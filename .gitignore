@@ -19,3 +19,10 @@
 
 # Go workspace file
 go.work
+
+initial/gen
+.idea
+.vscode
+log
+*.log
+node_modules

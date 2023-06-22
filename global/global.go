@@ -7,7 +7,8 @@ import (
 )
 
 var (
-	DB     *gorm.DB
-	Config *conf.SysConfig
-	Log    *zap.Logger
+	DB        *gorm.DB
+	Config    *conf.SystemConfig
+	Log       *zap.Logger
+	AccessLog *zap.Logger
 )

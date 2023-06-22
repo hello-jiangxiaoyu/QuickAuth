@@ -6,14 +6,18 @@ import (
 )
 
 const (
-	ErrorCodeUnknown = 2000
-	ErrorCodeSql     = 2001
-	ErrorNotFound    = 2002
+	ErrorServerPanic = 2000
+	ErrorCodeUnknown = 2001
+	ErrorCodeSql     = 2002
+	ErrorNotFound    = 2003
 )
 
 func ErrorUnknown(c *gin.Context, msg string) {
 	response(c, http.StatusInternalServerError, ErrorCodeUnknown, msg, struct{}{})
+	c.Abort()
 }
+
 func ErrorUnknownArray(c *gin.Context, msg string) {
 	arrayResponse(c, http.StatusInternalServerError, ErrorCodeUnknown, msg, 0, []any{})
+	c.Abort()
 }

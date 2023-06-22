@@ -3,7 +3,9 @@ package conf
 import "os"
 
 const (
-	DefaultSystemConfigName = "sys.yaml"
+	DefaultSystemConfigName = "./deploy/system.yaml"
+	DefaultDeployType       = "local"
+	DefaultIsFirstDeploy    = "false"
 )
 
 func getEnv(env, defaultValue string) string {
@@ -15,5 +17,14 @@ func getEnv(env, defaultValue string) string {
 }
 
 func GetSystemConfigFileName() string {
-	return getEnv("SYS_CONFIG", DefaultSystemConfigName)
+	return getEnv("SYSTEM_CONFIG", DefaultSystemConfigName)
+}
+
+func GetDeployType() string {
+	return getEnv("DEPLOY_TYPE", DefaultDeployType)
+}
+
+func IsFirstDeploy() bool {
+	isFirst := getEnv("FIRST_DEPLOY", DefaultIsFirstDeploy)
+	return isFirst == "true"
 }

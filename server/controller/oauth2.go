@@ -3,22 +3,40 @@ package controller
 import (
 	"QuickAuth/global"
 	"QuickAuth/response"
-	"QuickAuth/server/model"
 	"QuickAuth/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-func NewOauth2Router(r *gin.RouterGroup) {
-	r.GET("/v1/:tenant/.well-known/openid-configuration", OIDC)
-	r.GET("/v1/:tenant/.well-known/jwks.json", GetJwks)
+func NewOauth2Router(e *gin.Engine) {
+	r := e.Group("/")
+	{
+		r.GET("/v1/.well-known/openid-configuration", GetOIDC)
+		r.GET("/v1/.well-known/jwks.json", GetJwks)
+	}
+	e.GET("/v1/health", func(c *gin.Context) { c.String(http.StatusOK, "ok") })
 }
 
-func OIDC(c *gin.Context) {
+type OpenidConfigurationDto struct {
+	Issuer                            string   `json:"issuer"`
+	AuthorizationEndpoint             string   `json:"authorization_endpoint"`
+	TokenEndpoint                     string   `json:"token_endpoint"`
+	UserinfoEndpoint                  string   `json:"userinfo_endpoint"`
+	JwksUri                           string   `json:"jwks_uri"`
+	ScopesSupported                   []string `json:"scopes_supported"`
+	ResponseTypesSupported            []string `json:"response_types_supported"`
+	SubjectTypesSupported             []string `json:"subject_types_supported"`
+	IdTokenSigningAlgValuesSupported  []string `json:"id_token_signing_alg_values_supported"`
+	TokenEndpointAuthMethodsSupported []string `json:"token_endpoint_auth_methods_supported"`
+	ClaimsSupported                   []string `json:"claims_supported"`
+	RequestUriParameterSupported      bool     `json:"request_uri_parameter_supported"`
+}
+
+func GetOIDC(c *gin.Context) {
 	tenantName := "default"
 	prefix := utils.GetHostWithScheme(c)
-	conf := model.OpenidConfigurationDto{
+	conf := OpenidConfigurationDto{
 		Issuer:                            fmt.Sprintf("%s/%s", prefix, tenantName),
 		AuthorizationEndpoint:             fmt.Sprintf("%s/%s/oauth2/auth", prefix, tenantName),
 		TokenEndpoint:                     fmt.Sprintf("%s/%s/oauth2/token", prefix, tenantName),
