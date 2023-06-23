@@ -5,52 +5,48 @@
 package main
 
 import (
-	"QuickAuth/global"
-	"QuickAuth/initial"
+	"QuickAuth/internal"
+	"QuickAuth/internal/global"
+	"QuickAuth/internal/server"
 	"fmt"
-	"go.uber.org/zap"
-	"time"
 )
 
 func initSystem() error {
 	var err error
-	if err = initial.InitConfig(); err != nil {
+	if err = internal.InitConfig(); err != nil {
 		return err
 	}
-	if err = initial.InitLogger(); err != nil {
+	if err = internal.InitLogger(); err != nil {
 		return err
 	}
-	if err = initial.InitGorm(); err != nil {
+	if err = internal.InitGorm(); err != nil {
 		return err
 	}
-	if err = initial.MigrateDatabase(); err != nil {
+	if err = server.MigrateDatabase(); err != nil {
 		return err
 	}
 
 	return nil
 }
 
+// @title swagger 接口文档
+// @version 1.0
+// @description
+// @license.name MIT
+// @license.url https://github.com/hello-jiangxiaoyu/QuickAuth/blob/main/LICENSE
+// @securityDefinitions.apikey  Login
+// @in                          header
+// @name                        token
 func main() {
-	var err error
-	for i := 0; i < 3; i++ {
-		err = initSystem() // 系统初始化，重试3次失败则退出
-		if err == nil {
-			break
-		}
-		fmt.Println("init system err: ", err, "\n\nwaiting for starting...")
-		time.Sleep(time.Second * 10)
-	}
-
-	if err != nil {
+	if err := initSystem(); err == nil { // 系统初始化，重试3次失败则退出
 		fmt.Println("failed to init system, down")
 		return
 	}
 
-	svc := initial.GetServer()
-	runAddr := global.Config.Svc.Listen
-	if err = svc.Run(runAddr); err != nil {
-		global.Log.Error("server run err: ", zap.Error(err))
+	svc := internal.GetServer()
+	if err := svc.Run(global.Config.Svc.Listen); err != nil {
+		fmt.Println("server run err: ", err)
 	}
 
-	global.Log.Info("server turned off")
+	fmt.Println("server turned off")
 }
