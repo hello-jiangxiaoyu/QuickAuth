@@ -3,7 +3,7 @@ package middleware
 import (
 	"QuickAuth/internal/endpoint/response"
 	"QuickAuth/internal/global"
-	"QuickAuth/internal/server/model"
+	"QuickAuth/internal/model"
 	"github.com/gin-gonic/gin"
 )
 

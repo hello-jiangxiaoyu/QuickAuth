@@ -3,7 +3,8 @@ package service
 import (
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/global"
-	"QuickAuth/internal/server/model"
+	"QuickAuth/internal/model"
+	"QuickAuth/internal/utils"
 	"go.uber.org/zap"
 )
 
@@ -16,23 +17,32 @@ func GetUser(req *request.Login) (*model.User, error) {
 	return &user, nil
 }
 
-func IsClientSecretValid(clientId, clientSecret string) bool {
-	secrets := make([]model.ClientSecret, 0)
-	if err := global.DB.Where("client_id = ?", clientId).Find(&secrets).Error; err != nil {
+func IsClientValid(clientId string) bool {
+	var client model.Client
+	if err := global.DB.Select("id").Where("id = ?", clientId).First(&client).Error; err != nil {
 		global.Log.Error("get secret err: ", zap.Error(err))
 		return false
 	}
-	for _, secret := range secrets {
-		if *secret.Secret == clientSecret {
-			return true
-		}
+
+	return true
+}
+
+func IsClientSecretValid(clientId, clientSecret string) bool {
+	var secret model.ClientSecret
+	if err := global.DB.Select("secret").
+		Where("client_id = ? AND secret = ?", clientId, clientSecret).
+		First(&secret).Error; err != nil {
+		global.Log.Error("get secret err: ", zap.Error(err))
+		return false
 	}
-	return false
+
+	return secret.Secret == clientSecret
 }
 
 func IsCodeValid(clientId string, codeName string) bool {
 	var code model.Code
-	if err := global.DB.Where("client_id = ? AND code = ?", clientId, codeName).
+	if err := global.DB.Select("id").
+		Where("client_id = ? AND code = ?", clientId, codeName).
 		Find(&code).Error; err != nil {
 		global.Log.Error("get code err: ", zap.Error(err))
 		return false
@@ -42,4 +52,31 @@ func IsCodeValid(clientId string, codeName string) bool {
 		global.Log.Error("clear code err: ", zap.Error(err))
 	}
 	return true
+}
+
+func IsRedirectUriValid(clientId, uri string) bool {
+	var redirectUri model.RedirectURI
+	if err := global.DB.Select("uri").
+		Where("client_id = ? AND uri = ?", clientId, uri).
+		First(&uri).Error; err != nil {
+		global.Log.Error("failed to find redirect uri: ", zap.Error(err))
+		return false
+	}
+	return redirectUri.URI == uri
+}
+
+func CreateAccessCode(clientId string, userId string) (string, string, error) {
+	code := utils.RandHex(31)
+	state := utils.RandHex(31)
+	accessCode := model.Code{
+		ClientID: clientId,
+		UserID:   userId,
+		Code:     code,
+		State:    state,
+	}
+	if err := global.DB.Create(accessCode).Error; err != nil {
+		return "", "", err
+	}
+
+	return code, state, nil
 }

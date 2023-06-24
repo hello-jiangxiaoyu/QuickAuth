@@ -7,7 +7,6 @@ package main
 import (
 	"QuickAuth/internal"
 	"QuickAuth/internal/global"
-	"QuickAuth/internal/server"
 	"fmt"
 )
 
@@ -22,7 +21,7 @@ func initSystem() error {
 	if err = internal.InitGorm(); err != nil {
 		return err
 	}
-	if err = server.MigrateDatabase(); err != nil {
+	if err = global.MigrateDatabase(); err != nil {
 		return err
 	}
 
@@ -38,7 +37,7 @@ func initSystem() error {
 // @in                          header
 // @name                        token
 func main() {
-	if err := initSystem(); err != nil { // 系统初始化，重试3次失败则退出
+	if err := initSystem(); err != nil {
 		fmt.Println("init system err: ", err)
 		return
 	}

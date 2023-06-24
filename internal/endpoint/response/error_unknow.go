@@ -9,7 +9,7 @@ const (
 	ServerPanic     = 2000
 	CodeUnknown     = 2001
 	CodeSqlSelect   = 2002
-	CodeSqlList     = 2002
+	CodeSqlModify   = 2002
 	CodeNotFound    = 2003
 	CodeSaveSession = 2004
 )
@@ -17,6 +17,11 @@ const (
 // ErrorUnknown 未知错误
 func ErrorUnknown(c *gin.Context, msg string, isArray ...bool) {
 	errorResponse(c, http.StatusInternalServerError, CodeUnknown, msg, isArray)
+}
+
+// ErrorSqlModify SQL修改失败
+func ErrorSqlModify(c *gin.Context, msg string, isArray ...bool) {
+	errorResponse(c, http.StatusInternalServerError, CodeSqlModify, msg, isArray)
 }
 
 // ErrorSelect 数据库查询错误

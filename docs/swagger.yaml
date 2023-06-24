@@ -1,0 +1,120 @@
+info:
+  contact: {}
+  license:
+    name: MIT
+    url: https://github.com/hello-jiangxiaoyu/QuickAuth/blob/main/LICENSE
+  title: swagger 接口文档
+  version: "1.0"
+paths:
+  /v1/login:
+    post:
+      description: login using username and password
+      parameters:
+      - description: username
+        in: formData
+        name: username
+        required: true
+        type: string
+      - description: password
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: next
+        in: query
+        name: next
+        type: string
+      responses:
+        "200":
+          description: OK
+        "302":
+          description: Found
+      summary: login a user
+      tags:
+      - login
+  /v1/oauth2/auth:
+    get:
+      description: oauth2 authorize
+      parameters:
+      - description: client_id
+        in: query
+        name: client_id
+        required: true
+        type: string
+      - description: scope
+        in: query
+        name: scope
+        required: true
+        type: string
+      - description: response_type
+        in: query
+        name: response_type
+        required: true
+        type: string
+      - description: redirect_uri
+        in: query
+        name: redirect_uri
+        required: true
+        type: string
+      - description: state
+        in: query
+        name: state
+        type: string
+      - description: nonce
+        in: query
+        name: nonce
+        type: string
+      responses:
+        "200":
+          description: OK
+        "302":
+          description: Found
+      summary: oauth2 authorize
+      tags:
+      - oauth2
+  /v1/oauth2/token:
+    get:
+      description: oauth2 token
+      parameters:
+      - description: client_id
+        in: query
+        name: client_id
+        required: true
+        type: string
+      - description: client_secret
+        in: query
+        name: client_secret
+        type: string
+      - description: code
+        in: query
+        name: code
+        type: string
+      - description: grant_type
+        in: query
+        name: grant_type
+        required: true
+        type: string
+      - description: redirect_uri
+        in: query
+        name: redirect_uri
+        type: string
+      - description: state
+        in: query
+        name: state
+        type: string
+      - description: nonce
+        in: query
+        name: nonce
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: oauth2 token
+      tags:
+      - oauth2
+securityDefinitions:
+  Login:
+    in: header
+    name: token
+    type: apiKey
+swagger: "2.0"

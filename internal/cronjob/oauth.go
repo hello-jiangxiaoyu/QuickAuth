@@ -2,7 +2,7 @@ package cronjob
 
 import (
 	"QuickAuth/internal/global"
-	"QuickAuth/internal/server/model"
+	"QuickAuth/internal/model"
 	"go.uber.org/zap"
 	"time"
 )

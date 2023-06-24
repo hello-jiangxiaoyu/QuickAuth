@@ -5,9 +5,9 @@ import (
 	"strings"
 )
 
-func AmendFile(path string, f func([]byte) []byte) error {
-	path = strings.ReplaceAll(path, `\`, "/") // handle windows path
-	rd, err := os.ReadDir(path)
+func AmendFile(dir string, f func([]byte) []byte) error {
+	dir = strings.ReplaceAll(dir, `\`, "/") // handle windows path
+	rd, err := os.ReadDir(dir)
 	if err != nil {
 		return err
 	}
@@ -17,7 +17,7 @@ func AmendFile(path string, f func([]byte) []byte) error {
 			continue
 		}
 
-		fullName := path + "/" + fi.Name()
+		fullName := dir + "/" + fi.Name()
 		src, err := os.ReadFile(fullName)
 		if err != nil {
 			return err

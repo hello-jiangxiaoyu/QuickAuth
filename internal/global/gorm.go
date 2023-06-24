@@ -1,9 +1,8 @@
-package server
+package global
 
 import (
 	"QuickAuth/internal/conf"
-	"QuickAuth/internal/global"
-	"QuickAuth/internal/server/model"
+	"QuickAuth/internal/model"
 	"errors"
 	"fmt"
 	"gorm.io/driver/mysql"
@@ -26,11 +25,11 @@ func MigrateDatabase() error {
 		model.Tenant{},
 	}
 
-	if global.DB == nil {
+	if DB == nil {
 		return errors.New("global db is nil, failed to migrate database")
 	}
 
-	if err := global.DB.AutoMigrate(migrateList...); err != nil {
+	if err := DB.AutoMigrate(migrateList...); err != nil {
 		fmt.Println("migrate db err: ", err)
 		return err
 	}

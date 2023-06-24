@@ -5,18 +5,19 @@ import (
 	"QuickAuth/internal/endpoint/response"
 	"QuickAuth/internal/global"
 	"QuickAuth/internal/server/controller/internal"
-	"QuickAuth/internal/server/model"
 	"QuickAuth/internal/server/service"
 	"QuickAuth/internal/utils"
+	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"net/http"
+	"net/url"
 )
 
 func NewOauth2Router(e *gin.Engine) {
 	var o oauth
-	r := e.Group("/v1")
+	r := e.Group("/quick/v1")
 	{
 		r.GET("/.well-known/openid-configuration", o.getOIDC)
 		r.GET("/.well-known/jwks.json", o.getJwks)
@@ -98,47 +99,45 @@ func (o *oauth) getAuthCode(c *gin.Context) {
 		return
 	}
 
-	var client model.Client
-	if err := global.DB.First(&client, "tenant_id = ? AND id = ?", in.Tenant.ID, in.ClientId).Error; err != nil {
-		c.JSON(http.StatusForbidden, gin.H{"message": "Invalid client_id."})
-		global.Log.Error("get client err: " + err.Error())
+	session := sessions.Default(c)
+	userId, ok := session.Get("userId").(string)
+	if !ok || userId == "" {
+		response.ErrorForbidden(c, "invalid user_id")
 		return
 	}
-	//if err := service.IsValidateUri(in.Tenant.ID, client.ID, in.RedirectUri); err != nil {
-	//	c.JSON(http.StatusForbidden, gin.H{"message": "Invalid redirect_uri."})
-	//	global.Log.Error("get redirect uri err: " + err.Error())
-	//	return
-	//}
-	//
-	//if in.ResponseType == internal.Oauth2ResponseTypeCode {
-	//	code, err := getAccessCode(c, &client)
-	//	if err != nil {
-	//		c.Status(http.StatusInternalServerError)
-	//		global.Log.Error("get access code err: " + err.Error())
-	//		return
-	//	}
-	//	query := url.Values{}
-	//	query.Add("code", code)
-	//	query.Add("state", in.State)
-	//	location := fmt.Sprintf("%s?%s", in.RedirectUri, query.Encode())
-	//	c.Redirect(http.StatusFound, location)
-	//	return
-	//}
-	//
-	//if in.ResponseType == internal.Oauth2ResponseTypeToken {
-	//	token, err := internal.GetAccessToken(c, &client)
-	//	if err != nil {
-	//		c.Status(http.StatusInternalServerError)
-	//		global.Log.Error("get access token err: " + err.Error())
-	//		return
-	//	}
-	//	query := url.Values{}
-	//	query.Add("access_token", token)
-	//	query.Add("state", in.State)
-	//	location := fmt.Sprintf("%s?%s", in.RedirectUri, query.Encode())
-	//	c.Redirect(http.StatusFound, location)
-	//	return
-	//}
+	if ok := service.IsRedirectUriValid(in.ClientID, in.RedirectUri); !ok {
+		response.ErrorForbidden(c, "Invalid redirect_uri.")
+		return
+	}
+
+	if in.ResponseType == internal.Oauth2ResponseTypeCode {
+		code, state, err := service.CreateAccessCode(in.ClientID, userId)
+		if err != nil {
+			response.ErrorSqlModify(c, "failed to create access code")
+			global.Log.Error("get access code err: " + err.Error())
+			return
+		}
+		query := url.Values{}
+		query.Add("code", code)
+		session.Set("state", state)
+		if err = session.Save(); err != nil {
+			response.ErrorSaveSession(c)
+			global.Log.Error("oauth save session err: ", zap.Error(err))
+			return
+		}
+		location := fmt.Sprintf("%s?%s", in.RedirectUri, query.Encode())
+		c.Redirect(http.StatusFound, location)
+		return
+	}
+
+	if in.ResponseType == internal.Oauth2ResponseTypeToken {
+		token := ""
+		query := url.Values{}
+		query.Add("access_token", token)
+		location := fmt.Sprintf("%s?%s", in.RedirectUri, query.Encode())
+		c.Redirect(http.StatusFound, location)
+		return
+	}
 
 	response.ErrorRequestWithMsg(c, "Invalid response_type.")
 }
@@ -154,7 +153,7 @@ func (o *oauth) getAuthCode(c *gin.Context) {
 // @Param		redirect_uri	query		string	false	"redirect_uri"
 // @Param		state			query		string	false	"state"
 // @Param		nonce			query		string	false	"nonce"
-// @Success		200				{object}	dto.AccessTokenDto
+// @Success		200
 // @Router		/v1/oauth2/token [get]
 func (o *oauth) getToken(c *gin.Context) {
 	var in request.Token
@@ -166,8 +165,7 @@ func (o *oauth) getToken(c *gin.Context) {
 
 	handler, err := getTokenHandler(in.GrantType)
 	if err != nil {
-		response.ErrorRequestWithMsg(c, "Invalid grant_type.")
-		global.Log.Error("get token handler err: ", zap.Error(err))
+		response.ErrorRequestWithMsg(c, err.Error())
 		return
 	}
 	token, err := handler(&in)

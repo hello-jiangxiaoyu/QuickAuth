@@ -1,4 +1,4 @@
-package server
+package global
 
 import (
 	"QuickAuth/internal/conf"
@@ -22,10 +22,11 @@ func TestGenDao(t *testing.T) {
 
 	jsonField := gen.FieldJSONTagWithNS(func(columnName string) (tagContent string) { return columnName })
 	opt := []gen.ModelOpt{jsonField}
+	opt = append(opt, gen.FieldType("grant_types", "pq.StringArray"))
 	g.GenerateAllTable(opt...)
 	g.Execute()
 
-	_ = utils.AmendFile("./model", convertToCamelCase)
+	_ = utils.AmendFile("../model", convertToCamelCase)
 }
 
 func getG(dbName string) (*gen.Generator, error) {
@@ -35,7 +36,7 @@ func getG(dbName string) (*gen.Generator, error) {
 	}
 
 	g := gen.NewGenerator(gen.Config{
-		OutPath:           "./query",                                     // 相对执行`go run`时的路径, 会自动创建目录
+		OutPath:           "../query",                                    // 相对执行`go run`时的路径, 会自动创建目录
 		Mode:              gen.WithDefaultQuery | gen.WithQueryInterface, // 生成默认查询结构体(作为全局变量使用), 即`Q`结构体和其字段(各表模型)
 		FieldNullable:     true,                                          // generate pointer when field is nullable
 		FieldCoverable:    false,                                         // generate pointer when field has default value, to fix problem zero value cannot be assign: https://gorm.io/docs/create.html#Default-Values

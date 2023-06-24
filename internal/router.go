@@ -1,12 +1,15 @@
 package internal
 
 import (
-	"QuickAuth/internal/middleware"
+	_ "QuickAuth/docs"
 	"QuickAuth/internal/server/controller/oauth"
+	"QuickAuth/internal/server/middleware"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func GetServer() *gin.Engine {
@@ -21,6 +24,7 @@ func GetServer() *gin.Engine {
 	})
 	r.Use(sessions.Sessions("QixinAuth", store))
 
+	r.GET("/quick/v1/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	oauth.NewOauth2Router(r)
 	return r
 }

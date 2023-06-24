@@ -1,0 +1,179 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "swagger 接口文档",
+        "contact": {},
+        "license": {
+            "name": "MIT",
+            "url": "https://github.com/hello-jiangxiaoyu/QuickAuth/blob/main/LICENSE"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/v1/login": {
+            "post": {
+                "description": "login using username and password",
+                "tags": [
+                    "login"
+                ],
+                "summary": "login a user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "username",
+                        "name": "username",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "password",
+                        "name": "password",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "next",
+                        "name": "next",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "302": {
+                        "description": "Found"
+                    }
+                }
+            }
+        },
+        "/v1/oauth2/auth": {
+            "get": {
+                "description": "oauth2 authorize",
+                "tags": [
+                    "oauth2"
+                ],
+                "summary": "oauth2 authorize",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "client_id",
+                        "name": "client_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "scope",
+                        "name": "scope",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "response_type",
+                        "name": "response_type",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "redirect_uri",
+                        "name": "redirect_uri",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "state",
+                        "name": "state",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "nonce",
+                        "name": "nonce",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "302": {
+                        "description": "Found"
+                    }
+                }
+            }
+        },
+        "/v1/oauth2/token": {
+            "get": {
+                "description": "oauth2 token",
+                "tags": [
+                    "oauth2"
+                ],
+                "summary": "oauth2 token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "client_id",
+                        "name": "client_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "client_secret",
+                        "name": "client_secret",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "code",
+                        "name": "code",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "grant_type",
+                        "name": "grant_type",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "redirect_uri",
+                        "name": "redirect_uri",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "state",
+                        "name": "state",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "nonce",
+                        "name": "nonce",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "Login": {
+            "type": "apiKey",
+            "name": "token",
+            "in": "header"
+        }
+    }
+}

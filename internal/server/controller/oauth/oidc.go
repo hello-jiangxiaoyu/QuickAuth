@@ -3,6 +3,7 @@ package oauth
 import (
 	"QuickAuth/internal/endpoint/response"
 	"QuickAuth/internal/global"
+	"QuickAuth/internal/server/service"
 	"QuickAuth/internal/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -46,7 +47,7 @@ func (o *oauth) getOIDC(c *gin.Context) {
 
 func (o *oauth) getJwks(c *gin.Context) {
 	tenantName := "default"
-	jwks, err := utils.LoadRsaPublicKeys(tenantName)
+	jwks, err := service.LoadRsaPublicKeys(tenantName)
 	if err != nil {
 		response.ErrorUnknown(c, "failed to get pub keys")
 		global.Log.Error("get jwks err: " + err.Error())

@@ -1,4 +1,4 @@
-package internal
+package global
 
 import (
 	rotate "github.com/lestrrat-go/file-rotatelogs"

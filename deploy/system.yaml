@@ -13,7 +13,7 @@ default:
 
 log:
   level: "info"
-  dir: "./log"
+  dir: "./data/log"
   fullStackSwitch: false # log full stack information
 
 database:

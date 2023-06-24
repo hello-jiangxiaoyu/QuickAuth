@@ -1,7 +1,7 @@
 package internal
 
 import (
-	"QuickAuth/internal/server/model"
+	"QuickAuth/internal/model"
 	"errors"
 )
 
