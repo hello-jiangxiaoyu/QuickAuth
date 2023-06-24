@@ -38,8 +38,8 @@ func initSystem() error {
 // @in                          header
 // @name                        token
 func main() {
-	if err := initSystem(); err == nil { // 系统初始化，重试3次失败则退出
-		fmt.Println("failed to init system, down")
+	if err := initSystem(); err != nil { // 系统初始化，重试3次失败则退出
+		fmt.Println("init system err: ", err)
 		return
 	}
 
