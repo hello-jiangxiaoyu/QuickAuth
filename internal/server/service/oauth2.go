@@ -5,7 +5,13 @@ import (
 	"QuickAuth/internal/global"
 	"QuickAuth/internal/model"
 	"QuickAuth/internal/utils"
+	"errors"
 	"go.uber.org/zap"
+	"time"
+)
+
+var (
+	ErrorCodeExpired = errors.New("code expired")
 )
 
 func GetUser(req *request.Login) (*model.User, error) {
@@ -39,19 +45,23 @@ func IsClientSecretValid(clientId, clientSecret string) bool {
 	return secret.Secret == clientSecret
 }
 
-func IsCodeValid(clientId string, codeName string) bool {
+func GetAccessCode(clientId string, codeName string) (*model.Code, error) {
 	var code model.Code
-	if err := global.DB.Select("id").
-		Where("client_id = ? AND code = ?", clientId, codeName).
-		Find(&code).Error; err != nil {
+	if err := global.DB.Where("client_id = ? AND code = ?", clientId, codeName).
+		First(&code).Error; err != nil {
 		global.Log.Error("get code err: ", zap.Error(err))
-		return false
+		return nil, err
 	}
 
 	if err := global.DB.Where("id = ?", code.ID).Delete(model.Code{}).Error; err != nil {
 		global.Log.Error("clear code err: ", zap.Error(err))
 	}
-	return true
+
+	if code.CreateTime.After(time.Now()) {
+		return nil, ErrorCodeExpired
+	}
+
+	return &code, nil
 }
 
 func IsRedirectUriValid(clientId, uri string) bool {

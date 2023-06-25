@@ -74,7 +74,7 @@ func LoadRsaPrivateKeys(tenantId string) (map[string]*rsa.PrivateKey, error) {
 	return keys, nil
 }
 
-func CreateAccessToken(client model.Client, tenantId, nonce, scope, host, userId string) (string, error) {
+func CreateAccessToken(client model.Client, tenantId, host, userId, nonce, scope string) (string, error) {
 	var token *jwt.Token
 	nowTime := time.Now()
 	expireTime := nowTime.Add(time.Duration(client.TokenExpire) * time.Hour)

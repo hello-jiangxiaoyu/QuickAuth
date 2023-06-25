@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS codes (
     create_time  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     update_time  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE INDEX idx_codes_tenant_user_id ON codes(client_id, code);
+CREATE UNIQUE INDEX idx_codes_tenant_user_id ON codes(client_id, code);
 
 
 

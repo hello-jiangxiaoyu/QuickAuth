@@ -2,7 +2,6 @@ package oauth
 
 import (
 	"QuickAuth/internal/endpoint/request"
-	"QuickAuth/internal/model"
 	"QuickAuth/internal/server/service"
 	"errors"
 )
@@ -35,8 +34,13 @@ func getTokenHandler(grantType string) (Handler, error) {
 }
 
 func authorizationCodeHandler(req *request.Token) (*TokenResponse, error) {
-	token, err := service.CreateAccessToken(model.Client{ID: req.ClientID},
-		req.Tenant.ID, req.Tenant.Host, req.Nonce, req.State, req.UserID)
+	code, err := service.GetAccessCode(req.ClientID, req.Code)
+	if err != nil {
+		return nil, err
+	}
+
+	token, err := service.CreateAccessToken(req.Client, req.Tenant.ID,
+		req.Tenant.Host, req.UserID, req.Nonce, code.Scope)
 	if err != nil {
 		return nil, err
 	}
@@ -45,8 +49,8 @@ func authorizationCodeHandler(req *request.Token) (*TokenResponse, error) {
 }
 
 func clientCredentialHandler(req *request.Token) (*TokenResponse, error) {
-	token, err := service.CreateAccessToken(model.Client{ID: req.ClientID},
-		req.Tenant.ID, req.Tenant.Host, req.Nonce, req.State, req.UserID)
+	token, err := service.CreateAccessToken(req.Client, req.Tenant.ID,
+		req.Tenant.Host, req.UserID, req.Nonce, req.State)
 	if err != nil {
 		return nil, err
 	}

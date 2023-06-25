@@ -105,7 +105,7 @@ func (o *oauth) getAuthCode(c *gin.Context) {
 		response.ErrorForbidden(c, "invalid user_id")
 		return
 	}
-	if ok := service.IsRedirectUriValid(in.ClientID, in.RedirectUri); !ok {
+	if ok = service.IsRedirectUriValid(in.ClientID, in.RedirectUri); !ok {
 		response.ErrorForbidden(c, "Invalid redirect_uri.")
 		return
 	}
@@ -163,16 +163,30 @@ func (o *oauth) getToken(c *gin.Context) {
 		return
 	}
 
+	client, err := service.GetClientById(in.ClientID)
+	if err != nil {
+		response.ErrorRequestWithMsg(c, "no such client")
+		global.Log.Error("get client err: ", zap.Error(err))
+		return
+	}
+	in.Client = *client
 	handler, err := getTokenHandler(in.GrantType)
 	if err != nil {
 		response.ErrorRequestWithMsg(c, err.Error())
 		return
 	}
+
 	token, err := handler(&in)
 	if err != nil {
-		response.ErrorUnknown(c, "failed to get token.")
-		global.Log.Error("get token handler err: ", zap.Error(err))
+		switch err {
+		case service.ErrorCodeExpired:
+			response.ErrorForbidden(c, err.Error())
+		default:
+			response.ErrorUnknown(c, "failed to get token.")
+		}
+		global.Log.Error("get token err: ", zap.Error(err))
+		return
 	}
 
-	response.SuccessWithData(c, token)
+	response.SuccessWithData(c, token) // success!
 }
