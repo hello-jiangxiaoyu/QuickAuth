@@ -2,7 +2,6 @@ package oauth
 
 import (
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/global"
 	"QuickAuth/internal/server/controller/internal"
 	"QuickAuth/internal/server/service"
 	"fmt"
@@ -49,8 +48,7 @@ func (o *oauth) getJwks(c *gin.Context) {
 	tenantName := "default"
 	jwks, err := service.LoadRsaPublicKeys(tenantName)
 	if err != nil {
-		resp.ErrorUnknown(c, "failed to get pub keys")
-		global.Log.Error("get jwks err: " + err.Error())
+		resp.ErrorUnknown(c, err, "failed to get pub keys")
 		return
 	}
 

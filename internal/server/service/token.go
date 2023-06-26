@@ -25,8 +25,8 @@ func LoadRsaPublicKeys(tenant string) (*jose.JSONWebKeySet, error) {
 	}
 	var err error
 	res := map[string][]byte{}
-	if res, err = utils.GetJWKs(tenant); err != nil || len(res) == 0 {
-		if res, err = utils.GenerateKey(tenant); err != nil {
+	if res, err = safe.GetJWKs(tenant); err != nil || len(res) == 0 {
+		if res, err = safe.GenerateKey(tenant); err != nil {
 			return nil, err
 		}
 	}
@@ -54,7 +54,7 @@ func LoadRsaPublicKeys(tenant string) (*jose.JSONWebKeySet, error) {
 }
 
 func LoadRsaPrivateKeys(tenantId string) (map[string]*rsa.PrivateKey, error) {
-	res, err := utils.GetJWKs(tenantId)
+	res, err := safe.GetJWKs(tenantId)
 	if err != nil {
 		return nil, err
 	}

@@ -23,33 +23,30 @@ func GetUser(req *request.Login) (*model.User, error) {
 	return &user, nil
 }
 
-func IsClientValid(clientId string) bool {
+func IsClientValid(clientId string) (bool, error) {
 	var client model.Client
-	if err := global.DB.Select("id").Where("id = ?", clientId).First(&client).Error; err != nil {
-		global.Log.Error("get secret err: ", zap.Error(err))
-		return false
+	if err := global.DB.Select("id").Where("id = ?", clientId).Limit(1).Find(&client).Error; err != nil {
+		return false, err
 	}
 
-	return true
+	return client.ID == clientId, nil
 }
 
-func IsClientSecretValid(clientId, clientSecret string) bool {
+func IsClientSecretValid(clientId, clientSecret string) (bool, error) {
 	var secret model.ClientSecret
 	if err := global.DB.Select("secret").
 		Where("client_id = ? AND secret = ?", clientId, clientSecret).
-		First(&secret).Error; err != nil {
-		global.Log.Error("get secret err: ", zap.Error(err))
-		return false
+		Limit(1).Find(&secret).Error; err != nil {
+		return false, err
 	}
 
-	return secret.Secret == clientSecret
+	return secret.Secret == clientSecret, nil
 }
 
 func GetAccessCode(clientId string, codeName string) (*model.Code, error) {
 	var code model.Code
 	if err := global.DB.Where("client_id = ? AND code = ?", clientId, codeName).
 		First(&code).Error; err != nil {
-		global.Log.Error("get code err: ", zap.Error(err))
 		return nil, err
 	}
 
@@ -64,15 +61,14 @@ func GetAccessCode(clientId string, codeName string) (*model.Code, error) {
 	return &code, nil
 }
 
-func IsRedirectUriValid(clientId, uri string) bool {
+func IsRedirectUriValid(clientId, uri string) (bool, error) {
 	var redirectUri model.RedirectURI
-	if err := global.DB.Select("uri").
-		Where("client_id = ? AND uri = ?", clientId, uri).
-		First(&uri).Error; err != nil {
-		global.Log.Error("failed to find redirect uri: ", zap.Error(err))
-		return false
+	if err := global.DB.Select("uri").Where("client_id = ? AND uri = ?", clientId, uri).
+		Limit(1).Find(&uri).Error; err != nil {
+		return false, err
 	}
-	return redirectUri.URI == uri
+
+	return redirectUri.URI == uri, nil
 }
 
 func CreateAccessCode(clientId string, userId string) (string, string, error) {

@@ -1,7 +1,9 @@
 package resp
 
 import (
+	"QuickAuth/internal/global"
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 	"net/http"
 )
 
@@ -14,20 +16,23 @@ const (
 
 func errorResponse(c *gin.Context, code int, errCode uint, msg string, isArray []bool) {
 	if len(isArray) == 0 {
-		response(c, code, errCode, msg, struct{}{})
+		c.JSON(code, &Response{Code: errCode, Msg: msg, Data: struct{}{}})
 	} else {
-		arrayResponse(c, code, errCode, msg, 0, []any{})
+		c.JSON(code, &ArrayResponse{Code: errCode, Msg: msg, Total: 0, Data: []any{}})
 	}
+	c.Abort()
 }
 
 // ErrorRequest 请求参数错误
-func ErrorRequest(c *gin.Context, isArray ...bool) {
-	errorResponse(c, http.StatusBadRequest, CodeRequestPara, "invalidate request parameters", isArray)
+func ErrorRequest(c *gin.Context, err error, msg string, isArray ...bool) {
+	errorResponse(c, http.StatusBadRequest, CodeRequestPara, msg, isArray)
+	global.Log.Error(msg, zap.Error(err))
 }
 
 // ErrorRequestWithMsg 请求参数错误
-func ErrorRequestWithMsg(c *gin.Context, msg string, isArray ...bool) {
+func ErrorRequestWithMsg(c *gin.Context, err error, msg string, isArray ...bool) {
 	errorResponse(c, http.StatusBadRequest, CodeRequestPara, msg, isArray)
+	global.Log.Error(msg, zap.Error(err))
 }
 
 // ErrorForbidden 无权访问

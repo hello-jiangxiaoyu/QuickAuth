@@ -3,7 +3,6 @@ package gorm
 import (
 	"QuickAuth/pkg/model"
 	"errors"
-	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
@@ -31,7 +30,6 @@ func MigrateDatabase(db *gorm.DB) error {
 	}
 
 	if err := db.AutoMigrate(migrateList...); err != nil {
-		fmt.Println("migrate db err: ", err)
 		return err
 	}
 

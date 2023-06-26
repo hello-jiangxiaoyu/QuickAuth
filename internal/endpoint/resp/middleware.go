@@ -6,11 +6,11 @@ import (
 )
 
 func ErrorPanic(c *gin.Context) {
-	response(c, http.StatusInternalServerError, ServerPanic, "server panic", struct{}{})
+	c.JSON(http.StatusInternalServerError, &Response{Code: ServerPanic, Msg: "server panic", Data: struct{}{}})
 	c.Abort()
 }
 
 func ErrorHost(c *gin.Context) {
-	response(c, http.StatusForbidden, CodeNoSuchHost, "no such host", struct{}{})
+	c.JSON(http.StatusForbidden, &Response{Code: CodeNoSuchHost, Msg: "no such host", Data: struct{}{}})
 	c.Abort()
 }

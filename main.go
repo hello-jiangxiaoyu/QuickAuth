@@ -13,12 +13,15 @@ import (
 func initSystem() error {
 	var err error
 	if err = internal.InitConfig(); err != nil {
+		fmt.Println("init config err: ", err)
 		return err
 	}
 	if err = internal.InitLogger(); err != nil {
+		fmt.Println("init logger err: ", err)
 		return err
 	}
 	if err = internal.InitGorm(); err != nil {
+		fmt.Println("init gorm err: ", err)
 		return err
 	}
 
@@ -35,7 +38,6 @@ func initSystem() error {
 // @name                        token
 func main() {
 	if err := initSystem(); err != nil {
-		fmt.Println("init system err: ", err)
 		return
 	}
 

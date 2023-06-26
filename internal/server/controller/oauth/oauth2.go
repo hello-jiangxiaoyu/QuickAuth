@@ -3,14 +3,13 @@ package oauth
 import (
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/global"
 	"QuickAuth/internal/server/controller/internal"
 	"QuickAuth/internal/server/service"
 	"QuickAuth/pkg/utils/safe"
 	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
+	"github.com/pkg/errors"
 	"net/http"
 	"net/url"
 )
@@ -47,15 +46,13 @@ func (o *oauth) login(c *gin.Context) {
 		return
 	}
 	if err := internal.NewApi(c).BindQuery(&in).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c)
-		global.Log.Error("api err: ", zap.Error(err))
+		resp.ErrorRequest(c, err, "init login req err")
 		return
 	}
 
 	user, err := service.GetUser(&in)
 	if err != nil {
-		resp.ErrorNotFound(c, "no such user")
-		global.Log.Error("login err, no such user: ", zap.Error(err))
+		resp.ErrorNotFound(c, err, "no such user")
 		return
 	}
 	if !safe.CheckPasswordHash(in.Password, *user.Password) {
@@ -67,8 +64,7 @@ func (o *oauth) login(c *gin.Context) {
 	session.Set("user", user.Username)
 	session.Set("userId", user.ID)
 	if err = session.Save(); err != nil {
-		resp.ErrorSaveSession(c)
-		global.Log.Error("login save session err: ", zap.Error(err))
+		resp.ErrorSaveSession(c, errors.Wrap(err, "login err"))
 		return
 	}
 	if next := c.Query("next"); next != "" {
@@ -94,8 +90,7 @@ func (o *oauth) login(c *gin.Context) {
 func (o *oauth) getAuthCode(c *gin.Context) {
 	var in request.Auth
 	if err := internal.NewApi(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c)
-		global.Log.Error("api err: ", zap.Error(err))
+		resp.ErrorRequest(c, err, "init auth para err")
 		return
 	}
 
@@ -105,7 +100,10 @@ func (o *oauth) getAuthCode(c *gin.Context) {
 		resp.ErrorForbidden(c, "invalid user_id")
 		return
 	}
-	if ok = service.IsRedirectUriValid(in.ClientID, in.RedirectUri); !ok {
+	if ok, err := service.IsRedirectUriValid(in.ClientID, in.RedirectUri); err != nil {
+		resp.ErrorSelect(c, err, "get redirect uri err.")
+		return
+	} else if !ok {
 		resp.ErrorForbidden(c, "Invalid redirect_uri.")
 		return
 	}
@@ -113,16 +111,14 @@ func (o *oauth) getAuthCode(c *gin.Context) {
 	if in.ResponseType == internal.Oauth2ResponseTypeCode {
 		code, state, err := service.CreateAccessCode(in.ClientID, userId)
 		if err != nil {
-			resp.ErrorSqlModify(c, "failed to create access code")
-			global.Log.Error("get access code err: " + err.Error())
+			resp.ErrorSqlModify(c, err, "failed to create access code.")
 			return
 		}
 		query := url.Values{}
 		query.Add("code", code)
 		session.Set("state", state)
 		if err = session.Save(); err != nil {
-			resp.ErrorSaveSession(c)
-			global.Log.Error("oauth save session err: ", zap.Error(err))
+			resp.ErrorSaveSession(c, errors.Wrap(err, "auth err"))
 			return
 		}
 		location := fmt.Sprintf("%s?%s", in.RedirectUri, query.Encode())
@@ -139,7 +135,7 @@ func (o *oauth) getAuthCode(c *gin.Context) {
 		return
 	}
 
-	resp.ErrorRequestWithMsg(c, "Invalid response_type.")
+	resp.ErrorRequestWithMsg(c, nil, "Invalid response_type.")
 }
 
 // @Summary	oauth2 token
@@ -158,21 +154,19 @@ func (o *oauth) getAuthCode(c *gin.Context) {
 func (o *oauth) getToken(c *gin.Context) {
 	var in request.Token
 	if err := internal.NewApi(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c)
-		global.Log.Error("api err: ", zap.Error(err))
+		resp.ErrorRequest(c, err, "init token req para err")
 		return
 	}
 
 	client, err := service.GetClientById(in.ClientID)
 	if err != nil {
-		resp.ErrorRequestWithMsg(c, "no such client")
-		global.Log.Error("get client err: ", zap.Error(err))
+		resp.ErrorRequestWithMsg(c, err, "no such client")
 		return
 	}
 	in.Client = *client
 	handler, err := getTokenHandler(in.GrantType)
 	if err != nil {
-		resp.ErrorRequestWithMsg(c, err.Error())
+		resp.ErrorRequestWithMsg(c, err, err.Error())
 		return
 	}
 
@@ -182,9 +176,8 @@ func (o *oauth) getToken(c *gin.Context) {
 		case service.ErrorCodeExpired:
 			resp.ErrorForbidden(c, err.Error())
 		default:
-			resp.ErrorUnknown(c, "failed to get token.")
+			resp.ErrorUnknown(c, err, "failed to get token.")
 		}
-		global.Log.Error("get token err: ", zap.Error(err))
 		return
 	}
 
