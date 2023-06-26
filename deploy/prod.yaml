@@ -1,0 +1,40 @@
+
+server:
+  listen: ":80"
+  uploadSwitch: true
+  wildcardSwitch: false
+  wildcardSuffix: ".example.com"
+
+default:
+  defaultUsername: "admin"
+  defaultPassword: "admin"
+  defaultTenant: "default"
+  defaultHost: "localhost"
+
+log:
+  level: "info"
+  dir: "./data/log"
+  fullStackSwitch: false # log full stack information
+
+database:
+  dbType: "postgres"
+  host: "postgres"
+  port: 5432
+  dbName: "quick_auth"
+  username: "admin"
+  password: "admin"
+
+# database for log
+clickhouse:
+  host: "clickhouse"
+  port: 8123
+  dbName: "log"
+  username: "default"
+  password: "admin"
+
+redis:
+  host: "redis"
+  port: 6379
+  username: "admin"
+  password: "admin"
+

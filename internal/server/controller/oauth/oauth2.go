@@ -2,11 +2,11 @@ package oauth
 
 import (
 	"QuickAuth/internal/endpoint/request"
-	"QuickAuth/internal/endpoint/response"
+	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/internal/global"
 	"QuickAuth/internal/server/controller/internal"
 	"QuickAuth/internal/server/service"
-	"QuickAuth/internal/utils"
+	"QuickAuth/pkg/utils/safe"
 	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -43,23 +43,23 @@ func (o *oauth) login(c *gin.Context) {
 	session := sessions.Default(c)
 	su := session.Get("user")
 	if su != nil {
-		response.DoNothing(c, "user is already logged in, nothing to do")
+		resp.DoNothing(c, "user is already logged in, nothing to do")
 		return
 	}
 	if err := internal.NewApi(c).BindQuery(&in).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
-		response.ErrorRequest(c)
+		resp.ErrorRequest(c)
 		global.Log.Error("api err: ", zap.Error(err))
 		return
 	}
 
 	user, err := service.GetUser(&in)
 	if err != nil {
-		response.ErrorNotFound(c, "no such user")
+		resp.ErrorNotFound(c, "no such user")
 		global.Log.Error("login err, no such user: ", zap.Error(err))
 		return
 	}
-	if !utils.CheckPasswordHash(in.Password, *user.Password) {
-		response.ErrorForbidden(c, "user name or password is incorrect")
+	if !safe.CheckPasswordHash(in.Password, *user.Password) {
+		resp.ErrorForbidden(c, "user name or password is incorrect")
 		return
 	}
 
@@ -67,7 +67,7 @@ func (o *oauth) login(c *gin.Context) {
 	session.Set("user", user.Username)
 	session.Set("userId", user.ID)
 	if err = session.Save(); err != nil {
-		response.ErrorSaveSession(c)
+		resp.ErrorSaveSession(c)
 		global.Log.Error("login save session err: ", zap.Error(err))
 		return
 	}
@@ -94,7 +94,7 @@ func (o *oauth) login(c *gin.Context) {
 func (o *oauth) getAuthCode(c *gin.Context) {
 	var in request.Auth
 	if err := internal.NewApi(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
-		response.ErrorRequest(c)
+		resp.ErrorRequest(c)
 		global.Log.Error("api err: ", zap.Error(err))
 		return
 	}
@@ -102,18 +102,18 @@ func (o *oauth) getAuthCode(c *gin.Context) {
 	session := sessions.Default(c)
 	userId, ok := session.Get("userId").(string)
 	if !ok || userId == "" {
-		response.ErrorForbidden(c, "invalid user_id")
+		resp.ErrorForbidden(c, "invalid user_id")
 		return
 	}
 	if ok = service.IsRedirectUriValid(in.ClientID, in.RedirectUri); !ok {
-		response.ErrorForbidden(c, "Invalid redirect_uri.")
+		resp.ErrorForbidden(c, "Invalid redirect_uri.")
 		return
 	}
 
 	if in.ResponseType == internal.Oauth2ResponseTypeCode {
 		code, state, err := service.CreateAccessCode(in.ClientID, userId)
 		if err != nil {
-			response.ErrorSqlModify(c, "failed to create access code")
+			resp.ErrorSqlModify(c, "failed to create access code")
 			global.Log.Error("get access code err: " + err.Error())
 			return
 		}
@@ -121,7 +121,7 @@ func (o *oauth) getAuthCode(c *gin.Context) {
 		query.Add("code", code)
 		session.Set("state", state)
 		if err = session.Save(); err != nil {
-			response.ErrorSaveSession(c)
+			resp.ErrorSaveSession(c)
 			global.Log.Error("oauth save session err: ", zap.Error(err))
 			return
 		}
@@ -139,7 +139,7 @@ func (o *oauth) getAuthCode(c *gin.Context) {
 		return
 	}
 
-	response.ErrorRequestWithMsg(c, "Invalid response_type.")
+	resp.ErrorRequestWithMsg(c, "Invalid response_type.")
 }
 
 // @Summary	oauth2 token
@@ -158,21 +158,21 @@ func (o *oauth) getAuthCode(c *gin.Context) {
 func (o *oauth) getToken(c *gin.Context) {
 	var in request.Token
 	if err := internal.NewApi(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
-		response.ErrorRequest(c)
+		resp.ErrorRequest(c)
 		global.Log.Error("api err: ", zap.Error(err))
 		return
 	}
 
 	client, err := service.GetClientById(in.ClientID)
 	if err != nil {
-		response.ErrorRequestWithMsg(c, "no such client")
+		resp.ErrorRequestWithMsg(c, "no such client")
 		global.Log.Error("get client err: ", zap.Error(err))
 		return
 	}
 	in.Client = *client
 	handler, err := getTokenHandler(in.GrantType)
 	if err != nil {
-		response.ErrorRequestWithMsg(c, err.Error())
+		resp.ErrorRequestWithMsg(c, err.Error())
 		return
 	}
 
@@ -180,13 +180,13 @@ func (o *oauth) getToken(c *gin.Context) {
 	if err != nil {
 		switch err {
 		case service.ErrorCodeExpired:
-			response.ErrorForbidden(c, err.Error())
+			resp.ErrorForbidden(c, err.Error())
 		default:
-			response.ErrorUnknown(c, "failed to get token.")
+			resp.ErrorUnknown(c, "failed to get token.")
 		}
 		global.Log.Error("get token err: ", zap.Error(err))
 		return
 	}
 
-	response.SuccessWithData(c, token) // success!
+	resp.SuccessWithData(c, token) // success!
 }

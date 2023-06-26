@@ -21,9 +21,6 @@ func initSystem() error {
 	if err = internal.InitGorm(); err != nil {
 		return err
 	}
-	if err = global.MigrateDatabase(); err != nil {
-		return err
-	}
 
 	return nil
 }

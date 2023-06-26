@@ -2,7 +2,7 @@ package service
 
 import (
 	"QuickAuth/internal/global"
-	"QuickAuth/internal/model"
+	"QuickAuth/pkg/model"
 )
 
 func GetClientById(id string) (*model.Client, error) {

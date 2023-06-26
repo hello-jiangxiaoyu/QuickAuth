@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"QuickAuth/internal/endpoint/response"
+	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/internal/global"
-	"QuickAuth/internal/model"
+	"QuickAuth/pkg/model"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,7 +12,7 @@ func TenantHost() gin.HandlerFunc {
 		var tenant model.Tenant
 		if err := global.DB.Where("host = ?", c.Request.Host).
 			First(&tenant).Error; err != nil {
-			response.ErrorHost(c)
+			resp.ErrorHost(c)
 			return
 		}
 		c.Set("tenant", tenant)

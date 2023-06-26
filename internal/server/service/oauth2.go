@@ -3,8 +3,8 @@ package service
 import (
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/global"
-	"QuickAuth/internal/model"
-	"QuickAuth/internal/utils"
+	"QuickAuth/pkg/model"
+	"QuickAuth/pkg/utils/safe"
 	"errors"
 	"go.uber.org/zap"
 	"time"
@@ -76,8 +76,8 @@ func IsRedirectUriValid(clientId, uri string) bool {
 }
 
 func CreateAccessCode(clientId string, userId string) (string, string, error) {
-	code := utils.RandHex(31)
-	state := utils.RandHex(31)
+	code := safe.RandHex(31)
+	state := safe.RandHex(31)
 	accessCode := model.Code{
 		ClientID: clientId,
 		UserID:   userId,

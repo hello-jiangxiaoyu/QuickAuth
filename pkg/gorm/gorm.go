@@ -1,8 +1,7 @@
-package global
+package gorm
 
 import (
-	"QuickAuth/internal/conf"
-	"QuickAuth/internal/model"
+	"QuickAuth/pkg/model"
 	"errors"
 	"fmt"
 	"gorm.io/driver/mysql"
@@ -12,11 +11,17 @@ import (
 	"time"
 )
 
-func MigrateDatabase() error {
-	if !conf.IsFirstDeploy() {
-		return nil
-	}
+const (
+	DBPostgres  = "postgres"
+	DBTimeScale = "timescale"
+	DBMySQL     = "mysql"
+	DBSqlite    = "sqlite"
+)
 
+func MigrateDatabase(db *gorm.DB) error {
+	if db == nil {
+		return errors.New("db is nil, failed to migrate database")
+	}
 	migrateList := []any{
 		model.User{},
 		model.UserPool{},
@@ -25,11 +30,7 @@ func MigrateDatabase() error {
 		model.Tenant{},
 	}
 
-	if DB == nil {
-		return errors.New("global db is nil, failed to migrate database")
-	}
-
-	if err := DB.AutoMigrate(migrateList...); err != nil {
+	if err := db.AutoMigrate(migrateList...); err != nil {
 		fmt.Println("migrate db err: ", err)
 		return err
 	}
@@ -39,11 +40,11 @@ func MigrateDatabase() error {
 
 func NewGormDB(dbType string, dsn string) (*gorm.DB, error) {
 	switch dbType {
-	case conf.DBPostgres, conf.DBTimeScale:
+	case DBPostgres, DBTimeScale:
 		return getGormDB(postgres.Open(dsn))
-	case conf.DBMySQL:
+	case DBMySQL:
 		return getGormDB(mysql.Open(dsn))
-	case conf.DBSqlite:
+	case DBSqlite:
 		return getGormDB(sqlite.Open(dsn))
 	default:
 		return nil, errors.New("unsupported database type")

@@ -1,7 +1,7 @@
 package request
 
 import (
-	"QuickAuth/internal/model"
+	"QuickAuth/pkg/model"
 )
 
 type Login struct {

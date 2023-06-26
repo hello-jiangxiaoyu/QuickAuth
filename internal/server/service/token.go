@@ -1,8 +1,9 @@
 package service
 
 import (
-	"QuickAuth/internal/model"
-	"QuickAuth/internal/utils"
+	"QuickAuth/pkg/model"
+	"QuickAuth/pkg/utils"
+	"QuickAuth/pkg/utils/safe"
 	"crypto/rsa"
 	"crypto/x509"
 	"errors"
@@ -90,7 +91,7 @@ func CreateAccessToken(client model.Client, tenantId, host, userId, nonce, scope
 			ExpiresAt: jwt.NewNumericDate(expireTime),
 			NotBefore: jwt.NewNumericDate(nowTime),
 			IssuedAt:  jwt.NewNumericDate(nowTime),
-			ID:        client.Name + "-" + utils.Rand62(31),
+			ID:        client.Name + "-" + safe.Rand62(31),
 		},
 	}
 	token = jwt.NewWithClaims(jwt.SigningMethodRS256, claims)

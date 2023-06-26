@@ -3,7 +3,7 @@ package conf
 import "os"
 
 const (
-	DefaultSystemConfigName = "./deploy/system.yaml"
+	DefaultSystemConfigName = "deploy/dev.yaml"
 	DefaultDeployType       = "local"
 	DefaultIsFirstDeploy    = "false"
 )

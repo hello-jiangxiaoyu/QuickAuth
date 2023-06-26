@@ -1,8 +1,13 @@
-package global
+// Copyright 2023 jiang. All rights reserved.
+// Use of this source code is governed by a MIT style
+// license that can be found in the LICENSE file.
+
+package main
 
 import (
-	"QuickAuth/internal/conf"
-	"QuickAuth/internal/utils"
+	"QuickAuth/pkg/conf"
+	"QuickAuth/pkg/gorm"
+	"QuickAuth/pkg/utils"
 	"fmt"
 	_ "github.com/lib/pq"
 	"golang.org/x/text/cases"
@@ -10,10 +15,15 @@ import (
 	"gorm.io/gen"
 	"regexp"
 	"strings"
-	"testing"
 )
 
-func TestGenDao(t *testing.T) {
+const (
+	genDir   = "../pkg"
+	modelDir = genDir + "/model"
+	queryDir = genDir + "/query"
+)
+
+func main() {
 	g, err := getG("quick_auth")
 	if err != nil {
 		fmt.Println("failed to get generator", err)
@@ -26,17 +36,17 @@ func TestGenDao(t *testing.T) {
 	g.GenerateAllTable(opt...)
 	g.Execute()
 
-	_ = utils.AmendFile("../model", convertToCamelCase)
+	_ = utils.AmendFile(modelDir, convertToCamelCase)
 }
 
 func getG(dbName string) (*gen.Generator, error) {
-	db, err := NewGormDB(conf.DBPostgres, fmt.Sprintf("host=127.0.0.1 user=admin password=admin dbname=%s port=5432 %s", dbName, ""))
+	db, err := gorm.NewGormDB(conf.DBPostgres, fmt.Sprintf("host=127.0.0.1 user=admin password=admin dbname=%s port=5432 %s", dbName, ""))
 	if err != nil {
 		return nil, err
 	}
 
 	g := gen.NewGenerator(gen.Config{
-		OutPath:           "../query",                                    // 相对执行`go run`时的路径, 会自动创建目录
+		OutPath:           queryDir,                                      // 相对执行`go run`时的路径, 会自动创建目录
 		Mode:              gen.WithDefaultQuery | gen.WithQueryInterface, // 生成默认查询结构体(作为全局变量使用), 即`Q`结构体和其字段(各表模型)
 		FieldNullable:     true,                                          // generate pointer when field is nullable
 		FieldCoverable:    false,                                         // generate pointer when field has default value, to fix problem zero value cannot be assign: https://gorm.io/docs/create.html#Default-Values

@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"QuickAuth/internal/conf"
-	"QuickAuth/internal/endpoint/response"
+	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/internal/global"
+	"QuickAuth/pkg/conf"
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -53,7 +53,7 @@ func Recovery() gin.HandlerFunc {
 					_ = c.Error(err.(error))
 					c.Abort() // If the connection is dead, we can't write a status to it.
 				} else {
-					response.ErrorPanic(c)
+					resp.ErrorPanic(c)
 				}
 			}
 		}()

@@ -30,7 +30,7 @@ FROM alpine:latest
 RUN mkdir -p /app/web
 WORKDIR /app
 
-COPY ./deploy/system.yaml ./system.yaml
+COPY deploy/dev.yaml ./system.yaml
 
 COPY --from=build-web    /app/.next/static       ./web/_next/static
 COPY --from=build-web    /app/.next/server/pages ./web

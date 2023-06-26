@@ -2,8 +2,8 @@ package internal
 
 import (
 	_ "QuickAuth/docs"
+	"QuickAuth/internal/middleware"
 	"QuickAuth/internal/server/controller/oauth"
-	"QuickAuth/internal/server/middleware"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"

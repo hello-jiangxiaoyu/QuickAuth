@@ -1,8 +1,10 @@
 package internal
 
 import (
-	"QuickAuth/internal/model"
+	"QuickAuth/pkg/model"
 	"errors"
+	"fmt"
+	"github.com/gin-gonic/gin"
 )
 
 func (a *Api) SetTenant(t *model.Tenant) *Api {
@@ -24,4 +26,16 @@ func (a *Api) SetTenant(t *model.Tenant) *Api {
 
 	*t = tenant
 	return a
+}
+
+func GetHostWithScheme(c *gin.Context) string {
+	scheme := "http"
+	if c.Request.TLS != nil {
+		scheme = "https"
+	}
+	if s := c.Request.Header.Get("X-Forwarded-Proto"); s != "" {
+		scheme = s
+	}
+
+	return fmt.Sprintf("%s://%s", scheme, c.Request.Host)
 }

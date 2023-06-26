@@ -1,8 +1,10 @@
 package internal
 
 import (
-	"QuickAuth/internal/conf"
 	"QuickAuth/internal/global"
+	"QuickAuth/pkg/conf"
+	"QuickAuth/pkg/gorm"
+	"QuickAuth/pkg/log"
 	"errors"
 )
 
@@ -24,7 +26,7 @@ func InitGorm() error {
 		return errors.New("dsn is empty, failed to initialize gorm")
 	}
 
-	db, err := global.NewGormDB(global.Config.DB.DbType, dsn)
+	db, err := gorm.NewGormDB(global.Config.DB.DbType, dsn)
 	if err != nil {
 		return err
 	}
@@ -36,11 +38,11 @@ func InitLogger() error {
 	if global.Config == nil {
 		return errors.New("global.Config is nil, failed to initialize logger")
 	}
-	errorLog, err := global.NewZapErrorLogger(global.Config.Log.Dir, global.Config.Log.Level)
+	errorLog, err := log.NewZapErrorLogger(global.Config.Log.Dir, global.Config.Log.Level)
 	if err != nil {
 		return err
 	}
-	accessLog, err := global.NewZapAccessLogger(global.Config.Log.Dir)
+	accessLog, err := log.NewZapAccessLogger(global.Config.Log.Dir)
 	if err != nil {
 		return err
 	}

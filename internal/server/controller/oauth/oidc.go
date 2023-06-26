@@ -1,10 +1,10 @@
 package oauth
 
 import (
-	"QuickAuth/internal/endpoint/response"
+	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/internal/global"
+	"QuickAuth/internal/server/controller/internal"
 	"QuickAuth/internal/server/service"
-	"QuickAuth/internal/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -27,7 +27,7 @@ type OpenidConfigurationDto struct {
 
 func (o *oauth) getOIDC(c *gin.Context) {
 	tenantName := "default"
-	prefix := utils.GetHostWithScheme(c)
+	prefix := internal.GetHostWithScheme(c)
 	conf := OpenidConfigurationDto{
 		Issuer:                            fmt.Sprintf("%s/%s", prefix, tenantName),
 		AuthorizationEndpoint:             fmt.Sprintf("%s/%s/oauth2/auth", prefix, tenantName),
@@ -49,10 +49,10 @@ func (o *oauth) getJwks(c *gin.Context) {
 	tenantName := "default"
 	jwks, err := service.LoadRsaPublicKeys(tenantName)
 	if err != nil {
-		response.ErrorUnknown(c, "failed to get pub keys")
+		resp.ErrorUnknown(c, "failed to get pub keys")
 		global.Log.Error("get jwks err: " + err.Error())
 		return
 	}
 
-	response.SuccessWithData(c, jwks)
+	resp.SuccessWithData(c, jwks)
 }
