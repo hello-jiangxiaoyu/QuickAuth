@@ -22,22 +22,18 @@ type IdProvider interface {
 	GetUserInfo(token *oauth2.Token) (*UserInfo, error)
 }
 
-func GetIdProvider(typ string, subType string, clientId string, clientSecret string, redirectUrl string) IdProvider {
-	if typ == "GitHub" {
+func GetIdProvider(typ string, clientId string, clientSecret string, redirectUrl string) IdProvider {
+	if typ == "github" {
 		return NewGithubIdProvider(clientId, clientSecret, redirectUrl)
-	} else if typ == "QQ" {
+	} else if typ == "qq" {
 		return NewQqIdProvider(clientId, clientSecret, redirectUrl)
-	} else if typ == "WeChat" {
+	} else if typ == "wechat" {
 		return NewWeChatIdProvider(clientId, clientSecret, redirectUrl)
-	} else if typ == "DingTalk" {
+	} else if typ == "dingtalk" {
 		return NewDingTalkIdProvider(clientId, clientSecret, redirectUrl)
-	} else if typ == "WeCom" {
-		if subType == "Internal" {
-			return NewWeComInternalIdProvider(clientId, clientSecret, redirectUrl)
-		} else {
-			return nil
-		}
-	} else if typ == "Lark" {
+	} else if typ == "wecom" {
+		return NewWeComInternalIdProvider(clientId, clientSecret, redirectUrl)
+	} else if typ == "lark" {
 		return NewLarkIdProvider(clientId, clientSecret, redirectUrl)
 	}
 

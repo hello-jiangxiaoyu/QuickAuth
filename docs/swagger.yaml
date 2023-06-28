@@ -87,9 +87,45 @@ paths:
       responses:
         "200":
           description: OK
-        "302":
-          description: Found
       summary: login a user
+      tags:
+      - login
+  /api/quick/login/provider-info:
+    get:
+      description: get all login provider information list
+      responses:
+        "200":
+          description: OK
+      summary: provider info
+      tags:
+      - login
+  /api/quick/login/provider/{provider}:
+    get:
+      description: login third provider callback
+      parameters:
+      - description: provider name
+        in: path
+        name: provider
+        required: true
+        type: string
+      - description: code
+        in: query
+        name: code
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: provider callback
+      tags:
+      - login
+  /api/quick/logout:
+    get:
+      description: logout current user
+      responses:
+        "200":
+          description: OK
+      summary: logout current user
       tags:
       - login
   /api/quick/oauth2/auth:

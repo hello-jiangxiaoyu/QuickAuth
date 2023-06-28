@@ -1,7 +1,7 @@
 package service
 
 import (
-	"QuickAuth/pkg/models"
+	"QuickAuth/pkg/model"
 	"QuickAuth/pkg/tools/safe"
 	"QuickAuth/pkg/tools/utils"
 	"crypto/rsa"
@@ -16,7 +16,7 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
-func (s *Service) CreateAccessToken(client models.Client, tenantId, host, userId, nonce, scope string) (string, error) {
+func (s *Service) CreateAccessToken(client model.Client, tenantId, host, userId, nonce, scope string) (string, error) {
 	var token *jwt.Token
 	nowTime := time.Now()
 	expireTime := nowTime.Add(time.Duration(client.TokenExpire) * time.Hour)

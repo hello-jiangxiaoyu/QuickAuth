@@ -2,13 +2,20 @@ package main
 
 import (
 	"QuickAuth/internal/global"
-	"QuickAuth/pkg/tools/orm"
+	"QuickAuth/pkg/model"
 	"fmt"
 )
 
 func main() {
-	if err := orm.MigrateDatabase(global.DB); err != nil {
-		fmt.Println("Failed to migrate database: ", err)
+	migrateList := []any{
+		model.User{},
+		model.UserPool{},
+		model.Client{},
+		model.ClientSecret{},
+		model.Tenant{},
+	}
+
+	if err := global.DB.AutoMigrate(migrateList...); err != nil {
 		return
 	}
 

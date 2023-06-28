@@ -3,7 +3,7 @@ package service
 import (
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/global"
-	"QuickAuth/pkg/models"
+	"QuickAuth/pkg/model"
 	"QuickAuth/pkg/tools/safe"
 	"errors"
 	"go.uber.org/zap"
@@ -14,8 +14,8 @@ var (
 	ErrorCodeExpired = errors.New("code expired")
 )
 
-func (s *Service) GetUser(req *request.Login) (*models.User, error) {
-	var user models.User
+func (s *Service) GetUser(req *request.Login) (*model.User, error) {
+	var user model.User
 	if err := global.DB.Where("user_pool_id = ? AND username = ?", req.Tenant.UserPoolID, req.UserName).
 		First(&user).Error; err != nil {
 		return nil, err
@@ -24,7 +24,7 @@ func (s *Service) GetUser(req *request.Login) (*models.User, error) {
 }
 
 func (s *Service) IsClientValid(clientId string) (bool, error) {
-	var client models.Client
+	var client model.Client
 	if err := global.DB.Select("id").Where("id = ?", clientId).Limit(1).Find(&client).Error; err != nil {
 		return false, err
 	}
@@ -33,7 +33,7 @@ func (s *Service) IsClientValid(clientId string) (bool, error) {
 }
 
 func (s *Service) IsClientSecretValid(clientId, clientSecret string) (bool, error) {
-	var secret models.ClientSecret
+	var secret model.ClientSecret
 	if err := global.DB.Select("secret").
 		Where("client_id = ? AND secret = ?", clientId, clientSecret).
 		Limit(1).Find(&secret).Error; err != nil {
@@ -43,14 +43,14 @@ func (s *Service) IsClientSecretValid(clientId, clientSecret string) (bool, erro
 	return secret.Secret == clientSecret, nil
 }
 
-func (s *Service) GetAccessCode(clientId string, codeName string) (*models.Code, error) {
-	var code models.Code
+func (s *Service) GetAccessCode(clientId string, codeName string) (*model.Code, error) {
+	var code model.Code
 	if err := global.DB.Where("client_id = ? AND code = ?", clientId, codeName).
 		First(&code).Error; err != nil {
 		return nil, err
 	}
 
-	if err := global.DB.Where("id = ?", code.ID).Delete(models.Code{}).Error; err != nil {
+	if err := global.DB.Where("id = ?", code.ID).Delete(model.Code{}).Error; err != nil {
 		global.Log.Error("clear code err: ", zap.Error(err))
 	}
 
@@ -62,7 +62,7 @@ func (s *Service) GetAccessCode(clientId string, codeName string) (*models.Code,
 }
 
 func (s *Service) IsRedirectUriValid(clientId, uri string) (bool, error) {
-	var redirectUri models.RedirectURI
+	var redirectUri model.RedirectURI
 	if err := global.DB.Select("uri").Where("client_id = ? AND uri = ?", clientId, uri).
 		Limit(1).Find(&uri).Error; err != nil {
 		return false, err
@@ -74,7 +74,7 @@ func (s *Service) IsRedirectUriValid(clientId, uri string) (bool, error) {
 func (s *Service) CreateAccessCode(clientId string, userId string) (string, string, error) {
 	code := safe.RandHex(31)
 	state := safe.RandHex(31)
-	accessCode := models.Code{
+	accessCode := model.Code{
 		ClientID: clientId,
 		UserID:   userId,
 		Code:     code,

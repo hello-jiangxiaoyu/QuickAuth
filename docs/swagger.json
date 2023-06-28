@@ -73,9 +73,64 @@
                 "responses": {
                     "200": {
                         "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/login/provider-info": {
+            "get": {
+                "description": "get all login provider information list",
+                "tags": [
+                    "login"
+                ],
+                "summary": "provider info",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/login/provider/{provider}": {
+            "get": {
+                "description": "login third provider callback",
+                "tags": [
+                    "login"
+                ],
+                "summary": "provider callback",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "provider name",
+                        "name": "provider",
+                        "in": "path",
+                        "required": true
                     },
-                    "302": {
-                        "description": "Found"
+                    {
+                        "type": "string",
+                        "description": "code",
+                        "name": "code",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/logout": {
+            "get": {
+                "description": "logout current user",
+                "tags": [
+                    "login"
+                ],
+                "summary": "logout current user",
+                "responses": {
+                    "200": {
+                        "description": "OK"
                     }
                 }
             }

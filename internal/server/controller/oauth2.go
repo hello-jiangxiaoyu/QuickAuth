@@ -5,7 +5,6 @@ import (
 	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/internal/server/controller/internal"
 	"QuickAuth/internal/server/service"
-	"QuickAuth/pkg/tools/safe"
 	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -21,53 +20,6 @@ type Controller struct {
 
 func NewOAuth2Api(svc *service.Service) Controller {
 	return Controller{svc: svc}
-}
-
-// @Summary	login a user
-// @Schemes
-// @Description	login using username and password
-// @Tags		login
-// @Param		username	formData	string	true	"username"
-// @Param		password	formData	string	true	"password"
-// @Param		next		query		string	false	"next"
-// @Success		302
-// @Success		200
-// @Router		/api/quick/login [post]
-func (o Controller) login(c *gin.Context) {
-	var in request.Login
-	session := sessions.Default(c)
-	su := session.Get("user")
-	if su != nil {
-		resp.DoNothing(c, "user is already logged in, nothing to do")
-		return
-	}
-	if err := o.SetCtx(c).BindQuery(&in).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "init login req err")
-		return
-	}
-
-	user, err := o.svc.GetUser(&in)
-	if err != nil {
-		resp.ErrorNotFound(c, err, "no such user")
-		return
-	}
-	if !safe.CheckPasswordHash(in.Password, *user.Password) {
-		resp.ErrorForbidden(c, "user name or password is incorrect")
-		return
-	}
-
-	session.Set("tenant", in.Tenant.Name)
-	session.Set("user", user.Username)
-	session.Set("userId", user.ID)
-	if err = session.Save(); err != nil {
-		resp.ErrorSaveSession(c, errors.Wrap(err, "login err"))
-		return
-	}
-	if next := c.Query("next"); next != "" {
-		c.Redirect(http.StatusFound, next)
-		return
-	}
-	c.Status(http.StatusOK)
 }
 
 // @Summary	oauth2 authorize

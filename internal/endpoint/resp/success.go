@@ -21,11 +21,11 @@ type Response struct {
 type ArrayResponse struct {
 	Code  uint   `json:"code"`
 	Msg   string `json:"msg"`
-	Total uint   `json:"total"`
+	Total int    `json:"total"`
 	Data  any    `json:"data"`
 }
 
-func success(ctx context.Context, data any, total uint, isArray bool) {
+func success(ctx context.Context, data any, total int, isArray bool) {
 	c, ok := ctx.(*gin.Context)
 	if !ok {
 		return
@@ -45,7 +45,7 @@ func Success(ctx context.Context) {
 func SuccessWithData(ctx context.Context, data any) {
 	success(ctx, data, 0, false)
 }
-func SuccessArray(ctx context.Context, total uint, data []any) {
+func SuccessArray(ctx context.Context, total int, data any) {
 	success(ctx, data, total, true)
 }
 

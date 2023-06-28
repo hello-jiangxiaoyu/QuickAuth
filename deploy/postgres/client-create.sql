@@ -40,18 +40,6 @@ CREATE TABLE IF NOT EXISTS tenants (
 CREATE UNIQUE INDEX idx_tenants_host ON tenants(host);
 CREATE INDEX idx_tenants_client_user_pool_id ON tenants(client_id, user_pool_id);
 
-CREATE TABLE IF NOT EXISTS codes (
-    id           SERIAL PRIMARY KEY,
-    user_id      uuid NOT NULL,
-    client_id    uuid NOT NULL,
-    code         CHARACTER(31) NOT NULL,
-    scope        VARCHAR(255) NOT NULL,
-    state        CHARACTER(31) NOT NULL,
-    create_time  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    update_time  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
-);
-CREATE UNIQUE INDEX idx_codes_tenant_user_id ON codes(client_id, code);
-
 
 
 CREATE TABLE IF NOT EXISTS clients (

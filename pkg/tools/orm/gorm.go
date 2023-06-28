@@ -1,7 +1,6 @@
 package orm
 
 import (
-	"QuickAuth/pkg/models"
 	"errors"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
@@ -16,25 +15,6 @@ const (
 	DBMySQL     = "mysql"
 	DBSqlite    = "sqlite"
 )
-
-func MigrateDatabase(db *gorm.DB) error {
-	if db == nil {
-		return errors.New("db is nil, failed to migrate database")
-	}
-	migrateList := []any{
-		models.User{},
-		models.UserPool{},
-		models.Client{},
-		models.ClientSecret{},
-		models.Tenant{},
-	}
-
-	if err := db.AutoMigrate(migrateList...); err != nil {
-		return err
-	}
-
-	return nil
-}
 
 func NewGormDB(dbType string, dsn string) (*gorm.DB, error) {
 	switch dbType {
