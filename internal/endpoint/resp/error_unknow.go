@@ -2,7 +2,7 @@ package resp
 
 import (
 	"QuickAuth/internal/global"
-	"github.com/gin-gonic/gin"
+	"context"
 	"go.uber.org/zap"
 	"net/http"
 )
@@ -17,30 +17,30 @@ const (
 )
 
 // ErrorUnknown 未知错误
-func ErrorUnknown(c *gin.Context, err error, respMsg string, isArray ...bool) {
-	errorResponse(c, http.StatusInternalServerError, CodeUnknown, respMsg, isArray)
+func ErrorUnknown(ctx context.Context, err error, respMsg string, isArray ...bool) {
+	errorResponse(ctx, http.StatusInternalServerError, CodeUnknown, respMsg, isArray)
 	global.Log.Error(respMsg, zap.Error(err))
 }
 
 // ErrorSqlModify SQL修改失败
-func ErrorSqlModify(c *gin.Context, err error, respMsg string, isArray ...bool) {
-	errorResponse(c, http.StatusInternalServerError, CodeSqlModify, respMsg, isArray)
+func ErrorSqlModify(ctx context.Context, err error, respMsg string, isArray ...bool) {
+	errorResponse(ctx, http.StatusInternalServerError, CodeSqlModify, respMsg, isArray)
 	global.Log.Error(respMsg, zap.Error(err))
 }
 
 // ErrorSelect 数据库查询错误
-func ErrorSelect(c *gin.Context, err error, respMsg string, isArray ...bool) {
-	errorResponse(c, http.StatusInternalServerError, CodeSqlSelect, respMsg, isArray)
+func ErrorSelect(ctx context.Context, err error, respMsg string, isArray ...bool) {
+	errorResponse(ctx, http.StatusInternalServerError, CodeSqlSelect, respMsg, isArray)
 	global.Log.Error(respMsg, zap.Error(err))
 }
 
 // ErrorNotFound 资源未找到
-func ErrorNotFound(c *gin.Context, err error, respMsg string, isArray ...bool) {
-	errorResponse(c, http.StatusInternalServerError, CodeNotFound, respMsg, isArray)
+func ErrorNotFound(ctx context.Context, err error, respMsg string, isArray ...bool) {
+	errorResponse(ctx, http.StatusInternalServerError, CodeNotFound, respMsg, isArray)
 	global.Log.Error(respMsg, zap.Error(err))
 }
 
-func ErrorSaveSession(c *gin.Context, err error, isArray ...bool) {
-	errorResponse(c, http.StatusInternalServerError, CodeSaveSession, "failed to save session", isArray)
+func ErrorSaveSession(ctx context.Context, err error, isArray ...bool) {
+	errorResponse(ctx, http.StatusInternalServerError, CodeSaveSession, "failed to save session", isArray)
 	global.Log.Error("failed to save session: ", zap.Error(err))
 }

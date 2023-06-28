@@ -2,6 +2,7 @@ package resp
 
 import (
 	"QuickAuth/internal/global"
+	"context"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"net/http"
@@ -14,33 +15,38 @@ const (
 	CodeNoSuchHost  = 1003
 )
 
-func errorResponse(c *gin.Context, code int, errCode uint, msg string, isArray []bool) {
+func errorResponse(ctx context.Context, code int, errCode uint, msg string, isArray []bool) {
+	c, ok := ctx.(*gin.Context)
+	if !ok {
+		return
+	}
+
 	if len(isArray) == 0 {
 		c.JSON(code, &Response{Code: errCode, Msg: msg, Data: struct{}{}})
 	} else {
-		c.JSON(code, &ArrayResponse{Code: errCode, Msg: msg, Total: 0, Data: []any{}})
+		c.JSON(code, &ArrayResponse{Code: errCode, Msg: msg, Total: 0, Data: []struct{}{}})
 	}
 	c.Abort()
 }
 
 // ErrorRequest 请求参数错误
-func ErrorRequest(c *gin.Context, err error, msg string, isArray ...bool) {
-	errorResponse(c, http.StatusBadRequest, CodeRequestPara, msg, isArray)
+func ErrorRequest(ctx context.Context, err error, msg string, isArray ...bool) {
+	errorResponse(ctx, http.StatusBadRequest, CodeRequestPara, msg, isArray)
 	global.Log.Error(msg, zap.Error(err))
 }
 
 // ErrorRequestWithMsg 请求参数错误
-func ErrorRequestWithMsg(c *gin.Context, err error, msg string, isArray ...bool) {
-	errorResponse(c, http.StatusBadRequest, CodeRequestPara, msg, isArray)
+func ErrorRequestWithMsg(ctx context.Context, err error, msg string, isArray ...bool) {
+	errorResponse(ctx, http.StatusBadRequest, CodeRequestPara, msg, isArray)
 	global.Log.Error(msg, zap.Error(err))
 }
 
 // ErrorForbidden 无权访问
-func ErrorForbidden(c *gin.Context, msg string, isArray ...bool) {
-	errorResponse(c, http.StatusForbidden, CodeForbidden, msg, isArray)
+func ErrorForbidden(ctx context.Context, msg string, isArray ...bool) {
+	errorResponse(ctx, http.StatusForbidden, CodeForbidden, msg, isArray)
 }
 
 // ErrorNoLogin 用户未登录
-func ErrorNoLogin(c *gin.Context, isArray ...bool) {
-	errorResponse(c, http.StatusUnauthorized, CodeNoLogin, "user not login", isArray)
+func ErrorNoLogin(ctx context.Context, isArray ...bool) {
+	errorResponse(ctx, http.StatusUnauthorized, CodeNoLogin, "user not login", isArray)
 }

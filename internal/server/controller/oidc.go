@@ -1,9 +1,8 @@
-package oauth
+package controller
 
 import (
 	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/internal/server/controller/internal"
-	"QuickAuth/internal/server/service"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -24,7 +23,13 @@ type OpenidConfigurationDto struct {
 	RequestUriParameterSupported      bool     `json:"request_uri_parameter_supported"`
 }
 
-func (o *oauth) getOIDC(c *gin.Context) {
+// @Summary	get OIDC
+// @Schemes
+// @Description	get open id configuration
+// @Tags		oidc
+// @Success		200		{object}	OpenidConfigurationDto
+// @Router		/api/quick/.well-known/openid-configuration [get]
+func (o Controller) getOIDC(c *gin.Context) {
 	tenantName := "default"
 	prefix := internal.GetHostWithScheme(c)
 	conf := OpenidConfigurationDto{
@@ -44,9 +49,15 @@ func (o *oauth) getOIDC(c *gin.Context) {
 	c.JSON(http.StatusOK, conf)
 }
 
-func (o *oauth) getJwks(c *gin.Context) {
+// @Summary	get jwks
+// @Schemes
+// @Description	get jwks
+// @Tags		oidc
+// @Success		200
+// @Router		/api/quick/.well-known/jwks.json [get]
+func (o Controller) getJwks(c *gin.Context) {
 	tenantName := "default"
-	jwks, err := service.LoadRsaPublicKeys(tenantName)
+	jwks, err := o.svc.LoadRsaPublicKeys(tenantName)
 	if err != nil {
 		resp.ErrorUnknown(c, err, "failed to get pub keys")
 		return

@@ -9,8 +9,8 @@ type Api struct {
 	Error error
 }
 
-func NewApi(c *gin.Context) *Api {
-	a := &Api{c: c}
+func (a *Api) SetCtx(c *gin.Context) *Api {
+	a.c = c
 	return a
 }
 

@@ -19,7 +19,7 @@ import (
 
 const (
 	genDir   = "../pkg"
-	modelDir = genDir + "/model"
+	modelDir = genDir + "/models"
 	queryDir = genDir + "/query"
 )
 

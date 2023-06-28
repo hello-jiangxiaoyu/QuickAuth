@@ -1,16 +1,14 @@
 package resp
 
 import (
-	"github.com/gin-gonic/gin"
+	"context"
 	"net/http"
 )
 
-func ErrorPanic(c *gin.Context) {
-	c.JSON(http.StatusInternalServerError, &Response{Code: ServerPanic, Msg: "server panic", Data: struct{}{}})
-	c.Abort()
+func ErrorPanic(ctx context.Context) {
+	errorResponse(ctx, http.StatusInternalServerError, ServerPanic, "server panic", nil)
 }
 
-func ErrorHost(c *gin.Context) {
-	c.JSON(http.StatusForbidden, &Response{Code: CodeNoSuchHost, Msg: "no such host", Data: struct{}{}})
-	c.Abort()
+func ErrorHost(ctx context.Context) {
+	errorResponse(ctx, http.StatusForbidden, CodeNoSuchHost, "no such host", nil)
 }

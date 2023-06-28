@@ -1,13 +1,13 @@
 package internal
 
 import (
-	"QuickAuth/pkg/model"
+	"QuickAuth/pkg/models"
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
-func (a *Api) SetTenant(t *model.Tenant) *Api {
+func (a *Api) SetTenant(t *models.Tenant) *Api {
 	if a.c == nil {
 		a.setError(errors.New("gin context should not be nil"))
 		return a
@@ -18,7 +18,7 @@ func (a *Api) SetTenant(t *model.Tenant) *Api {
 		return a
 	}
 
-	tenant, ok := value.(model.Tenant)
+	tenant, ok := value.(models.Tenant)
 	if !ok {
 		a.setError(errors.New("failed to convert gin tenant"))
 		return a

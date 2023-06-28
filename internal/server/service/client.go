@@ -2,11 +2,11 @@ package service
 
 import (
 	"QuickAuth/internal/global"
-	"QuickAuth/pkg/model"
+	"QuickAuth/pkg/models"
 )
 
-func GetClientById(id string) (*model.Client, error) {
-	var client model.Client
+func (s *Service) GetClientById(id string) (*models.Client, error) {
+	var client models.Client
 	if err := global.DB.Where("id = ?", id).First(&client).Error; err != nil {
 		return nil, err
 	}

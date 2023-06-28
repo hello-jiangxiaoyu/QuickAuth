@@ -1,3 +1,43 @@
+definitions:
+  controller.OpenidConfigurationDto:
+    properties:
+      authorization_endpoint:
+        type: string
+      claims_supported:
+        items:
+          type: string
+        type: array
+      id_token_signing_alg_values_supported:
+        items:
+          type: string
+        type: array
+      issuer:
+        type: string
+      jwks_uri:
+        type: string
+      request_uri_parameter_supported:
+        type: boolean
+      response_types_supported:
+        items:
+          type: string
+        type: array
+      scopes_supported:
+        items:
+          type: string
+        type: array
+      subject_types_supported:
+        items:
+          type: string
+        type: array
+      token_endpoint:
+        type: string
+      token_endpoint_auth_methods_supported:
+        items:
+          type: string
+        type: array
+      userinfo_endpoint:
+        type: string
+    type: object
 info:
   contact: {}
   license:
@@ -6,7 +46,27 @@ info:
   title: swagger 接口文档
   version: "1.0"
 paths:
-  /v1/login:
+  /api/quick/.well-known/jwks.json:
+    get:
+      description: get jwks
+      responses:
+        "200":
+          description: OK
+      summary: get jwks
+      tags:
+      - oidc
+  /api/quick/.well-known/openid-configuration:
+    get:
+      description: get open id configuration
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.OpenidConfigurationDto'
+      summary: get OIDC
+      tags:
+      - oidc
+  /api/quick/login:
     post:
       description: login using username and password
       parameters:
@@ -32,7 +92,7 @@ paths:
       summary: login a user
       tags:
       - login
-  /v1/oauth2/auth:
+  /api/quick/oauth2/auth:
     get:
       description: oauth2 authorize
       parameters:
@@ -73,7 +133,7 @@ paths:
       tags:
       - oauth2
   /v1/oauth2/token:
-    get:
+    post:
       description: oauth2 token
       parameters:
       - description: client_id

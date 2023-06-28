@@ -15,15 +15,15 @@ var (
 
 type Repository struct {
 	// rdb    *redis.Client
-	db     *gorm.DB
-	logger *zap.Logger
-	config *conf.SystemConfig
+	DB     *gorm.DB
+	Logger *zap.Logger
+	Config *conf.SystemConfig
 }
 
 func NewRepository(db *gorm.DB, logger *zap.Logger, config *conf.SystemConfig) *Repository {
 	return &Repository{
-		db:     db,
-		logger: logger,
-		config: config,
+		DB:     db,
+		Logger: logger,
+		Config: config,
 	}
 }

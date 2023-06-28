@@ -12,5 +12,7 @@ func TestDebug(t *testing.T) {
 }
 
 func TestError(t *testing.T) {
-	fmt.Println(errors.Wrap(errors.Wrap(errors.New("first err"), "second err"), "third err"))
+	err := errors.Wrap(errors.Wrap(errors.New("first err"), "second err"), "third err")
+	fmt.Println(err)
+	fmt.Println(errors.Unwrap(err))
 }

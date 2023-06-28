@@ -1,13 +1,10 @@
 package service
 
 import (
-	"QuickAuth/pkg/model"
+	"QuickAuth/pkg/models"
 	"QuickAuth/pkg/utils"
 	"QuickAuth/pkg/utils/safe"
 	"crypto/rsa"
-	"crypto/x509"
-	"errors"
-	"github.com/go-jose/go-jose/v3"
 	"github.com/golang-jwt/jwt/v5"
 	"time"
 )
@@ -19,67 +16,10 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
-func LoadRsaPublicKeys(tenant string) (*jose.JSONWebKeySet, error) {
-	if tenant == "" {
-		return nil, errors.New("tenant name should not be null")
-	}
-	var err error
-	res := map[string][]byte{}
-	if res, err = safe.GetJWKs(tenant); err != nil || len(res) == 0 {
-		if res, err = safe.GenerateKey(tenant); err != nil {
-			return nil, err
-		}
-	}
-
-	var jwkSet jose.JSONWebKeySet
-	var key *rsa.PrivateKey
-	for k, v := range res {
-		key, err = jwt.ParseRSAPrivateKeyFromPEM(v)
-		if err != nil {
-			return nil, err
-		}
-
-		jwk := jose.JSONWebKey{
-			Key:                       key.Public(),
-			KeyID:                     k,
-			Algorithm:                 "RS256",
-			Use:                       "sig",
-			Certificates:              []*x509.Certificate{},
-			CertificateThumbprintSHA1: []uint8{},
-		}
-		jwkSet.Keys = append(jwkSet.Keys, jwk)
-	}
-
-	return &jwkSet, nil
-}
-
-func LoadRsaPrivateKeys(tenantId string) (map[string]*rsa.PrivateKey, error) {
-	res, err := safe.GetJWKs(tenantId)
-	if err != nil {
-		return nil, err
-	}
-
-	if len(res) == 0 {
-		return nil, errors.New("jwk is nil")
-	}
-
-	keys := make(map[string]*rsa.PrivateKey)
-	for k, v := range res {
-		key, err := jwt.ParseRSAPrivateKeyFromPEM(v)
-		if err != nil {
-			return nil, err
-		}
-		keys[k] = key
-	}
-
-	return keys, nil
-}
-
-func CreateAccessToken(client model.Client, tenantId, host, userId, nonce, scope string) (string, error) {
+func (s *Service) CreateAccessToken(client models.Client, tenantId, host, userId, nonce, scope string) (string, error) {
 	var token *jwt.Token
 	nowTime := time.Now()
 	expireTime := nowTime.Add(time.Duration(client.TokenExpire) * time.Hour)
-	//refreshExpireTime := nowTime.Add(time.Duration(client.RefreshExpire) * time.Hour)
 	claims := Claims{
 		TokenType: "access-token",
 		Nonce:     nonce,
@@ -95,7 +35,7 @@ func CreateAccessToken(client model.Client, tenantId, host, userId, nonce, scope
 		},
 	}
 	token = jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
-	keys, err := LoadRsaPrivateKeys(tenantId)
+	keys, err := s.LoadRsaPrivateKeys(tenantId)
 	if err != nil {
 		return "", err
 	}

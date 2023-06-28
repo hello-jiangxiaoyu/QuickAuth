@@ -1,4 +1,4 @@
-package oauth
+package controller
 
 import (
 	"QuickAuth/internal/endpoint/request"
@@ -14,18 +14,14 @@ import (
 	"net/url"
 )
 
-func NewOauth2Router(e *gin.Engine) {
-	var o oauth
-	r := e.Group("/quick/v1")
-	{
-		r.GET("/.well-known/openid-configuration", o.getOIDC)
-		r.GET("/.well-known/jwks.json", o.getJwks)
-		r.POST("/login", o.login)
-	}
-	e.GET("/v1/health", func(c *gin.Context) { c.String(http.StatusOK, "ok") })
+type Controller struct {
+	internal.Api
+	svc *service.Service
 }
 
-type oauth struct{}
+func NewOAuth2Api(svc *service.Service) Controller {
+	return Controller{svc: svc}
+}
 
 // @Summary	login a user
 // @Schemes
@@ -36,8 +32,8 @@ type oauth struct{}
 // @Param		next		query		string	false	"next"
 // @Success		302
 // @Success		200
-// @Router		/v1/login [post]
-func (o *oauth) login(c *gin.Context) {
+// @Router		/api/quick/login [post]
+func (o Controller) login(c *gin.Context) {
 	var in request.Login
 	session := sessions.Default(c)
 	su := session.Get("user")
@@ -45,12 +41,12 @@ func (o *oauth) login(c *gin.Context) {
 		resp.DoNothing(c, "user is already logged in, nothing to do")
 		return
 	}
-	if err := internal.NewApi(c).BindQuery(&in).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := o.SetCtx(c).BindQuery(&in).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err, "init login req err")
 		return
 	}
 
-	user, err := service.GetUser(&in)
+	user, err := o.svc.GetUser(&in)
 	if err != nil {
 		resp.ErrorNotFound(c, err, "no such user")
 		return
@@ -86,10 +82,10 @@ func (o *oauth) login(c *gin.Context) {
 // @Param		nonce			query	string	false	"nonce"
 // @Success		302
 // @Success		200
-// @Router		/v1/oauth2/auth [get]
-func (o *oauth) getAuthCode(c *gin.Context) {
+// @Router		/api/quick/oauth2/auth [get]
+func (o Controller) getAuthCode(c *gin.Context) {
 	var in request.Auth
-	if err := internal.NewApi(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := o.SetCtx(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err, "init auth para err")
 		return
 	}
@@ -100,7 +96,7 @@ func (o *oauth) getAuthCode(c *gin.Context) {
 		resp.ErrorForbidden(c, "invalid user_id")
 		return
 	}
-	if ok, err := service.IsRedirectUriValid(in.ClientID, in.RedirectUri); err != nil {
+	if ok, err := o.svc.IsRedirectUriValid(in.ClientID, in.RedirectUri); err != nil {
 		resp.ErrorSelect(c, err, "get redirect uri err.")
 		return
 	} else if !ok {
@@ -109,7 +105,7 @@ func (o *oauth) getAuthCode(c *gin.Context) {
 	}
 
 	if in.ResponseType == internal.Oauth2ResponseTypeCode {
-		code, state, err := service.CreateAccessCode(in.ClientID, userId)
+		code, state, err := o.svc.CreateAccessCode(in.ClientID, userId)
 		if err != nil {
 			resp.ErrorSqlModify(c, err, "failed to create access code.")
 			return
@@ -150,21 +146,21 @@ func (o *oauth) getAuthCode(c *gin.Context) {
 // @Param		state			query		string	false	"state"
 // @Param		nonce			query		string	false	"nonce"
 // @Success		200
-// @Router		/v1/oauth2/token [get]
-func (o *oauth) getToken(c *gin.Context) {
+// @Router		/v1/oauth2/token [post]
+func (o Controller) getToken(c *gin.Context) {
 	var in request.Token
-	if err := internal.NewApi(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := o.SetCtx(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err, "init token req para err")
 		return
 	}
 
-	client, err := service.GetClientById(in.ClientID)
+	client, err := o.svc.GetClientById(in.ClientID)
 	if err != nil {
 		resp.ErrorRequestWithMsg(c, err, "no such client")
 		return
 	}
 	in.Client = *client
-	handler, err := getTokenHandler(in.GrantType)
+	handler, err := o.getTokenHandler(in.GrantType)
 	if err != nil {
 		resp.ErrorRequestWithMsg(c, err, err.Error())
 		return

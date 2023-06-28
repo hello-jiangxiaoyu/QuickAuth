@@ -20,7 +20,38 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/v1/login": {
+        "/api/quick/.well-known/jwks.json": {
+            "get": {
+                "description": "get jwks",
+                "tags": [
+                    "oidc"
+                ],
+                "summary": "get jwks",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/.well-known/openid-configuration": {
+            "get": {
+                "description": "get open id configuration",
+                "tags": [
+                    "oidc"
+                ],
+                "summary": "get OIDC",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.OpenidConfigurationDto"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/quick/login": {
             "post": {
                 "description": "login using username and password",
                 "tags": [
@@ -59,7 +90,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/oauth2/auth": {
+        "/api/quick/oauth2/auth": {
             "get": {
                 "description": "oauth2 authorize",
                 "tags": [
@@ -119,7 +150,7 @@ const docTemplate = `{
             }
         },
         "/v1/oauth2/token": {
-            "get": {
+            "post": {
                 "description": "oauth2 token",
                 "tags": [
                     "oauth2"
@@ -175,6 +206,67 @@ const docTemplate = `{
                     "200": {
                         "description": "OK"
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "controller.OpenidConfigurationDto": {
+            "type": "object",
+            "properties": {
+                "authorization_endpoint": {
+                    "type": "string"
+                },
+                "claims_supported": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "id_token_signing_alg_values_supported": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "issuer": {
+                    "type": "string"
+                },
+                "jwks_uri": {
+                    "type": "string"
+                },
+                "request_uri_parameter_supported": {
+                    "type": "boolean"
+                },
+                "response_types_supported": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "scopes_supported": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "subject_types_supported": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "token_endpoint": {
+                    "type": "string"
+                },
+                "token_endpoint_auth_methods_supported": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "userinfo_endpoint": {
+                    "type": "string"
                 }
             }
         }
