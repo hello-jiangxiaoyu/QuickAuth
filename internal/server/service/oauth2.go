@@ -4,7 +4,7 @@ import (
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/global"
 	"QuickAuth/pkg/models"
-	"QuickAuth/pkg/utils/safe"
+	"QuickAuth/pkg/tools/safe"
 	"errors"
 	"go.uber.org/zap"
 	"time"

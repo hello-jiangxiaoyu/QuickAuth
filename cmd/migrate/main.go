@@ -2,12 +2,12 @@ package main
 
 import (
 	"QuickAuth/internal/global"
-	"QuickAuth/pkg/gorm"
+	"QuickAuth/pkg/tools/orm"
 	"fmt"
 )
 
 func main() {
-	if err := gorm.MigrateDatabase(global.DB); err != nil {
+	if err := orm.MigrateDatabase(global.DB); err != nil {
 		fmt.Println("Failed to migrate database: ", err)
 		return
 	}

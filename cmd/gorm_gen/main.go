@@ -6,8 +6,8 @@ package main
 
 import (
 	"QuickAuth/pkg/conf"
-	"QuickAuth/pkg/gorm"
-	"QuickAuth/pkg/utils"
+	"QuickAuth/pkg/tools/orm"
+	"QuickAuth/pkg/tools/utils"
 	"fmt"
 	_ "github.com/lib/pq"
 	"golang.org/x/text/cases"
@@ -40,7 +40,7 @@ func main() {
 }
 
 func getG(dbName string) (*gen.Generator, error) {
-	db, err := gorm.NewGormDB(conf.DBPostgres, fmt.Sprintf("host=127.0.0.1 user=admin password=admin dbname=%s port=5432 %s", dbName, ""))
+	db, err := orm.NewGormDB(conf.DBPostgres, fmt.Sprintf("host=127.0.0.1 user=admin password=admin dbname=%s port=5432 %s", dbName, ""))
 	if err != nil {
 		return nil, err
 	}

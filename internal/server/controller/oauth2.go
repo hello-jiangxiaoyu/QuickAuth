@@ -5,7 +5,7 @@ import (
 	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/internal/server/controller/internal"
 	"QuickAuth/internal/server/service"
-	"QuickAuth/pkg/utils/safe"
+	"QuickAuth/pkg/tools/safe"
 	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"

@@ -3,8 +3,8 @@ package internal
 import (
 	"QuickAuth/internal/global"
 	"QuickAuth/pkg/conf"
-	"QuickAuth/pkg/gorm"
-	"QuickAuth/pkg/log"
+	"QuickAuth/pkg/tools/log"
+	"QuickAuth/pkg/tools/orm"
 	"errors"
 )
 
@@ -26,7 +26,7 @@ func InitGorm() error {
 		return errors.New("dsn is empty, failed to initialize gorm")
 	}
 
-	db, err := gorm.NewGormDB(global.Config.DB.DbType, dsn)
+	db, err := orm.NewGormDB(global.Config.DB.DbType, dsn)
 	if err != nil {
 		return err
 	}

@@ -1,7 +1,7 @@
 package service
 
 import (
-	"QuickAuth/pkg/utils/safe"
+	"QuickAuth/pkg/tools/safe"
 	"crypto/rsa"
 	"crypto/x509"
 	"errors"

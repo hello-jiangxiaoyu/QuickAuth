@@ -2,8 +2,8 @@ package service
 
 import (
 	"QuickAuth/pkg/models"
-	"QuickAuth/pkg/utils"
-	"QuickAuth/pkg/utils/safe"
+	"QuickAuth/pkg/tools/safe"
+	"QuickAuth/pkg/tools/utils"
 	"crypto/rsa"
 	"github.com/golang-jwt/jwt/v5"
 	"time"
