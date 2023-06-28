@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"QuickAuth/internal/controller/internal"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/server/controller/internal"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"

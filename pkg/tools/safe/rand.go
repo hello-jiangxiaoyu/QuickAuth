@@ -4,15 +4,15 @@ import (
 	"crypto/rand"
 )
 
-const Base64Chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/"
-const Base62Chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-const HexChars = "0123456789abcdef"
-const DecChars = "0123456789"
+const base64Chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/"
+const base62Chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const hexChars = "0123456789abcdef"
+const decChars = "0123456789"
 
-func Rand64(n int) string  { return RandString(n, Base64Chars) }
-func Rand62(n int) string  { return RandString(n, Base62Chars) }
-func RandDec(n int) string { return RandString(n, DecChars) }
-func RandHex(n int) string { return RandString(n, HexChars) }
+func Rand64(n int) string  { return RandString(n, base64Chars) }
+func Rand62(n int) string  { return RandString(n, base62Chars) }
+func RandDec(n int) string { return RandString(n, decChars) }
+func RandHex(n int) string { return RandString(n, hexChars) }
 
 // RandString Generate random string
 func RandString(n int, letters string) string {
@@ -23,7 +23,7 @@ func RandString(n int, letters string) string {
 	}
 
 	if len(letters) == 0 {
-		letters = Base62Chars
+		letters = base62Chars
 	}
 	for i := 0; i < len(b); i++ {
 		b[i] = letters[b[i]%byte(len(letters))]

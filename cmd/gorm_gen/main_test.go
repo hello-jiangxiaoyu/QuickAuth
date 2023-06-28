@@ -12,10 +12,10 @@ import (
 	"testing"
 )
 
-func Test(*testing.T) {
+func TestGen(*testing.T) {
 	generator, err := getG("quick_auth")
 	if err != nil {
-		fmt.Println("failed to get generator", err)
+		fmt.Println("get generator err: ", err)
 		return
 	}
 
@@ -25,5 +25,7 @@ func Test(*testing.T) {
 	generator.GenerateAllTable(opt...)
 	generator.Execute()
 
-	_ = utils.AmendFile(modelDir, convertToCamelCase)
+	if err = utils.AmendFile(modelDir, convertToCamelCase); err != nil {
+		fmt.Println("amend err: ", err)
+	}
 }

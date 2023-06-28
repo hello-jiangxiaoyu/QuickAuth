@@ -21,3 +21,26 @@ func (s *Service) GetLoginProviderInfo(tenantId string) ([]model.Provider, error
 
 	return provider, nil
 }
+
+func (s *Service) CreateProvider(prd model.Provider) (*model.Provider, error) {
+	if err := s.db.Create(&prd).Error; err != nil {
+		return nil, err
+	}
+	return &prd, nil
+}
+
+func (s *Service) ModifyProvider(prd model.Provider) error {
+	if err := s.db.Where("tenant_id = ? ANT type = ?", prd.TenantID, prd.Type).
+		Save(&prd).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *Service) DeleteProvider(tenantId, providerName string) error {
+	if err := s.db.Where("tenant_id = ? ANT type = ?", tenantId, providerName).
+		Delete(model.Provider{}).Error; err != nil {
+		return err
+	}
+	return nil
+}

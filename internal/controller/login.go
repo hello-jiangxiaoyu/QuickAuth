@@ -4,7 +4,6 @@ import (
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/pkg/idp"
-	"QuickAuth/pkg/model"
 	"QuickAuth/pkg/tools/safe"
 	"QuickAuth/pkg/tools/utils"
 	"fmt"
@@ -36,7 +35,7 @@ func (o Controller) login(c *gin.Context) {
 		return
 	}
 
-	user, err := o.svc.GetUser(&in)
+	user, err := o.svc.GetUser(in.Tenant.UserPoolID, in.UserName)
 	if err != nil {
 		resp.ErrorNotFound(c, err, "no such user")
 		return
@@ -81,27 +80,6 @@ func (o Controller) logout(c *gin.Context) {
 	resp.Success(c)
 }
 
-// @Summary	provider info
-// @Schemes
-// @Description	get all login provider information list
-// @Tags		login
-// @Success		200
-// @Router		/api/quick/login/provider-info [get]
-func (o Controller) listProviders(c *gin.Context) {
-	var tenant model.Tenant
-	if err := o.SetCtx(c).SetTenant(&tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "init provider-info err")
-		return
-	}
-	providers, err := o.svc.GetLoginProviderInfo(tenant.ID)
-	if err != nil {
-		resp.ErrorSelect(c, err, "failed to get provider list")
-		return
-	}
-
-	resp.SuccessArray(c, len(providers), providers)
-}
-
 // @Summary	provider callback
 // @Schemes
 // @Description	login third provider callback
@@ -109,7 +87,7 @@ func (o Controller) listProviders(c *gin.Context) {
 // @Param		provider	path	string	true	"provider name"
 // @Param		code		query	string	true	"code"
 // @Success		200
-// @Router		/api/quick/login/provider/{provider} [get]
+// @Router		/api/quick/login/providers/{provider} [get]
 func (o Controller) providerCallback(c *gin.Context) {
 	var in request.LoginProvider
 	if err := o.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {

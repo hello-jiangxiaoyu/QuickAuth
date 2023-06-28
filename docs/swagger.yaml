@@ -38,6 +38,74 @@ definitions:
       userinfo_endpoint:
         type: string
     type: object
+  model.Client:
+    type: object
+  model.ClientSecret:
+    properties:
+      clientId:
+        type: string
+      createTime:
+        type: string
+      describe:
+        type: string
+      id:
+        type: integer
+      secret:
+        type: string
+      updateTime:
+        type: string
+    type: object
+  model.Provider:
+    properties:
+      clientId:
+        type: string
+      clientSecret:
+        type: string
+      createTime:
+        type: string
+      tenantId:
+        type: string
+      type:
+        type: string
+      updateTime:
+        type: string
+    type: object
+  model.RedirectURI:
+    properties:
+      clientId:
+        type: string
+      createTime:
+        type: string
+      id:
+        type: integer
+      updateTime:
+        type: string
+      uri:
+        type: string
+    type: object
+  model.Tenant:
+    properties:
+      clientId:
+        type: string
+      company:
+        type: string
+      createTime:
+        type: string
+      describe:
+        type: string
+      host:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      type:
+        type: integer
+      updateTime:
+        type: string
+      userPoolId:
+        type: string
+    type: object
 info:
   contact: {}
   license:
@@ -66,6 +134,278 @@ paths:
       summary: get OIDC
       tags:
       - oidc
+  /api/quick/clients:
+    get:
+      description: list clients
+      responses:
+        "200":
+          description: OK
+      summary: clients info
+      tags:
+      - client
+    post:
+      description: create client
+      parameters:
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/model.Client'
+      responses:
+        "200":
+          description: OK
+      summary: create client
+      tags:
+      - client
+  /api/quick/clients/{clientId}:
+    delete:
+      description: delete client
+      parameters:
+      - description: client id
+        in: path
+        name: clientId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: delete client
+      tags:
+      - client
+    get:
+      description: list clients
+      parameters:
+      - description: client id
+        in: path
+        name: clientId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: clients info
+      tags:
+      - client
+    put:
+      description: modify client
+      parameters:
+      - description: client id
+        in: path
+        name: clientId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/model.Client'
+      responses:
+        "200":
+          description: OK
+      summary: modify client
+      tags:
+      - client
+  /api/quick/clients/{clientId}/redirect-uri:
+    get:
+      description: get redirect uri list
+      parameters:
+      - description: client id
+        in: path
+        name: clientId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: get redirect uri list
+      tags:
+      - client
+    post:
+      description: create client
+      parameters:
+      - description: client id
+        in: path
+        name: clientId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/model.RedirectURI'
+      responses:
+        "200":
+          description: OK
+      summary: create client
+      tags:
+      - client
+  /api/quick/clients/{clientId}/redirect-uri/{uriId}:
+    delete:
+      description: delete client
+      parameters:
+      - description: client id
+        in: path
+        name: clientId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: delete client
+      tags:
+      - client
+  /api/quick/clients/{clientId}/secrets:
+    get:
+      description: list client secret
+      parameters:
+      - description: client id
+        in: path
+        name: clientId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: client secret info
+      tags:
+      - client
+    post:
+      description: create client secret
+      parameters:
+      - description: client id
+        in: path
+        name: clientId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/model.ClientSecret'
+      responses:
+        "200":
+          description: OK
+      summary: create client secret
+      tags:
+      - client
+  /api/quick/clients/{clientId}/secrets/{secretId}:
+    delete:
+      description: delete client secret
+      parameters:
+      - description: client id
+        in: path
+        name: clientId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: delete client secret
+      tags:
+      - client
+  /api/quick/clients/{clientId}/tenants:
+    get:
+      description: list provider info
+      parameters:
+      - description: client id
+        in: path
+        name: clientId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: provider info
+      tags:
+      - tenant
+    post:
+      description: get provider details
+      parameters:
+      - description: client id
+        in: path
+        name: clientId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/model.Tenant'
+      responses:
+        "200":
+          description: OK
+      summary: get provider details
+      tags:
+      - tenant
+  /api/quick/clients/{clientId}/tenants/{tenantId}:
+    delete:
+      description: get provider details
+      parameters:
+      - description: client id
+        in: path
+        name: clientId
+        required: true
+        type: string
+      - description: tenant id
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: get provider details
+      tags:
+      - tenant
+    get:
+      description: get provider details
+      parameters:
+      - description: client id
+        in: path
+        name: clientId
+        required: true
+        type: string
+      - description: tenant id
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: get provider details
+      tags:
+      - tenant
+    put:
+      description: get provider details
+      parameters:
+      - description: client id
+        in: path
+        name: clientId
+        required: true
+        type: string
+      - description: tenant id
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/model.Tenant'
+      responses:
+        "200":
+          description: OK
+      summary: get provider details
+      tags:
+      - tenant
   /api/quick/login:
     post:
       description: login using username and password
@@ -90,16 +430,7 @@ paths:
       summary: login a user
       tags:
       - login
-  /api/quick/login/provider-info:
-    get:
-      description: get all login provider information list
-      responses:
-        "200":
-          description: OK
-      summary: provider info
-      tags:
-      - login
-  /api/quick/login/provider/{provider}:
+  /api/quick/login/providers/{provider}:
     get:
       description: login third provider callback
       parameters:
@@ -168,6 +499,105 @@ paths:
       summary: oauth2 authorize
       tags:
       - oauth2
+  /api/quick/providers:
+    get:
+      description: list provider info
+      responses:
+        "200":
+          description: OK
+      summary: provider info
+      tags:
+      - provider
+  /api/quick/providers/{providerId}:
+    delete:
+      description: get provider details
+      parameters:
+      - description: client id
+        in: path
+        name: providerId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: get provider details
+      tags:
+      - provider
+    get:
+      description: get provider details
+      parameters:
+      - description: client id
+        in: path
+        name: providerId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: get provider details
+      tags:
+      - provider
+    post:
+      description: get provider details
+      parameters:
+      - description: client id
+        in: path
+        name: providerId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/model.Provider'
+      responses:
+        "200":
+          description: OK
+      summary: get provider details
+      tags:
+      - provider
+    put:
+      description: get provider details
+      parameters:
+      - description: client id
+        in: path
+        name: providerId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/model.Provider'
+      responses:
+        "200":
+          description: OK
+      summary: get provider details
+      tags:
+      - provider
+  /api/quick/redirect-uri/{uriId}:
+    put:
+      description: modify client
+      parameters:
+      - description: client id
+        in: path
+        name: clientId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/model.RedirectURI'
+      responses:
+        "200":
+          description: OK
+      summary: modify client
+      tags:
+      - client
   /v1/oauth2/token:
     post:
       description: oauth2 token

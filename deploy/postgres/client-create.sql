@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
     display_name VARCHAR(127),
     email        VARCHAR(127),
     phone        VARCHAR(20),
+    type         CHARACTER(31) NOT NULL,
     is_disabled  BOOLEAN NOT NULL DEFAULT FALSE,
     create_time  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     update_time  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()

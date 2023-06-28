@@ -1,10 +1,10 @@
 package controller
 
 import (
+	"QuickAuth/internal/controller/internal"
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/server/controller/internal"
-	"QuickAuth/internal/server/service"
+	"QuickAuth/internal/service"
 	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -106,7 +106,7 @@ func (o Controller) getToken(c *gin.Context) {
 		return
 	}
 
-	client, err := o.svc.GetClientById(in.ClientID)
+	client, err := o.svc.GetClient(in.ClientID)
 	if err != nil {
 		resp.ErrorRequestWithMsg(c, err, "no such client")
 		return

@@ -19,6 +19,7 @@ type User struct {
 	DisplayName *string   `gorm:"column:display_name;type:character varying(127)" json:"displayName"`
 	Email       *string   `gorm:"column:email;type:character varying(127)" json:"email"`
 	Phone       *string   `gorm:"column:phone;type:character varying(20)" json:"phone"`
+	Type        string    `gorm:"column:type;type:character(31);not null" json:"type"`
 	IsDisabled  bool      `gorm:"column:is_disabled;type:boolean;not null" json:"isDisabled"`
 	CreateTime  time.Time `gorm:"column:create_time;type:timestamp with time zone;not null;default:now()" json:"createTime"`
 	UpdateTime  time.Time `gorm:"column:update_time;type:timestamp with time zone;not null;default:now()" json:"updateTime"`

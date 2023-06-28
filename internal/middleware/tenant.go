@@ -10,7 +10,11 @@ import (
 func TenantHost() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var tenant model.Tenant
-		if err := global.DB.Where("host = ?", c.Request.Host).
+		host := c.Request.Header.Get("host")
+		if host == "" {
+			host = c.Request.Host
+		}
+		if err := global.DB.Where("host = ?", host).
 			First(&tenant).Error; err != nil {
 			resp.ErrorHost(c)
 			return
