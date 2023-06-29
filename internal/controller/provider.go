@@ -15,7 +15,7 @@ import (
 func (o Controller) listProvider(c *gin.Context) {
 	var tenant model.Tenant
 	if err := o.SetCtx(c).SetTenant(&tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "init provider-info err")
+		resp.ErrorRequest(c, err, "init provider err")
 		return
 	}
 	providers, err := o.svc.GetLoginProviderInfo(tenant.ID)
@@ -37,7 +37,7 @@ func (o Controller) listProvider(c *gin.Context) {
 func (o Controller) getProvider(c *gin.Context) {
 	var tenant model.Tenant
 	if err := o.SetCtx(c).SetTenant(&tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "init provider-info err")
+		resp.ErrorRequest(c, err, "init provider err")
 		return
 	}
 	provider, err := o.svc.GetProviderByType(tenant.ID, c.Param("providerId"))
@@ -54,7 +54,7 @@ func (o Controller) getProvider(c *gin.Context) {
 // @Description	get provider details
 // @Tags		provider
 // @Param		providerId	path	string	true	"client id"
-// @Param		bd		body	model.Provider	true	"body"
+// @Param		bd			body	model.Provider	true	"body"
 // @Success		200
 // @Router		/api/quick/providers/{providerId} [post]
 func (o Controller) createProvider(c *gin.Context) {
@@ -78,8 +78,8 @@ func (o Controller) createProvider(c *gin.Context) {
 // @Schemes
 // @Description	get provider details
 // @Tags		provider
-// @Param		providerId	path	string	true	"client id"
-// @Param		bd		body	model.Provider	true	"body"
+// @Param		providerId	path	string			true	"client id"
+// @Param		bd			body	model.Provider	true	"body"
 // @Success		200
 // @Router		/api/quick/providers/{providerId} [put]
 func (o Controller) modifyProvider(c *gin.Context) {
@@ -89,6 +89,7 @@ func (o Controller) modifyProvider(c *gin.Context) {
 		resp.ErrorRequest(c, err, "init provider err")
 		return
 	}
+	in.TenantID = tenant.ID
 	if err := o.svc.ModifyProvider(in); err != nil {
 		resp.ErrorSelect(c, err, "modify provider err")
 		return

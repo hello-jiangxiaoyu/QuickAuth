@@ -35,7 +35,7 @@ func (o Controller) login(c *gin.Context) {
 		return
 	}
 
-	user, err := o.svc.GetUser(in.Tenant.UserPoolID, in.UserName)
+	user, err := o.svc.GetUserByName(in.Tenant.UserPoolID, in.UserName)
 	if err != nil {
 		resp.ErrorNotFound(c, err, "no such user")
 		return

@@ -3,7 +3,6 @@ package controller
 import (
 	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/pkg/model"
-	"QuickAuth/pkg/tools/safe"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,7 +16,7 @@ import (
 func (o Controller) listClientSecret(c *gin.Context) {
 	clients, err := o.svc.ListClientSecrets(c.Param("clientId"))
 	if err != nil {
-		resp.ErrorSelect(c, err, "list clients err")
+		resp.ErrorSelect(c, err, "list client secret err")
 		return
 	}
 	resp.SuccessArray(c, len(clients), clients)
@@ -27,21 +26,20 @@ func (o Controller) listClientSecret(c *gin.Context) {
 // @Schemes
 // @Description	create client secret
 // @Tags		client
-// @Param		clientId	path	string	true	"client id"
-// @Param		bd		body	model.ClientSecret	true	"body"
+// @Param		clientId	path	string				true	"client id"
+// @Param		bd			body	model.ClientSecret	true	"body"
 // @Success		200
 // @Router		/api/quick/clients/{clientId}/secrets [post]
 func (o Controller) createClientSecret(c *gin.Context) {
 	var in model.ClientSecret
 	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "init client req err")
+		resp.ErrorRequest(c, err, "init client secret req err")
 		return
 	}
 	in.ClientID = c.Param("clientId")
-	in.Secret = safe.Rand62(31)
 	client, err := o.svc.CreateClientSecret(in)
 	if err != nil {
-		resp.ErrorUnknown(c, err, "create client err")
+		resp.ErrorUnknown(c, err, "create client secret err")
 		return
 	}
 	resp.SuccessWithData(c, client)
@@ -58,7 +56,7 @@ func (o Controller) deleteClientSecret(c *gin.Context) {
 	clientId := c.Param("clientId")
 	secretId := c.Param("secretId")
 	if err := o.svc.DeleteClientSecret(clientId, secretId); err != nil {
-		resp.ErrorUnknown(c, err, "delete client err")
+		resp.ErrorUnknown(c, err, "delete client secret err")
 		return
 	}
 	resp.Success(c)

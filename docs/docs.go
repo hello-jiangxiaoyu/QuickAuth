@@ -216,6 +216,36 @@ const docTemplate = `{
             }
         },
         "/api/quick/clients/{clientId}/redirect-uri/{uriId}": {
+            "put": {
+                "description": "modify client",
+                "tags": [
+                    "client"
+                ],
+                "summary": "modify client",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "client id",
+                        "name": "clientId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body",
+                        "name": "bd",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RedirectURI"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
             "delete": {
                 "description": "delete client",
                 "tags": [
@@ -719,18 +749,76 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/redirect-uri/{uriId}": {
-            "put": {
-                "description": "modify client",
+        "/api/quick/user-pool": {
+            "get": {
+                "description": "list user pool",
                 "tags": [
-                    "client"
+                    "user"
                 ],
-                "summary": "modify client",
+                "summary": "user pools info",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "description": "create user pool",
+                "tags": [
+                    "user"
+                ],
+                "summary": "create user pool",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "bd",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Client"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/user-pool/{poolId}": {
+            "get": {
+                "description": "list user pool",
+                "tags": [
+                    "user"
+                ],
+                "summary": "user pool info",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
-                        "name": "clientId",
+                        "description": "user pool id",
+                        "name": "poolId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "put": {
+                "description": "modify user pool",
+                "tags": [
+                    "user"
+                ],
+                "summary": "modify user pool",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "poolId",
                         "in": "path",
                         "required": true
                     },
@@ -740,8 +828,163 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.RedirectURI"
+                            "$ref": "#/definitions/model.UserPool"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete user pool",
+                "tags": [
+                    "user"
+                ],
+                "summary": "delete user pool",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "poolId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/user-pool/{poolId}/users": {
+            "get": {
+                "description": "list users",
+                "tags": [
+                    "user"
+                ],
+                "summary": "user info",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "description": "create user",
+                "tags": [
+                    "user"
+                ],
+                "summary": "create user",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "bd",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Client"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/user-pool/{poolId}/users/{userId}": {
+            "get": {
+                "description": "list user",
+                "tags": [
+                    "user"
+                ],
+                "summary": "user info",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "poolId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "put": {
+                "description": "modify user",
+                "tags": [
+                    "user"
+                ],
+                "summary": "modify user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "poolId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body",
+                        "name": "bd",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UserPool"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/user-pool/{poolId}/users/{user}": {
+            "delete": {
+                "description": "delete user",
+                "tags": [
+                    "user"
+                ],
+                "summary": "delete user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "poolId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -972,6 +1215,26 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "userPoolId": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.UserPool": {
+            "type": "object",
+            "properties": {
+                "createTime": {
+                    "type": "string"
+                },
+                "describe": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updateTime": {
                     "type": "string"
                 }
             }

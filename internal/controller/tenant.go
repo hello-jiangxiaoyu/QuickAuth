@@ -54,12 +54,13 @@ func (o Controller) getTenant(c *gin.Context) {
 func (o Controller) createTenant(c *gin.Context) {
 	var in model.Tenant
 	if err := o.SetCtx(c).BindJson(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "init provider err")
+		resp.ErrorRequest(c, err, "init tenant err")
 		return
 	}
+	in.ClientID = c.Param("clientId")
 	tenant, err := o.svc.CreatTenant(in)
 	if err != nil {
-		resp.ErrorSelect(c, err, "create provider err")
+		resp.ErrorSelect(c, err, "create tenant err")
 		return
 	}
 
@@ -78,12 +79,13 @@ func (o Controller) createTenant(c *gin.Context) {
 func (o Controller) modifyTenant(c *gin.Context) {
 	var in model.Tenant
 	if err := o.SetCtx(c).BindJson(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "init provider err")
+		resp.ErrorRequest(c, err, "init tenant err")
 		return
 	}
+	in.ID = c.Param("tenantId")
 	in.ClientID = c.Param("clientId")
 	if err := o.svc.ModifyTenant(in); err != nil {
-		resp.ErrorSelect(c, err, "modify provider err")
+		resp.ErrorSelect(c, err, "modify tenant err")
 		return
 	}
 
@@ -99,13 +101,10 @@ func (o Controller) modifyTenant(c *gin.Context) {
 // @Success		200
 // @Router		/api/quick/clients/{clientId}/tenants/{tenantId} [delete]
 func (o Controller) deleteTenant(c *gin.Context) {
-	var tenant model.Tenant
-	if err := o.SetCtx(c).SetTenant(&tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "init provider err")
-		return
-	}
-	if err := o.svc.DeleteProvider(tenant.ID, c.Param("providerId")); err != nil {
-		resp.ErrorSelect(c, err, "delete provider err")
+	clientId := c.Param("clientId")
+	tenantId := c.Param("tenantId")
+	if err := o.svc.DeleteTenant(clientId, tenantId); err != nil {
+		resp.ErrorSelect(c, err, "delete tenant err")
 		return
 	}
 

@@ -20,6 +20,12 @@ func (s *Service) ListTenant(clientId string) ([]model.Tenant, error) {
 }
 
 func (s *Service) CreatTenant(t model.Tenant) (*model.Tenant, error) {
+	if _, err := s.GetClient(t.ClientID); err != nil {
+		return nil, err
+	}
+	if _, err := s.GetUserPool(t.UserPoolID); err != nil {
+		return nil, err
+	}
 	if err := s.db.Create(&t).Error; err != nil {
 		return nil, err
 	}
@@ -33,12 +39,12 @@ func (s *Service) ModifyTenant(t model.Tenant) error {
 	return nil
 }
 
-func (s *Service) DeleteTenant(t model.Tenant) (*model.Tenant, error) {
-	if _, err := s.GetTenant(t.ID, t.ClientID); err != nil {
-		return nil, err
+func (s *Service) DeleteTenant(clientId, tenantId string) error {
+	if _, err := s.GetTenant(clientId, tenantId); err != nil {
+		return err
 	}
-	if err := s.db.Where("id = ? AND client_id = ?", t.ID, t.ClientID).Delete(&t).Error; err != nil {
-		return nil, err
+	if err := s.db.Where("id = ? AND client_id = ?", tenantId, clientId).Delete(&model.Tenant{}).Error; err != nil {
+		return err
 	}
-	return &t, nil
+	return nil
 }

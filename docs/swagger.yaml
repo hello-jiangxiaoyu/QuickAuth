@@ -106,6 +106,19 @@ definitions:
       userPoolId:
         type: string
     type: object
+  model.UserPool:
+    properties:
+      createTime:
+        type: string
+      describe:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updateTime:
+        type: string
+    type: object
 info:
   contact: {}
   license:
@@ -255,6 +268,26 @@ paths:
         "200":
           description: OK
       summary: delete client
+      tags:
+      - client
+    put:
+      description: modify client
+      parameters:
+      - description: client id
+        in: path
+        name: clientId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/model.RedirectURI'
+      responses:
+        "200":
+          description: OK
+      summary: modify client
       tags:
       - client
   /api/quick/clients/{clientId}/secrets:
@@ -577,13 +610,65 @@ paths:
       summary: get provider details
       tags:
       - provider
-  /api/quick/redirect-uri/{uriId}:
-    put:
-      description: modify client
+  /api/quick/user-pool:
+    get:
+      description: list user pool
+      responses:
+        "200":
+          description: OK
+      summary: user pools info
+      tags:
+      - user
+    post:
+      description: create user pool
       parameters:
-      - description: client id
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/model.Client'
+      responses:
+        "200":
+          description: OK
+      summary: create user pool
+      tags:
+      - user
+  /api/quick/user-pool/{poolId}:
+    delete:
+      description: delete user pool
+      parameters:
+      - description: user pool id
         in: path
-        name: clientId
+        name: poolId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: delete user pool
+      tags:
+      - user
+    get:
+      description: list user pool
+      parameters:
+      - description: user pool id
+        in: path
+        name: poolId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: user pool info
+      tags:
+      - user
+    put:
+      description: modify user pool
+      parameters:
+      - description: user pool id
+        in: path
+        name: poolId
         required: true
         type: string
       - description: body
@@ -591,13 +676,102 @@ paths:
         name: bd
         required: true
         schema:
-          $ref: '#/definitions/model.RedirectURI'
+          $ref: '#/definitions/model.UserPool'
       responses:
         "200":
           description: OK
-      summary: modify client
+      summary: modify user pool
       tags:
-      - client
+      - user
+  /api/quick/user-pool/{poolId}/users:
+    get:
+      description: list users
+      responses:
+        "200":
+          description: OK
+      summary: user info
+      tags:
+      - user
+    post:
+      description: create user
+      parameters:
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/model.Client'
+      responses:
+        "200":
+          description: OK
+      summary: create user
+      tags:
+      - user
+  /api/quick/user-pool/{poolId}/users/{user}:
+    delete:
+      description: delete user
+      parameters:
+      - description: user pool id
+        in: path
+        name: poolId
+        required: true
+        type: string
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: delete user
+      tags:
+      - user
+  /api/quick/user-pool/{poolId}/users/{userId}:
+    get:
+      description: list user
+      parameters:
+      - description: user pool id
+        in: path
+        name: poolId
+        required: true
+        type: string
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: user info
+      tags:
+      - user
+    put:
+      description: modify user
+      parameters:
+      - description: user pool id
+        in: path
+        name: poolId
+        required: true
+        type: string
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserPool'
+      responses:
+        "200":
+          description: OK
+      summary: modify user
+      tags:
+      - user
   /v1/oauth2/token:
     post:
       description: oauth2 token

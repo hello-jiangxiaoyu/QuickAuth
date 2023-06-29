@@ -29,12 +29,7 @@ func (o Controller) listClient(c *gin.Context) {
 // @Success		200
 // @Router		/api/quick/clients/{clientId} [get]
 func (o Controller) getClient(c *gin.Context) {
-	var in model.Client
-	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "init client req err")
-		return
-	}
-	client, err := o.svc.GetClient(in.ID)
+	client, err := o.svc.GetClient(c.Param("clientId"))
 	if err != nil {
 		resp.ErrorUnknown(c, err, "no such client")
 		return
@@ -46,8 +41,8 @@ func (o Controller) getClient(c *gin.Context) {
 // @Schemes
 // @Description	create client
 // @Tags		client
-// @Success		200
 // @Param		bd		body	model.Client	true	"body"
+// @Success		200
 // @Router		/api/quick/clients [post]
 func (o Controller) createClient(c *gin.Context) {
 	var in model.Client
@@ -68,7 +63,7 @@ func (o Controller) createClient(c *gin.Context) {
 // @Description	modify client
 // @Tags		client
 // @Param		clientId	path	string	true	"client id"
-// @Param		bd		body	model.Client	true	"body"
+// @Param		bd			body	model.Client	true	"body"
 // @Success		200
 // @Router		/api/quick/clients/{clientId} [put]
 func (o Controller) modifyClient(c *gin.Context) {

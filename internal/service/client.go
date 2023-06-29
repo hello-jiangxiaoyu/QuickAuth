@@ -2,6 +2,7 @@ package service
 
 import (
 	"QuickAuth/pkg/model"
+	"QuickAuth/pkg/tools/safe"
 	"QuickAuth/pkg/tools/utils"
 )
 
@@ -59,6 +60,10 @@ func (s *Service) ListClientSecrets(clientId string) ([]model.ClientSecret, erro
 }
 
 func (s *Service) CreateClientSecret(secret model.ClientSecret) (*model.ClientSecret, error) {
+	if _, err := s.GetClient(secret.ClientID); err != nil {
+		return nil, err
+	}
+	secret.Secret = safe.Rand62(31)
 	if err := s.db.Create(&secret).Error; err != nil {
 		return nil, err
 	}
@@ -73,7 +78,7 @@ func (s *Service) ModifyClientSecret(secret model.ClientSecret) error {
 }
 
 func (s *Service) DeleteClientSecret(clientId, secretId string) error {
-	if err := s.db.Where("id = ? AND client_id = ?", clientId, secretId).
+	if err := s.db.Where("id = ? AND client_id = ?", secretId, clientId).
 		Delete(&model.ClientSecret{}).Error; err != nil {
 		return err
 	}
@@ -102,6 +107,9 @@ func (s *Service) ListRedirectUri(clientId string) ([]model.RedirectURI, error) 
 }
 
 func (s *Service) CreateRedirectUri(uri model.RedirectURI) (*model.RedirectURI, error) {
+	if _, err := s.GetClient(uri.ClientID); err != nil {
+		return nil, err
+	}
 	if err := s.db.Create(&uri).Error; err != nil {
 		return nil, err
 	}
@@ -116,7 +124,7 @@ func (s *Service) ModifyRedirectUri(uri model.RedirectURI) error {
 }
 
 func (s *Service) DeleteRedirectUri(clientId, uriId string) error {
-	if err := s.db.Where("id = ? AND client_id = ?", clientId, uriId).
+	if err := s.db.Where("id = ? AND client_id = ?", uriId, clientId).
 		Delete(&model.RedirectURI{}).Error; err != nil {
 		return err
 	}
