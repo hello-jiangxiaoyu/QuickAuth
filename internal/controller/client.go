@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/pkg/model"
 	"github.com/gin-gonic/gin"
 )
 
@@ -41,16 +41,17 @@ func (o Controller) getClient(c *gin.Context) {
 // @Schemes
 // @Description	create client
 // @Tags		client
-// @Param		bd		body	model.Client	true	"body"
+// @Param		bd		body	request.ClientReq	true	"body"
 // @Success		200
 // @Router		/api/quick/clients [post]
 func (o Controller) createClient(c *gin.Context) {
-	var in model.Client
-	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+	var in request.ClientReq
+	if err := o.SetCtx(c).BindJson(&in).Error; err != nil {
 		resp.ErrorRequest(c, err, "init client req err")
 		return
 	}
-	client, err := o.svc.CreateClient(in)
+
+	client, err := o.svc.CreateClient(in.ToModel())
 	if err != nil {
 		resp.ErrorUnknown(c, err, "create client err")
 		return
@@ -62,17 +63,18 @@ func (o Controller) createClient(c *gin.Context) {
 // @Schemes
 // @Description	modify client
 // @Tags		client
-// @Param		clientId	path	string	true	"client id"
-// @Param		bd			body	model.Client	true	"body"
+// @Param		clientId	path	string				true	"client id"
+// @Param		bd			body	request.ClientReq	true	"body"
 // @Success		200
 // @Router		/api/quick/clients/{clientId} [put]
 func (o Controller) modifyClient(c *gin.Context) {
-	var in model.Client
+	var in request.ClientReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
 		resp.ErrorRequest(c, err, "init client req err")
 		return
 	}
-	if err := o.svc.ModifyClient(in); err != nil {
+
+	if err := o.svc.ModifyClient(in.ToModel()); err != nil {
 		resp.ErrorUnknown(c, err, "modify client err")
 		return
 	}

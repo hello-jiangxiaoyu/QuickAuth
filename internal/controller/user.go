@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/pkg/model"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,7 +11,7 @@ import (
 // @Description	list users
 // @Tags		user
 // @Success		200
-// @Router		/api/quick/user-pool/{poolId}/users [get]
+// @Router		/api/quick/user-pools/{poolId}/users [get]
 func (o Controller) listUser(c *gin.Context) {
 	clients, err := o.svc.ListUser(c.Param("poolId"))
 	if err != nil {
@@ -28,13 +28,13 @@ func (o Controller) listUser(c *gin.Context) {
 // @Param		poolId	path	string	true	"user pool id"
 // @Param		userId	path	string	true	"user id"
 // @Success		200
-// @Router		/api/quick/user-pool/{poolId}/users/{userId} [get]
+// @Router		/api/quick/user-pools/{poolId}/users/{userId} [get]
 func (o Controller) getUser(c *gin.Context) {
 	poolId := c.Param("poolId")
 	userId := c.Param("userId")
 	client, err := o.svc.GetUserById(poolId, userId)
 	if err != nil {
-		resp.ErrorUnknown(c, err, "no such user pool")
+		resp.ErrorUnknown(c, err, "no such user")
 		return
 	}
 	resp.SuccessWithData(c, client)
@@ -44,19 +44,19 @@ func (o Controller) getUser(c *gin.Context) {
 // @Schemes
 // @Description	create user
 // @Tags		user
-// @Param		bd		body	model.Client	true	"body"
+// @Param		bd		body	request.UserReq	true	"body"
 // @Success		200
-// @Router		/api/quick/user-pool/{poolId}/users [post]
+// @Router		/api/quick/user-pools/{poolId}/users [post]
 func (o Controller) createUser(c *gin.Context) {
-	var in model.User
-	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "init user pool req err")
+	var in request.UserReq
+	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+		resp.ErrorRequest(c, err, "init user req err")
 		return
 	}
-	in.UserPoolID = c.Param("poolId")
-	client, err := o.svc.CreateUser(in)
+
+	client, err := o.svc.CreateUser(in.ToModel())
 	if err != nil {
-		resp.ErrorUnknown(c, err, "create user pool err")
+		resp.ErrorUnknown(c, err, "create user err")
 		return
 	}
 	resp.SuccessWithData(c, client)
@@ -68,19 +68,18 @@ func (o Controller) createUser(c *gin.Context) {
 // @Tags		user
 // @Param		poolId	path	string			true	"user pool id"
 // @Param		userId	path	string			true	"user id"
-// @Param		bd		body	model.UserPool	true	"body"
+// @Param		bd		body	request.UserReq	true	"body"
 // @Success		200
-// @Router		/api/quick/user-pool/{poolId}/users/{userId} [put]
+// @Router		/api/quick/user-pools/{poolId}/users/{userId} [put]
 func (o Controller) modifyUser(c *gin.Context) {
-	var in model.User
+	var in request.UserReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "init user pool req err")
+		resp.ErrorRequest(c, err, "init user req err")
 		return
 	}
-	in.UserPoolID = c.Param("poolId")
-	in.ID = c.Param("userId")
-	if err := o.svc.ModifyUser(in); err != nil {
-		resp.ErrorUnknown(c, err, "modify user pool err")
+
+	if err := o.svc.ModifyUser(in.ToModel()); err != nil {
+		resp.ErrorUnknown(c, err, "modify user err")
 		return
 	}
 	resp.Success(c)
@@ -93,12 +92,12 @@ func (o Controller) modifyUser(c *gin.Context) {
 // @Param		poolId	path	string	true	"user pool id"
 // @Param		userId	path	string	true	"user id"
 // @Success		200
-// @Router		/api/quick/user-pool/{poolId}/users/{user} [delete]
+// @Router		/api/quick/user-pools/{poolId}/users/{user} [delete]
 func (o Controller) deleteUser(c *gin.Context) {
 	poolId := c.Param("poolId")
 	userId := c.Param("userId")
 	if err := o.svc.DeleteUser(poolId, userId); err != nil {
-		resp.ErrorUnknown(c, err, "delete user pool err")
+		resp.ErrorUnknown(c, err, "delete user err")
 		return
 	}
 	resp.Success(c)

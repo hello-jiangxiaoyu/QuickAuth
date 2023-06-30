@@ -18,8 +18,10 @@ type Client struct {
 	Name          string         `gorm:"column:name;type:character varying(127);not null" json:"name"`
 	Describe      *string        `gorm:"column:describe;type:character varying(127)" json:"describe"`
 	GrantTypes    pq.StringArray `gorm:"column:grant_types;type:character varying(127)[]" json:"grantTypes"`
+	RedirectUris  pq.StringArray `gorm:"column:redirect_uris;type:character(127)[]" json:"redirectUris"`
 	TokenExpire   int32          `gorm:"column:token_expire;type:integer;not null" json:"tokenExpire"`
 	RefreshExpire int32          `gorm:"column:refresh_expire;type:integer;not null" json:"refreshExpire"`
+	CodeExpire    int32          `gorm:"column:code_expire;type:integer;not null" json:"codeExpire"`
 	CreateTime    time.Time      `gorm:"column:create_time;type:timestamp with time zone;not null;default:now()" json:"createTime"`
 	UpdateTime    time.Time      `gorm:"column:update_time;type:timestamp with time zone;not null;default:now()" json:"updateTime"`
 }

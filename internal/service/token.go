@@ -16,7 +16,7 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
-func (s *Service) CreateAccessToken(client model.Client, tenantId, host, userId, nonce, scope string) (string, error) {
+func (s *Service) CreateAccessToken(client model.Client, tenantName, host, userId, nonce, scope string) (string, error) {
 	var token *jwt.Token
 	nowTime := time.Now()
 	expireTime := nowTime.Add(time.Duration(client.TokenExpire) * time.Hour)
@@ -35,7 +35,7 @@ func (s *Service) CreateAccessToken(client model.Client, tenantId, host, userId,
 		},
 	}
 	token = jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
-	keys, err := s.LoadRsaPrivateKeys(tenantId)
+	keys, err := s.LoadRsaPrivateKeys(tenantName)
 	if err != nil {
 		return "", err
 	}

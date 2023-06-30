@@ -12,8 +12,8 @@ const TableNameCode = "codes"
 
 // Code mapped from table <codes>
 type Code struct {
-	ID         int32     `gorm:"column:id;type:integer;primaryKey;autoIncrement:true" json:"id"`
-	UserID     string    `gorm:"column:user_id;type:uuid;not null" json:"userId"`
+	ID         int64     `gorm:"column:id;type:bigint;primaryKey;autoIncrement:true" json:"id"`
+	UserID     int64     `gorm:"column:user_id;type:bigint;not null" json:"userId"`
 	ClientID   string    `gorm:"column:client_id;type:uuid;not null" json:"clientId"`
 	Code       string    `gorm:"column:code;type:character(31);not null" json:"code"`
 	Scope      string    `gorm:"column:scope;type:character varying(255);not null" json:"scope"`

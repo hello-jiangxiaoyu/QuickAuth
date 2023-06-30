@@ -2,10 +2,9 @@ package service
 
 import (
 	"QuickAuth/pkg/model"
-	"QuickAuth/pkg/tools/utils"
 )
 
-func (s *Service) GetUserByName(poolId, userName string) (*model.User, error) {
+func (s *Service) GetUserByName(poolId int64, userName string) (*model.User, error) {
 	var user model.User
 	if err := s.db.Where("user_pool_id = ? AND username = ?", poolId, userName).
 		First(&user).Error; err != nil {
@@ -16,7 +15,8 @@ func (s *Service) GetUserByName(poolId, userName string) (*model.User, error) {
 
 func (s *Service) GetUserById(poolId, userId string) (*model.User, error) {
 	var user model.User
-	if err := s.db.Where("id = ? AND user_pool_id = ?", poolId, userId).
+	if err := s.db.Select("id", "username", "display_name", "email", "phone").
+		Where("id = ? AND user_pool_id = ?", poolId, userId).
 		First(&user).Error; err != nil {
 		return nil, err
 	}
@@ -25,7 +25,7 @@ func (s *Service) GetUserById(poolId, userId string) (*model.User, error) {
 
 func (s *Service) ListUser(poolId string) ([]model.User, error) {
 	var user []model.User
-	if err := s.db.Where("user_Pool_id = ?", poolId).Find(&user).Error; err != nil {
+	if err := s.db.Select("id", "username", "display_name", "email", "phone").Where("user_Pool_id = ?", poolId).Find(&user).Error; err != nil {
 		return nil, err
 	}
 	return user, nil
@@ -74,7 +74,6 @@ func (s *Service) ListUserPool() ([]model.UserPool, error) {
 }
 
 func (s *Service) CreateUserPool(pool model.UserPool) (*model.UserPool, error) {
-	pool.ID = utils.GetNoLineUUID()
 	if err := s.db.Create(&pool).Error; err != nil {
 		return nil, err
 	}

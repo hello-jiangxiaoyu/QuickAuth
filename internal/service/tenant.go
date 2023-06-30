@@ -1,6 +1,9 @@
 package service
 
-import "QuickAuth/pkg/model"
+import (
+	"QuickAuth/pkg/model"
+	"strconv"
+)
 
 func (s *Service) GetTenant(id, clientId string) (*model.Tenant, error) {
 	var tenant model.Tenant
@@ -23,7 +26,7 @@ func (s *Service) CreatTenant(t model.Tenant) (*model.Tenant, error) {
 	if _, err := s.GetClient(t.ClientID); err != nil {
 		return nil, err
 	}
-	if _, err := s.GetUserPool(t.UserPoolID); err != nil {
+	if _, err := s.GetUserPool(strconv.FormatInt(t.UserPoolID, 10)); err != nil {
 		return nil, err
 	}
 	if err := s.db.Create(&t).Error; err != nil {

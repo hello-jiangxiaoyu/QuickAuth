@@ -70,13 +70,6 @@ func (s *Service) CreateClientSecret(secret model.ClientSecret) (*model.ClientSe
 	return &secret, nil
 }
 
-func (s *Service) ModifyClientSecret(secret model.ClientSecret) error {
-	if err := s.db.Where("id = ? AND client_id = ?", secret.ID, secret.ClientID).Save(secret).Error; err != nil {
-		return err
-	}
-	return nil
-}
-
 func (s *Service) DeleteClientSecret(clientId, secretId string) error {
 	if err := s.db.Where("id = ? AND client_id = ?", secretId, clientId).
 		Delete(&model.ClientSecret{}).Error; err != nil {
@@ -88,45 +81,51 @@ func (s *Service) DeleteClientSecret(clientId, secretId string) error {
 // =================== redirect uri ===================
 
 func (s *Service) IsRedirectUriValid(clientId, uri string) (bool, error) {
-	var redirectUri model.RedirectURI
-	if err := s.db.Select("uri").Where("client_id = ? AND uri = ?", clientId, uri).
-		Limit(1).Find(&uri).Error; err != nil {
+	var client model.Client
+	if err := s.db.Select("uri").Where("id = ?", clientId, uri).First(&client).Error; err != nil {
 		return false, err
 	}
 
-	return redirectUri.URI == uri, nil
+	for _, v := range client.RedirectUris {
+		if v == uri {
+			return true, nil
+		}
+	}
+	return false, nil
 }
 
-func (s *Service) ListRedirectUri(clientId string) ([]model.RedirectURI, error) {
-	var clients []model.RedirectURI
-	if err := s.db.Where("client_id = ?", clientId).Find(&clients).Error; err != nil {
+func (s *Service) ListRedirectUri(clientId string) ([]string, error) {
+	var clients []string
+	if err := s.db.Model(model.Client{}).Select("redirect_uris").Where("id = ?", clientId).Find(&clients).Error; err != nil {
 		return nil, err
 	}
 
 	return clients, nil
 }
 
-func (s *Service) CreateRedirectUri(uri model.RedirectURI) (*model.RedirectURI, error) {
-	if _, err := s.GetClient(uri.ClientID); err != nil {
-		return nil, err
-	}
-	if err := s.db.Create(&uri).Error; err != nil {
-		return nil, err
-	}
-	return &uri, nil
-}
-
-func (s *Service) ModifyRedirectUri(uri model.RedirectURI) error {
-	if err := s.db.Where("id = ? AND client_id = ?", uri.ID, uri.ClientID).Save(uri).Error; err != nil {
+func (s *Service) CreateRedirectUri(clientId, uri string) error {
+	sql := `update clients set redirect_uris = array_prepend(?, redirect_uris) where id = ?;`
+	if err := s.db.Exec(sql, uri, clientId).Error; err != nil {
 		return err
 	}
+
 	return nil
 }
 
-func (s *Service) DeleteRedirectUri(clientId, uriId string) error {
-	if err := s.db.Where("id = ? AND client_id = ?", uriId, clientId).
-		Delete(&model.RedirectURI{}).Error; err != nil {
+func (s *Service) ModifyRedirectUri(clientId string, uriId uint, uri string) error {
+	sql := `update clients set redirect_uris[?] = ? where id = ?;`
+	if err := s.db.Exec(sql, uriId, uri, clientId).Error; err != nil {
 		return err
 	}
+
+	return nil
+}
+
+func (s *Service) DeleteRedirectUri(clientId string, uri string) error {
+	sql := `update clients set redirect_uris = array_remove(redirect_uris, ?) where id = ?;`
+	if err := s.db.Exec(sql, uri, clientId).Error; err != nil {
+		return err
+	}
+
 	return nil
 }

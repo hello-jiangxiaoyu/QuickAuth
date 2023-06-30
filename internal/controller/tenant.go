@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/pkg/model"
 	"github.com/gin-gonic/gin"
 )
 
@@ -47,18 +47,18 @@ func (o Controller) getTenant(c *gin.Context) {
 // @Schemes
 // @Description	get provider details
 // @Tags		tenant
-// @Param		clientId	path	string	true	"client id"
-// @Param		bd			body	model.Tenant	true	"body"
+// @Param		clientId	path	string				true	"client id"
+// @Param		bd			body	request.TenantReq	true	"body"
 // @Success		200
 // @Router		/api/quick/clients/{clientId}/tenants [post]
 func (o Controller) createTenant(c *gin.Context) {
-	var in model.Tenant
-	if err := o.SetCtx(c).BindJson(&in).Error; err != nil {
+	var in request.TenantReq
+	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
 		resp.ErrorRequest(c, err, "init tenant err")
 		return
 	}
-	in.ClientID = c.Param("clientId")
-	tenant, err := o.svc.CreatTenant(in)
+
+	tenant, err := o.svc.CreatTenant(in.ToModel())
 	if err != nil {
 		resp.ErrorSelect(c, err, "create tenant err")
 		return
@@ -71,20 +71,19 @@ func (o Controller) createTenant(c *gin.Context) {
 // @Schemes
 // @Description	get provider details
 // @Tags		tenant
-// @Param		clientId	path	string	true	"client id"
-// @Param		tenantId	path	string	true	"tenant id"
-// @Param		bd			body	model.Tenant	true	"body"
+// @Param		clientId	path	string				true	"client id"
+// @Param		tenantId	path	string				true	"tenant id"
+// @Param		bd			body	request.TenantReq	true	"body"
 // @Success		200
 // @Router		/api/quick/clients/{clientId}/tenants/{tenantId} [put]
 func (o Controller) modifyTenant(c *gin.Context) {
-	var in model.Tenant
-	if err := o.SetCtx(c).BindJson(&in).Error; err != nil {
+	var in request.TenantReq
+	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
 		resp.ErrorRequest(c, err, "init tenant err")
 		return
 	}
-	in.ID = c.Param("tenantId")
-	in.ClientID = c.Param("clientId")
-	if err := o.svc.ModifyTenant(in); err != nil {
+
+	if err := o.svc.ModifyTenant(in.ToModel()); err != nil {
 		resp.ErrorSelect(c, err, "modify tenant err")
 		return
 	}

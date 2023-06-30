@@ -12,9 +12,9 @@ const TableNameTenant = "tenants"
 
 // Tenant mapped from table <tenants>
 type Tenant struct {
-	ID         string    `gorm:"column:id;type:uuid;primaryKey" json:"id"`
+	ID         int64     `gorm:"column:id;type:bigint;primaryKey;autoIncrement:true" json:"id"`
 	ClientID   string    `gorm:"column:client_id;type:uuid;not null" json:"clientId"`
-	UserPoolID string    `gorm:"column:user_pool_id;type:uuid;not null" json:"userPoolId"`
+	UserPoolID int64     `gorm:"column:user_pool_id;type:bigint;not null" json:"userPoolId"`
 	Type       int32     `gorm:"column:type;type:integer;not null" json:"type"`
 	Name       string    `gorm:"column:name;type:character varying(127);not null" json:"name"`
 	Host       string    `gorm:"column:host;type:character varying(127);not null" json:"host"`

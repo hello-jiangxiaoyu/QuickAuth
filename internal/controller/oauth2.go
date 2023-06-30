@@ -43,13 +43,13 @@ func (o Controller) getAuthCode(c *gin.Context) {
 	}
 
 	session := sessions.Default(c)
-	userId, ok := session.Get("userId").(string)
-	if !ok || userId == "" {
+	userId, ok := session.Get("userId").(int64)
+	if !ok || userId == 0 {
 		resp.ErrorForbidden(c, "invalid user_id")
 		return
 	}
 	if ok, err := o.svc.IsRedirectUriValid(in.ClientID, in.RedirectUri); err != nil {
-		resp.ErrorSelect(c, err, "get redirect uri err.")
+		resp.ErrorSelect(c, err, "no such uri.")
 		return
 	} else if !ok {
 		resp.ErrorForbidden(c, "Invalid redirect_uri.")

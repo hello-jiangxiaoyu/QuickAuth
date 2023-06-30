@@ -37,16 +37,16 @@ func NewOauth2Router(repo *global.Repository, e *gin.Engine) {
 		client.GET("/:clientId/redirect-uri", o.listRedirectUri)
 		client.POST("/:clientId/redirect-uri", o.createRedirectUri)
 		client.PUT("/:clientId/redirect-uri/:uriId", o.modifyRedirectUri)
-		client.DELETE("/:clientId/redirect-uri/:uriId", o.deleteClientSecret)
+		client.DELETE("/:clientId/redirect-uri/:uri", o.deleteRedirectUri)
 	}
 
-	tenant := e.Group("/api/quick")
+	tenant := e.Group("/api/quick/clients/:clientId/tenants")
 	{
-		tenant.GET("/:clientId/tenants", o.listTenant)
-		tenant.GET("/:clientId/tenants/:tenantId", o.getTenant)
-		tenant.POST("/:clientId/tenants", o.createTenant)
-		tenant.PUT("/:clientId/tenants/:tenantId", o.modifyTenant)
-		tenant.DELETE("/:clientId/tenants/:tenantId", o.deleteTenant)
+		tenant.GET("", o.listTenant)
+		tenant.GET("/:tenantId", o.getTenant)
+		tenant.POST("", o.createTenant)
+		tenant.PUT("/:tenantId", o.modifyTenant)
+		tenant.DELETE("/:tenantId", o.deleteTenant)
 	}
 	provider := e.Group("/api/quick/providers") // 通过host区分租户
 	{
@@ -58,7 +58,17 @@ func NewOauth2Router(repo *global.Repository, e *gin.Engine) {
 
 	user := e.Group("/api/quick/user-pools")
 	{
-		user.GET("/:poolId")
+		user.GET("", o.listUserPool)
+		user.GET("/:poolId", o.getUserPool)
+		user.POST("", o.createUserPool)
+		user.PUT("/:poolId", o.modifyUserPool)
+		user.DELETE("/:poolId", o.deleteUserPool)
+
+		user.GET("/:poolId", o.listUser)
+		user.GET("/:poolId/users/:userId", o.getUser)
+		user.POST("/:poolId/users", o.createUser)
+		user.PUT("/:poolId/users/:userId", o.modifyUser)
+		user.DELETE("/:poolId/users/:userId", o.deleteUser)
 	}
 
 	e.GET("/api/quick/health", func(c *gin.Context) { c.String(http.StatusOK, "ok") }) // 健康探测

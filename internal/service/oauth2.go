@@ -30,7 +30,7 @@ func (s *Service) GetAccessCode(clientId string, codeName string) (*model.Code, 
 	return &code, nil
 }
 
-func (s *Service) CreateAccessCode(clientId string, userId string) (string, string, error) {
+func (s *Service) CreateAccessCode(clientId string, userId int64) (string, string, error) {
 	code := safe.RandHex(31)
 	state := safe.RandHex(31)
 	accessCode := model.Code{

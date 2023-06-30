@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/pkg/model"
 	"github.com/gin-gonic/gin"
 )
 
@@ -27,7 +27,7 @@ func (o Controller) listUserPool(c *gin.Context) {
 // @Tags		user
 // @Param		poolId	path	string	true	"user pool id"
 // @Success		200
-// @Router		/api/quick/user-pool/{poolId} [get]
+// @Router		/api/quick/user-pools/{poolId} [get]
 func (o Controller) getUserPool(c *gin.Context) {
 	client, err := o.svc.GetUserPool(c.Param("poolId"))
 	if err != nil {
@@ -41,16 +41,16 @@ func (o Controller) getUserPool(c *gin.Context) {
 // @Schemes
 // @Description	create user pool
 // @Tags		user
-// @Param		bd		body	model.Client	true	"body"
+// @Param		bd		body	request.UserPoolReq	true	"body"
 // @Success		200
-// @Router		/api/quick/user-pool [post]
+// @Router		/api/quick/user-pools [post]
 func (o Controller) createUserPool(c *gin.Context) {
-	var in model.UserPool
-	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+	var in request.UserPoolReq
+	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
 		resp.ErrorRequest(c, err, "init user pool req err")
 		return
 	}
-	client, err := o.svc.CreateUserPool(in)
+	client, err := o.svc.CreateUserPool(in.ToModel())
 	if err != nil {
 		resp.ErrorUnknown(c, err, "create user pool err")
 		return
@@ -62,18 +62,18 @@ func (o Controller) createUserPool(c *gin.Context) {
 // @Schemes
 // @Description	modify user pool
 // @Tags		user
-// @Param		poolId	path	string	true	"user pool id"
-// @Param		bd		body	model.UserPool	true	"body"
+// @Param		poolId	path	string				true	"user pool id"
+// @Param		bd		body	request.UserPoolReq	true	"body"
 // @Success		200
-// @Router		/api/quick/user-pool/{poolId} [put]
+// @Router		/api/quick/user-pools/{poolId} [put]
 func (o Controller) modifyUserPool(c *gin.Context) {
-	var in model.UserPool
+	var in request.UserPoolReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
 		resp.ErrorRequest(c, err, "init user pool req err")
 		return
 	}
-	in.ID = c.Param("poolId")
-	if err := o.svc.ModifyUserPool(in); err != nil {
+
+	if err := o.svc.ModifyUserPool(in.ToModel()); err != nil {
 		resp.ErrorUnknown(c, err, "modify user pool err")
 		return
 	}
@@ -86,7 +86,7 @@ func (o Controller) modifyUserPool(c *gin.Context) {
 // @Tags		user
 // @Param		poolId	path	string	true	"user pool id"
 // @Success		200
-// @Router		/api/quick/user-pool/{poolId} [delete]
+// @Router		/api/quick/user-pools/{poolId} [delete]
 func (o Controller) deleteUserPool(c *gin.Context) {
 	if err := o.svc.DeleteUserPool(c.Param("poolId")); err != nil {
 		resp.ErrorUnknown(c, err, "delete user pool err")

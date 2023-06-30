@@ -12,7 +12,7 @@ const TableNameUserPool = "user_pools"
 
 // UserPool mapped from table <user_pools>
 type UserPool struct {
-	ID         string    `gorm:"column:id;type:uuid;primaryKey" json:"id"`
+	ID         int64     `gorm:"column:id;type:bigint;primaryKey;autoIncrement:true" json:"id"`
 	Name       string    `gorm:"column:name;type:character varying(127);not null" json:"name"`
 	Describe   *string   `gorm:"column:describe;type:character varying(127)" json:"describe"`
 	CreateTime time.Time `gorm:"column:create_time;type:timestamp with time zone;not null;default:now()" json:"createTime"`
