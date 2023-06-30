@@ -77,7 +77,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Client"
+                            "$ref": "#/definitions/request.ClientReq"
                         }
                     }
                 ],
@@ -130,7 +130,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Client"
+                            "$ref": "#/definitions/request.ClientReq"
                         }
                     }
                 ],
@@ -180,7 +180,13 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             },
@@ -204,7 +210,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.RedirectURI"
+                            "$ref": "#/definitions/request.RedirectUriReq"
                         }
                     }
                 ],
@@ -231,12 +237,19 @@ const docTemplate = `{
                         "required": true
                     },
                     {
+                        "type": "string",
+                        "description": "uri id",
+                        "name": "uriId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
                         "description": "body",
                         "name": "bd",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.RedirectURI"
+                            "$ref": "#/definitions/request.RedirectUriReq"
                         }
                     }
                 ],
@@ -245,7 +258,9 @@ const docTemplate = `{
                         "description": "OK"
                     }
                 }
-            },
+            }
+        },
+        "/api/quick/clients/{clientId}/redirect-uri/{uri}": {
             "delete": {
                 "description": "delete client",
                 "tags": [
@@ -257,6 +272,13 @@ const docTemplate = `{
                         "type": "string",
                         "description": "client id",
                         "name": "clientId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "uri name",
+                        "name": "uri",
                         "in": "path",
                         "required": true
                     }
@@ -310,7 +332,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.ClientSecret"
+                            "$ref": "#/definitions/request.ClientSecretReq"
                         }
                     }
                 ],
@@ -386,7 +408,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Tenant"
+                            "$ref": "#/definitions/request.TenantReq"
                         }
                     }
                 ],
@@ -453,7 +475,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Tenant"
+                            "$ref": "#/definitions/request.TenantReq"
                         }
                     }
                 ],
@@ -687,7 +709,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Provider"
+                            "$ref": "#/definitions/request.ProviderReq"
                         }
                     }
                 ],
@@ -717,7 +739,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Provider"
+                            "$ref": "#/definitions/request.ProviderReq"
                         }
                     }
                 ],
@@ -749,7 +771,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/user-pool": {
+        "/api/quick/user-pools": {
             "get": {
                 "description": "list user pool",
                 "tags": [
@@ -775,7 +797,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Client"
+                            "$ref": "#/definitions/request.UserPoolReq"
                         }
                     }
                 ],
@@ -786,7 +808,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/user-pool/{poolId}": {
+        "/api/quick/user-pools/{poolId}": {
             "get": {
                 "description": "list user pool",
                 "tags": [
@@ -828,7 +850,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.UserPool"
+                            "$ref": "#/definitions/request.UserPoolReq"
                         }
                     }
                 ],
@@ -860,13 +882,22 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/user-pool/{poolId}/users": {
+        "/api/quick/user-pools/{poolId}/users": {
             "get": {
                 "description": "list users",
                 "tags": [
                     "user"
                 ],
                 "summary": "user info",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "poolId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -881,12 +912,19 @@ const docTemplate = `{
                 "summary": "create user",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "poolId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
                         "description": "body",
                         "name": "bd",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Client"
+                            "$ref": "#/definitions/request.UserReq"
                         }
                     }
                 ],
@@ -897,7 +935,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/user-pool/{poolId}/users/{userId}": {
+        "/api/quick/user-pools/{poolId}/users/{userId}": {
             "get": {
                 "description": "list user",
                 "tags": [
@@ -953,7 +991,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.UserPool"
+                            "$ref": "#/definitions/request.UserReq"
                         }
                     }
                 ],
@@ -962,9 +1000,7 @@ const docTemplate = `{
                         "description": "OK"
                     }
                 }
-            }
-        },
-        "/api/quick/user-pool/{poolId}/users/{user}": {
+            },
             "delete": {
                 "description": "delete user",
                 "tags": [
@@ -1115,33 +1151,18 @@ const docTemplate = `{
                 }
             }
         },
-        "model.Client": {
+        "request.ClientReq": {
             "type": "object"
         },
-        "model.ClientSecret": {
+        "request.ClientSecretReq": {
             "type": "object",
             "properties": {
-                "clientId": {
-                    "type": "string"
-                },
-                "createTime": {
-                    "type": "string"
-                },
                 "describe": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "secret": {
-                    "type": "string"
-                },
-                "updateTime": {
                     "type": "string"
                 }
             }
         },
-        "model.Provider": {
+        "request.ProviderReq": {
             "type": "object",
             "properties": {
                 "clientId": {
@@ -1149,51 +1170,21 @@ const docTemplate = `{
                 },
                 "clientSecret": {
                     "type": "string"
-                },
-                "createTime": {
-                    "type": "string"
-                },
-                "tenantId": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                },
-                "updateTime": {
-                    "type": "string"
                 }
             }
         },
-        "model.RedirectURI": {
+        "request.RedirectUriReq": {
             "type": "object",
             "properties": {
-                "clientId": {
-                    "type": "string"
-                },
-                "createTime": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "updateTime": {
-                    "type": "string"
-                },
                 "uri": {
                     "type": "string"
                 }
             }
         },
-        "model.Tenant": {
+        "request.TenantReq": {
             "type": "object",
             "properties": {
-                "clientId": {
-                    "type": "string"
-                },
                 "company": {
-                    "type": "string"
-                },
-                "createTime": {
                     "type": "string"
                 },
                 "describe": {
@@ -1202,39 +1193,47 @@ const docTemplate = `{
                 "host": {
                     "type": "string"
                 },
-                "id": {
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 },
                 "type": {
                     "type": "integer"
                 },
-                "updateTime": {
-                    "type": "string"
-                },
                 "userPoolId": {
-                    "type": "string"
+                    "type": "integer"
                 }
             }
         },
-        "model.UserPool": {
+        "request.UserPoolReq": {
             "type": "object",
             "properties": {
-                "createTime": {
-                    "type": "string"
-                },
                 "describe": {
-                    "type": "string"
-                },
-                "id": {
                     "type": "string"
                 },
                 "name": {
                     "type": "string"
+                }
+            }
+        },
+        "request.UserReq": {
+            "type": "object",
+            "properties": {
+                "displayName": {
+                    "type": "string"
                 },
-                "updateTime": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "username": {
                     "type": "string"
                 }
             }

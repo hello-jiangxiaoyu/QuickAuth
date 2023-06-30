@@ -12,8 +12,8 @@ type UserDtoModel struct {
 	DisplayName *string   `json:"displayName"`
 	Email       *string   `json:"email"`
 	Phone       *string   `json:"phone"`
-	Type        string    `json:"type"`
-	IsDisabled  bool      `json:"isDisabled"`
+	Type        int32     `json:"type"`
+	IsDisabled  int32     `json:"isDisabled"`
 	CreateTime  time.Time `json:"createTime"`
 	UpdateTime  time.Time `json:"updateTime"`
 }

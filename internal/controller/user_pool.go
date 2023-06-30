@@ -11,7 +11,7 @@ import (
 // @Description	list user pool
 // @Tags		user
 // @Success		200
-// @Router		/api/quick/user-pool [get]
+// @Router		/api/quick/user-pools [get]
 func (o Controller) listUserPool(c *gin.Context) {
 	clients, err := o.svc.ListUserPool()
 	if err != nil {

@@ -67,7 +67,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Client"
+                            "$ref": "#/definitions/request.ClientReq"
                         }
                     }
                 ],
@@ -120,7 +120,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Client"
+                            "$ref": "#/definitions/request.ClientReq"
                         }
                     }
                 ],
@@ -170,7 +170,13 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             },
@@ -194,7 +200,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.RedirectURI"
+                            "$ref": "#/definitions/request.RedirectUriReq"
                         }
                     }
                 ],
@@ -221,12 +227,19 @@
                         "required": true
                     },
                     {
+                        "type": "string",
+                        "description": "uri id",
+                        "name": "uriId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
                         "description": "body",
                         "name": "bd",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.RedirectURI"
+                            "$ref": "#/definitions/request.RedirectUriReq"
                         }
                     }
                 ],
@@ -235,7 +248,9 @@
                         "description": "OK"
                     }
                 }
-            },
+            }
+        },
+        "/api/quick/clients/{clientId}/redirect-uri/{uri}": {
             "delete": {
                 "description": "delete client",
                 "tags": [
@@ -247,6 +262,13 @@
                         "type": "string",
                         "description": "client id",
                         "name": "clientId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "uri name",
+                        "name": "uri",
                         "in": "path",
                         "required": true
                     }
@@ -300,7 +322,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.ClientSecret"
+                            "$ref": "#/definitions/request.ClientSecretReq"
                         }
                     }
                 ],
@@ -376,7 +398,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Tenant"
+                            "$ref": "#/definitions/request.TenantReq"
                         }
                     }
                 ],
@@ -443,7 +465,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Tenant"
+                            "$ref": "#/definitions/request.TenantReq"
                         }
                     }
                 ],
@@ -677,7 +699,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Provider"
+                            "$ref": "#/definitions/request.ProviderReq"
                         }
                     }
                 ],
@@ -707,7 +729,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Provider"
+                            "$ref": "#/definitions/request.ProviderReq"
                         }
                     }
                 ],
@@ -739,7 +761,7 @@
                 }
             }
         },
-        "/api/quick/user-pool": {
+        "/api/quick/user-pools": {
             "get": {
                 "description": "list user pool",
                 "tags": [
@@ -765,7 +787,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Client"
+                            "$ref": "#/definitions/request.UserPoolReq"
                         }
                     }
                 ],
@@ -776,7 +798,7 @@
                 }
             }
         },
-        "/api/quick/user-pool/{poolId}": {
+        "/api/quick/user-pools/{poolId}": {
             "get": {
                 "description": "list user pool",
                 "tags": [
@@ -818,7 +840,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.UserPool"
+                            "$ref": "#/definitions/request.UserPoolReq"
                         }
                     }
                 ],
@@ -850,13 +872,22 @@
                 }
             }
         },
-        "/api/quick/user-pool/{poolId}/users": {
+        "/api/quick/user-pools/{poolId}/users": {
             "get": {
                 "description": "list users",
                 "tags": [
                     "user"
                 ],
                 "summary": "user info",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "poolId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -871,12 +902,19 @@
                 "summary": "create user",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "poolId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
                         "description": "body",
                         "name": "bd",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Client"
+                            "$ref": "#/definitions/request.UserReq"
                         }
                     }
                 ],
@@ -887,7 +925,7 @@
                 }
             }
         },
-        "/api/quick/user-pool/{poolId}/users/{userId}": {
+        "/api/quick/user-pools/{poolId}/users/{userId}": {
             "get": {
                 "description": "list user",
                 "tags": [
@@ -943,7 +981,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.UserPool"
+                            "$ref": "#/definitions/request.UserReq"
                         }
                     }
                 ],
@@ -952,9 +990,7 @@
                         "description": "OK"
                     }
                 }
-            }
-        },
-        "/api/quick/user-pool/{poolId}/users/{user}": {
+            },
             "delete": {
                 "description": "delete user",
                 "tags": [
@@ -1105,33 +1141,18 @@
                 }
             }
         },
-        "model.Client": {
+        "request.ClientReq": {
             "type": "object"
         },
-        "model.ClientSecret": {
+        "request.ClientSecretReq": {
             "type": "object",
             "properties": {
-                "clientId": {
-                    "type": "string"
-                },
-                "createTime": {
-                    "type": "string"
-                },
                 "describe": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "secret": {
-                    "type": "string"
-                },
-                "updateTime": {
                     "type": "string"
                 }
             }
         },
-        "model.Provider": {
+        "request.ProviderReq": {
             "type": "object",
             "properties": {
                 "clientId": {
@@ -1139,51 +1160,21 @@
                 },
                 "clientSecret": {
                     "type": "string"
-                },
-                "createTime": {
-                    "type": "string"
-                },
-                "tenantId": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                },
-                "updateTime": {
-                    "type": "string"
                 }
             }
         },
-        "model.RedirectURI": {
+        "request.RedirectUriReq": {
             "type": "object",
             "properties": {
-                "clientId": {
-                    "type": "string"
-                },
-                "createTime": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "updateTime": {
-                    "type": "string"
-                },
                 "uri": {
                     "type": "string"
                 }
             }
         },
-        "model.Tenant": {
+        "request.TenantReq": {
             "type": "object",
             "properties": {
-                "clientId": {
-                    "type": "string"
-                },
                 "company": {
-                    "type": "string"
-                },
-                "createTime": {
                     "type": "string"
                 },
                 "describe": {
@@ -1192,39 +1183,47 @@
                 "host": {
                     "type": "string"
                 },
-                "id": {
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 },
                 "type": {
                     "type": "integer"
                 },
-                "updateTime": {
-                    "type": "string"
-                },
                 "userPoolId": {
-                    "type": "string"
+                    "type": "integer"
                 }
             }
         },
-        "model.UserPool": {
+        "request.UserPoolReq": {
             "type": "object",
             "properties": {
-                "createTime": {
-                    "type": "string"
-                },
                 "describe": {
-                    "type": "string"
-                },
-                "id": {
                     "type": "string"
                 },
                 "name": {
                     "type": "string"
+                }
+            }
+        },
+        "request.UserReq": {
+            "type": "object",
+            "properties": {
+                "displayName": {
+                    "type": "string"
                 },
-                "updateTime": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "username": {
                     "type": "string"
                 }
             }

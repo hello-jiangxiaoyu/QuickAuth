@@ -23,6 +23,7 @@ func (s *Service) GetLoginProviderInfo(tenantId int64) ([]model.Provider, error)
 }
 
 func (s *Service) CreateProvider(prd model.Provider) (*model.Provider, error) {
+	// todo: check if tenant exists
 	if err := s.db.Create(&prd).Error; err != nil {
 		return nil, err
 	}

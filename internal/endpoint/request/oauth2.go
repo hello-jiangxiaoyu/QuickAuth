@@ -40,3 +40,14 @@ type Token struct {
 	Tenant       model.Tenant `json:"-"`
 	Client       model.Client `json:"-"`
 }
+
+type ProviderReq struct {
+	TenantID     int64  `json:"-"`
+	Type         string `json:"-"`
+	ClientID     string `json:"clientId"`
+	ClientSecret string `json:"clientSecret"`
+}
+
+func (p *ProviderReq) ToModel() model.Provider {
+	return model.Provider{}
+}

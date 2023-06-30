@@ -14,8 +14,9 @@ import (
 )
 
 func GetServer() *gin.Engine {
-	r := gin.New()
-	gin.Recovery()
+	r := gin.Default()
+	// r := gin.New()
+	// gin.SetMode(gin.ReleaseMode)
 	r.Use(middleware.Recovery(), middleware.RequestLog(), cors.Default(), middleware.TenantHost())
 	cookieSecret := []byte("QuickAuth")
 	store := cookie.NewStore(cookieSecret)
@@ -25,7 +26,7 @@ func GetServer() *gin.Engine {
 	})
 	r.Use(sessions.Sessions("QuickAuth", store))
 
-	r.GET("/quick/v1/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.GET("/api/quick/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	controller.NewOauth2Router(&global.Repository{Logger: global.Log, DB: global.DB, Config: global.Config}, r)
 	return r
 }

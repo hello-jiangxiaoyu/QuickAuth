@@ -27,12 +27,12 @@ func (o Controller) listRedirectUri(c *gin.Context) {
 // @Description	create client
 // @Tags		client
 // @Param		clientId	path	string				true	"client id"
-// @Param		bd			body	model.RedirectURI	true	"body"
+// @Param		bd			body	request.RedirectUriReq	true	"body"
 // @Success		200
 // @Router		/api/quick/clients/{clientId}/redirect-uri [post]
 func (o Controller) createRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
-	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
 		resp.ErrorRequest(c, err, "init redirect uri req err")
 		return
 	}
@@ -49,7 +49,8 @@ func (o Controller) createRedirectUri(c *gin.Context) {
 // @Description	modify client
 // @Tags		client
 // @Param		clientId	path	string				true	"client id"
-// @Param		bd			body	model.RedirectURI	true	"body"
+// @Param		uriId		path	string				true	"uri id"
+// @Param		bd			body	request.RedirectUriReq	true	"body"
 // @Success		200
 // @Router		/api/quick/clients/{clientId}/redirect-uri/{uriId} [put]
 func (o Controller) modifyRedirectUri(c *gin.Context) {
@@ -70,6 +71,7 @@ func (o Controller) modifyRedirectUri(c *gin.Context) {
 // @Description	delete client
 // @Tags		client
 // @Param		clientId	path	string	true	"client id"
+// @Param		uri			path	string	true	"uri name"
 // @Success		200
 // @Router		/api/quick/clients/{clientId}/redirect-uri/{uri} [delete]
 func (o Controller) deleteRedirectUri(c *gin.Context) {

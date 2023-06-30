@@ -5,9 +5,9 @@ import (
 	"strconv"
 )
 
-func (s *Service) GetTenant(id, clientId string) (*model.Tenant, error) {
+func (s *Service) GetTenant(clientId, tenantId string) (*model.Tenant, error) {
 	var tenant model.Tenant
-	if err := s.db.Where("id = ? AND client_id = ?", id, clientId).
+	if err := s.db.Where("id = ? AND client_id = ?", tenantId, clientId).
 		First(&tenant).Error; err != nil {
 		return nil, err
 	}
@@ -16,7 +16,8 @@ func (s *Service) GetTenant(id, clientId string) (*model.Tenant, error) {
 
 func (s *Service) ListTenant(clientId string) ([]model.Tenant, error) {
 	var tenant []model.Tenant
-	if err := s.db.Select("id", "client_id", "type", "name").Where("client_id = ?", clientId).Find(&tenant).Error; err != nil {
+	if err := s.db.Select("id", "client_id", "user_pool_id", "type", "host", "name", "company", "create_time", "update_time").
+		Where("client_id = ?", clientId).Find(&tenant).Error; err != nil {
 		return nil, err
 	}
 	return tenant, nil

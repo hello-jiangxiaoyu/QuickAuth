@@ -38,85 +38,60 @@ definitions:
       userinfo_endpoint:
         type: string
     type: object
-  model.Client:
+  request.ClientReq:
     type: object
-  model.ClientSecret:
+  request.ClientSecretReq:
     properties:
-      clientId:
-        type: string
-      createTime:
-        type: string
       describe:
         type: string
-      id:
-        type: integer
-      secret:
-        type: string
-      updateTime:
-        type: string
     type: object
-  model.Provider:
+  request.ProviderReq:
     properties:
       clientId:
         type: string
       clientSecret:
         type: string
-      createTime:
-        type: string
-      tenantId:
-        type: string
-      type:
-        type: string
-      updateTime:
-        type: string
     type: object
-  model.RedirectURI:
+  request.RedirectUriReq:
     properties:
-      clientId:
-        type: string
-      createTime:
-        type: string
-      id:
-        type: integer
-      updateTime:
-        type: string
       uri:
         type: string
     type: object
-  model.Tenant:
+  request.TenantReq:
     properties:
-      clientId:
-        type: string
       company:
-        type: string
-      createTime:
         type: string
       describe:
         type: string
       host:
         type: string
-      id:
-        type: string
       name:
         type: string
       type:
         type: integer
-      updateTime:
-        type: string
       userPoolId:
-        type: string
+        type: integer
     type: object
-  model.UserPool:
+  request.UserPoolReq:
     properties:
-      createTime:
-        type: string
       describe:
-        type: string
-      id:
         type: string
       name:
         type: string
-      updateTime:
+    type: object
+  request.UserReq:
+    properties:
+      displayName:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      type:
+        type: integer
+      username:
         type: string
     type: object
 info:
@@ -164,7 +139,7 @@ paths:
         name: bd
         required: true
         schema:
-          $ref: '#/definitions/model.Client'
+          $ref: '#/definitions/request.ClientReq'
       responses:
         "200":
           description: OK
@@ -213,7 +188,7 @@ paths:
         name: bd
         required: true
         schema:
-          $ref: '#/definitions/model.Client'
+          $ref: '#/definitions/request.ClientReq'
       responses:
         "200":
           description: OK
@@ -232,6 +207,10 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            items:
+              type: string
+            type: array
       summary: get redirect uri list
       tags:
       - client
@@ -248,14 +227,14 @@ paths:
         name: bd
         required: true
         schema:
-          $ref: '#/definitions/model.RedirectURI'
+          $ref: '#/definitions/request.RedirectUriReq'
       responses:
         "200":
           description: OK
       summary: create client
       tags:
       - client
-  /api/quick/clients/{clientId}/redirect-uri/{uriId}:
+  /api/quick/clients/{clientId}/redirect-uri/{uri}:
     delete:
       description: delete client
       parameters:
@@ -264,12 +243,18 @@ paths:
         name: clientId
         required: true
         type: string
+      - description: uri name
+        in: path
+        name: uri
+        required: true
+        type: string
       responses:
         "200":
           description: OK
       summary: delete client
       tags:
       - client
+  /api/quick/clients/{clientId}/redirect-uri/{uriId}:
     put:
       description: modify client
       parameters:
@@ -278,12 +263,17 @@ paths:
         name: clientId
         required: true
         type: string
+      - description: uri id
+        in: path
+        name: uriId
+        required: true
+        type: string
       - description: body
         in: body
         name: bd
         required: true
         schema:
-          $ref: '#/definitions/model.RedirectURI'
+          $ref: '#/definitions/request.RedirectUriReq'
       responses:
         "200":
           description: OK
@@ -318,7 +308,7 @@ paths:
         name: bd
         required: true
         schema:
-          $ref: '#/definitions/model.ClientSecret'
+          $ref: '#/definitions/request.ClientSecretReq'
       responses:
         "200":
           description: OK
@@ -368,7 +358,7 @@ paths:
         name: bd
         required: true
         schema:
-          $ref: '#/definitions/model.Tenant'
+          $ref: '#/definitions/request.TenantReq'
       responses:
         "200":
           description: OK
@@ -432,7 +422,7 @@ paths:
         name: bd
         required: true
         schema:
-          $ref: '#/definitions/model.Tenant'
+          $ref: '#/definitions/request.TenantReq'
       responses:
         "200":
           description: OK
@@ -583,7 +573,7 @@ paths:
         name: bd
         required: true
         schema:
-          $ref: '#/definitions/model.Provider'
+          $ref: '#/definitions/request.ProviderReq'
       responses:
         "200":
           description: OK
@@ -603,14 +593,14 @@ paths:
         name: bd
         required: true
         schema:
-          $ref: '#/definitions/model.Provider'
+          $ref: '#/definitions/request.ProviderReq'
       responses:
         "200":
           description: OK
       summary: get provider details
       tags:
       - provider
-  /api/quick/user-pool:
+  /api/quick/user-pools:
     get:
       description: list user pool
       responses:
@@ -627,14 +617,14 @@ paths:
         name: bd
         required: true
         schema:
-          $ref: '#/definitions/model.Client'
+          $ref: '#/definitions/request.UserPoolReq'
       responses:
         "200":
           description: OK
       summary: create user pool
       tags:
       - user
-  /api/quick/user-pool/{poolId}:
+  /api/quick/user-pools/{poolId}:
     delete:
       description: delete user pool
       parameters:
@@ -676,16 +666,22 @@ paths:
         name: bd
         required: true
         schema:
-          $ref: '#/definitions/model.UserPool'
+          $ref: '#/definitions/request.UserPoolReq'
       responses:
         "200":
           description: OK
       summary: modify user pool
       tags:
       - user
-  /api/quick/user-pool/{poolId}/users:
+  /api/quick/user-pools/{poolId}/users:
     get:
       description: list users
+      parameters:
+      - description: user pool id
+        in: path
+        name: poolId
+        required: true
+        type: string
       responses:
         "200":
           description: OK
@@ -695,19 +691,24 @@ paths:
     post:
       description: create user
       parameters:
+      - description: user pool id
+        in: path
+        name: poolId
+        required: true
+        type: string
       - description: body
         in: body
         name: bd
         required: true
         schema:
-          $ref: '#/definitions/model.Client'
+          $ref: '#/definitions/request.UserReq'
       responses:
         "200":
           description: OK
       summary: create user
       tags:
       - user
-  /api/quick/user-pool/{poolId}/users/{user}:
+  /api/quick/user-pools/{poolId}/users/{userId}:
     delete:
       description: delete user
       parameters:
@@ -727,7 +728,6 @@ paths:
       summary: delete user
       tags:
       - user
-  /api/quick/user-pool/{poolId}/users/{userId}:
     get:
       description: list user
       parameters:
@@ -765,7 +765,7 @@ paths:
         name: bd
         required: true
         schema:
-          $ref: '#/definitions/model.UserPool'
+          $ref: '#/definitions/request.UserReq'
       responses:
         "200":
           description: OK

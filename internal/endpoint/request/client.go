@@ -30,7 +30,7 @@ func (c *ClientReq) ToModel() model.Client {
 }
 
 type ClientSecretReq struct {
-	ClientId string `json:"-" uri:"clientId" binding:"required"`
+	ClientId string `json:"-" uri:"clientId"`
 	Describe string `json:"describe"`
 }
 
@@ -42,14 +42,14 @@ func (c *ClientSecretReq) ToModel() model.ClientSecret {
 }
 
 type RedirectUriReq struct {
-	ClientId string `json:"-" uri:"clientId" binding:"required"`
+	ClientId string `json:"-" uri:"clientId"`
 	UriId    uint   `json:"-" uri:"uriId"`
 	Uri      string `json:"uri"`
 }
 
 type TenantReq struct {
 	TenantID   int64   `json:"-" uri:"tenantId"`
-	ClientID   string  `json:"-" uri:"clientId" binding:"required"`
+	ClientID   string  `json:"-" uri:"clientId"`
 	UserPoolID int64   `json:"userPoolId"`
 	Type       int32   `json:"type"`
 	Name       string  `json:"name"`

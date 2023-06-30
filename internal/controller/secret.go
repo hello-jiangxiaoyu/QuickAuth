@@ -32,7 +32,7 @@ func (o Controller) listClientSecret(c *gin.Context) {
 // @Router		/api/quick/clients/{clientId}/secrets [post]
 func (o Controller) createClientSecret(c *gin.Context) {
 	var in request.ClientSecretReq
-	if err := o.SetCtx(c).BindJson(&in).Error; err != nil {
+	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
 		resp.ErrorRequest(c, err, "init client secret req err")
 		return
 	}

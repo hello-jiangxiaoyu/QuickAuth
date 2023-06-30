@@ -8,7 +8,7 @@ import (
 
 func (s *Service) ListClients() ([]model.Client, error) {
 	var clients []model.Client
-	if err := s.db.Select("id", "name").Find(&clients).Error; err != nil {
+	if err := s.db.Select("id", "name", "create_time", "update_time").Find(&clients).Error; err != nil {
 		return nil, err
 	}
 

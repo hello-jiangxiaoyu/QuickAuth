@@ -64,7 +64,7 @@ func NewOauth2Router(repo *global.Repository, e *gin.Engine) {
 		user.PUT("/:poolId", o.modifyUserPool)
 		user.DELETE("/:poolId", o.deleteUserPool)
 
-		user.GET("/:poolId", o.listUser)
+		user.GET("/:poolId/users", o.listUser)
 		user.GET("/:poolId/users/:userId", o.getUser)
 		user.POST("/:poolId/users", o.createUser)
 		user.PUT("/:poolId/users/:userId", o.modifyUser)

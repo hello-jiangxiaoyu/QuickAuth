@@ -35,6 +35,7 @@ func (s *Service) CreateUser(u model.User) (*model.User, error) {
 	if err := s.db.Create(&u).Error; err != nil {
 		return nil, err
 	}
+	u.Password = ""
 	return &u, nil
 }
 

@@ -13,7 +13,7 @@ const TableNameProvider = "providers"
 // Provider mapped from table <providers>
 type Provider struct {
 	TenantID     int64     `gorm:"column:tenant_id;type:bigint;primaryKey;autoIncrement:true" json:"tenantId"`
-	Type         string    `gorm:"column:type;type:character(31);primaryKey" json:"type"`
+	Type         string    `gorm:"column:type;type:character varying(31);primaryKey" json:"type"`
 	ClientID     string    `gorm:"column:client_id;type:character varying(255);not null" json:"clientId"`
 	ClientSecret string    `gorm:"column:client_secret;type:character varying(255);not null" json:"clientSecret"`
 	CreateTime   time.Time `gorm:"column:create_time;type:timestamp with time zone;not null;default:now()" json:"createTime"`

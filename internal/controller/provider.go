@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/pkg/model"
 	"github.com/gin-gonic/gin"
@@ -53,18 +54,19 @@ func (o Controller) getProvider(c *gin.Context) {
 // @Schemes
 // @Description	get provider details
 // @Tags		provider
-// @Param		providerId	path	string	true	"client id"
-// @Param		bd			body	model.Provider	true	"body"
+// @Param		providerId	path	string				true	"client id"
+// @Param		bd			body	request.ProviderReq	true	"body"
 // @Success		200
 // @Router		/api/quick/providers/{providerId} [post]
 func (o Controller) createProvider(c *gin.Context) {
-	var in model.Provider
+	var in request.ProviderReq
 	var tenant model.Tenant
 	if err := o.SetCtx(c).BindJson(&in).SetTenant(&tenant).Error; err != nil {
 		resp.ErrorRequest(c, err, "init provider err")
 		return
 	}
-	provider, err := o.svc.CreateProvider(in)
+	in.TenantID = tenant.ID
+	provider, err := o.svc.CreateProvider(in.ToModel())
 	provider.TenantID = tenant.ID
 	if err != nil {
 		resp.ErrorSelect(c, err, "create provider err")
@@ -78,19 +80,19 @@ func (o Controller) createProvider(c *gin.Context) {
 // @Schemes
 // @Description	get provider details
 // @Tags		provider
-// @Param		providerId	path	string			true	"client id"
-// @Param		bd			body	model.Provider	true	"body"
+// @Param		providerId	path	string				true	"client id"
+// @Param		bd			body	request.ProviderReq	true	"body"
 // @Success		200
 // @Router		/api/quick/providers/{providerId} [put]
 func (o Controller) modifyProvider(c *gin.Context) {
 	var tenant model.Tenant
-	var in model.Provider
+	var in request.ProviderReq
 	if err := o.SetCtx(c).BindJson(&in).SetTenant(&tenant).Error; err != nil {
 		resp.ErrorRequest(c, err, "init provider err")
 		return
 	}
 	in.TenantID = tenant.ID
-	if err := o.svc.ModifyProvider(in); err != nil {
+	if err := o.svc.ModifyProvider(in.ToModel()); err != nil {
 		resp.ErrorSelect(c, err, "modify provider err")
 		return
 	}

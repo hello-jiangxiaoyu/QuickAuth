@@ -40,7 +40,7 @@ func (o Controller) login(c *gin.Context) {
 		resp.ErrorNotFound(c, err, "no such user")
 		return
 	}
-	if !safe.CheckPasswordHash(in.Password, *user.Password) {
+	if !safe.CheckPasswordHash(in.Password, user.Password) {
 		resp.ErrorForbidden(c, "user name or password is incorrect")
 		return
 	}

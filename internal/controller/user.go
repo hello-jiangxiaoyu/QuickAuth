@@ -3,13 +3,16 @@ package controller
 import (
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
+	"QuickAuth/pkg/tools/safe"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 // @Summary	user info
 // @Schemes
 // @Description	list users
 // @Tags		user
+// @Param		poolId	path	string	true	"user pool id"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users [get]
 func (o Controller) listUser(c *gin.Context) {
@@ -44,6 +47,7 @@ func (o Controller) getUser(c *gin.Context) {
 // @Schemes
 // @Description	create user
 // @Tags		user
+// @Param		poolId	path	string			true	"user pool id"
 // @Param		bd		body	request.UserReq	true	"body"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users [post]
@@ -54,6 +58,13 @@ func (o Controller) createUser(c *gin.Context) {
 		return
 	}
 
+	var err error
+	in.Password, err = safe.HashPassword(in.Password)
+	if err != nil {
+		resp.ErrorUnknown(c, err, "hash password err")
+		return
+	}
+	in.OpenId = uuid.NewString()
 	client, err := o.svc.CreateUser(in.ToModel())
 	if err != nil {
 		resp.ErrorUnknown(c, err, "create user err")
@@ -92,7 +103,7 @@ func (o Controller) modifyUser(c *gin.Context) {
 // @Param		poolId	path	string	true	"user pool id"
 // @Param		userId	path	string	true	"user id"
 // @Success		200
-// @Router		/api/quick/user-pools/{poolId}/users/{user} [delete]
+// @Router		/api/quick/user-pools/{poolId}/users/{userId} [delete]
 func (o Controller) deleteUser(c *gin.Context) {
 	poolId := c.Param("poolId")
 	userId := c.Param("userId")
