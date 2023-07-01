@@ -1,9 +1,8 @@
 import React from 'react';
+import type { NextPage } from 'next';
 
-export default function Home() {
-  return (
-    <>
-      hello main
-    </>
-  )
-}
+const Home: NextPage = () => {
+  return <main>Arco Design Pro</main>;
+};
+
+export default Home;
