@@ -36,7 +36,7 @@ module.exports = withLess(
       return [
         {
           source: '/',
-          destination: '/example',
+          destination: '/application',
           permanent: true,
         },
       ];

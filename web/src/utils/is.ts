@@ -15,3 +15,9 @@ export const isSSR = (function () {
     return true;
   }
 })();
+
+export function isValidUri(uri: string, path: string): boolean {
+  const regexPath = path.replace(/{.*?}/g, '[\\w\\-_]*$');
+  const regex = new RegExp(`^${regexPath}$`);
+  return regex.test(uri);
+}

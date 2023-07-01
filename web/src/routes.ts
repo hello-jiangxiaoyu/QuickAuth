@@ -13,8 +13,15 @@ export type IRoute = AuthParams & {
 
 export const routes: IRoute[] = [
   {
-    name: 'Example',
-    key: 'example',
+    name: 'menu.application',
+    key: 'application',
+    children: [
+      {
+        name: 'menu.application',
+        key: 'application/{clientId}',
+        ignore: true,
+      }
+    ]
   },
 ];
 

@@ -37,9 +37,7 @@ function PageLayout({ children }: { children: ReactNode }) {
   const pathname = router.pathname;
   const currentComponent = qs.parseUrl(pathname).url.slice(1);
   const locale = useLocale();
-  const { userInfo, settings, userLoading } = useSelector(
-    (state: GlobalState) => state
-  );
+  const { userInfo, settings, userLoading } = useSelector((state: GlobalState) => state);
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [routes, defaultRoute] = useRoute(userInfo?.permissions);
@@ -177,7 +175,7 @@ function PageLayout({ children }: { children: ReactNode }) {
                 </div>
               )}
               <Content>
-                {routeMap.current.has(pathname) ? children : <NoAccess />}
+                {pathname !== '/_error' ? children : <NoAccess />/*routeMap.current.has(pathname) ? children : <NoAccess />*/}
               </Content>
             </div>
             {showFooter && <Footer />}
