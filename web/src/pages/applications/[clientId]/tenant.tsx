@@ -17,7 +17,7 @@ export default function TenantInfo(props: {clientId: string}) {
   ];
   return (
     <>
-      {props.clientId}
+      <h3>{props.clientId} 租户信息</h3>
       <Table columns={columns} data={data} />
     </>
   );

@@ -36,11 +36,12 @@ module.exports = withLess(
       return [
         {
           source: '/',
-          destination: '/application',
+          destination: '/applications',
           permanent: true,
         },
       ];
     },
     pageExtensions: ['tsx'],
+    trailingSlash: true,
   })
 );

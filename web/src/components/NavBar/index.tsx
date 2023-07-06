@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import {
   Tooltip,
-  Input,
   Avatar,
   Select,
   Dropdown,
@@ -20,7 +19,6 @@ import {
   IconPoweroff,
   IconExperiment,
   IconDashboard,
-  IconInteraction,
   IconTag,
 } from '@arco-design/web-react/icon';
 import { useSelector, useDispatch } from 'react-redux';
@@ -75,9 +73,7 @@ function Navbar({ show }: { show: boolean }) {
     return (
       <div className={styles['fixed-settings']}>
         <Settings
-          trigger={
-            <Button icon={<IconSettings />} type="primary" size="large" />
-          }
+          trigger={<Button icon={<IconSettings />} type="primary" size="large" />}
         />
       </div>
     );
@@ -94,9 +90,7 @@ function Navbar({ show }: { show: boolean }) {
           <>
             <IconUser className={styles['dropdown-icon']} />
             <span className={styles['user-role']}>
-              {role === 'admin'
-                ? t['menu.user.role.admin']
-                : t['menu.user.role.user']}
+              {role === 'admin' ? t['menu.user.role.admin'] : t['menu.user.role.user']}
             </span>
           </>
         }
@@ -142,18 +136,9 @@ function Navbar({ show }: { show: boolean }) {
       <ul className={styles.right}>
         <li>
           <Select
-            triggerElement={<IconButton icon={<IconLanguage />} />}
-            options={[
-              { label: '中文', value: 'zh-CN' },
-              { label: 'English', value: 'en-US' },
-            ]}
-            value={lang}
-            triggerProps={{
-              autoAlignPopupWidth: false,
-              autoAlignPopupMinWidth: true,
-              position: 'br',
-            }}
-            trigger="hover"
+            value={lang} trigger="hover" triggerElement={<IconButton icon={<IconLanguage />} />}
+            triggerProps={{autoAlignPopupWidth: false, autoAlignPopupMinWidth: true, position: 'br'}}
+            options={[{ label: '中文', value: 'zh-CN' }, { label: 'English', value: 'en-US' }]}
             onChange={(value) => {
               setLang(value);
               const nextLang = defaultLocale[value];
@@ -167,13 +152,7 @@ function Navbar({ show }: { show: boolean }) {
           </MessageBox>
         </li>
         <li>
-          <Tooltip
-            content={
-              theme === 'light'
-                ? t['settings.navbar.theme.toDark']
-                : t['settings.navbar.theme.toLight']
-            }
-          >
+          <Tooltip content={theme === 'light' ? t['settings.navbar.theme.toDark'] : t['settings.navbar.theme.toLight']}>
             <IconButton
               icon={theme !== 'dark' ? <IconMoonFill /> : <IconSunFill />}
               onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}

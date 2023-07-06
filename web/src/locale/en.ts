@@ -2,7 +2,11 @@
 const en = {
   'menu.dashboard': 'Dashboard',
   'menu.dashboard.workplace': 'Workplace',
-  'menu.application': 'Application',
+  'menu.applications': 'Applications',
+  'menu.tenants': 'Tenants',
+  'menu.pools': 'User Pools',
+  'menu.authentication': 'authentication',
+  'menu.messages': 'messages',
   'menu.user.info': 'User Info',
   'menu.user.setting': 'User Setting',
   'menu.user.switchRoles': 'Switch Roles',

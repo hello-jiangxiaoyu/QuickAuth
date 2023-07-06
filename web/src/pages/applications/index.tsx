@@ -9,7 +9,7 @@ function Example() {
     {name: 'zhao', type: 'frontend', icon: 'IconMessage', clientId: '3'},
     {name: 'feng', type: 'insert', icon: 'IconBook', clientId: '4'},
     {name: 'qiang', type: 'python', icon: 'IconRobot', clientId: '5'},
-  ]
+  ];
   return (
     <div style={{ minHeight: '80vh', marginLeft: 10 }}>
       <Grid.Row gutter={24} style={{minHeight: '200', width: '100%'}}>

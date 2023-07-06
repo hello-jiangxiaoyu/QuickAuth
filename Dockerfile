@@ -1,11 +1,14 @@
 ##
 ## bulid web
 ##
-FROM node:19-alpine AS build-web
+FROM node:18-alpine AS build-web
 WORKDIR /app
 COPY ./web /app
 
-RUN npm run install
+RUN npm config set registry https://registry.npmmirror.com/
+RUN npm i -g npm
+RUN npm install
+RUN npm run build
 RUN npm run export
 
 
@@ -30,11 +33,7 @@ FROM alpine:latest
 RUN mkdir -p /app/web
 WORKDIR /app
 
-COPY deploy/dev.yaml ./system.yaml
-
-COPY --from=build-web    /app/.next/static       ./web/_next/static
-COPY --from=build-web    /app/.next/server/pages ./web
-
+COPY --from=build /app/out ./web
 COPY --from=build-back   /app/QuickAuth    ./
 COPY --from=build-back   /app/system.yaml  ./
 

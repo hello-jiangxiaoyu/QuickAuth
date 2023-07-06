@@ -2,7 +2,11 @@
 const zh = {
   'menu.dashboard': '仪表盘',
   'menu.dashboard.workplace': '工作台',
-  'menu.application': '应用',
+  'menu.applications': '应用管理',
+  'menu.tenants': '租户管理',
+  'menu.pools': '用户池',
+  'menu.authentication': '权限管理',
+  'menu.messages': '消息推送',
   'menu.user.info': '用户信息',
   'menu.user.setting': '用户设置',
   'menu.user.switchRoles': '切换角色',

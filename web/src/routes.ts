@@ -13,15 +13,41 @@ export type IRoute = AuthParams & {
 
 export const routes: IRoute[] = [
   {
-    name: 'menu.application',
-    key: 'application',
+    name: 'menu.applications',
+    key: 'applications',
     children: [
       {
-        name: 'menu.application',
-        key: 'application/{clientId}',
+        name: 'menu.applications',
+        key: 'applications/{clientId}',
         ignore: true,
       }
     ]
+  },{
+    name: 'menu.tenants',
+    key: 'tenants',
+    children: [
+      {
+        name: 'menu.tenants',
+        key: 'tenants/{tenantId}',
+        ignore: true,
+      }
+    ]
+  },{
+    name: 'menu.pools',
+    key: 'pools',
+    children: [
+      {
+        name: 'menu.pools',
+        key: 'pools/{poolId}',
+        ignore: true,
+      }
+    ]
+  },{
+    name: 'menu.authentication',
+    key: 'authentication',
+  },{
+    name: 'menu.messages',
+    key: 'messages',
   },
 ];
 

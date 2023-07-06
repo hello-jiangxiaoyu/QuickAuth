@@ -1,7 +1,7 @@
 import React, { useState, ReactNode, useRef, useEffect } from 'react';
 import { Layout, Menu, Breadcrumb, Spin } from '@arco-design/web-react';
 import cs from 'classnames';
-import {IconDashboard, IconTag, IconMenuFold, IconMenuUnfold} from '@arco-design/web-react/icon';
+import {IconApps, IconIdcard, IconMenuFold, IconMenuUnfold, IconUserGroup, IconLock, IconMessage} from '@arco-design/web-react/icon';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -22,10 +22,16 @@ const Content = Layout.Content;
 
 function getIconFromKey(key) {
   switch (key) {
-    case 'dashboard':
-      return <IconDashboard className={styles.icon} />;
-    case 'example':
-      return <IconTag className={styles.icon} />;
+    case 'applications':
+      return <IconApps className={styles.icon} />;
+    case 'tenants':
+      return <IconIdcard className={styles.icon} />;
+    case 'pools':
+      return <IconUserGroup className={styles.icon} />
+    case 'authentication':
+      return <IconLock className={styles.icon}/>
+    case 'messages':
+      return <IconMessage />
     default:
       return <div className={styles['icon-empty']} />;
   }
