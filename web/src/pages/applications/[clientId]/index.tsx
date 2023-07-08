@@ -20,7 +20,7 @@ export default function Page() {
   }
 
   return (
-    <Card style={{minHeight: '80vh'}}>
+    <Card style={{minHeight:'80vh'}}>
       <h2>应用管理({clientId})</h2>
       <div style={{marginLeft:20}}>
         <Tabs defaultActiveTab={tableKey} onClickTab={(key: string) => Router.push(`${clientId}/?tab=${key}`).then()}>

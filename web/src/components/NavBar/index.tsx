@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import {Tooltip, Avatar, Select, Dropdown, Menu, Divider, Message, Button} from '@arco-design/web-react';
 import {IconLanguage, IconNotification, IconSunFill, IconMoonFill, IconSettings, IconPoweroff} from '@arco-design/web-react/icon';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { GlobalState } from '@/store';
 import { GlobalContext } from '@/context';
 import useLocale from '@/utils/useLocale';
@@ -12,16 +12,12 @@ import Settings from '../Settings';
 import styles from './style/index.module.less';
 import defaultLocale from '@/locale';
 import useStorage from '@/utils/useStorage';
-import { generatePermission } from '@/routes';
 import ApplicationSelector from "@/components/NavBar/AppSwitch";
 
 function Navbar({ show }: { show: boolean }) {
   const t = useLocale();
   const userInfo = useSelector((state: GlobalState) => state.userInfo);
-  const dispatch = useDispatch();
-
   const [_, setUserStatus] = useStorage('userStatus');
-  const [role, setRole] = useStorage('userRole', 'admin');
 
   const { setLang, lang, theme, setTheme } = useContext(GlobalContext);
 
@@ -37,18 +33,6 @@ function Navbar({ show }: { show: boolean }) {
       Message.info(`You clicked ${key}`);
     }
   }
-
-  useEffect(() => {
-    dispatch({
-      type: 'update-userInfo',
-      payload: {
-        userInfo: {
-          ...userInfo,
-          permissions: generatePermission(role),
-        },
-      },
-    });
-  }, [role]);
 
   if (!show) {
     return (

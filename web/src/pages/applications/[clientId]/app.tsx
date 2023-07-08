@@ -4,7 +4,7 @@ import {IconDelete} from "@arco-design/web-react/icon";
 
 function BasicInfo() {
   return (
-    <Form style={{ width: 600 }} autoComplete='off'>
+    <Form style={{ width:600 }} autoComplete='off'>
       <h3>基本信息</h3>
       <Form.Item label={'应用名称'} rules={[{ required: true }]}>
         <Input placeholder='please enter your app name...' />
@@ -54,7 +54,7 @@ function AuthInfo() {
     <>
       <Descriptions
         column={2} colon=':' title={<h3>认证信息</h3>} data={data}
-        style={{width:'90%', marginTop: 40}} labelStyle={{ paddingRight: 25 }}
+        style={{width:'90%', marginTop:40}} labelStyle={{ paddingRight:25 }}
       />
     </>
   );
@@ -67,7 +67,7 @@ export default function AppInfo(props: {clientId: string}) {
       <BasicInfo></BasicInfo>
       <AuthInfo></AuthInfo>
 
-      <Card style={{ width: 500, height: 80, marginTop:60, marginBottom:50, backgroundColor: 'var(--color-fill-2)'}}>
+      <Card style={{ width:500, height:80, marginTop:60, marginBottom:50, backgroundColor:'var(--color-fill-2)'}}>
         <Space size={80}>
           <div>此操作不可逆，请谨慎操作</div>
           <Button type='primary' status='danger' icon={<IconDelete />}>删除应用</Button>

@@ -1,14 +1,19 @@
 import React from 'react';
-import {Card, Grid} from "@arco-design/web-react";
+import {Card, Select, Space} from "@arco-design/web-react";
 
 export default function Page() {
+
+
   return (
-    <>
-      <div style={{ minHeight: '80vh', marginLeft: 10 }}>
-        <Grid.Row gutter={24} style={{minHeight:'200', width:'100%'}}>
-          <Card style={{minHeight:'80vh', width:'100%'}}></Card>
-        </Grid.Row>
-      </div>
-    </>
+    <Card style={{minHeight:'80vh'}}>
+      <Space style={{marginBottom:15}} size='medium'>
+        <h4>租户:</h4>
+        <Select style={{width:200}}></Select>
+      </Space>
+      <Space style={{marginBottom:15, marginLeft:20}} size='medium'>
+        <h4>消息源:</h4>
+        <Select style={{width:200}}></Select>
+      </Space>
+    </Card>
   );
 }

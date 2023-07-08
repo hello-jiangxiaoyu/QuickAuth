@@ -33,7 +33,7 @@ export default function MyCard(props: { clientId: string, name: string, type: st
   return (
     <>
       <Card
-        hoverable style={{ width: 330, height: 180, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 12px 0 rgba(0, 0, 0, 0.19)' }}
+        hoverable style={{ width:330, height: 180, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 12px 0 rgba(0, 0, 0, 0.19)' }}
         actions={[<MoreButton key={1} clientId={props.clientId}></MoreButton>]}
       >
         <div onClick={onClickCard}>

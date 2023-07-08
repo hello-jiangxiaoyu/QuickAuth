@@ -19,11 +19,11 @@ function RedirectUriComponent(props: {uri: string}) {
   return (
     <Grid.Row>
       {edit ? <> {/*编辑状态*/}
-        <Input style={{ width: 650, height:30 }} allowClear  placeholder='请填写 HTTP/HTTPS 开头的 URL' defaultValue={props.uri} />
+        <Input style={{ width:650, height:30 }} allowClear  placeholder='请填写 HTTP/HTTPS 开头的 URL' defaultValue={props.uri} />
         <Button type='primary' style={{marginLeft:10}} onClick={onClickSave} >保存</Button>
         <Button type='secondary' style={{marginLeft:10}} onClick={onClickCansel} >取消</Button>
       </> : <>
-        <div style={{width: 600, height:30}}>{props.uri}</div>
+        <div style={{width:600, height:30}}>{props.uri}</div>
         <Button type='text' style={{marginLeft:10}} icon={<IconEdit />} onClick={onClickEdit} />
         <Button type='text' icon={<IconDelete />} onClick={onClickDelete} />
       </>}
@@ -41,11 +41,11 @@ export default function LoginAuth(props: {clientId: string}) {
     <>
       <h3>回调域名</h3>
       <Space size='small'>
-        <Input style={{ width: 800 }} allowClear  placeholder='请填写 HTTP/HTTPS 开头的 URL' />
+        <Input style={{ width:800 }} allowClear  placeholder='请填写 HTTP/HTTPS 开头的 URL' />
         <Button type='primary'>添加</Button>
       </Space>
 
-      <List style={{ width: 900, marginTop:20 }} size='small' dataSource={dataSource} split={false} render={(item, index) => (
+      <List style={{ width:900, marginTop:20 }} size='small' dataSource={dataSource} split={false} render={(item, index) => (
           <List.Item key={index}>
             <RedirectUriComponent uri='https://jiangzhaofeng.online/login'></RedirectUriComponent>
           </List.Item>

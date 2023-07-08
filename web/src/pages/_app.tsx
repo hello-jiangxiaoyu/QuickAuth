@@ -43,7 +43,7 @@ export default function MyApp({
       case 'en-US':
         return enUS;
       default:
-        return enUS;
+        return zhCN;
     }
   }, [lang]);
 
@@ -102,14 +102,7 @@ export default function MyApp({
       <Head>
         <link rel="shortcut icon" type="image/x-icon" href="https://unpkg.byted-static.com/latest/byted/arco-config/assets/favicon.ico"/>
       </Head>
-      <ConfigProvider
-        locale={locale}
-        componentConfig={{
-          Card: {bordered: false},
-          List: {bordered: false},
-          Table: {border: false},
-        }}
-      >
+      <ConfigProvider locale={locale} componentConfig={{Card: {bordered: false}, List: {bordered: false}, Table: {border: false}}}>
         <Provider store={store}>
           <GlobalContext.Provider value={contextValue}>
             {Component.displayName === 'LoginPage' ? (

@@ -4,10 +4,8 @@ import {useEffect, useMemo, useState} from 'react';
 export type IRoute = AuthParams & {
   name: string;
   key: string;
-  // 当前页是否展示面包屑
   breadcrumb?: boolean;
   children?: IRoute[];
-  // 当前路由是否渲染菜单项，为 true 的话不会在菜单中显示，但可通过路由地址访问。
   ignore?: boolean;
 };
 
@@ -18,23 +16,9 @@ export const routes: IRoute[] = [
   },{
     name: 'menu.applications',
     key: 'applications',
-    children: [
-      {
-        name: 'menu.applications',
-        key: 'applications/{clientId}',
-        ignore: true,
-      }
-    ]
   },{
     name: 'menu.tenants',
-    key: 'tenants',
-    children: [
-      {
-        name: 'menu.tenants',
-        key: 'tenants/{tenantId}',
-        ignore: true,
-      }
-    ]
+    key: 'tenants'
   },{
     name: 'menu.authentication',
     key: 'authentication',
@@ -47,13 +31,6 @@ export const routes: IRoute[] = [
   },{
     name: 'menu.pools',
     key: 'pools',
-    children: [
-      {
-        name: 'menu.pools',
-        key: 'pools/{poolId}',
-        ignore: true,
-      }
-    ]
   },{
     name: 'menu.audit',
     key: 'audit',
@@ -69,19 +46,6 @@ export const getName = (path: string, routes) => {
       return getName(path, item.children);
     }
   });
-};
-
-export const generatePermission = (role: string) => {
-  const actions = role === 'admin' ? ['*'] : ['read'];
-  const result = {};
-  routes.forEach((item) => {
-    if (item.children) {
-      item.children.forEach((child) => {
-        result[child.name] = actions;
-      });
-    }
-  });
-  return result;
 };
 
 const useRoute = (userPermission): [IRoute[], string] => {
