@@ -1,41 +1,34 @@
 import React, { ReactNode } from 'react';
 import { Layout, Spin } from '@arco-design/web-react';
-import cs from 'classnames';
-import { useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 import Navbar from '@/components/NavBar';
 import Footer from '@/components/Footer';
-import { GlobalState } from '@/store';
-import styles from '@/style/layout.module.less';
 import NoAccess from '@/pages/exception/403';
+
+import { useRouter } from 'next/router';
+import styles from '@/style/layout.module.less';
 import ApplicationSiderWithRouter from "@/router/sider";
+import store from "@/store/mobx"
+import {observer} from "mobx-react";
 
 function PageLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = router.pathname;
-  const { settings, userLoading } = useSelector((state: GlobalState) => state);
-  const showNavbar = settings?.navbar;
-  const showMenu = settings?.menu;
-  const showFooter = settings?.footer;
-  const paddingLeft = showMenu ? { paddingLeft: 48 } : {};
-  const paddingTop = showNavbar ? { paddingTop: 60 } : {};
-  const paddingStyle = { ...paddingLeft, ...paddingTop };
 
   return (
     <Layout className={styles.layout}>
-      <div className={cs(styles['layout-navbar'], {[styles['layout-navbar-hidden']]: !showNavbar})}>
-        <Navbar show={showNavbar} />
+      <div className={styles['layout-navbar']}>
+        <Navbar/>
       </div>
-      {userLoading ? (<Spin className={styles['spin']} />) : (
+      {store.userLoading ? (<Spin className={styles['spin']} />) : (
         <Layout>
-          {showMenu && (<ApplicationSiderWithRouter/>)}
-          <Layout className={styles['layout-content']} style={paddingStyle}>
+          <ApplicationSiderWithRouter/>
+          <Layout className={styles['layout-content']} style={{ paddingLeft:store.settings.menuWidth, paddingTop:60 }}>
             <div className={styles['layout-content-wrapper']}>
               <Layout.Content>
                 {pathname !== '/_error' ? children : <NoAccess />/*routeMap.current.has(pathname) ? children : <NoAccess />*/}
               </Layout.Content>
             </div>
-            {showFooter && <Footer />}
+            <Footer />
           </Layout>
         </Layout>
       )}
@@ -43,4 +36,4 @@ function PageLayout({ children }: { children: ReactNode }) {
   );
 }
 
-export default PageLayout;
+export default observer(PageLayout);

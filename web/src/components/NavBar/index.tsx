@@ -1,48 +1,32 @@
 import React, { useContext } from 'react';
-import {Tooltip, Avatar, Select, Dropdown, Menu, Divider, Message, Button} from '@arco-design/web-react';
-import {IconLanguage, IconNotification, IconSunFill, IconMoonFill, IconSettings, IconPoweroff} from '@arco-design/web-react/icon';
-import { useSelector } from 'react-redux';
-import { GlobalState } from '@/store';
-import { GlobalContext } from '@/context';
-import useLocale from '@/utils/useLocale';
-import Logo from '@/assets/logo.svg';
+import {Tooltip, Avatar, Select, Dropdown, Menu, Divider, Message} from '@arco-design/web-react';
+import {IconLanguage, IconNotification, IconSunFill, IconMoonFill, IconPoweroff} from '@arco-design/web-react/icon';
+import ApplicationSelector from "@/components/NavBar/AppSwitch";
 import MessageBox from '@/components/MessageBox';
 import IconButton from './IconButton';
-import Settings from '../Settings';
+import Logo from '@/assets/logo.svg';
+
 import styles from './style/index.module.less';
+import { GlobalContext } from '@/context';
+import useLocale from '@/utils/useLocale';
 import defaultLocale from '@/locale';
 import useStorage from '@/utils/useStorage';
-import ApplicationSelector from "@/components/NavBar/AppSwitch";
+import store from "@/store/mobx";
+import {observer} from "mobx-react";
 
-function Navbar({ show }: { show: boolean }) {
+function Navbar() {
   const t = useLocale();
-  const userInfo = useSelector((state: GlobalState) => state.userInfo);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setUserStatus] = useStorage('userStatus');
-
   const { setLang, lang, theme, setTheme } = useContext(GlobalContext);
-
-  function logout() {
-    setUserStatus('logout');
-    window.location.href = '/login';
-  }
-
   function onMenuItemClick(key) {
     if (key === 'logout') {
-      logout();
-    } else {
-      Message.info(`You clicked ${key}`);
+      setUserStatus('logout');
+      window.location.href = '/login';
     }
   }
 
-  if (!show) {
-    return (
-      <div className={styles['fixed-settings']}>
-        <Settings trigger={<Button icon={<IconSettings />} type="primary" size="large" />}/>
-      </div>
-    );
-  }
-
-  const dropList = (
+  const dropList = ( // 头像下拉框
     <Menu onClickMenuItem={onMenuItemClick}>
       <Divider style={{ margin: '4px 0' }} />
       <Menu.Item key="logout">
@@ -77,24 +61,22 @@ function Navbar({ show }: { show: boolean }) {
           />
         </li>
         <li>
-          <MessageBox>
-            <IconButton icon={<IconNotification />} />
-          </MessageBox>
-        </li>
-        <li>
           <Tooltip content={theme === 'light' ? t['settings.navbar.theme.toDark'] : t['settings.navbar.theme.toLight']}>
-            <IconButton
-              icon={theme !== 'dark' ? <IconMoonFill /> : <IconSunFill />}
+            <IconButton icon={theme !== 'dark' ? <IconMoonFill /> : <IconSunFill />}
               onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
             />
           </Tooltip>
         </li>
-        <Settings />
-        {userInfo && (
+        <li>
+          <MessageBox>
+            <IconButton icon={<IconNotification />} />
+          </MessageBox>
+        </li>
+        {store.userInfo && (
           <li>
             <Dropdown droplist={dropList} position="br">
               <Avatar size={32} style={{ cursor: 'pointer' }}>
-                <img alt="avatar" src={userInfo.avatar} />
+                <img alt="avatar" src={store.userInfo.avatar} />
               </Avatar>
             </Dropdown>
           </li>
@@ -104,4 +86,5 @@ function Navbar({ show }: { show: boolean }) {
   );
 }
 
-export default Navbar;
+export default observer(Navbar);
+

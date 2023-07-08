@@ -4,11 +4,8 @@ import Link from "next/link";
 import {IconApps, IconHistory, IconHome, IconIdcard, IconLock, IconMenuFold, IconMenuUnfold, IconMessage, IconSafe, IconUserGroup} from "@arco-design/web-react/icon";
 import useLocale from "@/utils/useLocale";
 import styles from "@/style/layout.module.less";
-import {useSelector} from "react-redux";
-import {GlobalState} from "@/store";
-import {useRouter} from "next/router";
-import qs from "query-string";
-import useRoute from "@/routes";
+import store from "@/store/mobx";
+import {observer} from "mobx-react";
 
 export type IRoute = {
    name: string;
@@ -29,48 +26,33 @@ const siderRoutes: IRoute[] = [
   {name: 'menu.audit', key: 'audit', icon: <IconHistory style={iconStyle}/>},
 ];
 
-
-export default function ApplicationSiderWithRouter() {
+function ApplicationSiderWithRouter() {
   const locale = useLocale();
-  const { userInfo, settings } = useSelector((state: GlobalState) => state);
-  const [routes, defaultRoute] = useRoute(userInfo?.permissions);
-  const paddingTop = settings?.navbar !== false ? { paddingTop: 60 } : {};
-
-  const currentComponent = qs.parseUrl(useRouter().pathname).url.slice(1);
-  const paths = (currentComponent || defaultRoute).split('/');
-
-  const defaultOpenKeys = paths.slice(0, paths.length - 1);
-  const [openKeys, setOpenKeys] = useState<string[]>(defaultOpenKeys);
-
-  const [collapsed, setCollapsed] = useState<boolean>(false);
-  const menuWidth = collapsed ? 48 : settings?.menuWidth;
-
-  const defaultSelectedKeys = [currentComponent || defaultRoute];
-  const [selectedKeys, setSelectedKeys] = useState<string[]>(defaultSelectedKeys);
-
+  const paddingTop = { paddingTop: 60 };
+  const [selectedKeys, setSelectedKeys] = useState<string[]>(["dashboard"]);
 
   return (
-    <Layout.Sider
-      className={styles['layout-sider']} style={paddingTop} width={menuWidth} breakpoint="xl" trigger={null}
-      collapsed={collapsed} onCollapse={setCollapsed} collapsible
+    <Layout.Sider collapsed={store.settings.siderCollapsed} onCollapse={store.setCollapsed} collapsible
+      className={styles['layout-sider']} style={paddingTop} width={store.settings.menuWidth} breakpoint="xl" trigger={null}
     >
       <div className={styles['menu-wrapper']}>
-        <Menu
-          collapse={collapsed} selectedKeys={selectedKeys} openKeys={openKeys}
-          onClickMenuItem={(key)=>setSelectedKeys([key])} onClickSubMenu={(_, openKeys) => {setOpenKeys(openKeys)}}
+        <Menu collapse={store.settings.siderCollapsed} selectedKeys={selectedKeys}
+          onClickMenuItem={(key)=>setSelectedKeys([key])}
         >
           {siderRoutes.map(route => (
             <Menu.Item key={route.key}>
               <Link href={`/${route.key}`}>
-                <div>{route.icon} {locale[route.name] || route.name}</div>
+                <a>{route.icon} {locale[route.name] || route.name}</a>
               </Link>
             </Menu.Item>
           ))}
         </Menu>
       </div>
-      <div className={styles['collapse-btn']} onClick={()=>setCollapsed((collapsed) => !collapsed)}>
-        {collapsed ? <IconMenuUnfold /> : <IconMenuFold />}
+      <div className={styles['collapse-btn']} onClick={store.switchCollapsed}>
+        {store.settings.siderCollapsed ? <IconMenuUnfold /> : <IconMenuFold />}
       </div>
     </Layout.Sider>
   );
 }
+
+export default observer(ApplicationSiderWithRouter)
