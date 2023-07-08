@@ -95,12 +95,7 @@ export default function MyApp({
     changeTheme(theme);
   }, [lang, theme]);
 
-  const contextValue = {
-    lang,
-    setLang,
-    theme,
-    setTheme,
-  };
+  const contextValue = {lang, setLang, theme, setTheme};
 
   return (
     <>
@@ -110,15 +105,9 @@ export default function MyApp({
       <ConfigProvider
         locale={locale}
         componentConfig={{
-          Card: {
-            bordered: false,
-          },
-          List: {
-            bordered: false,
-          },
-          Table: {
-            border: false,
-          },
+          Card: {bordered: false},
+          List: {bordered: false},
+          Table: {border: false},
         }}
       >
         <Provider store={store}>

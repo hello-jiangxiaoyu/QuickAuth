@@ -1,23 +1,7 @@
 import React from 'react';
 import Router from "next/router"
 import {Button, Popover, Card, Space} from '@arco-design/web-react';
-import * as Icon from '@arco-design/web-react/icon';
-
-function MyIcon(props: {name: string, color?: string, size?: number}) {
-  const iconStyle = {color: undefined, height: undefined, width: undefined}
-  if (typeof props.color === 'string' && props.color !== '') {
-    iconStyle.color = props.color
-  }
-  if (typeof props.size === 'number' && props.size !== 0) {
-    iconStyle.height = props.size
-    iconStyle.width = props.size
-  }
-  const allIcon = (name: string) => React.createElement(Icon && (Icon as any)[name], {
-      style: iconStyle,
-    }
-  )
-  return <>{allIcon(props.name)}</>
-}
+import MyIcon from "@/components/StringIcon";
 
 // application card with dynamic icon
 export default function MyCard(props: { clientId: string, name: string, type: string, icon?: string}) {
@@ -32,7 +16,7 @@ export default function MyCard(props: { clientId: string, name: string, type: st
 
   function MoreButton(props: { clientId: string}) {
     return (
-      <Popover
+      <Popover position='top'
         content={
           <Button type='text' status='danger' style={{height:25}} key={props.clientId}>
             删除应用
@@ -43,7 +27,7 @@ export default function MyCard(props: { clientId: string, name: string, type: st
           <MyIcon name={'IconMore'}/>
         </Button>
       </Popover>
-    )
+    );
   }
 
   return (

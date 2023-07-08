@@ -1,7 +1,7 @@
 import React, { useState, ReactNode, useRef, useEffect } from 'react';
 import { Layout, Menu, Breadcrumb, Spin } from '@arco-design/web-react';
 import cs from 'classnames';
-import {IconApps, IconIdcard, IconMenuFold, IconMenuUnfold, IconUserGroup, IconLock, IconMessage} from '@arco-design/web-react/icon';
+import {IconHome, IconApps, IconIdcard, IconMenuFold, IconMenuUnfold, IconUserGroup, IconLock, IconSafe, IconMessage, IconHistory} from '@arco-design/web-react/icon';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -22,16 +22,22 @@ const Content = Layout.Content;
 
 function getIconFromKey(key) {
   switch (key) {
+    case 'dashboard':
+      return <IconHome  className={styles.icon}/>
     case 'applications':
-      return <IconApps className={styles.icon} />;
+      return <IconApps className={styles.icon}/>;
     case 'tenants':
-      return <IconIdcard className={styles.icon} />;
+      return <IconIdcard className={styles.icon}/>;
     case 'pools':
-      return <IconUserGroup className={styles.icon} />
+      return <IconUserGroup className={styles.icon}/>
     case 'authentication':
+      return <IconSafe className={styles.icon}/>
+    case 'authorization':
       return <IconLock className={styles.icon}/>
     case 'messages':
-      return <IconMessage />
+      return <IconMessage className={styles.icon}/>
+    case 'audit':
+      return <IconHistory className={styles.icon}/>
     default:
       return <div className={styles['icon-empty']} />;
   }

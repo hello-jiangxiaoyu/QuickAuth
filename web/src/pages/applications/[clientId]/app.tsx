@@ -1,4 +1,4 @@
-import {Button, Card, Form, Grid, Input, Link, Space, Descriptions} from "@arco-design/web-react";
+import {Button, Card, Form, Input, Link, Space, Descriptions} from "@arco-design/web-react";
 import React from "react";
 import {IconDelete} from "@arco-design/web-react/icon";
 
@@ -13,7 +13,7 @@ function BasicInfo() {
         <Input.TextArea placeholder='please enter app description...' />
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 5 }}>
-        <Space size={"medium"}>
+        <Space size='medium'>
           <Button type='primary'>保存</Button>
           <Button type='secondary'>重置</Button>
         </Space>
@@ -29,7 +29,7 @@ function AuthInfo() {
       value: '648ed50f20231ecfee93ad87',
     }, {
       label: 'JWKS 公钥',
-      value: <Link style={{paddingLeft:0}} href={"https://jiangzhaofeng.online/oidc/.well-known/jwks.json"}>https://jiangzhaofeng.online/oidc/.well-known/jwks.json</Link>,
+      value: <Link style={{paddingLeft:0}} href='https://jiangzhaofeng.online/oidc/.well-known/jwks.json'>https://jiangzhaofeng.online/oidc/.well-known/jwks.json</Link>,
     }, {
       label: 'App Secret',
       value: 'cef745e1fbc99255cce96070a6132177',
@@ -44,7 +44,7 @@ function AuthInfo() {
       value: 'https://jiangzhaofeng.online/oidc/me',
     }, {
       label: '服务发现接口',
-      value: <Link style={{paddingLeft:0}} href={"https://jiangzhaofeng.online/oidc/.well-known/openid-configuration"}>https://jiangzhaofeng.online/oidc/.well-known/openid-configuration</Link>,
+      value: <Link style={{paddingLeft:0}} href='https://jiangzhaofeng.online/oidc/.well-known/openid-configuration'>https://jiangzhaofeng.online/oidc/.well-known/openid-configuration</Link>,
     }, {
       label: '登出接口',
       value: 'https://jiangzhaofeng.online/oidc/session/end',

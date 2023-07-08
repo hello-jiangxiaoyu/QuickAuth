@@ -2,6 +2,7 @@
 import qs from 'query-string';
 import { isSSR } from './is';
 
+
 export type ParamsType = Record<string, any>;
 
 export default function getUrlParams(): ParamsType {
@@ -16,4 +17,15 @@ export default function getUrlParams(): ParamsType {
     }
   });
   return returnParams;
+}
+
+export function getRouterPara(temp: unknown): string {
+  let res = '';
+  if (typeof temp === 'string') {
+    res = temp;
+  } else {
+    return "";
+  }
+
+  return res;
 }

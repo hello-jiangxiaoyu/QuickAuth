@@ -37,21 +37,20 @@ export default function LoginAuth(props: {clientId: string}) {
     description: 'Beijing ByteDance Technology Co., Ltd. is an enterprise located in China.',
   });
 
-
   return (
     <>
-      <h3>回调域名 {props.clientId}</h3>
-      <Space size={"small"}>
+      <h3>回调域名</h3>
+      <Space size='small'>
         <Input style={{ width: 800 }} allowClear  placeholder='请填写 HTTP/HTTPS 开头的 URL' />
         <Button type='primary'>添加</Button>
       </Space>
 
       <List style={{ width: 900, marginTop:20 }} size='small' dataSource={dataSource} split={false} render={(item, index) => (
           <List.Item key={index}>
-            <RedirectUriComponent uri={"https://jiangzhaofeng.online/login"}></RedirectUriComponent>
+            <RedirectUriComponent uri='https://jiangzhaofeng.online/login'></RedirectUriComponent>
           </List.Item>
         )}
       />
     </>
-  )
+  );
 }
