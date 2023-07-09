@@ -24,10 +24,9 @@ class GlobalStatus {
 
   setUserInfo = (userInfo: GlobalState) => {this.userInfo = userInfo.userInfo}
   setUserLoading = (userLoading: boolean) => {this.userLoading = userLoading}
-  setCollapsed = (collapsed: boolean) => {this.settings.menuWidth = collapsed ? 48 : 220; this.settings.siderCollapsed = collapsed;}
+  setCollapsed = (collapsed: boolean) => {this.settings.menuWidth = collapsed ? 50 : 220; this.settings.siderCollapsed = collapsed;}
   switchCollapsed = () => {
-    this.settings.siderCollapsed = !this.settings.siderCollapsed;
-    this.settings.menuWidth = this.settings.siderCollapsed ? 48 : 220;
+    this.setCollapsed(!this.settings.siderCollapsed);
   }
 }
 

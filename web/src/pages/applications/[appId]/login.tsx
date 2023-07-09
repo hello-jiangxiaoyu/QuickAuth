@@ -31,7 +31,7 @@ function RedirectUriComponent(props: {uri: string}) {
   );
 }
 
-export default function LoginAuth(props: {clientId: string}) {
+export default function LoginAuth(props: {appId: string}) {
   const dataSource = new Array(4).fill({
     title: 'Beijing Bytedance Technology Co., Ltd.',
     description: 'Beijing ByteDance Technology Co., Ltd. is an enterprise located in China.',

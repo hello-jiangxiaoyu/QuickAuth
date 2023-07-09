@@ -6,14 +6,14 @@ import LoginAuth from './login'
 import AppInfo from './app'
 import {getRouterPara} from "@/utils/getUrlParams";
 
-export default function Page() {
+function Page() {
   const router = useRouter();
-  const clientId = getRouterPara(router.query.clientId);
+  const appId = getRouterPara(router.query.appId);
   let tableKey = getRouterPara(router.query.tab);
   const tables = [
-    {key: 'app', title: '应用信息', content: <AppInfo clientId={clientId}></AppInfo>},
-    {key: 'login', title: '登录配置', content: <LoginAuth clientId={clientId}></LoginAuth>},
-    {key: 'tenant', title: '租户信息', content: <TenantInfo clientId={clientId}></TenantInfo>}
+    {key: 'app', title: '应用信息', content: <AppInfo appId={appId}></AppInfo>},
+    {key: 'login', title: '登录配置', content: <LoginAuth appId={appId}></LoginAuth>},
+    {key: 'tenant', title: '租户信息', content: <TenantInfo appId={appId}></TenantInfo>}
   ];
   if (!tables.some(ele => ele.key === tableKey)) {
     tableKey = 'app'
@@ -21,9 +21,9 @@ export default function Page() {
 
   return (
     <Card style={{minHeight:'80vh'}}>
-      <h2>应用管理({clientId})</h2>
+      <h2>应用管理({appId})</h2>
       <div style={{marginLeft:20}}>
-        <Tabs defaultActiveTab={tableKey} onClickTab={(key: string) => Router.push(`${clientId}/?tab=${key}`).then()}>
+        <Tabs defaultActiveTab={tableKey} onClickTab={(key: string) => Router.push(`${appId}/?tab=${key}`).then()}>
           {tables.map((item) => (
             <Tabs.TabPane key={item.key} title={item.title}>
               <Typography.Paragraph>{item.content}</Typography.Paragraph>
@@ -34,3 +34,6 @@ export default function Page() {
     </Card>
   );
 }
+
+Page.displayName = 'Application'
+export default Page;

@@ -4,26 +4,26 @@ import {Button, Popover, Card, Space} from '@arco-design/web-react';
 import MyIcon from "@/components/StringIcon";
 
 // application card with dynamic icon
-export default function MyCard(props: { clientId: string, name: string, type: string, icon?: string}) {
+export default function MyCard(props: { appId: string, name: string, type: string, icon?: string}) {
   let icon = 'IconCodeSandbox';
   if (props.icon != undefined && props.icon != '') {
     icon = props.icon;
   }
 
   function onClickCard() {
-    Router.push(`applications/${props.clientId}`).then();
+    Router.push(`applications/${props.appId}`).then();
   }
 
-  function MoreButton(props: { clientId: string}) {
+  function MoreButton(props: { appId: string}) {
     return (
       <Popover position='top'
         content={
-          <Button type='text' status='danger' style={{height:25}} key={props.clientId}>
+          <Button type='text' status='danger' style={{height:25}} key={props.appId}>
             删除应用
           </Button>
         }
       >
-        <Button type={'text'} style={{height:25}} key={props.clientId}>
+        <Button type={'text'} style={{height:25}} key={props.appId}>
           <MyIcon name={'IconMore'}/>
         </Button>
       </Popover>
@@ -34,7 +34,7 @@ export default function MyCard(props: { clientId: string, name: string, type: st
     <>
       <Card
         hoverable style={{ width:330, height: 180, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 12px 0 rgba(0, 0, 0, 0.19)' }}
-        actions={[<MoreButton key={1} clientId={props.clientId}></MoreButton>]}
+        actions={[<MoreButton key={1} appId={props.appId}></MoreButton>]}
       >
         <div onClick={onClickCard}>
           <Space >

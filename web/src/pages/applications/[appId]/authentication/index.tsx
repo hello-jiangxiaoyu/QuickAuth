@@ -1,7 +1,7 @@
 import React from 'react';
 import {Card, Select, Space, Tabs, Typography} from "@arco-design/web-react";
 
-export default function Page() {
+function Page() {
   const tables = [
     {key: 'database', title: '数据库', content: <div></div>},
     {key: 'social', title: '社会身份', content: <div></div>},
@@ -10,11 +10,10 @@ export default function Page() {
     {key: 'email', title: '邮 件', content: <div></div>}
   ];
 
-
   return (
     <Card style={{minHeight:'80vh'}}>
       <Space style={{marginBottom:15}}>
-        <h4>筛选租户:</h4>
+        <h4>租户:</h4>
         <Select style={{width:200}}></Select>
       </Space>
       <Tabs>
@@ -27,3 +26,6 @@ export default function Page() {
     </Card>
   );
 }
+
+Page.displayName = 'Application'
+export default Page;

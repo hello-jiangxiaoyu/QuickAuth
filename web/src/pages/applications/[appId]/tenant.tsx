@@ -1,7 +1,7 @@
 import {Table, TableColumnProps} from "@arco-design/web-react";
 import React from "react";
 
-export default function TenantInfo(props: {clientId: string}) {
+export default function TenantInfo(props: {appId: string}) {
   const columns: TableColumnProps[] = [
     {title: 'Name', dataIndex: 'name'},
     {title: 'Salary', dataIndex: 'salary'},

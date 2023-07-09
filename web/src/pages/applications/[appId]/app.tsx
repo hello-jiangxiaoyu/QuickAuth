@@ -61,7 +61,7 @@ function AuthInfo() {
 }
 
 
-export default function AppInfo(props: {clientId: string}) {
+export default function AppInfo(props: {appId: string}) {
   return (
     <>
       <BasicInfo></BasicInfo>

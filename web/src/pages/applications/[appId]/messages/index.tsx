@@ -1,9 +1,7 @@
 import React from 'react';
 import {Card, Select, Space} from "@arco-design/web-react";
 
-export default function Page() {
-
-
+function Page() {
   return (
     <Card style={{minHeight:'80vh'}}>
       <Space style={{marginBottom:15}} size='medium'>
@@ -17,3 +15,6 @@ export default function Page() {
     </Card>
   );
 }
+
+Page.displayName = 'Application'
+export default Page;
