@@ -4,7 +4,7 @@ import {Card, Tabs, Typography} from '@arco-design/web-react';
 import TenantInfo from './tenant'
 import LoginAuth from './login'
 import AppInfo from './app'
-import {getRouterPara} from "@/utils/getUrlParams";
+import {getRouterPara} from "@/utils/stringTools";
 
 function Page() {
   const router = useRouter();

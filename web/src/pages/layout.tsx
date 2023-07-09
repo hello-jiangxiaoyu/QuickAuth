@@ -12,7 +12,6 @@ import {observer} from "mobx-react";
 function PageLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = router.pathname;
-
   return (
     <Layout className={styles.layout}>
       <div className={styles['layout-navbar']}>

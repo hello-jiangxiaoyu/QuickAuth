@@ -15,6 +15,8 @@ import Layout from './layout';
 import {checkLogin} from '@/store/localStorage';
 import changeTheme from '@/utils/changeTheme';
 import {fetchUserInfo} from "@/http/users";
+import store from "@/store/mobx";
+import {getRouterPara} from "@/utils/stringTools";
 
 interface RenderConfig {
   arcoLang?: string;

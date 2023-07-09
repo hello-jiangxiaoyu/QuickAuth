@@ -6,7 +6,7 @@ import useLocale from "@/utils/useLocale";
 import styles from "@/style/layout.module.less";
 import store from "@/store/mobx";
 import {observer} from "mobx-react";
-import {getRouterPara} from "@/utils/getUrlParams";
+import {getRouterPara} from "@/utils/stringTools";
 import {useRouter} from "next/router";
 
 export type IRoute = {
