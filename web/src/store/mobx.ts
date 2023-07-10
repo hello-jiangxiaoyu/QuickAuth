@@ -1,8 +1,7 @@
 import {makeAutoObservable} from 'mobx'
-import defaultSettings from "@/settings.json";
+import env from './env.json'
 
 export interface GlobalState {
-  settings?: typeof defaultSettings;
   userInfo?: {
     name?: string;
     avatar?: string;
@@ -20,13 +19,14 @@ class GlobalStatus {
   demo: GlobalState = {};
   userInfo: typeof this.demo.userInfo =  {permissions: {}};
   userLoading = true;
-  settings = defaultSettings;
+  menuWidth = env.menuWidth;
+  menuCollapsed = false;
 
   setUserInfo = (userInfo: GlobalState) => {this.userInfo = userInfo.userInfo}
   setUserLoading = (userLoading: boolean) => {this.userLoading = userLoading}
-  setCollapsed = (collapsed: boolean) => {this.settings.menuWidth = collapsed ? 50 : 220; this.settings.siderCollapsed = collapsed;}
+  setCollapsed = (collapsed: boolean) => {this.menuWidth = collapsed ? env.menuCollapseWith : env.menuWidth; this.menuCollapsed = collapsed;}
   switchCollapsed = () => {
-    this.setCollapsed(!this.settings.siderCollapsed);
+    this.setCollapsed(!this.menuCollapsed);
   }
 }
 

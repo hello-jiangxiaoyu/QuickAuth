@@ -6,8 +6,8 @@ function Page() {
     {key: 'database', title: '数据库', content: <div></div>},
     {key: 'social', title: '社会身份', content: <div></div>},
     {key: 'enterprise', title: '企业身份', content: <div></div>},
-    {key: 'sms', title: '短 信', content: <div></div>},
-    {key: 'email', title: '邮 件', content: <div></div>}
+    {key: 'sms', title: '短信认证', content: <div></div>},
+    {key: 'email', title: '邮件认证', content: <div></div>}
   ];
 
   return (

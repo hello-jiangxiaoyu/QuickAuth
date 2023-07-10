@@ -38,7 +38,7 @@ function AuthInfo() {
       value: 'https://jiangzhaofeng.online/oidc/token',
     }, {
       label: 'Issuer',
-      value: 'https://jiang-online.authing.cn/oidc',
+      value: 'https://jiangzhaofeng.online/oidc',
     }, {
       label: '用户信息接口',
       value: 'https://jiangzhaofeng.online/oidc/me',

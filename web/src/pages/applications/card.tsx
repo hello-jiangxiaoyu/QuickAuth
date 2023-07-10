@@ -32,9 +32,8 @@ export default function MyCard(props: { appId: string, name: string, type: strin
 
   return (
     <>
-      <Card
-        hoverable style={{ width:330, height: 180, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 12px 0 rgba(0, 0, 0, 0.19)' }}
-        actions={[<MoreButton key={1} appId={props.appId}></MoreButton>]}
+      <Card hoverable actions={[<MoreButton key={1} appId={props.appId}></MoreButton>]}
+        style={{ width:330, height: 180, cursor:'pointer', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 12px 0 rgba(0, 0, 0, 0.19)' }}
       >
         <div onClick={onClickCard}>
           <Space >

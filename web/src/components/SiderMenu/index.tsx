@@ -5,6 +5,7 @@ import {IconApps, IconHistory, IconHome, IconIdcard, IconLock, IconMenuFold, Ico
 import useLocale from "@/utils/useLocale";
 import styles from "@/style/layout.module.less";
 import store from "@/store/mobx";
+import env from "@/store/env.json";
 import {observer} from "mobx-react";
 import {getRouterPara} from "@/utils/stringTools";
 import {useRouter} from "next/router";
@@ -39,11 +40,11 @@ function ApplicationSiderWithRouter() {
   ];
 
   return (
-    <Layout.Sider collapsed={store.settings.siderCollapsed} onCollapse={store.setCollapsed} collapsible
-      className={styles['layout-sider']} style={{ paddingTop: 60 }} width={store.settings.menuWidth} breakpoint="xl" trigger={null}
+    <Layout.Sider collapsed={store.menuCollapsed} onCollapse={store.setCollapsed} collapsible
+      className={styles['layout-sider']} style={{ paddingTop: 60 }} width={env.menuWidth} collapsedWidth={env.menuCollapseWith} breakpoint="xl" trigger={null}
     >
       <div className={styles['menu-wrapper']}>
-        <Menu collapse={store.settings.siderCollapsed} selectedKeys={selectedKeys}
+        <Menu collapse={store.menuCollapsed} selectedKeys={selectedKeys}
           onClickMenuItem={(key)=>setSelectedKeys([key])}
         >
           <Menu.Item key="1">
@@ -58,7 +59,7 @@ function ApplicationSiderWithRouter() {
         </Menu>
       </div>
       <div className={styles['collapse-btn']} onClick={store.switchCollapsed}>
-        {store.settings.siderCollapsed ? <IconMenuUnfold /> : <IconMenuFold />}
+        {store.menuCollapsed ? <IconMenuUnfold /> : <IconMenuFold />}
       </div>
     </Layout.Sider>
   );

@@ -20,7 +20,7 @@ function PageLayout({ children }: { children: ReactNode }) {
       {store.userLoading ? (<Spin className={styles['spin']} />) : (
         <Layout>
           <ApplicationSiderWithRouter></ApplicationSiderWithRouter>
-          <Layout className={styles['layout-content']} style={{ paddingLeft:store.settings.menuWidth, paddingTop:60 }}>
+          <Layout className={styles['layout-content']} style={{ paddingLeft:store.menuWidth, paddingTop:60 }}>
             <div className={styles['layout-content-wrapper']}>
               <Layout.Content>
                 {pathname !== '/_error' ? children : <NoAccess />/*routeMap.current.has(pathname) ? children : <NoAccess />*/}
