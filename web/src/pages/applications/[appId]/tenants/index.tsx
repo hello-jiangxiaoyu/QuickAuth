@@ -1,15 +1,31 @@
 import React from 'react';
-import {Card, Grid} from "@arco-design/web-react";
+import {Button, Card, Grid, Table, TableColumnProps} from "@arco-design/web-react";
 
 function Page() {
+  const columns: TableColumnProps[] = [
+    {title: '租户名', dataIndex: 'name', align:'center'},
+    {title: '租户ID', dataIndex: 'tenantID', align:'center'},
+    {title: '来源', dataIndex: 'from', align:'center'},
+    {title: '用户池', dataIndex: 'userPoolID', align:'center'},
+    {title: '操作', dataIndex: 'op', align:'center', render: () => (
+        <>
+          <Button type='primary' status='danger'>删除</Button>
+          <Button type='text' style={{width:50}} status='warning'>禁用</Button>
+          <Button type='text'>登录租户</Button>
+        </>
+      )},
+  ];
+  const data = [
+    {key: '1', name: 'jiang', tenantID: 'e22d60b37fce2de059208602e4d8237f', from: 'default', userPoolID:1},
+    {key: '2', name: 'zhao', tenantID: 'ri08JMbndpI05SDOYqFl_9VKuyUvcvTahR', from: 'm2m', userPoolID:1},
+    {key: '3', name: 'feng', tenantID: '91b6dc86ee44d2f689e8beb4a447dfbd', from: 'm2m', userPoolID:1},
+    {key: '4', name: 'gateway', tenantID: '67a339640d86c5ddcc74f30e93ce3326', from: 'm2m', userPoolID:1},
+  ];
+
   return (
-    <>
-      <div style={{ minHeight:'80vh', marginLeft:10 }}>
-        <Grid.Row gutter={24} style={{minHeight:'200', width:'100%'}}>
-          <Card style={{minHeight:'80vh', width:'100%'}}></Card>
-        </Grid.Row>
-      </div>
-    </>
+    <Card style={{minHeight:'80vh', width:'100%'}}>
+      <Table columns={columns} data={data} />
+    </Card>
   );
 }
 

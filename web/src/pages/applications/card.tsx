@@ -1,7 +1,7 @@
 import React from 'react';
 import Router from "next/router"
 import {Button, Popover, Card, Space} from '@arco-design/web-react';
-import MyIcon from "@/components/StringIcon";
+import MyIcon from "@/components/Widget/StringIcon";
 
 // application card with dynamic icon
 export default function MyCard(props: { appId: string, name: string, type: string, icon?: string}) {

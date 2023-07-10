@@ -12,7 +12,7 @@ function Page() {
   ];
 
   return (
-    <div style={{ minHeight:'80vh', marginLeft:10 }}>
+    <div style={{ minHeight:'80vh' }}>
       <Grid.Row gutter={24} style={{minHeight:'200', width:'100%'}}>
         {list.map((item, index) => (
           <Grid.Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} key={index} style={{ marginBottom: 16 }} flex='100px'>

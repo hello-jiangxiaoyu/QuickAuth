@@ -6,7 +6,7 @@ function ClientCredential(props:{appId:string}) {
     {title: '名称', dataIndex: 'name', align:'center'},
     {title: '密钥', dataIndex: 'clientSecret', align:'center'},
     {title: 'Address', dataIndex: 'address', align:'center'},
-    {title: '操作', dataIndex: 'op', align:'center', render: (_, _record) => (
+    {title: '操作', dataIndex: 'op', align:'center', render: () => (
       <>
         <Button type='text' style={{width:50}} status='danger'>删除</Button>
         <Button type='text' style={{width:50}}>协议</Button>

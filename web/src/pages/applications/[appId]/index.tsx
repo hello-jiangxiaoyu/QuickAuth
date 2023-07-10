@@ -21,15 +21,13 @@ function Page() {
 
   return (
     <Card style={{minHeight:'80vh'}}>
-      <div style={{marginLeft:20}}>
-        <Tabs defaultActiveTab={tableKey} onClickTab={(key: string) => Router.push(`${appId}/?tab=${key}`).then()}>
-          {tables.map((item) => (
-            <Tabs.TabPane key={item.key} title={item.title}>
-              <Typography.Paragraph>{item.content}</Typography.Paragraph>
-            </Tabs.TabPane>
-          ))}
-        </Tabs>
-      </div>
+      <Tabs defaultActiveTab={tableKey} onClickTab={(key: string) => Router.push(`${appId}/?tab=${key}`).then()}>
+        {tables.map((item) => (
+          <Tabs.TabPane key={item.key} title={item.title}>
+            <Typography.Paragraph>{item.content}</Typography.Paragraph>
+          </Tabs.TabPane>
+        ))}
+      </Tabs>
     </Card>
   );
 }
