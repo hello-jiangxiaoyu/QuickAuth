@@ -18,16 +18,20 @@ class GlobalStatus {
   constructor() {makeAutoObservable(this)}
   demo: GlobalState = {};
   userInfo: typeof this.demo.userInfo =  {permissions: {}};
-  userLoading = true;
-  menuWidth = env.menuWidth;
-  menuCollapsed = false;
+  setUserInfo = (userInfo: GlobalState) => {this.userInfo = userInfo.userInfo};
 
-  setUserInfo = (userInfo: GlobalState) => {this.userInfo = userInfo.userInfo}
-  setUserLoading = (userLoading: boolean) => {this.userLoading = userLoading}
-  setCollapsed = (collapsed: boolean) => {this.menuWidth = collapsed ? env.menuCollapseWith : env.menuWidth; this.menuCollapsed = collapsed;}
-  switchCollapsed = () => {
-    this.setCollapsed(!this.menuCollapsed);
+  userLoading = true;
+  setUserLoading = (userLoading: boolean) => {this.userLoading = userLoading};
+
+  menuCollapsed = false;
+  menuWidth = env.menuWidth;
+  switchCollapsed = () => {this.setCollapsed(!this.menuCollapsed)}
+  setCollapsed = (collapsed: boolean) => {
+    this.menuWidth = collapsed ? env.menuCollapseWith : env.menuWidth; this.menuCollapsed = collapsed;
   }
+
+  multiTenant = false;
+  setMultiTenant = (multiTenant: boolean) => {this.multiTenant = multiTenant};
 }
 
 const store = new GlobalStatus()

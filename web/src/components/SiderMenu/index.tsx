@@ -1,7 +1,7 @@
 import React, {ReactNode, useState} from 'react';
 import {Layout, Menu} from '@arco-design/web-react';
 import Link from "next/link";
-import {IconApps, IconHistory, IconHome, IconIdcard, IconLock, IconMenuFold, IconMenuUnfold, IconMessage, IconSafe, IconUserGroup} from "@arco-design/web-react/icon";
+import {IconApps, IconHistory, IconHome, IconLock, IconMenuFold, IconMenuUnfold, IconMessage, IconSafe, IconUserGroup} from "@arco-design/web-react/icon";
 import useLocale from "@/utils/useLocale";
 import styles from "@/style/layout.module.less";
 import store from "@/store/mobx";
@@ -28,10 +28,9 @@ function ApplicationSiderWithRouter() {
     return <></>;
   }
 
-  const siderRoutes: IRoute[] = [
+  const sideRoutes: IRoute[] = [
     {name: 'menu.dashboard', key: `/applications/${appId}/dashboard/`, icon: <IconHome style={iconStyle}/>},
     {name: 'menu.applications', key: `/applications/${appId}/`, icon: <IconApps style={iconStyle}/>},
-    {name: 'menu.tenants', key: `/applications/${appId}/tenants/`, icon: <IconIdcard style={iconStyle}/>},
     {name: 'menu.authentication', key: `/applications/${appId}/authentication/`, icon: <IconSafe style={iconStyle}/>},
     {name: 'menu.authorization', key: `/applications/${appId}/authorization/`, icon: <IconLock style={iconStyle}/>},
     {name: 'menu.messages', key: `/applications/${appId}/messages/`, icon: <IconMessage style={iconStyle}/>},
@@ -49,7 +48,7 @@ function ApplicationSiderWithRouter() {
         >
           <Menu.Item key="1">
           </Menu.Item>
-          {siderRoutes.map(route => (
+          {sideRoutes.map(route => (
             <Menu.Item key={route.key}>
               <Link href={`${route.key}`}>
                 <a>{route.icon} {locale[route.name] || route.name}</a>

@@ -1,17 +1,20 @@
 import React from 'react';
-import {Button, Card, Grid, Table, TableColumnProps} from "@arco-design/web-react";
+import {Button, Card, Table, TableColumnProps} from "@arco-design/web-react";
+import Link from "next/link";
 
-function Page() {
+function Tenants(props:{appId:string}) {
   const columns: TableColumnProps[] = [
-    {title: '租户名', dataIndex: 'name', align:'center'},
+    {title: '租户名', dataIndex: 'name', align:'center', render:(_, record)=>(
+        <Link href={`/applications/${props.appId}/tenants/${record.name}`}><a>{record.name}</a></Link>
+      )},
     {title: '租户ID', dataIndex: 'tenantID', align:'center'},
     {title: '来源', dataIndex: 'from', align:'center'},
     {title: '用户池', dataIndex: 'userPoolID', align:'center'},
     {title: '操作', dataIndex: 'op', align:'center', render: () => (
         <>
-          <Button type='primary' status='danger'>删除</Button>
-          <Button type='text' style={{width:50}} status='warning'>禁用</Button>
-          <Button type='text'>登录租户</Button>
+          <Button type='primary' size='small' status='danger'>删除</Button>
+          <Button type='text' size='small' status='warning'>禁用</Button>
+          <Button type='text' size='small'>登录租户</Button>
         </>
       )},
   ];
@@ -29,5 +32,4 @@ function Page() {
   );
 }
 
-Page.displayName = 'Application'
-export default Page;
+export default Tenants;

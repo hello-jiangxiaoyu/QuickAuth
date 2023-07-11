@@ -8,9 +8,9 @@ function ClientCredential(props:{appId:string}) {
     {title: 'Address', dataIndex: 'address', align:'center'},
     {title: '操作', dataIndex: 'op', align:'center', render: () => (
       <>
-        <Button type='text' style={{width:50}} status='danger'>删除</Button>
-        <Button type='text' style={{width:50}}>协议</Button>
-        <Button type='text' style={{width:50}}>权限</Button>
+        <Button type='text' size='small' status='danger'>删除</Button>
+        <Button type='text' size='small'>协议</Button>
+        <Button type='text' size='small'>权限</Button>
       </>
       )},
   ];

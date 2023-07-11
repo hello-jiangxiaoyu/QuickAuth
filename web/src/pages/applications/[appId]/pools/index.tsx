@@ -7,6 +7,5 @@ function Page() {
   );
 }
 
-Page.displayName = 'Application'
 export default Page;
 

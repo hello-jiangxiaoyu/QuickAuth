@@ -1,20 +1,16 @@
 import React from 'react';
 import {Card, Select, Space} from "@arco-design/web-react";
+import store from "@/store/mobx";
 
 function Page() {
   return (
     <Card style={{minHeight:'80vh'}}>
-      <Space style={{marginBottom:15}} size='medium'>
+      <Space style={{marginBottom:15, display: store.multiTenant ? 'flex':'none'}} size='medium'>
         <h4>租户:</h4>
-        <Select style={{width:200}}></Select>
-      </Space>
-      <Space style={{marginBottom:15, marginLeft:20}} size='medium'>
-        <h4>消息源:</h4>
-        <Select style={{width:200}}></Select>
+        <Select></Select>
       </Space>
     </Card>
   );
 }
 
-Page.displayName = 'Application'
 export default Page;

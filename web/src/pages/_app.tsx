@@ -15,8 +15,6 @@ import Layout from './layout';
 import {checkLogin} from '@/store/localStorage';
 import changeTheme from '@/utils/changeTheme';
 import {fetchUserInfo} from "@/http/users";
-import store from "@/store/mobx";
-import {getRouterPara} from "@/utils/stringTools";
 
 interface RenderConfig {
   arcoLang?: string;
@@ -66,10 +64,10 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
       </Head>
       <ConfigProvider locale={locale} componentConfig={{Card: {bordered: false}, List: {bordered: false}, Table: {border: false}}}>
         <GlobalContext.Provider value={contextValue}>
-          {Component.displayName === 'Application' ? (
-            <Layout><Component {...pageProps} suppressHydrationWarning /></Layout>
-          ) : (
+          {Component.displayName === 'LoginPage' ? (
             <Component {...pageProps} suppressHydrationWarning />
+          ) : (
+            <Layout><Component {...pageProps} suppressHydrationWarning /></Layout>
           )}
         </GlobalContext.Provider>
       </ConfigProvider>
