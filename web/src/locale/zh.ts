@@ -5,7 +5,7 @@ const zh = {
   'menu.tenants': '租户管理',
   'menu.pools': '用户池',
   'menu.authentication': '认证配置',
-  'menu.authorization': '权限管理',
+  'menu.authorization': '资源权限',
   'menu.messages': '消息推送',
   'menu.audit': '审计日志',
   'menu.user.info': '用户信息',

@@ -32,8 +32,8 @@ function ApplicationSiderWithRouter() {
     {name: 'menu.dashboard', key: `/applications/${appId}/dashboard/`, icon: <IconHome style={iconStyle}/>},
     {name: 'menu.applications', key: `/applications/${appId}/`, icon: <IconApps style={iconStyle}/>},
     {name: 'menu.authentication', key: `/applications/${appId}/authentication/`, icon: <IconSafe style={iconStyle}/>},
-    {name: 'menu.authorization', key: `/applications/${appId}/authorization/`, icon: <IconLock style={iconStyle}/>},
     {name: 'menu.messages', key: `/applications/${appId}/messages/`, icon: <IconMessage style={iconStyle}/>},
+    {name: 'menu.authorization', key: `/applications/${appId}/authorization/`, icon: <IconLock style={iconStyle}/>},
     {name: 'menu.pools', key: `/applications/${appId}/pools/`, icon: <IconUserGroup style={iconStyle}/>},
     {name: 'menu.audit', key: `/applications/${appId}/audit/`, icon: <IconHistory style={iconStyle}/>},
   ];
