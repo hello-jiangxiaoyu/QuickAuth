@@ -38,7 +38,7 @@ type Token struct {
 	Scope        string       `json:"-"`
 	UserID       string       `json:"-"`
 	Tenant       model.Tenant `json:"-"`
-	Client       model.Client `json:"-"`
+	App          model.App    `json:"-"`
 }
 
 type ProviderReq struct {

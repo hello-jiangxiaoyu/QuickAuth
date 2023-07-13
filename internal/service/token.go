@@ -16,10 +16,10 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
-func (s *Service) CreateAccessToken(client model.Client, tenantName, host, userId, nonce, scope string) (string, error) {
+func (s *Service) CreateAccessToken(app model.App, tenantName, host, userId, nonce, scope string) (string, error) {
 	var token *jwt.Token
 	nowTime := time.Now()
-	expireTime := nowTime.Add(time.Duration(client.TokenExpire) * time.Hour)
+	expireTime := nowTime.Add(time.Duration(app.TokenExpire) * time.Hour)
 	claims := Claims{
 		TokenType: "access-token",
 		Nonce:     nonce,
@@ -27,11 +27,11 @@ func (s *Service) CreateAccessToken(client model.Client, tenantName, host, userI
 		RegisteredClaims: jwt.RegisteredClaims{
 			Issuer:    utils.GetUrlByHost(host),
 			Subject:   userId,
-			Audience:  []string{client.ID},
+			Audience:  []string{app.ID},
 			ExpiresAt: jwt.NewNumericDate(expireTime),
 			NotBefore: jwt.NewNumericDate(nowTime),
 			IssuedAt:  jwt.NewNumericDate(nowTime),
-			ID:        client.Name + "-" + safe.Rand62(31),
+			ID:        app.Name + "-" + safe.Rand62(31),
 		},
 	}
 	token = jwt.NewWithClaims(jwt.SigningMethodRS256, claims)

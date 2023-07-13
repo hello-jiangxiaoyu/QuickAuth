@@ -16,12 +16,12 @@ import (
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users [get]
 func (o Controller) listUser(c *gin.Context) {
-	clients, err := o.svc.ListUser(c.Param("poolId"))
+	users, err := o.svc.ListUser(c.Param("poolId"))
 	if err != nil {
 		resp.ErrorSelect(c, err, "list user pool err")
 		return
 	}
-	resp.SuccessArray(c, len(clients), clients)
+	resp.SuccessArray(c, len(users), users)
 }
 
 // @Summary	user info
@@ -35,12 +35,12 @@ func (o Controller) listUser(c *gin.Context) {
 func (o Controller) getUser(c *gin.Context) {
 	poolId := c.Param("poolId")
 	userId := c.Param("userId")
-	client, err := o.svc.GetUserById(poolId, userId)
+	user, err := o.svc.GetUserById(poolId, userId)
 	if err != nil {
 		resp.ErrorUnknown(c, err, "no such user")
 		return
 	}
-	resp.SuccessWithData(c, client)
+	resp.SuccessWithData(c, user)
 }
 
 // @Summary	create user
@@ -65,12 +65,12 @@ func (o Controller) createUser(c *gin.Context) {
 		return
 	}
 	in.OpenId = uuid.NewString()
-	client, err := o.svc.CreateUser(in.ToModel())
+	user, err := o.svc.CreateUser(in.ToModel())
 	if err != nil {
 		resp.ErrorUnknown(c, err, "create user err")
 		return
 	}
-	resp.SuccessWithData(c, client)
+	resp.SuccessWithData(c, user)
 }
 
 // @Summary	modify user

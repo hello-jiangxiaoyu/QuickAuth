@@ -106,12 +106,12 @@ func (o Controller) getToken(c *gin.Context) {
 		return
 	}
 
-	client, err := o.svc.GetClient(in.ClientID)
+	app, err := o.svc.GetApp(in.ClientID)
 	if err != nil {
-		resp.ErrorRequestWithMsg(c, err, "no such client")
+		resp.ErrorRequestWithMsg(c, err, "no such app")
 		return
 	}
-	in.Client = *client
+	in.App = *app
 	handler, err := o.getTokenHandler(in.GrantType)
 	if err != nil {
 		resp.ErrorRequestWithMsg(c, err, err.Error())

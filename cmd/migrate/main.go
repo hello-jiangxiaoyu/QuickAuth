@@ -10,8 +10,8 @@ func main() {
 	migrateList := []any{
 		model.User{},
 		model.UserPool{},
-		model.Client{},
-		model.ClientSecret{},
+		model.App{},
+		model.AppSecret{},
 		model.Tenant{},
 	}
 

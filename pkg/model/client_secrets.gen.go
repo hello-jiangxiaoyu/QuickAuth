@@ -10,16 +10,16 @@ import (
 
 const TableNameClientSecret = "client_secrets"
 
-// ClientSecret mapped from table <client_secrets>
-type ClientSecret struct {
-	ClientID   string    `gorm:"column:client_id;type:uuid;primaryKey" json:"clientId"`
-	Secret     string    `gorm:"column:secret;type:character(63);primaryKey" json:"secret"`
+// AppSecret mapped from table <client_secrets>
+type AppSecret struct {
+	AppID  string `gorm:"column:client_id;type:uuid;primaryKey" json:"clientId"`
+	Secret string `gorm:"column:secret;type:character(63);primaryKey" json:"secret"`
 	Describe   *string   `gorm:"column:describe;type:character varying(127)" json:"describe"`
 	CreateTime time.Time `gorm:"column:create_time;type:timestamp with time zone;not null;default:now()" json:"createTime"`
 	UpdateTime time.Time `gorm:"column:update_time;type:timestamp with time zone;not null;default:now()" json:"updateTime"`
 }
 
-// TableName ClientSecret's table name
-func (*ClientSecret) TableName() string {
+// TableName AppSecret's table name
+func (*AppSecret) TableName() string {
 	return TableNameClientSecret
 }

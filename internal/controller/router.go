@@ -22,25 +22,25 @@ func NewOauth2Router(repo *global.Repository, e *gin.Engine) {
 		r.POST("/oauth2/token", o.getToken)                     // token获取
 	}
 
-	client := e.Group("/api/quick/clients")
+	app := e.Group("/api/quick/apps")
 	{
-		client.GET("", o.listClient)
-		client.GET("/:clientId", o.getClient)
-		client.POST("", o.createClient)
-		client.PUT("/:clientId", o.modifyClient)
-		client.DELETE("/:clientId", o.deleteClient)
+		app.GET("", o.listApp)
+		app.GET("/:appId", o.getApp)
+		app.POST("", o.createApp)
+		app.PUT("/:appId", o.modifyApp)
+		app.DELETE("/:appId", o.deleteApp)
 
-		client.GET("/:clientId/secrets", o.listClientSecret)
-		client.POST("/:clientId/secrets", o.createClientSecret)
-		client.DELETE("/:clientId/secrets/:secretId", o.deleteClientSecret)
+		app.GET("/:appId/secrets", o.listAppSecret)
+		app.POST("/:appId/secrets", o.createAppSecret)
+		app.DELETE("/:appId/secrets/:secretId", o.deleteAppSecret)
 
-		client.GET("/:clientId/redirect-uri", o.listRedirectUri)
-		client.POST("/:clientId/redirect-uri", o.createRedirectUri)
-		client.PUT("/:clientId/redirect-uri/:uriId", o.modifyRedirectUri)
-		client.DELETE("/:clientId/redirect-uri/:uri", o.deleteRedirectUri)
+		app.GET("/:appId/redirect-uri", o.listRedirectUri)
+		app.POST("/:appId/redirect-uri", o.createRedirectUri)
+		app.PUT("/:appId/redirect-uri/:uriId", o.modifyRedirectUri)
+		app.DELETE("/:appId/redirect-uri/:uri", o.deleteRedirectUri)
 	}
 
-	tenant := e.Group("/api/quick/clients/:clientId/tenants")
+	tenant := e.Group("/api/quick/apps/:appId/tenants")
 	{
 		tenant.GET("", o.listTenant)
 		tenant.GET("/:tenantId", o.getTenant)

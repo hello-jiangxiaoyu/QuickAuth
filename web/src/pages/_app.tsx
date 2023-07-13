@@ -1,17 +1,19 @@
 import React, { useEffect, useMemo } from 'react';
-import { ConfigProvider } from '@arco-design/web-react';
 import zhCN from '@arco-design/web-react/es/locale/zh-CN';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 import '@/mock';
-import cookies from 'next-cookies';
-import useStorage from '@/utils/useStorage';
-import Head from 'next/head';
+import '@/style/global.less';
+import { ConfigProvider } from '@arco-design/web-react';
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
+
+import cookies from 'next-cookies';
 import { useRouter } from 'next/router';
+import useStorage from '@/utils/useStorage';
 import { GlobalContext } from '@/context';
-import '../style/global.less';
-import NProgress from 'nprogress';
+
 import Layout from './layout';
+import NProgress from 'nprogress';
 import {checkLogin} from '@/store/localStorage';
 import changeTheme from '@/utils/changeTheme';
 import {fetchUserInfo} from "@/http/users";

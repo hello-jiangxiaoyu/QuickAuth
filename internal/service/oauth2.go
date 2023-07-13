@@ -12,9 +12,9 @@ var (
 	ErrorCodeExpired = errors.New("code expired")
 )
 
-func (s *Service) GetAccessCode(clientId string, codeName string) (*model.Code, error) {
+func (s *Service) GetAccessCode(appId string, codeName string) (*model.Code, error) {
 	var code model.Code
-	if err := s.db.Where("client_id = ? AND code = ?", clientId, codeName).
+	if err := s.db.Where("app_id = ? AND code = ?", appId, codeName).
 		First(&code).Error; err != nil {
 		return nil, err
 	}
@@ -30,14 +30,14 @@ func (s *Service) GetAccessCode(clientId string, codeName string) (*model.Code, 
 	return &code, nil
 }
 
-func (s *Service) CreateAccessCode(clientId string, userId int64) (string, string, error) {
+func (s *Service) CreateAccessCode(appId string, userId int64) (string, string, error) {
 	code := safe.RandHex(31)
 	state := safe.RandHex(31)
 	accessCode := model.Code{
-		ClientID: clientId,
-		UserID:   userId,
-		Code:     code,
-		State:    state,
+		AppID:  appId,
+		UserID: userId,
+		Code:   code,
+		State:  state,
 	}
 	if err := s.db.Create(accessCode).Error; err != nil {
 		return "", "", err

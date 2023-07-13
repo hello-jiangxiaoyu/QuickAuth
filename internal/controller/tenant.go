@@ -10,11 +10,11 @@ import (
 // @Schemes
 // @Description	list provider info
 // @Tags		tenant
-// @Param		clientId	path	string	true	"client id"
+// @Param		appId	path	string	true	"app id"
 // @Success		200
-// @Router		/api/quick/clients/{clientId}/tenants [get]
+// @Router		/api/quick/apps/{appId}/tenants [get]
 func (o Controller) listTenant(c *gin.Context) {
-	tenants, err := o.svc.ListTenant(c.Param("clientId"))
+	tenants, err := o.svc.ListTenant(c.Param("appId"))
 	if err != nil {
 		resp.ErrorSelect(c, err, "get tenant list err")
 		return
@@ -27,14 +27,14 @@ func (o Controller) listTenant(c *gin.Context) {
 // @Schemes
 // @Description	get provider details
 // @Tags		tenant
-// @Param		clientId	path	string	true	"client id"
+// @Param		appId		path	string	true	"app id"
 // @Param		tenantId	path	string	true	"tenant id"
 // @Success		200
-// @Router		/api/quick/clients/{clientId}/tenants/{tenantId} [get]
+// @Router		/api/quick/apps/{appId}/tenants/{tenantId} [get]
 func (o Controller) getTenant(c *gin.Context) {
-	clientId := c.Param("clientId")
+	appId := c.Param("appId")
 	tenantId := c.Param("tenantId")
-	tenant, err := o.svc.GetTenant(clientId, tenantId)
+	tenant, err := o.svc.GetTenant(appId, tenantId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "get tenant err")
 		return
@@ -47,10 +47,10 @@ func (o Controller) getTenant(c *gin.Context) {
 // @Schemes
 // @Description	get provider details
 // @Tags		tenant
-// @Param		clientId	path	string				true	"client id"
-// @Param		bd			body	request.TenantReq	true	"body"
+// @Param		appId	path	string				true	"app id"
+// @Param		bd		body	request.TenantReq	true	"body"
 // @Success		200
-// @Router		/api/quick/clients/{clientId}/tenants [post]
+// @Router		/api/quick/apps/{appId}/tenants [post]
 func (o Controller) createTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
@@ -71,11 +71,11 @@ func (o Controller) createTenant(c *gin.Context) {
 // @Schemes
 // @Description	get provider details
 // @Tags		tenant
-// @Param		clientId	path	string				true	"client id"
+// @Param		appId		path	string				true	"app id"
 // @Param		tenantId	path	string				true	"tenant id"
 // @Param		bd			body	request.TenantReq	true	"body"
 // @Success		200
-// @Router		/api/quick/clients/{clientId}/tenants/{tenantId} [put]
+// @Router		/api/quick/apps/{appId}/tenants/{tenantId} [put]
 func (o Controller) modifyTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
@@ -95,14 +95,14 @@ func (o Controller) modifyTenant(c *gin.Context) {
 // @Schemes
 // @Description	get provider details
 // @Tags		tenant
-// @Param		clientId	path	string	true	"client id"
+// @Param		appId		path	string	true	"app id"
 // @Param		tenantId	path	string	true	"tenant id"
 // @Success		200
-// @Router		/api/quick/clients/{clientId}/tenants/{tenantId} [delete]
+// @Router		/api/quick/apps/{appId}/tenants/{tenantId} [delete]
 func (o Controller) deleteTenant(c *gin.Context) {
-	clientId := c.Param("clientId")
+	appId := c.Param("appId")
 	tenantId := c.Param("tenantId")
-	if err := o.svc.DeleteTenant(clientId, tenantId); err != nil {
+	if err := o.svc.DeleteTenant(appId, tenantId); err != nil {
 		resp.ErrorSelect(c, err, "delete tenant err")
 		return
 	}

@@ -1,12 +1,10 @@
 import React from 'react';
 import {Button, Card, Table, TableColumnProps} from "@arco-design/web-react";
-import Link from "next/link";
+import store from "@/store/mobx";
 
 function Tenants(props:{appId:string}) {
   const columns: TableColumnProps[] = [
-    {title: '租户名', dataIndex: 'name', align:'center', render:(_, record)=>(
-        <Link href={`/applications/${props.appId}/tenants/${record.name}`}><a>{record.name}</a></Link>
-      )},
+    {title: '租户名', dataIndex: 'name', align:'center'},
     {title: '租户ID', dataIndex: 'tenantID', align:'center'},
     {title: '来源', dataIndex: 'from', align:'center'},
     {title: '用户池', dataIndex: 'userPoolID', align:'center'},

@@ -1,12 +1,11 @@
 import React  from "react";
 import Router, { useRouter } from 'next/router';
-import {Card, Select, Space, Tabs, Typography} from '@arco-design/web-react';
+import {Card, Tabs, Typography} from '@arco-design/web-react';
 import LoginAuth from '@/pages/applications/[appId]/login'
 import AppInfo from '@/pages/applications/[appId]/appInfo'
 import ClientCredential from "@/pages/applications/[appId]/credentials";
-import Tenants from "@/pages/applications/[appId]/tenants/tenants"
+import Tenants from "@/pages/applications/[appId]/tenants"
 import {getRouterPara} from "@/utils/stringTools";
-import store from "@/store/mobx";
 
 function Page() {
   const router = useRouter();
@@ -15,7 +14,7 @@ function Page() {
   const tables = [
     {key: 'app', title: '应用信息', content: <AppInfo appId={appId}></AppInfo>},
     {key: 'login', title: '登录控制', content: <LoginAuth appId={appId}></LoginAuth>},
-    {key: 'credential', title: '访问权限', content: <ClientCredential appId={appId}></ClientCredential>},
+    {key: 'credential', title: '访问凭证', content: <ClientCredential appId={appId}></ClientCredential>},
     {key: 'tenants', title: '租户管理', content: <Tenants appId={appId}></Tenants>},
   ];
   if (!tables.some(ele => ele.key === tableKey)) {
@@ -24,10 +23,6 @@ function Page() {
 
   return (
     <Card style={{minHeight:'80vh'}}>
-      <Space style={{display: store.multiTenant ? 'flex':'none'}} size='medium'>
-        <h4>租户:</h4>
-        <Select style={{width:200}}></Select>
-      </Space>
       <Tabs defaultActiveTab={tableKey} onClickTab={(key: string) => Router.push(`${appId}/?tab=${key}`).then()}>
         {tables.map((item) => (
           <Tabs.TabPane key={item.key} title={item.title}>

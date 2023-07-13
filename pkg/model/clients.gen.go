@@ -12,8 +12,8 @@ import (
 
 const TableNameClient = "clients"
 
-// Client mapped from table <clients>
-type Client struct {
+// App mapped from table <clients>
+type App struct {
 	ID            string         `gorm:"column:id;type:uuid;primaryKey" json:"id"`
 	Name          string         `gorm:"column:name;type:character varying(127);not null" json:"name"`
 	Describe      *string        `gorm:"column:describe;type:character varying(127)" json:"describe"`
@@ -26,7 +26,7 @@ type Client struct {
 	UpdateTime    time.Time      `gorm:"column:update_time;type:timestamp with time zone;not null;default:now()" json:"updateTime"`
 }
 
-// TableName Client's table name
-func (*Client) TableName() string {
+// TableName App's table name
+func (*App) TableName() string {
 	return TableNameClient
 }

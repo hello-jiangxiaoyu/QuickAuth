@@ -13,12 +13,12 @@ import (
 // @Success		200
 // @Router		/api/quick/user-pools [get]
 func (o Controller) listUserPool(c *gin.Context) {
-	clients, err := o.svc.ListUserPool()
+	pools, err := o.svc.ListUserPool()
 	if err != nil {
 		resp.ErrorSelect(c, err, "list user pool err")
 		return
 	}
-	resp.SuccessArray(c, len(clients), clients)
+	resp.SuccessArray(c, len(pools), pools)
 }
 
 // @Summary	user pool info
@@ -29,12 +29,12 @@ func (o Controller) listUserPool(c *gin.Context) {
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId} [get]
 func (o Controller) getUserPool(c *gin.Context) {
-	client, err := o.svc.GetUserPool(c.Param("poolId"))
+	pool, err := o.svc.GetUserPool(c.Param("poolId"))
 	if err != nil {
 		resp.ErrorUnknown(c, err, "no such user pool")
 		return
 	}
-	resp.SuccessWithData(c, client)
+	resp.SuccessWithData(c, pool)
 }
 
 // @Summary	create user pool
@@ -50,12 +50,12 @@ func (o Controller) createUserPool(c *gin.Context) {
 		resp.ErrorRequest(c, err, "init user pool req err")
 		return
 	}
-	client, err := o.svc.CreateUserPool(in.ToModel())
+	pool, err := o.svc.CreateUserPool(in.ToModel())
 	if err != nil {
 		resp.ErrorUnknown(c, err, "create user pool err")
 		return
 	}
-	resp.SuccessWithData(c, client)
+	resp.SuccessWithData(c, pool)
 }
 
 // @Summary	modify user pool

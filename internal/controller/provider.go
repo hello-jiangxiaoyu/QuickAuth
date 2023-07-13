@@ -32,7 +32,7 @@ func (o Controller) listProvider(c *gin.Context) {
 // @Schemes
 // @Description	get provider details
 // @Tags		provider
-// @Param		providerId	path	string	true	"client id"
+// @Param		providerId	path	string	true	"app id"
 // @Success		200
 // @Router		/api/quick/providers/{providerId} [get]
 func (o Controller) getProvider(c *gin.Context) {
@@ -54,7 +54,7 @@ func (o Controller) getProvider(c *gin.Context) {
 // @Schemes
 // @Description	get provider details
 // @Tags		provider
-// @Param		providerId	path	string				true	"client id"
+// @Param		providerId	path	string				true	"app id"
 // @Param		bd			body	request.ProviderReq	true	"body"
 // @Success		200
 // @Router		/api/quick/providers/{providerId} [post]
@@ -80,7 +80,7 @@ func (o Controller) createProvider(c *gin.Context) {
 // @Schemes
 // @Description	get provider details
 // @Tags		provider
-// @Param		providerId	path	string				true	"client id"
+// @Param		providerId	path	string				true	"app id"
 // @Param		bd			body	request.ProviderReq	true	"body"
 // @Success		200
 // @Router		/api/quick/providers/{providerId} [put]
@@ -104,7 +104,7 @@ func (o Controller) modifyProvider(c *gin.Context) {
 // @Schemes
 // @Description	get provider details
 // @Tags		provider
-// @Param		providerId	path	string	true	"client id"
+// @Param		providerId	path	string	true	"app id"
 // @Success		200
 // @Router		/api/quick/providers/{providerId} [delete]
 func (o Controller) deleteProvider(c *gin.Context) {

@@ -5,8 +5,8 @@ import (
 	"github.com/lib/pq"
 )
 
-type ClientReq struct {
-	ClientId      string         `json:"-" uri:"clientId"`
+type AppReq struct {
+	AppId         string         `json:"-" uri:"appId"`
 	Name          string         `json:"name"`
 	Describe      string         `json:"describe"`
 	GrantTypes    pq.StringArray `json:"grantTypes"`
@@ -16,9 +16,9 @@ type ClientReq struct {
 	CodeExpire    int32          `json:"codeExpire"`
 }
 
-func (c *ClientReq) ToModel() model.Client {
-	return model.Client{
-		ID:            c.ClientId,
+func (c *AppReq) ToModel() model.App {
+	return model.App{
+		ID:            c.AppId,
 		Name:          c.Name,
 		Describe:      &c.Describe,
 		GrantTypes:    c.GrantTypes,
@@ -29,27 +29,28 @@ func (c *ClientReq) ToModel() model.Client {
 	}
 }
 
-type ClientSecretReq struct {
-	ClientId string `json:"-" uri:"clientId"`
+type AppSecretReq struct {
+	AppId    string `json:"-" uri:"appId"`
 	Describe string `json:"describe"`
 }
 
-func (c *ClientSecretReq) ToModel() model.ClientSecret {
-	return model.ClientSecret{
-		ClientID: c.ClientId,
+func (c *AppSecretReq) ToModel() model.AppSecret {
+	return model.AppSecret{
+		AppID:    c.AppId,
 		Describe: &c.Describe,
 	}
 }
 
 type RedirectUriReq struct {
-	ClientId string `json:"-" uri:"clientId"`
+	AppId    string `json:"-" uri:"appId"`
+	TenantId string `json:"-" uri:"tenantId"`
 	UriId    uint   `json:"-" uri:"uriId"`
 	Uri      string `json:"uri"`
 }
 
 type TenantReq struct {
 	TenantID   int64   `json:"-" uri:"tenantId"`
-	ClientID   string  `json:"-" uri:"clientId"`
+	AppId      string  `json:"-" uri:"appId"`
 	UserPoolID int64   `json:"userPoolId"`
 	Type       int32   `json:"type"`
 	Name       string  `json:"name"`
@@ -61,7 +62,7 @@ type TenantReq struct {
 func (t *TenantReq) ToModel() model.Tenant {
 	return model.Tenant{
 		ID:         t.TenantID,
-		ClientID:   t.ClientID,
+		AppId:      t.AppId,
 		UserPoolID: t.UserPoolID,
 		Type:       t.Type,
 		Name:       t.Name,

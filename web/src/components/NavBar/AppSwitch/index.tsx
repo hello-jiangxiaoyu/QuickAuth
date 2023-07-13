@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {Button, Divider, Select} from "@arco-design/web-react";
+import {Button, Divider, Select, Space} from "@arco-design/web-react";
 import {IconPlus} from "@arco-design/web-react/icon";
 import Router, {useRouter} from "next/router";
 import {getRouterPara, replaceUriAppId} from "@/utils/stringTools";
 import {observer} from "mobx-react";
+import store from "@/store/mobx";
 
 function ApplicationSelector() {
   const [options, setOptions] = useState(['1', '2', '3', '4', '5', '6']);
@@ -37,17 +38,43 @@ function ApplicationSelector() {
   }
 
   return (
-    <Select dropdownMenuStyle={{ maxHeight: 400 }} value={appId} onChange={onChange} bordered={false}
-      triggerProps={{autoAlignPopupWidth: false, autoAlignPopupMinWidth: true, position: 'bl'}}
-      style={{width:'fit-content', minWidth:120, maxWidth:250, backgroundColor:'var(--color-fill-1)', visibility: visibility}}
-      dropdownRender={(menu) => (<div>{menu}<Divider style={{ margin: 0 }} /><CreateApplication/></div>)}
-    >
-      {options.map((option) => (
-        <Select.Option key={option} value={option} style={{height:50, textAlign:'left', display:'block'}}>
-          {option}
-        </Select.Option>
-      ))}
-    </Select>
+    <div style={{marginLeft:10}}>
+      {appId !== '' && (
+        <Space>
+          <div>应用:</div>
+          <Select dropdownMenuStyle={{ maxHeight: 400 }} value={appId} onChange={onChange} bordered={false}
+                  triggerProps={{autoAlignPopupWidth: false, autoAlignPopupMinWidth: true, position: 'bl'}}
+                  style={{width:'fit-content', minWidth:120, maxWidth:250, backgroundColor:'var(--color-fill-2)'}}
+                  dropdownRender={(menu) => (<div>{menu}<Divider style={{ margin: 0 }} /><CreateApplication/></div>)}
+          >
+            {options.map((option) => (
+              <Select.Option key={option} value={option} style={{height:50, textAlign:'left', display:'block'}}>
+                {option}
+              </Select.Option>
+            ))}
+          </Select>
+        </Space>
+      )}
+
+      <Button onClick={()=>{store.setMultiTenant(!store.multiTenant);console.log(store.multiTenant)}}>租户</Button>
+      {store.multiTenant && (
+        <Space style={{marginLeft:20}}>
+          <div>租户:</div>
+          <Select dropdownMenuStyle={{ maxHeight: 400 }} value={appId} onChange={onChange} bordered={false}
+                  triggerProps={{autoAlignPopupWidth: false, autoAlignPopupMinWidth: true, position: 'bl'}}
+                  style={{width:'fit-content', minWidth:120, maxWidth:250, backgroundColor:'var(--color-fill-2)', visibility: visibility}}
+                  dropdownRender={(menu) => (<div>{menu}<Divider style={{ margin: 0 }} /><CreateApplication/></div>)}
+          >
+            {options.map((option) => (
+              <Select.Option key={option} value={option} style={{height:50, textAlign:'left', display:'block'}}>
+                {option}
+              </Select.Option>
+            ))}
+          </Select>
+        </Space>
+      )}
+    </div>
+
   );
 }
 
