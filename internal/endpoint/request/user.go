@@ -20,9 +20,9 @@ func (u *UserReq) ToModel() model.User {
 		UserPoolID:  u.UserPoolID,
 		Username:    u.Username,
 		Password:    u.Password,
-		DisplayName: &u.DisplayName,
-		Email:       &u.Email,
-		Phone:       &u.Phone,
+		DisplayName: u.DisplayName,
+		Email:       u.Email,
+		Phone:       u.Phone,
 		Type:        u.Type,
 	}
 }
@@ -37,6 +37,6 @@ func (u *UserPoolReq) ToModel() model.UserPool {
 	return model.UserPool{
 		ID:       u.PoolId,
 		Name:     u.Name,
-		Describe: &u.Describe,
+		Describe: u.Describe,
 	}
 }

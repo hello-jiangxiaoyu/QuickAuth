@@ -80,7 +80,7 @@ func (o Controller) getProfile(c *gin.Context) {
 	session := sessions.Default(c)
 	userId, ok := session.Get("userId").(int64)
 	if !ok || userId == 0 {
-		resp.ErrorForbidden(c, "invalid user_id")
+		resp.ErrorNoLogin(c)
 		return
 	}
 

@@ -69,7 +69,7 @@ func (o Controller) modifyAppSecret(c *gin.Context) {
 
 	secret, err := o.svc.ModifyAppSecret(in.ToModel())
 	if err != nil {
-		resp.ErrorUnknown(c, err, "create app secret err")
+		resp.ErrorUnknown(c, err, "modify app secret err")
 		return
 	}
 	resp.SuccessWithData(c, secret)

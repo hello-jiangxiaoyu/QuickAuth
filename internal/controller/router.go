@@ -15,7 +15,7 @@ import (
 func NewOauth2Router(repo *global.Repository, e *gin.Engine) {
 	svc := service.NewService(repo)
 	o := NewOAuth2Api(svc)
-	r := e.Group("/api/quick")
+	r := e.Group("/api/quick", middleware.TenantHost())
 	{
 		r.GET("/.well-known/openid-configuration", o.getOIDC)   // OIDC信息
 		r.GET("/.well-known/jwks.json", o.getJwks)              // jwk签名公钥
@@ -51,10 +51,10 @@ func NewOauth2Router(repo *global.Repository, e *gin.Engine) {
 		tenant.PUT("/tenants", o.modifyTenant)
 		tenant.DELETE("/tenants", o.deleteTenant)
 
-		app.GET("/redirect-uri", o.listRedirectUri)
-		app.POST("/redirect-uri", o.createRedirectUri)
-		app.PUT("/redirect-uri/:uriId", o.modifyRedirectUri)
-		app.DELETE("/redirect-uri/:uri", o.deleteRedirectUri)
+		tenant.GET("/redirect-uri", o.listRedirectUri)
+		tenant.POST("/redirect-uri", o.createRedirectUri)
+		tenant.PUT("/redirect-uri/:uriId", o.modifyRedirectUri)
+		tenant.DELETE("/redirect-uri/:uri", o.deleteRedirectUri)
 	}
 
 	provider := e.Group("/api/quick", middleware.TenantHost())
@@ -82,4 +82,7 @@ func NewOauth2Router(repo *global.Repository, e *gin.Engine) {
 
 	e.GET("/api/quick/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	e.GET("/api/quick/health", func(c *gin.Context) { c.String(http.StatusOK, "ok") }) // 健康探测
+	e.NoRoute(func(c *gin.Context) {
+		c.JSON(http.StatusNotFound, gin.H{"message": "no such router"})
+	})
 }

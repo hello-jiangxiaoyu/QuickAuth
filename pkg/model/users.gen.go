@@ -16,9 +16,9 @@ type User struct {
 	UserPoolID  int64     `gorm:"column:user_pool_id;type:bigint;not null" json:"userPoolId"`
 	Username    string    `gorm:"column:username;type:character varying(127);not null" json:"username"`
 	Password    string    `gorm:"column:password;type:character varying(127);not null;default:''::character varying" json:"password"`
-	DisplayName *string   `gorm:"column:display_name;type:character varying(127)" json:"displayName"`
-	Email       *string   `gorm:"column:email;type:character varying(127)" json:"email"`
-	Phone       *string   `gorm:"column:phone;type:character varying(20)" json:"phone"`
+	DisplayName string    `gorm:"column:display_name;type:character varying(127);not null" json:"displayName"`
+	Email       string    `gorm:"column:email;type:character varying(127);not null" json:"email"`
+	Phone       string    `gorm:"column:phone;type:character varying(20);not null" json:"phone"`
 	Type        int32     `gorm:"column:type;type:integer;not null" json:"type"`
 	IsDisabled  int32     `gorm:"column:is_disabled;type:integer;not null" json:"isDisabled"`
 	CreateTime  time.Time `gorm:"column:create_time;type:timestamp with time zone;not null;default:now()" json:"createTime"`

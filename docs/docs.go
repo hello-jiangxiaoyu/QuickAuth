@@ -181,8 +181,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "tenant host",
                         "name": "vhost",
-                        "in": "path",
-                        "required": true
+                        "in": "header"
                     }
                 ],
                 "responses": {
@@ -215,8 +214,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "tenant host",
                         "name": "vhost",
-                        "in": "path",
-                        "required": true
+                        "in": "header"
                     },
                     {
                         "description": "body",
@@ -254,8 +252,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "tenant host",
                         "name": "vhost",
-                        "in": "path",
-                        "required": true
+                        "in": "header"
                     },
                     {
                         "type": "string",
@@ -300,8 +297,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "tenant host",
                         "name": "vhost",
-                        "in": "path",
-                        "required": true
+                        "in": "header"
                     },
                     {
                         "type": "string",
@@ -1241,13 +1237,27 @@ const docTemplate = `{
             }
         },
         "request.AppReq": {
-            "type": "object"
-        },
-        "request.AppSecretReq": {
             "type": "object",
             "properties": {
                 "describe": {
                     "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.AppSecretReq": {
+            "type": "object",
+            "properties": {
+                "accessExpire": {
+                    "type": "integer"
+                },
+                "describe": {
+                    "type": "string"
+                },
+                "refreshExpire": {
+                    "type": "integer"
                 },
                 "scope": {
                     "type": "string"

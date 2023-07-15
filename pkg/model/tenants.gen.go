@@ -32,7 +32,7 @@ type Tenant struct {
 	IsPassword    int32          `gorm:"column:is_password;type:integer;not null" json:"isPassword"`
 	IsCredential  int32          `gorm:"column:is_credential;type:integer;not null;default:1" json:"isCredential"`
 	IsDeviceFlow  int32          `gorm:"column:is_device_flow;type:integer;not null" json:"isDeviceFlow"`
-	Describe      *string        `gorm:"column:describe;type:character varying(127)" json:"describe"`
+	Describe      string         `gorm:"column:describe;type:character varying(127);not null" json:"describe"`
 	IsDisabled    int32          `gorm:"column:is_disabled;type:integer;not null" json:"isDisabled"`
 	CreateTime    time.Time      `gorm:"column:create_time;type:timestamp with time zone;not null;default:now()" json:"createTime"`
 	UpdateTime    time.Time      `gorm:"column:update_time;type:timestamp with time zone;not null;default:now()" json:"updateTime"`

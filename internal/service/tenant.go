@@ -3,7 +3,8 @@ package service
 import (
 	"QuickAuth/pkg/model"
 	"github.com/lib/pq"
-	"strconv"
+	"github.com/pkg/errors"
+	"net/url"
 )
 
 func (s *Service) GetTenant(appId string, tenantId int64) (*model.Tenant, error) {
@@ -28,7 +29,7 @@ func (s *Service) CreatTenant(t model.Tenant) (*model.Tenant, error) {
 	if _, err := s.GetApp(t.AppID); err != nil {
 		return nil, err
 	}
-	if _, err := s.GetUserPool(strconv.FormatInt(t.UserPoolID, 10)); err != nil {
+	if _, err := s.GetUserPool(t.UserPoolID); err != nil {
 		return nil, err
 	}
 
@@ -101,8 +102,13 @@ func (s *Service) ModifyRedirectUri(appId string, tenantId int64, uriId uint, ur
 }
 
 func (s *Service) DeleteRedirectUri(appId string, tenantId int64, uri string) error {
+	uri, err := url.QueryUnescape(uri)
+	if err != nil {
+		return errors.Wrap(err, "invalid uri")
+	}
+
 	sql := `update tenants set redirect_uris = array_remove(redirect_uris, ?) where id = ? and app_id = ?;`
-	if err := s.db.Exec(sql, uri, tenantId, appId).Error; err != nil {
+	if err = s.db.Exec(sql, uri, tenantId, appId).Error; err != nil {
 		return err
 	}
 

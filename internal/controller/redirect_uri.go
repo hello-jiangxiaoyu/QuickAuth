@@ -11,7 +11,7 @@ import (
 // @Description	get redirect uri list
 // @Tags		tenant
 // @Param		appId	path		string	true	"app id"
-// @Param		vhost	path		string	true	"tenant host"
+// @Param		vhost	header		string	false	"tenant host"
 // @Success		200		{object}	[]string
 // @Router		/api/quick/apps/{appId}/redirect-uri [get]
 func (o Controller) listRedirectUri(c *gin.Context) {
@@ -34,7 +34,7 @@ func (o Controller) listRedirectUri(c *gin.Context) {
 // @Description	create app redirect uri
 // @Tags		tenant
 // @Param		appId	path	string					true	"app id"
-// @Param		vhost	path	string					true	"tenant host"
+// @Param		vhost	header	string					false	"tenant host"
 // @Param		bd		body	request.RedirectUriReq	true	"body"
 // @Success		200
 // @Router		/api/quick/apps/{appId}/redirect-uri [post]
@@ -57,7 +57,7 @@ func (o Controller) createRedirectUri(c *gin.Context) {
 // @Description	modify app
 // @Tags		tenant
 // @Param		appId	path	string					true	"app id"
-// @Param		vhost	path	string					true	"tenant host"
+// @Param		vhost	header	string					false	"tenant host"
 // @Param		uriId	path	string					true	"uri id"
 // @Param		bd		body	request.RedirectUriReq	true	"body"
 // @Success		200
@@ -80,7 +80,7 @@ func (o Controller) modifyRedirectUri(c *gin.Context) {
 // @Description	delete app
 // @Tags		tenant
 // @Param		appId	path	string	true	"app id"
-// @Param		vhost	path	string	true	"tenant host"
+// @Param		vhost	header	string	false	"tenant host"
 // @Param		uri		path	string	true	"uri name"
 // @Success		200
 // @Router		/api/quick/apps/{appId}/redirect-uri/{uri} [delete]

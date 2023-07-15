@@ -32,7 +32,7 @@ func (s *Service) CreateApp(app model.App) (*model.App, error) {
 }
 
 func (s *Service) ModifyApp(app model.App) error {
-	if err := s.db.Where("id = ?", app.ID).Save(app).Error; err != nil {
+	if err := s.db.Where("id = ?", app.ID).Updates(&app).Error; err != nil {
 		return err
 	}
 	return nil
@@ -63,7 +63,7 @@ func (s *Service) CreateAppSecret(secret model.AppSecret) (*model.AppSecret, err
 	if _, err := s.GetApp(secret.AppID); err != nil {
 		return nil, err
 	}
-	secret.Secret = safe.Rand62(31)
+	secret.Secret = safe.Rand62(63)
 	if err := s.db.Create(&secret).Error; err != nil {
 		return nil, err
 	}
@@ -71,7 +71,8 @@ func (s *Service) CreateAppSecret(secret model.AppSecret) (*model.AppSecret, err
 }
 
 func (s *Service) ModifyAppSecret(secret model.AppSecret) (*model.AppSecret, error) {
-	if err := s.db.Select("scope").Where("id = ? AND app_id = ?", secret.ID, secret.AppID).Create(&secret).Error; err != nil {
+	if err := s.db.Select("scope", "access_expire", "refresh_expire", "describe").
+		Where("id = ? AND app_id = ?", secret.ID, secret.AppID).Save(&secret).Error; err != nil {
 		return nil, err
 	}
 	return &secret, nil

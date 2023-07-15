@@ -17,7 +17,7 @@ type Provider struct {
 	Type         string    `gorm:"column:type;type:character varying(31);not null" json:"type"`
 	ClientID     string    `gorm:"column:client_id;type:character varying(255);not null" json:"clientId"`
 	ClientSecret string    `gorm:"column:client_secret;type:character varying(255);not null" json:"clientSecret"`
-	AgentID      *string   `gorm:"column:agent_id;type:character varying(255)" json:"agentId"`
+	AgentID      string    `gorm:"column:agent_id;type:character varying(255);not null" json:"agentId"`
 	CreateTime   time.Time `gorm:"column:create_time;type:timestamp with time zone;not null;default:now()" json:"createTime"`
 	UpdateTime   time.Time `gorm:"column:update_time;type:timestamp with time zone;not null;default:now()" json:"updateTime"`
 }

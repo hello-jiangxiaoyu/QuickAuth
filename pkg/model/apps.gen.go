@@ -14,7 +14,7 @@ const TableNameApp = "apps"
 type App struct {
 	ID         string    `gorm:"column:id;type:character(32);primaryKey" json:"id"`
 	Name       string    `gorm:"column:name;type:character varying(127);not null" json:"name"`
-	Describe   *string   `gorm:"column:describe;type:character varying(127)" json:"describe"`
+	Describe   string    `gorm:"column:describe;type:character varying(127);not null" json:"describe"`
 	CreateTime time.Time `gorm:"column:create_time;type:timestamp with time zone;not null;default:now()" json:"createTime"`
 	UpdateTime time.Time `gorm:"column:update_time;type:timestamp with time zone;not null;default:now()" json:"updateTime"`
 }

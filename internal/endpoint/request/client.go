@@ -6,37 +6,36 @@ import (
 )
 
 type AppReq struct {
-	AppId         string         `json:"-" uri:"appId"`
-	Name          string         `json:"name"`
-	Describe      string         `json:"describe"`
-	GrantTypes    pq.StringArray `json:"grantTypes"`
-	RedirectUris  pq.StringArray `json:"redirectUris"`
-	TokenExpire   int32          `json:"tokenExpire"`
-	RefreshExpire int32          `json:"refreshExpire"`
-	CodeExpire    int32          `json:"codeExpire"`
+	AppId    string `json:"-" uri:"appId"`
+	Name     string `json:"name"`
+	Describe string `json:"describe"`
 }
 
 func (c *AppReq) ToModel() model.App {
 	return model.App{
 		ID:       c.AppId,
 		Name:     c.Name,
-		Describe: &c.Describe,
+		Describe: c.Describe,
 	}
 }
 
 type AppSecretReq struct {
-	AppId    string `json:"-" uri:"appId"`
-	SecretId int64  `json:"-" uri:"secretId"`
-	Describe string `json:"describe"`
-	Scope    string `json:"scope"`
+	AppId         string `json:"-" uri:"appId"`
+	SecretId      int64  `json:"-" uri:"secretId"`
+	Describe      string `json:"describe"`
+	AccessExpire  int32  `json:"accessExpire"`
+	RefreshExpire int32  `json:"refreshExpire"`
+	Scope         string `json:"scope"`
 }
 
 func (c *AppSecretReq) ToModel() model.AppSecret {
 	return model.AppSecret{
-		ID:       c.SecretId,
-		AppID:    c.AppId,
-		Describe: &c.Describe,
-		Scope:    c.Scope,
+		ID:            c.SecretId,
+		AppID:         c.AppId,
+		Describe:      c.Describe,
+		Scope:         c.Scope,
+		AccessExpire:  c.AccessExpire,
+		RefreshExpire: c.RefreshExpire,
 	}
 }
 
@@ -50,7 +49,7 @@ type RedirectUriReq struct {
 type TenantReq struct {
 	Tenant        model.Tenant   `json:"-"`
 	ID            int64          `json:"-"`
-	AppID         string         `json:"-"`
+	AppID         string         `json:"-" uri:"appId"`
 	UserPoolID    int64          `json:"userPoolId"`
 	Type          int32          `json:"type"`
 	Name          string         `json:"name"`
@@ -67,7 +66,7 @@ type TenantReq struct {
 	IsPassword    int32          `json:"isPassword"`
 	IsCredential  int32          `son:"isCredential"`
 	IsDeviceFlow  int32          `json:"isDeviceFlow"`
-	Describe      *string        `json:"describe"`
+	Describe      string         `json:"describe"`
 	IsDisabled    int32          `json:"isDisabled"`
 }
 

@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS providers (
     type            VARCHAR(31) NOT NULL,
     client_id       VARCHAR(255) NOT NULL,
     client_secret   VARCHAR(255) NOT NULL,
-    agent_id        VARCHAR(255),
+    agent_id        VARCHAR(255) NOT NULL,
     create_time     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     update_time     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
@@ -26,7 +26,7 @@ CREATE INDEX idx_provider_tenant_type_id ON providers(tenant_id, type);
 CREATE TABLE IF NOT EXISTS user_pools (
     id          BIGSERIAL PRIMARY KEY,
     name        VARCHAR(127) NOT NULL,
-    describe    VARCHAR(127),
+    describe    VARCHAR(127) NOT NULL,
     is_disabled INTEGER NOT NULL DEFAULT 0,
     create_time TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     update_time TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()

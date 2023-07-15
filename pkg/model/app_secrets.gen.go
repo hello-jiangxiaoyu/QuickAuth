@@ -15,10 +15,10 @@ type AppSecret struct {
 	ID            int64     `gorm:"column:id;type:bigint;primaryKey;autoIncrement:true" json:"id"`
 	AppID         string    `gorm:"column:app_id;type:character(32);not null" json:"appId"`
 	Secret        string    `gorm:"column:secret;type:character(63);not null" json:"secret"`
-	Scope         string    `gorm:"column:scope;type:character varying(127)[];not null" json:"scope"`
+	Scope         string    `gorm:"column:scope;type:character varying(255);not null" json:"scope"`
 	AccessExpire  int32     `gorm:"column:access_expire;type:integer;not null;default:604800" json:"accessExpire"`
 	RefreshExpire int32     `gorm:"column:refresh_expire;type:integer;not null;default:2592000" json:"refreshExpire"`
-	Describe      *string   `gorm:"column:describe;type:character varying(127)" json:"describe"`
+	Describe      string    `gorm:"column:describe;type:character varying(127);not null" json:"describe"`
 	CreateTime    time.Time `gorm:"column:create_time;type:timestamp with time zone;not null;default:now()" json:"createTime"`
 	UpdateTime    time.Time `gorm:"column:update_time;type:timestamp with time zone;not null;default:now()" json:"updateTime"`
 }

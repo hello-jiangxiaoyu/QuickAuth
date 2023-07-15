@@ -39,11 +39,20 @@ definitions:
         type: string
     type: object
   request.AppReq:
-    type: object
-  request.AppSecretReq:
     properties:
       describe:
         type: string
+      name:
+        type: string
+    type: object
+  request.AppSecretReq:
+    properties:
+      accessExpire:
+        type: integer
+      describe:
+        type: string
+      refreshExpire:
+        type: integer
       scope:
         type: string
     type: object
@@ -229,9 +238,8 @@ paths:
         required: true
         type: string
       - description: tenant host
-        in: path
+        in: header
         name: vhost
-        required: true
         type: string
       responses:
         "200":
@@ -252,9 +260,8 @@ paths:
         required: true
         type: string
       - description: tenant host
-        in: path
+        in: header
         name: vhost
-        required: true
         type: string
       - description: body
         in: body
@@ -278,9 +285,8 @@ paths:
         required: true
         type: string
       - description: tenant host
-        in: path
+        in: header
         name: vhost
-        required: true
         type: string
       - description: uri name
         in: path
@@ -303,9 +309,8 @@ paths:
         required: true
         type: string
       - description: tenant host
-        in: path
+        in: header
         name: vhost
-        required: true
         type: string
       - description: uri id
         in: path

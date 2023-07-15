@@ -54,7 +54,7 @@ func (p *ProviderReq) ToModel() model.Provider {
 	return model.Provider{
 		TenantID:     p.Tenant.ID,
 		Type:         p.Type,
-		AgentID:      &p.AgentID,
+		AgentID:      p.AgentID,
 		ClientID:     p.ClientID,
 		ClientSecret: p.ClientSecret,
 	}
