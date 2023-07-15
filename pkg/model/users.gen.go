@@ -12,9 +12,8 @@ const TableNameUser = "users"
 
 // User mapped from table <users>
 type User struct {
-	ID          int64     `gorm:"column:id;type:bigint;primaryKey;autoIncrement:true" json:"id"`
+	ID          string    `gorm:"column:id;type:character(32);primaryKey" json:"id"`
 	UserPoolID  int64     `gorm:"column:user_pool_id;type:bigint;not null" json:"userPoolId"`
-	OpenID      string    `gorm:"column:open_id;type:uuid;not null" json:"openId"`
 	Username    string    `gorm:"column:username;type:character varying(127);not null" json:"username"`
 	Password    string    `gorm:"column:password;type:character varying(127);not null;default:''::character varying" json:"password"`
 	DisplayName *string   `gorm:"column:display_name;type:character varying(127)" json:"displayName"`

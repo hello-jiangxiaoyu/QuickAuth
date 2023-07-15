@@ -6,7 +6,7 @@ import (
 )
 
 type UserDtoModel struct {
-	ID          int64     `json:"id"`
+	ID          string    `json:"id"`
 	UserPoolID  int64     `json:"userPoolId"`
 	Username    string    `json:"username"`
 	DisplayName *string   `json:"displayName"`

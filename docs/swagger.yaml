@@ -38,15 +38,19 @@ definitions:
       userinfo_endpoint:
         type: string
     type: object
-  request.ClientReq:
+  request.AppReq:
     type: object
-  request.ClientSecretReq:
+  request.AppSecretReq:
     properties:
       describe:
+        type: string
+      scope:
         type: string
     type: object
   request.ProviderReq:
     properties:
+      agentId:
+        type: string
       clientId:
         type: string
       clientSecret:
@@ -59,14 +63,34 @@ definitions:
     type: object
   request.TenantReq:
     properties:
+      accessExpire:
+        type: integer
+      codeExpire:
+        type: integer
       company:
         type: string
       describe:
         type: string
       host:
         type: string
+      idExpire:
+        type: integer
+      isCode:
+        type: integer
+      isCredential:
+        type: integer
+      isDeviceFlow:
+        type: integer
+      isDisabled:
+        type: integer
+      isPassword:
+        type: integer
+      isRefresh:
+        type: integer
       name:
         type: string
+      refreshExpire:
+        type: integer
       type:
         type: integer
       userPoolId:
@@ -122,65 +146,65 @@ paths:
       summary: get OIDC
       tags:
       - oidc
-  /api/quick/clients:
+  /api/quick/apps:
     get:
-      description: list clients
+      description: list apps
       responses:
         "200":
           description: OK
-      summary: clients info
+      summary: apps info
       tags:
-      - client
+      - app
     post:
-      description: create client
+      description: create app
       parameters:
       - description: body
         in: body
         name: bd
         required: true
         schema:
-          $ref: '#/definitions/request.ClientReq'
+          $ref: '#/definitions/request.AppReq'
       responses:
         "200":
           description: OK
-      summary: create client
+      summary: create app
       tags:
-      - client
-  /api/quick/clients/{clientId}:
+      - app
+  /api/quick/apps/{appId}:
     delete:
-      description: delete client
+      description: delete app
       parameters:
-      - description: client id
+      - description: app id
         in: path
-        name: clientId
+        name: appId
         required: true
         type: string
       responses:
         "200":
           description: OK
-      summary: delete client
+      summary: delete app
       tags:
-      - client
+      - app
     get:
-      description: list clients
+      description: list apps
       parameters:
-      - description: client id
+      - description: app id
         in: path
-        name: clientId
+        name: appId
         required: true
         type: string
       responses:
         "200":
           description: OK
-      summary: clients info
+      summary: apps info
       tags:
-      - client
+      - app
     put:
-      description: modify client
+      description: modify app
       parameters:
-      - description: client id
+      - description: app id
         in: path
-        name: clientId
+        name: appId
         required: true
         type: string
       - description: body
@@ -188,20 +212,25 @@ paths:
         name: bd
         required: true
         schema:
-          $ref: '#/definitions/request.ClientReq'
+          $ref: '#/definitions/request.AppReq'
       responses:
         "200":
           description: OK
-      summary: modify client
+      summary: modify app
       tags:
-      - client
-  /api/quick/clients/{clientId}/redirect-uri:
+      - app
+  /api/quick/apps/{appId}/redirect-uri:
     get:
       description: get redirect uri list
       parameters:
-      - description: client id
+      - description: app id
         in: path
-        name: clientId
+        name: appId
+        required: true
+        type: string
+      - description: tenant host
+        in: path
+        name: vhost
         required: true
         type: string
       responses:
@@ -213,13 +242,18 @@ paths:
             type: array
       summary: get redirect uri list
       tags:
-      - client
+      - tenant
     post:
-      description: create client
+      description: create app redirect uri
       parameters:
-      - description: client id
+      - description: app id
         in: path
-        name: clientId
+        name: appId
+        required: true
+        type: string
+      - description: tenant host
+        in: path
+        name: vhost
         required: true
         type: string
       - description: body
@@ -231,16 +265,21 @@ paths:
       responses:
         "200":
           description: OK
-      summary: create client
+      summary: create app redirect uri
       tags:
-      - client
-  /api/quick/clients/{clientId}/redirect-uri/{uri}:
+      - tenant
+  /api/quick/apps/{appId}/redirect-uri/{uri}:
     delete:
-      description: delete client
+      description: delete app
       parameters:
-      - description: client id
+      - description: app id
         in: path
-        name: clientId
+        name: appId
+        required: true
+        type: string
+      - description: tenant host
+        in: path
+        name: vhost
         required: true
         type: string
       - description: uri name
@@ -251,16 +290,21 @@ paths:
       responses:
         "200":
           description: OK
-      summary: delete client
+      summary: delete app
       tags:
-      - client
-  /api/quick/clients/{clientId}/redirect-uri/{uriId}:
+      - tenant
+  /api/quick/apps/{appId}/redirect-uri/{uriId}:
     put:
-      description: modify client
+      description: modify app
       parameters:
-      - description: client id
+      - description: app id
         in: path
-        name: clientId
+        name: appId
+        required: true
+        type: string
+      - description: tenant host
+        in: path
+        name: vhost
         required: true
         type: string
       - description: uri id
@@ -277,30 +321,30 @@ paths:
       responses:
         "200":
           description: OK
-      summary: modify client
+      summary: modify app redirect uri
       tags:
-      - client
-  /api/quick/clients/{clientId}/secrets:
+      - tenant
+  /api/quick/apps/{appId}/secrets:
     get:
-      description: list client secret
+      description: list app secret
       parameters:
-      - description: client id
+      - description: app id
         in: path
-        name: clientId
+        name: appId
         required: true
         type: string
       responses:
         "200":
           description: OK
-      summary: client secret info
+      summary: app secret info
       tags:
-      - client
+      - app
     post:
-      description: create client secret
+      description: create app secret
       parameters:
-      - description: client id
+      - description: app id
         in: path
-        name: clientId
+        name: appId
         required: true
         type: string
       - description: body
@@ -308,35 +352,83 @@ paths:
         name: bd
         required: true
         schema:
-          $ref: '#/definitions/request.ClientSecretReq'
+          $ref: '#/definitions/request.AppSecretReq'
       responses:
         "200":
           description: OK
-      summary: create client secret
+      summary: create app secret
       tags:
-      - client
-  /api/quick/clients/{clientId}/secrets/{secretId}:
+      - app
+  /api/quick/apps/{appId}/secrets/{secretId}:
     delete:
-      description: delete client secret
+      description: delete app secret
       parameters:
-      - description: client id
+      - description: app id
         in: path
-        name: clientId
+        name: appId
+        required: true
+        type: string
+      - description: secret id
+        in: path
+        name: secretId
         required: true
         type: string
       responses:
         "200":
           description: OK
-      summary: delete client secret
+      summary: delete app secret
       tags:
-      - client
-  /api/quick/clients/{clientId}/tenants:
+      - app
+    put:
+      description: create app secret
+      parameters:
+      - description: app id
+        in: path
+        name: appId
+        required: true
+        type: string
+      - description: secret id
+        in: path
+        name: secretId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/request.AppSecretReq'
+      responses:
+        "200":
+          description: OK
+      summary: create app secret
+      tags:
+      - app
+  /api/quick/apps/{appId}/tenants:
+    delete:
+      description: get provider details
+      parameters:
+      - description: app id
+        in: path
+        name: appId
+        required: true
+        type: string
+      - description: tenant host
+        in: header
+        name: vhost
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: get provider details
+      tags:
+      - tenant
     get:
       description: list provider info
       parameters:
-      - description: client id
+      - description: app id
         in: path
-        name: clientId
+        name: appId
         required: true
         type: string
       responses:
@@ -348,10 +440,14 @@ paths:
     post:
       description: get provider details
       parameters:
-      - description: client id
+      - description: app id
         in: path
-        name: clientId
+        name: appId
         required: true
+        type: string
+      - description: tenant host
+        in: header
+        name: vhost
         type: string
       - description: body
         in: body
@@ -359,45 +455,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/request.TenantReq'
-      responses:
-        "200":
-          description: OK
-      summary: get provider details
-      tags:
-      - tenant
-  /api/quick/clients/{clientId}/tenants/{tenantId}:
-    delete:
-      description: get provider details
-      parameters:
-      - description: client id
-        in: path
-        name: clientId
-        required: true
-        type: string
-      - description: tenant id
-        in: path
-        name: tenantId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-      summary: get provider details
-      tags:
-      - tenant
-    get:
-      description: get provider details
-      parameters:
-      - description: client id
-        in: path
-        name: clientId
-        required: true
-        type: string
-      - description: tenant id
-        in: path
-        name: tenantId
-        required: true
-        type: string
       responses:
         "200":
           description: OK
@@ -407,15 +464,14 @@ paths:
     put:
       description: get provider details
       parameters:
-      - description: client id
+      - description: app id
         in: path
-        name: clientId
+        name: appId
         required: true
         type: string
-      - description: tenant id
-        in: path
-        name: tenantId
-        required: true
+      - description: tenant host
+        in: header
+        name: vhost
         type: string
       - description: body
         in: body
@@ -423,6 +479,25 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/request.TenantReq'
+      responses:
+        "200":
+          description: OK
+      summary: get provider details
+      tags:
+      - tenant
+  /api/quick/apps/{appId}/tenants/current:
+    get:
+      description: get provider details
+      parameters:
+      - description: app id
+        in: path
+        name: appId
+        required: true
+        type: string
+      - description: tenant host
+        in: header
+        name: vhost
+        type: string
       responses:
         "200":
           description: OK
@@ -482,6 +557,15 @@ paths:
       summary: logout current user
       tags:
       - login
+  /api/quick/me/profile:
+    get:
+      description: get jwks
+      responses:
+        "200":
+          description: OK
+      summary: get jwks
+      tags:
+      - oidc
   /api/quick/oauth2/auth:
     get:
       description: oauth2 authorize
@@ -535,7 +619,7 @@ paths:
     delete:
       description: get provider details
       parameters:
-      - description: client id
+      - description: app id
         in: path
         name: providerId
         required: true
@@ -549,7 +633,7 @@ paths:
     get:
       description: get provider details
       parameters:
-      - description: client id
+      - description: app id
         in: path
         name: providerId
         required: true
@@ -563,7 +647,7 @@ paths:
     post:
       description: get provider details
       parameters:
-      - description: client id
+      - description: app id
         in: path
         name: providerId
         required: true
@@ -583,7 +667,7 @@ paths:
     put:
       description: get provider details
       parameters:
-      - description: client id
+      - description: app id
         in: path
         name: providerId
         required: true

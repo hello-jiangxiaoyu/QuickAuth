@@ -11,7 +11,7 @@ const (
 	grantTypeClient       = "client_credential"
 	grantTypePassword     = "password"
 	grantTypeRefreshToken = "refresh_token"
-	grantTypeDeviceFlow   = "urn:ietf:params:oauth:grant-type:device_code"
+	grantTypeDeviceFlow   = "device_code"
 )
 
 type Handler func(*request.Token) (*dto.TokenResponse, error)

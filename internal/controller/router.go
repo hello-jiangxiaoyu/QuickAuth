@@ -1,9 +1,14 @@
 package controller
 
 import (
+	_ "QuickAuth/docs"
 	"QuickAuth/internal/global"
+	"QuickAuth/internal/middleware"
 	"QuickAuth/internal/service"
+
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"net/http"
 )
 
@@ -20,56 +25,61 @@ func NewOauth2Router(repo *global.Repository, e *gin.Engine) {
 		r.GET("/logout", o.logout)                              // 登出
 		r.GET("/oauth2/auth", o.getAuthCode)                    // 登录授权
 		r.POST("/oauth2/token", o.getToken)                     // token获取
+		r.GET("/me/profile", o.getProfile)                      // 获取当前用户信息
 	}
 
-	app := e.Group("/api/quick/apps")
+	app := e.Group("/api/quick")
 	{
-		app.GET("", o.listApp)
-		app.GET("/:appId", o.getApp)
-		app.POST("", o.createApp)
-		app.PUT("/:appId", o.modifyApp)
-		app.DELETE("/:appId", o.deleteApp)
+		app.GET("/apps", o.listApp)
+		app.GET("/apps/:appId", o.getApp)
+		app.POST("/apps", o.createApp)
+		app.PUT("/apps/:appId", o.modifyApp)
+		app.DELETE("/apps/:appId", o.deleteApp)
 
-		app.GET("/:appId/secrets", o.listAppSecret)
-		app.POST("/:appId/secrets", o.createAppSecret)
-		app.DELETE("/:appId/secrets/:secretId", o.deleteAppSecret)
+		app.GET("/apps/:appId/secrets", o.listAppSecret)
+		app.POST("/apps/:appId/secrets", o.createAppSecret)
+		app.PUT("/apps/:appId/secrets/:secretId", o.modifyAppSecret)
+		app.DELETE("/apps/:appId/secrets/:secretId", o.deleteAppSecret)
 
-		app.GET("/:appId/redirect-uri", o.listRedirectUri)
-		app.POST("/:appId/redirect-uri", o.createRedirectUri)
-		app.PUT("/:appId/redirect-uri/:uriId", o.modifyRedirectUri)
-		app.DELETE("/:appId/redirect-uri/:uri", o.deleteRedirectUri)
 	}
 
-	tenant := e.Group("/api/quick/apps/:appId/tenants")
+	tenant := e.Group("/api/quick/apps/:appId", middleware.TenantHost())
 	{
-		tenant.GET("", o.listTenant)
-		tenant.GET("/:tenantId", o.getTenant)
-		tenant.POST("", o.createTenant)
-		tenant.PUT("/:tenantId", o.modifyTenant)
-		tenant.DELETE("/:tenantId", o.deleteTenant)
+		tenant.GET("/tenants", o.listTenant)
+		tenant.GET("/tenants/current", o.getTenant)
+		tenant.POST("/tenants", o.createTenant)
+		tenant.PUT("/tenants", o.modifyTenant)
+		tenant.DELETE("/tenants", o.deleteTenant)
+
+		app.GET("/redirect-uri", o.listRedirectUri)
+		app.POST("/redirect-uri", o.createRedirectUri)
+		app.PUT("/redirect-uri/:uriId", o.modifyRedirectUri)
+		app.DELETE("/redirect-uri/:uri", o.deleteRedirectUri)
 	}
-	provider := e.Group("/api/quick/providers") // 通过host区分租户
+
+	provider := e.Group("/api/quick", middleware.TenantHost())
 	{
-		provider.GET("/:providerId", o.getProvider)
-		provider.POST("", o.createProvider)
-		provider.PUT("/:providerId", o.modifyProvider)
-		provider.DELETE("/:providerId", o.deleteProvider)
+		provider.GET("/providers/:providerId", o.getProvider)
+		provider.POST("/providers", o.createProvider)
+		provider.PUT("/providers/:providerId", o.modifyProvider)
+		provider.DELETE("/providers/:providerId", o.deleteProvider)
 	}
 
-	user := e.Group("/api/quick/user-pools")
+	user := e.Group("/api/quick")
 	{
-		user.GET("", o.listUserPool)
-		user.GET("/:poolId", o.getUserPool)
-		user.POST("", o.createUserPool)
-		user.PUT("/:poolId", o.modifyUserPool)
-		user.DELETE("/:poolId", o.deleteUserPool)
+		user.GET("/user-pools", o.listUserPool)
+		user.GET("/user-pools/:poolId", o.getUserPool)
+		user.POST("/user-pools", o.createUserPool)
+		user.PUT("/user-pools/:poolId", o.modifyUserPool)
+		user.DELETE("/user-pools/:poolId", o.deleteUserPool)
 
-		user.GET("/:poolId/users", o.listUser)
-		user.GET("/:poolId/users/:userId", o.getUser)
-		user.POST("/:poolId/users", o.createUser)
-		user.PUT("/:poolId/users/:userId", o.modifyUser)
-		user.DELETE("/:poolId/users/:userId", o.deleteUser)
+		user.GET("/user-pools/:poolId/users", o.listUser)
+		user.GET("/user-pools/:poolId/users/:userId", o.getUser)
+		user.POST("/user-pools/:poolId/users", o.createUser)
+		user.PUT("/user-pools/:poolId/users/:userId", o.modifyUser)
+		user.DELETE("/user-pools/:poolId/users/:userId", o.deleteUser)
 	}
 
+	e.GET("/api/quick/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	e.GET("/api/quick/health", func(c *gin.Context) { c.String(http.StatusOK, "ok") }) // 健康探测
 }

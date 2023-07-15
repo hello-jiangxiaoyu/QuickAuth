@@ -8,18 +8,18 @@ import (
 	"time"
 )
 
-const TableNameClientSecret = "client_secrets"
+const TableNameApp = "apps"
 
-// AppSecret mapped from table <client_secrets>
-type AppSecret struct {
-	AppID  string `gorm:"column:client_id;type:uuid;primaryKey" json:"clientId"`
-	Secret string `gorm:"column:secret;type:character(63);primaryKey" json:"secret"`
+// App mapped from table <apps>
+type App struct {
+	ID         string    `gorm:"column:id;type:character(32);primaryKey" json:"id"`
+	Name       string    `gorm:"column:name;type:character varying(127);not null" json:"name"`
 	Describe   *string   `gorm:"column:describe;type:character varying(127)" json:"describe"`
 	CreateTime time.Time `gorm:"column:create_time;type:timestamp with time zone;not null;default:now()" json:"createTime"`
 	UpdateTime time.Time `gorm:"column:update_time;type:timestamp with time zone;not null;default:now()" json:"updateTime"`
 }
 
-// TableName AppSecret's table name
-func (*AppSecret) TableName() string {
-	return TableNameClientSecret
+// TableName App's table name
+func (*App) TableName() string {
+	return TableNameApp
 }

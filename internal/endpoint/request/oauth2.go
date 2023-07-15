@@ -18,10 +18,10 @@ type LoginProvider struct {
 }
 
 type Auth struct {
-	ClientID     string       `json:"clientId" binding:"required"`
+	ClientID     string       `json:"client_id" binding:"required"`
 	Scope        string       `json:"scope" binding:"required"`
-	ResponseType string       `json:"responseType" binding:"required"`
-	RedirectUri  string       `json:"redirectUri" binding:"required"`
+	ResponseType string       `json:"response_type" binding:"required"`
+	RedirectUri  string       `json:"redirect_uri" binding:"required"`
 	Nonce        string       `json:"nonce"`
 	Tenant       model.Tenant `json:"-"`
 	UserID       string       `json:"-"`
@@ -42,12 +42,20 @@ type Token struct {
 }
 
 type ProviderReq struct {
-	TenantID     int64  `json:"-"`
-	Type         string `json:"-"`
-	ClientID     string `json:"clientId"`
-	ClientSecret string `json:"clientSecret"`
+	Tenant       model.Tenant `json:"-"`
+	Type         string       `json:"-"`
+	ProviderId   int64        `json:"-" uri:"providerId"`
+	AgentID      string       `json:"agentId"`
+	ClientID     string       `json:"clientId"`
+	ClientSecret string       `json:"clientSecret"`
 }
 
 func (p *ProviderReq) ToModel() model.Provider {
-	return model.Provider{}
+	return model.Provider{
+		TenantID:     p.Tenant.ID,
+		Type:         p.Type,
+		AgentID:      &p.AgentID,
+		ClientID:     p.ClientID,
+		ClientSecret: p.ClientSecret,
+	}
 }

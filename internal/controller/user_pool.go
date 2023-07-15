@@ -29,7 +29,13 @@ func (o Controller) listUserPool(c *gin.Context) {
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId} [get]
 func (o Controller) getUserPool(c *gin.Context) {
-	pool, err := o.svc.GetUserPool(c.Param("poolId"))
+	var in request.UserPoolReq
+	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+		resp.ErrorRequest(c, err, "invalid user-pools request param")
+		return
+	}
+
+	pool, err := o.svc.GetUserPool(in.PoolId)
 	if err != nil {
 		resp.ErrorUnknown(c, err, "no such user pool")
 		return
@@ -47,7 +53,7 @@ func (o Controller) getUserPool(c *gin.Context) {
 func (o Controller) createUserPool(c *gin.Context) {
 	var in request.UserPoolReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "init user pool req err")
+		resp.ErrorRequest(c, err, "invalid user-pools request param")
 		return
 	}
 	pool, err := o.svc.CreateUserPool(in.ToModel())
@@ -69,7 +75,7 @@ func (o Controller) createUserPool(c *gin.Context) {
 func (o Controller) modifyUserPool(c *gin.Context) {
 	var in request.UserPoolReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "init user pool req err")
+		resp.ErrorRequest(c, err, "invalid user-pools request param")
 		return
 	}
 
@@ -88,7 +94,13 @@ func (o Controller) modifyUserPool(c *gin.Context) {
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId} [delete]
 func (o Controller) deleteUserPool(c *gin.Context) {
-	if err := o.svc.DeleteUserPool(c.Param("poolId")); err != nil {
+	var in request.UserPoolReq
+	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+		resp.ErrorRequest(c, err, "invalid user-pools request param")
+		return
+	}
+
+	if err := o.svc.DeleteUserPool(in.PoolId); err != nil {
 		resp.ErrorUnknown(c, err, "delete user pool err")
 		return
 	}

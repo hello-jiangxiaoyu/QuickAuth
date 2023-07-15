@@ -38,7 +38,7 @@ func NewOAuth2Api(svc *service.Service) Controller {
 func (o Controller) getAuthCode(c *gin.Context) {
 	var in request.Auth
 	if err := o.SetCtx(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "init auth para err")
+		resp.ErrorRequest(c, err, "invalid auth request param")
 		return
 	}
 
@@ -48,7 +48,7 @@ func (o Controller) getAuthCode(c *gin.Context) {
 		resp.ErrorForbidden(c, "invalid user_id")
 		return
 	}
-	if ok, err := o.svc.IsRedirectUriValid(in.ClientID, in.RedirectUri); err != nil {
+	if ok, err := o.svc.IsRedirectUriValid(in.ClientID, in.Tenant.ID, in.RedirectUri); err != nil {
 		resp.ErrorSelect(c, err, "no such uri.")
 		return
 	} else if !ok {
@@ -102,7 +102,7 @@ func (o Controller) getAuthCode(c *gin.Context) {
 func (o Controller) getToken(c *gin.Context) {
 	var in request.Token
 	if err := o.SetCtx(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "init token req para err")
+		resp.ErrorRequest(c, err, "invalid token request param")
 		return
 	}
 

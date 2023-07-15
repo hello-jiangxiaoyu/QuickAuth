@@ -19,7 +19,7 @@ type Claims struct {
 func (s *Service) CreateAccessToken(app model.App, tenantName, host, userId, nonce, scope string) (string, error) {
 	var token *jwt.Token
 	nowTime := time.Now()
-	expireTime := nowTime.Add(time.Duration(app.TokenExpire) * time.Hour)
+	expireTime := nowTime.Add(time.Duration(24) * time.Hour)
 	claims := Claims{
 		TokenType: "access-token",
 		Nonce:     nonce,

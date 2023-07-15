@@ -13,7 +13,7 @@ func (s *Service) GetUserByName(poolId int64, userName string) (*model.User, err
 	return &user, nil
 }
 
-func (s *Service) GetUserById(poolId, userId string) (*model.User, error) {
+func (s *Service) GetUserById(poolId int64, userId string) (*model.User, error) {
 	var user model.User
 	if err := s.db.Select("id", "username", "display_name", "email", "phone").
 		Where("id = ? AND user_pool_id = ?", poolId, userId).
@@ -23,7 +23,7 @@ func (s *Service) GetUserById(poolId, userId string) (*model.User, error) {
 	return &user, nil
 }
 
-func (s *Service) ListUser(poolId string) ([]model.User, error) {
+func (s *Service) ListUser(poolId int64) ([]model.User, error) {
 	var user []model.User
 	if err := s.db.Select("id", "username", "display_name", "email", "phone").Where("user_Pool_id = ?", poolId).Find(&user).Error; err != nil {
 		return nil, err
@@ -48,7 +48,7 @@ func (s *Service) ModifyUser(u model.User) error {
 	return nil
 }
 
-func (s *Service) DeleteUser(poolId, userId string) error {
+func (s *Service) DeleteUser(poolId int64, userId string) error {
 	if err := s.db.Where("id = ? AND user_pool_id = ?", userId, poolId).Delete(&model.UserPool{}).Error; err != nil {
 		return err
 	}
@@ -57,7 +57,7 @@ func (s *Service) DeleteUser(poolId, userId string) error {
 
 // ====================== user pool ======================
 
-func (s *Service) GetUserPool(poolId string) (*model.UserPool, error) {
+func (s *Service) GetUserPool(poolId int64) (*model.UserPool, error) {
 	var pool model.UserPool
 	if err := s.db.Where("id = ?", poolId).
 		First(&pool).Error; err != nil {
@@ -68,7 +68,7 @@ func (s *Service) GetUserPool(poolId string) (*model.UserPool, error) {
 
 func (s *Service) ListUserPool() ([]model.UserPool, error) {
 	var pool []model.UserPool
-	if err := s.db.Select("id", "name").Find(&pool).Error; err != nil {
+	if err := s.db.Select("id", "name", "create_time").Find(&pool).Error; err != nil {
 		return nil, err
 	}
 	return pool, nil
@@ -88,7 +88,7 @@ func (s *Service) ModifyUserPool(pool model.UserPool) error {
 	return nil
 }
 
-func (s *Service) DeleteUserPool(poolId string) error {
+func (s *Service) DeleteUserPool(poolId int64) error {
 	if err := s.db.Where("id = ? AND user_pool_id = ?", poolId).Delete(&model.UserPool{}).Error; err != nil {
 		return err
 	}

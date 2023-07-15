@@ -29,7 +29,13 @@ func (o Controller) listApp(c *gin.Context) {
 // @Success		200
 // @Router		/api/quick/apps/{appId} [get]
 func (o Controller) getApp(c *gin.Context) {
-	app, err := o.svc.GetApp(c.Param("appId"))
+	var in request.AppReq
+	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+		resp.ErrorRequest(c, err, "invalid app request param")
+		return
+	}
+
+	app, err := o.svc.GetApp(in.AppId)
 	if err != nil {
 		resp.ErrorUnknown(c, err, "no such app")
 		return
@@ -47,7 +53,7 @@ func (o Controller) getApp(c *gin.Context) {
 func (o Controller) createApp(c *gin.Context) {
 	var in request.AppReq
 	if err := o.SetCtx(c).BindJson(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "init app req err")
+		resp.ErrorRequest(c, err, "invalid app request param")
 		return
 	}
 
@@ -70,7 +76,7 @@ func (o Controller) createApp(c *gin.Context) {
 func (o Controller) modifyApp(c *gin.Context) {
 	var in request.AppReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "init app req err")
+		resp.ErrorRequest(c, err, "invalid app request param")
 		return
 	}
 

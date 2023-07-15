@@ -1,11 +1,13 @@
 
 
-insert into apps (id, name, describe, grant_types, token_expire, refresh_expire, code_expire)
-values ('8767EE84-83AD-8BD6-FA79-62A9F77E228A', 'default', 'test client', '{code}', 10, 100, 1);
+insert into apps (id, name, describe)
+values ('8767EE8483AD8BD6FA7962A9F77E228A', 'default', 'test client');
 
 
 insert into user_pools (name, describe) values ('test', 'default client test user pool');
 insert into user_pools (name, describe) values ('test2', 'default client test user pool2');
 
-insert into tenants (client_id, type, name, host, company, describe)
- VALUES ('8767EE84-83AD-8BD6-FA79-62A9F77E228A', 1, 'default', 'localhost', 'local', 'localhost test tenant');
+insert into tenants (app_id, type, name, host, company, describe, redirect_uris, grant_types)
+ VALUES ('8767EE8483AD8BD6FA7962A9F77E228A', 1, 'default', 'localhost', 'local', 'localhost test tenant', '{localhost}', '{read_user}');
+
+

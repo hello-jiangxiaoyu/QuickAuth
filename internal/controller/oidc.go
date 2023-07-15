@@ -1,9 +1,10 @@
 package controller
 
 import (
-	"QuickAuth/internal/controller/internal"
 	"QuickAuth/internal/endpoint/resp"
+	"QuickAuth/pkg/model"
 	"fmt"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -30,14 +31,17 @@ type OpenidConfigurationDto struct {
 // @Success		200		{object}	OpenidConfigurationDto
 // @Router		/api/quick/.well-known/openid-configuration [get]
 func (o Controller) getOIDC(c *gin.Context) {
-	tenantName := "default"
-	prefix := internal.GetHostWithScheme(c)
+	var tenant model.Tenant
+	if err := o.SetCtx(c).SetTenant(&tenant).Error; err != nil {
+		resp.ErrorRequest(c, err, "invalid oidc request param")
+		return
+	}
 	conf := OpenidConfigurationDto{
-		Issuer:                            fmt.Sprintf("%s/%s", prefix, tenantName),
-		AuthorizationEndpoint:             fmt.Sprintf("%s/%s/oauth2/auth", prefix, tenantName),
-		TokenEndpoint:                     fmt.Sprintf("%s/%s/oauth2/token", prefix, tenantName),
-		UserinfoEndpoint:                  fmt.Sprintf("%s/%s/me/profile", prefix, tenantName),
-		JwksUri:                           fmt.Sprintf("%s/%s/.well-known/jwks.json", prefix, tenantName),
+		Issuer:                            fmt.Sprintf("%s", tenant.Host),
+		AuthorizationEndpoint:             fmt.Sprintf("%s/api/quick/oauth2/auth", tenant.Host),
+		TokenEndpoint:                     fmt.Sprintf("%s/api/quick/oauth2/token", tenant.Host),
+		UserinfoEndpoint:                  fmt.Sprintf("%s/api/quick/me/profile", tenant.Host),
+		JwksUri:                           fmt.Sprintf("%s/api/quick/.well-known/jwks.json", tenant.Host),
 		ScopesSupported:                   []string{"openid", "profile", "email", "offline_access"},
 		ResponseTypesSupported:            []string{"code", "id_token", "code id_token", "id_token token"},
 		SubjectTypesSupported:             []string{"pairwise"},
@@ -64,4 +68,21 @@ func (o Controller) getJwks(c *gin.Context) {
 	}
 
 	resp.SuccessWithData(c, jwks)
+}
+
+// @Summary	get jwks
+// @Schemes
+// @Description	get jwks
+// @Tags		oidc
+// @Success		200
+// @Router		/api/quick/me/profile [get]
+func (o Controller) getProfile(c *gin.Context) {
+	session := sessions.Default(c)
+	userId, ok := session.Get("userId").(int64)
+	if !ok || userId == 0 {
+		resp.ErrorForbidden(c, "invalid user_id")
+		return
+	}
+
+	resp.SuccessWithData(c, userId)
 }

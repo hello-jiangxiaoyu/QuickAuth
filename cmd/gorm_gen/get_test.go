@@ -27,6 +27,6 @@ func TestGen(*testing.T) {
 	generator.Execute()
 
 	if err = utils.AmendFile(modelDir, convertToCamelCase); err != nil {
-		fmt.Println("amend err: ", err)
+		panic(err)
 	}
 }

@@ -1,7 +1,6 @@
 package internal
 
 import (
-	_ "QuickAuth/docs"
 	"QuickAuth/internal/controller"
 	"QuickAuth/internal/global"
 	"QuickAuth/internal/middleware"
@@ -9,15 +8,13 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func GetServer() *gin.Engine {
 	r := gin.Default()
 	// r := gin.New()
 	// gin.SetMode(gin.ReleaseMode)
-	r.Use(middleware.Recovery(), middleware.RequestLog(), cors.Default(), middleware.TenantHost())
+	r.Use(middleware.Recovery(), middleware.RequestLog(), cors.Default())
 	cookieSecret := []byte("QuickAuth")
 	store := cookie.NewStore(cookieSecret)
 	store.Options(sessions.Options{
@@ -26,7 +23,6 @@ func GetServer() *gin.Engine {
 	})
 	r.Use(sessions.Sessions("QuickAuth", store))
 
-	r.GET("/api/quick/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	controller.NewOauth2Router(&global.Repository{Logger: global.Log, DB: global.DB, Config: global.Config}, r)
 	return r
 }

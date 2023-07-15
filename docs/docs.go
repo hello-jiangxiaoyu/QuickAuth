@@ -51,13 +51,13 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/clients": {
+        "/api/quick/apps": {
             "get": {
-                "description": "list clients",
+                "description": "list apps",
                 "tags": [
-                    "client"
+                    "app"
                 ],
-                "summary": "clients info",
+                "summary": "apps info",
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -65,11 +65,11 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "create client",
+                "description": "create app",
                 "tags": [
-                    "client"
+                    "app"
                 ],
-                "summary": "create client",
+                "summary": "create app",
                 "parameters": [
                     {
                         "description": "body",
@@ -77,7 +77,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.ClientReq"
+                            "$ref": "#/definitions/request.AppReq"
                         }
                     }
                 ],
@@ -88,18 +88,18 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/clients/{clientId}": {
+        "/api/quick/apps/{appId}": {
             "get": {
-                "description": "list clients",
+                "description": "list apps",
                 "tags": [
-                    "client"
+                    "app"
                 ],
-                "summary": "clients info",
+                "summary": "apps info",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
-                        "name": "clientId",
+                        "description": "app id",
+                        "name": "appId",
                         "in": "path",
                         "required": true
                     }
@@ -111,16 +111,16 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "description": "modify client",
+                "description": "modify app",
                 "tags": [
-                    "client"
+                    "app"
                 ],
-                "summary": "modify client",
+                "summary": "modify app",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
-                        "name": "clientId",
+                        "description": "app id",
+                        "name": "appId",
                         "in": "path",
                         "required": true
                     },
@@ -130,7 +130,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.ClientReq"
+                            "$ref": "#/definitions/request.AppReq"
                         }
                     }
                 ],
@@ -141,16 +141,16 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "delete client",
+                "description": "delete app",
                 "tags": [
-                    "client"
+                    "app"
                 ],
-                "summary": "delete client",
+                "summary": "delete app",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
-                        "name": "clientId",
+                        "description": "app id",
+                        "name": "appId",
                         "in": "path",
                         "required": true
                     }
@@ -162,18 +162,25 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/clients/{clientId}/redirect-uri": {
+        "/api/quick/apps/{appId}/redirect-uri": {
             "get": {
                 "description": "get redirect uri list",
                 "tags": [
-                    "client"
+                    "tenant"
                 ],
                 "summary": "get redirect uri list",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
-                        "name": "clientId",
+                        "description": "app id",
+                        "name": "appId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "tenant host",
+                        "name": "vhost",
                         "in": "path",
                         "required": true
                     }
@@ -191,16 +198,23 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "create client",
+                "description": "create app redirect uri",
                 "tags": [
-                    "client"
+                    "tenant"
                 ],
-                "summary": "create client",
+                "summary": "create app redirect uri",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
-                        "name": "clientId",
+                        "description": "app id",
+                        "name": "appId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "tenant host",
+                        "name": "vhost",
                         "in": "path",
                         "required": true
                     },
@@ -221,18 +235,25 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/clients/{clientId}/redirect-uri/{uriId}": {
+        "/api/quick/apps/{appId}/redirect-uri/{uriId}": {
             "put": {
-                "description": "modify client",
+                "description": "modify app",
                 "tags": [
-                    "client"
+                    "tenant"
                 ],
-                "summary": "modify client",
+                "summary": "modify app redirect uri",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
-                        "name": "clientId",
+                        "description": "app id",
+                        "name": "appId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "tenant host",
+                        "name": "vhost",
                         "in": "path",
                         "required": true
                     },
@@ -260,18 +281,25 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/clients/{clientId}/redirect-uri/{uri}": {
+        "/api/quick/apps/{appId}/redirect-uri/{uri}": {
             "delete": {
-                "description": "delete client",
+                "description": "delete app",
                 "tags": [
-                    "client"
+                    "tenant"
                 ],
-                "summary": "delete client",
+                "summary": "delete app",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
-                        "name": "clientId",
+                        "description": "app id",
+                        "name": "appId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "tenant host",
+                        "name": "vhost",
                         "in": "path",
                         "required": true
                     },
@@ -290,18 +318,18 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/clients/{clientId}/secrets": {
+        "/api/quick/apps/{appId}/secrets": {
             "get": {
-                "description": "list client secret",
+                "description": "list app secret",
                 "tags": [
-                    "client"
+                    "app"
                 ],
-                "summary": "client secret info",
+                "summary": "app secret info",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
-                        "name": "clientId",
+                        "description": "app id",
+                        "name": "appId",
                         "in": "path",
                         "required": true
                     }
@@ -313,16 +341,16 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "create client secret",
+                "description": "create app secret",
                 "tags": [
-                    "client"
+                    "app"
                 ],
-                "summary": "create client secret",
+                "summary": "create app secret",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
-                        "name": "clientId",
+                        "description": "app id",
+                        "name": "appId",
                         "in": "path",
                         "required": true
                     },
@@ -332,7 +360,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.ClientSecretReq"
+                            "$ref": "#/definitions/request.AppSecretReq"
                         }
                     }
                 ],
@@ -343,18 +371,62 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/clients/{clientId}/secrets/{secretId}": {
-            "delete": {
-                "description": "delete client secret",
+        "/api/quick/apps/{appId}/secrets/{secretId}": {
+            "put": {
+                "description": "create app secret",
                 "tags": [
-                    "client"
+                    "app"
                 ],
-                "summary": "delete client secret",
+                "summary": "create app secret",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
-                        "name": "clientId",
+                        "description": "app id",
+                        "name": "appId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "secret id",
+                        "name": "secretId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body",
+                        "name": "bd",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AppSecretReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete app secret",
+                "tags": [
+                    "app"
+                ],
+                "summary": "delete app secret",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "app id",
+                        "name": "appId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "secret id",
+                        "name": "secretId",
                         "in": "path",
                         "required": true
                     }
@@ -366,7 +438,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/clients/{clientId}/tenants": {
+        "/api/quick/apps/{appId}/tenants": {
             "get": {
                 "description": "list provider info",
                 "tags": [
@@ -376,68 +448,8 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
-                        "name": "clientId",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            },
-            "post": {
-                "description": "get provider details",
-                "tags": [
-                    "tenant"
-                ],
-                "summary": "get provider details",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "client id",
-                        "name": "clientId",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "body",
-                        "name": "bd",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.TenantReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
-        "/api/quick/clients/{clientId}/tenants/{tenantId}": {
-            "get": {
-                "description": "get provider details",
-                "tags": [
-                    "tenant"
-                ],
-                "summary": "get provider details",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "client id",
-                        "name": "clientId",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "tenant id",
-                        "name": "tenantId",
+                        "description": "app id",
+                        "name": "appId",
                         "in": "path",
                         "required": true
                     }
@@ -457,17 +469,52 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
-                        "name": "clientId",
+                        "description": "app id",
+                        "name": "appId",
                         "in": "path",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "tenant id",
-                        "name": "tenantId",
+                        "description": "tenant host",
+                        "name": "vhost",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "bd",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.TenantReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "description": "get provider details",
+                "tags": [
+                    "tenant"
+                ],
+                "summary": "get provider details",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "app id",
+                        "name": "appId",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "tenant host",
+                        "name": "vhost",
+                        "in": "header"
                     },
                     {
                         "description": "body",
@@ -494,17 +541,45 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
-                        "name": "clientId",
+                        "description": "app id",
+                        "name": "appId",
                         "in": "path",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "tenant id",
-                        "name": "tenantId",
+                        "description": "tenant host",
+                        "name": "vhost",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/apps/{appId}/tenants/current": {
+            "get": {
+                "description": "get provider details",
+                "tags": [
+                    "tenant"
+                ],
+                "summary": "get provider details",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "app id",
+                        "name": "appId",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "tenant host",
+                        "name": "vhost",
+                        "in": "header"
                     }
                 ],
                 "responses": {
@@ -587,6 +662,20 @@ const docTemplate = `{
                     "login"
                 ],
                 "summary": "logout current user",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/me/profile": {
+            "get": {
+                "description": "get jwks",
+                "tags": [
+                    "oidc"
+                ],
+                "summary": "get jwks",
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -677,7 +766,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
+                        "description": "app id",
                         "name": "providerId",
                         "in": "path",
                         "required": true
@@ -698,7 +787,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
+                        "description": "app id",
                         "name": "providerId",
                         "in": "path",
                         "required": true
@@ -728,7 +817,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
+                        "description": "app id",
                         "name": "providerId",
                         "in": "path",
                         "required": true
@@ -758,7 +847,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "client id",
+                        "description": "app id",
                         "name": "providerId",
                         "in": "path",
                         "required": true
@@ -1151,13 +1240,16 @@ const docTemplate = `{
                 }
             }
         },
-        "request.ClientReq": {
+        "request.AppReq": {
             "type": "object"
         },
-        "request.ClientSecretReq": {
+        "request.AppSecretReq": {
             "type": "object",
             "properties": {
                 "describe": {
+                    "type": "string"
+                },
+                "scope": {
                     "type": "string"
                 }
             }
@@ -1165,6 +1257,9 @@ const docTemplate = `{
         "request.ProviderReq": {
             "type": "object",
             "properties": {
+                "agentId": {
+                    "type": "string"
+                },
                 "clientId": {
                     "type": "string"
                 },
@@ -1184,6 +1279,12 @@ const docTemplate = `{
         "request.TenantReq": {
             "type": "object",
             "properties": {
+                "accessExpire": {
+                    "type": "integer"
+                },
+                "codeExpire": {
+                    "type": "integer"
+                },
                 "company": {
                     "type": "string"
                 },
@@ -1193,8 +1294,32 @@ const docTemplate = `{
                 "host": {
                     "type": "string"
                 },
+                "idExpire": {
+                    "type": "integer"
+                },
+                "isCode": {
+                    "type": "integer"
+                },
+                "isCredential": {
+                    "type": "integer"
+                },
+                "isDeviceFlow": {
+                    "type": "integer"
+                },
+                "isDisabled": {
+                    "type": "integer"
+                },
+                "isPassword": {
+                    "type": "integer"
+                },
+                "isRefresh": {
+                    "type": "integer"
+                },
                 "name": {
                     "type": "string"
+                },
+                "refreshExpire": {
+                    "type": "integer"
                 },
                 "type": {
                     "type": "integer"
@@ -1258,6 +1383,8 @@ var SwaggerInfo = &swag.Spec{
 	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
+	LeftDelim:        "{{",
+	RightDelim:       "}}",
 }
 
 func init() {

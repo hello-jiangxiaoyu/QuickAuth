@@ -31,7 +31,7 @@ func (o Controller) login(c *gin.Context) {
 		return
 	}
 	if err := o.SetCtx(c).BindQuery(&in).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "init login req err")
+		resp.ErrorRequest(c, err, "invalid login request param")
 		return
 	}
 
@@ -72,7 +72,9 @@ func (o Controller) logout(c *gin.Context) {
 		resp.ErrorNoLogin(c)
 		return
 	}
+	session.Delete("tenant")
 	session.Delete("user")
+	session.Delete("userId")
 	if err := session.Save(); err != nil {
 		resp.ErrorSaveSession(c, err)
 		return
@@ -91,7 +93,7 @@ func (o Controller) logout(c *gin.Context) {
 func (o Controller) providerCallback(c *gin.Context) {
 	var in request.LoginProvider
 	if err := o.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "init provider login err")
+		resp.ErrorRequest(c, err, "invalid provider callback request param")
 		return
 	}
 	session := sessions.Default(c)

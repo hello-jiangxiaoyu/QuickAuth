@@ -16,9 +16,15 @@ import (
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users [get]
 func (o Controller) listUser(c *gin.Context) {
-	users, err := o.svc.ListUser(c.Param("poolId"))
+	var in request.UserReq
+	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+		resp.ErrorRequest(c, err, "invalid user request param")
+		return
+	}
+
+	users, err := o.svc.ListUser(in.UserPoolID)
 	if err != nil {
-		resp.ErrorSelect(c, err, "list user pool err")
+		resp.ErrorSelect(c, err, "invalid user request param")
 		return
 	}
 	resp.SuccessArray(c, len(users), users)
@@ -33,9 +39,13 @@ func (o Controller) listUser(c *gin.Context) {
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users/{userId} [get]
 func (o Controller) getUser(c *gin.Context) {
-	poolId := c.Param("poolId")
-	userId := c.Param("userId")
-	user, err := o.svc.GetUserById(poolId, userId)
+	var in request.UserReq
+	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+		resp.ErrorRequest(c, err, "invalid user request param")
+		return
+	}
+
+	user, err := o.svc.GetUserById(in.UserPoolID, in.UserID)
 	if err != nil {
 		resp.ErrorUnknown(c, err, "no such user")
 		return
@@ -54,7 +64,7 @@ func (o Controller) getUser(c *gin.Context) {
 func (o Controller) createUser(c *gin.Context) {
 	var in request.UserReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "init user req err")
+		resp.ErrorRequest(c, err, "invalid user request param")
 		return
 	}
 
@@ -85,7 +95,7 @@ func (o Controller) createUser(c *gin.Context) {
 func (o Controller) modifyUser(c *gin.Context) {
 	var in request.UserReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "init user req err")
+		resp.ErrorRequest(c, err, "invalid user request param")
 		return
 	}
 
@@ -105,9 +115,13 @@ func (o Controller) modifyUser(c *gin.Context) {
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users/{userId} [delete]
 func (o Controller) deleteUser(c *gin.Context) {
-	poolId := c.Param("poolId")
-	userId := c.Param("userId")
-	if err := o.svc.DeleteUser(poolId, userId); err != nil {
+	var in request.UserReq
+	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+		resp.ErrorRequest(c, err, "invalid user request param")
+		return
+	}
+
+	if err := o.svc.DeleteUser(in.UserPoolID, in.UserID); err != nil {
 		resp.ErrorUnknown(c, err, "delete user err")
 		return
 	}
