@@ -13,7 +13,6 @@ type AppReq struct {
 
 func (c *AppReq) ToModel() model.App {
 	return model.App{
-		ID:       c.AppId,
 		Name:     c.Name,
 		Describe: c.Describe,
 	}
@@ -30,8 +29,6 @@ type AppSecretReq struct {
 
 func (c *AppSecretReq) ToModel() model.AppSecret {
 	return model.AppSecret{
-		ID:            c.SecretId,
-		AppID:         c.AppId,
 		Describe:      c.Describe,
 		Scope:         c.Scope,
 		AccessExpire:  c.AccessExpire,
@@ -48,14 +45,13 @@ type RedirectUriReq struct {
 
 type TenantReq struct {
 	Tenant        model.Tenant   `json:"-"`
-	ID            int64          `json:"-"`
 	AppID         string         `json:"-" uri:"appId"`
 	UserPoolID    int64          `json:"userPoolId"`
 	Type          int32          `json:"type"`
 	Name          string         `json:"name"`
 	Host          string         `json:"host"`
 	Company       string         `json:"company"`
-	GrantTypes    pq.StringArray `json:"-"`
+	GrantTypes    []string       `json:"grantTypes"`
 	RedirectUris  pq.StringArray `json:"-"`
 	CodeExpire    int32          `json:"codeExpire"`
 	IDExpire      int32          `json:"idExpire"`

@@ -133,3 +133,28 @@ func (o Controller) providerCallback(c *gin.Context) {
 	session.Set("userId", userInfo.Id)
 	resp.Success(c) // todo: redirect to next by state
 }
+
+// @Summary	login a user
+// @Schemes
+// @Description	login using username and password
+// @Tags		login
+// @Param		username	formData	string	true	"username"
+// @Param		password	formData	string	true	"password"
+// @Param		next		query		string	false	"next"
+// @Success		200
+// @Router		/api/quick/register [post]
+func (o Controller) register(c *gin.Context) {
+	var in request.Login
+	session := sessions.Default(c)
+	su := session.Get("user")
+	if su != nil {
+		resp.DoNothing(c, "user is already logged in, nothing to do")
+		return
+	}
+	if err := o.SetCtx(c).BindQuery(&in).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
+		resp.ErrorRequest(c, err, "invalid login request param")
+		return
+	}
+
+	c.Status(http.StatusOK)
+}

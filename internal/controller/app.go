@@ -80,7 +80,7 @@ func (o Controller) modifyApp(c *gin.Context) {
 		return
 	}
 
-	if err := o.svc.ModifyApp(in.ToModel()); err != nil {
+	if err := o.svc.ModifyApp(in.AppId, in.ToModel()); err != nil {
 		resp.ErrorUnknown(c, err, "modify app err")
 		return
 	}

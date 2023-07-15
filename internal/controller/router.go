@@ -17,15 +17,17 @@ func NewOauth2Router(repo *global.Repository, e *gin.Engine) {
 	o := NewOAuth2Api(svc)
 	r := e.Group("/api/quick", middleware.TenantHost())
 	{
-		r.GET("/.well-known/openid-configuration", o.getOIDC)   // OIDC信息
-		r.GET("/.well-known/jwks.json", o.getJwks)              // jwk签名公钥
+		r.GET("/.well-known/openid-configuration", o.getOIDC) // OIDC信息
+		r.GET("/.well-known/jwks.json", o.getJwks)            // jwk签名公钥
+		r.GET("/oauth2/auth", o.getAuthCode)                  // 登录授权
+		r.POST("/oauth2/token", o.getToken)                   // token获取
+		r.GET("/me/profile", o.getProfile)                    // 获取当前用户信息
+
 		r.POST("/login", o.login)                               // 账号密码登录
+		r.POST("/register", o.register)                         // 注册
+		r.GET("/logout", o.logout)                              // 登出
 		r.GET("/login/providers/:provider", o.providerCallback) // 第三方登录回调
 		r.GET("/providers", o.listProvider)                     // 获取当前租户所有第三方登录所需信息
-		r.GET("/logout", o.logout)                              // 登出
-		r.GET("/oauth2/auth", o.getAuthCode)                    // 登录授权
-		r.POST("/oauth2/token", o.getToken)                     // token获取
-		r.GET("/me/profile", o.getProfile)                      // 获取当前用户信息
 	}
 
 	app := e.Group("/api/quick")

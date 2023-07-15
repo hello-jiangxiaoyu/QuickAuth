@@ -27,24 +27,24 @@ func (s *Service) ListTenant(appId string) ([]model.Tenant, error) {
 
 func (s *Service) CreatTenant(t model.Tenant) (*model.Tenant, error) {
 	if _, err := s.GetApp(t.AppID); err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "no such app")
 	}
 	if _, err := s.GetUserPool(t.UserPoolID); err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "no such user pool")
 	}
 
-	t.RedirectUris = pq.StringArray{t.Host}
+	t.RedirectUris = pq.StringArray{"https://" + t.Host, "http://" + t.Host}
 	t.GrantTypes = pq.StringArray{"authorization_code", "client_credential", "refresh_token"}
-	if err := s.db.Select("app_id", "user_pool_id", "type", "name", "host", "company", "grant_type", "redirect_uris", "describe").
+	if err := s.db.Select("app_id", "user_pool_id", "type", "name", "host", "company", "grant_types", "redirect_uris", "describe").
 		Create(&t).Error; err != nil {
 		return nil, err
 	}
 	return &t, nil
 }
 
-func (s *Service) ModifyTenant(t model.Tenant) error {
-	if err := s.db.Select("app_id", "user_pool_id", "type", "name", "host", "company", "grant_type", "redirect_uris", "describe").
-		Where("id = ? AND app_id = ?", t.ID, t.AppID).Save(&t).Error; err != nil {
+func (s *Service) ModifyTenant(tenantId int64, t model.Tenant) error {
+	if err := s.db.Select("app_id", "user_pool_id", "type", "name", "host", "company", "grant_type", "describe").
+		Where("id = ? AND app_id = ?", tenantId, t.AppID).Updates(&t).Error; err != nil {
 		return err
 	}
 	return nil

@@ -25,7 +25,7 @@ func (o Controller) listUserPool(c *gin.Context) {
 // @Schemes
 // @Description	list user pool
 // @Tags		user
-// @Param		poolId	path	string	true	"user pool id"
+// @Param		poolId	path	integer	true	"user pool id"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId} [get]
 func (o Controller) getUserPool(c *gin.Context) {
@@ -68,7 +68,7 @@ func (o Controller) createUserPool(c *gin.Context) {
 // @Schemes
 // @Description	modify user pool
 // @Tags		user
-// @Param		poolId	path	string				true	"user pool id"
+// @Param		poolId	path	integer				true	"user pool id"
 // @Param		bd		body	request.UserPoolReq	true	"body"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId} [put]
@@ -79,7 +79,7 @@ func (o Controller) modifyUserPool(c *gin.Context) {
 		return
 	}
 
-	if err := o.svc.ModifyUserPool(in.ToModel()); err != nil {
+	if err := o.svc.ModifyUserPool(in.PoolId, in.ToModel()); err != nil {
 		resp.ErrorUnknown(c, err, "modify user pool err")
 		return
 	}
@@ -90,7 +90,7 @@ func (o Controller) modifyUserPool(c *gin.Context) {
 // @Schemes
 // @Description	delete user pool
 // @Tags		user
-// @Param		poolId	path	string	true	"user pool id"
+// @Param		poolId	path	integer	true	"user pool id"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId} [delete]
 func (o Controller) deleteUserPool(c *gin.Context) {

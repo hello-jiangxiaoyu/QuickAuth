@@ -14,6 +14,7 @@ CREATE UNIQUE INDEX idx_codes_tenant_user_id ON codes(code, app_id);
 CREATE TABLE IF NOT EXISTS providers (
     id              BIGSERIAL PRIMARY KEY,
     tenant_id       BIGSERIAL NOT NULL,
+    app_id          CHAR(32) NOT NULL,
     type            VARCHAR(31) NOT NULL,
     client_id       VARCHAR(255) NOT NULL,
     client_secret   VARCHAR(255) NOT NULL,
@@ -21,7 +22,7 @@ CREATE TABLE IF NOT EXISTS providers (
     create_time     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     update_time     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE INDEX idx_provider_tenant_type_id ON providers(tenant_id, type);
+CREATE INDEX idx_provider_tenant_type_id ON providers(tenant_id, app_id);
 
 CREATE TABLE IF NOT EXISTS user_pools (
     id          BIGSERIAL PRIMARY KEY,

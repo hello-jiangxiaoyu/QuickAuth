@@ -28,7 +28,7 @@ func initSystem() error {
 	return nil
 }
 
-// @title swagger 接口文档
+// @title Quick Auth 接口文档
 // @version 1.0
 // @description
 // @license.name MIT

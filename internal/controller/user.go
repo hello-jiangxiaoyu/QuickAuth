@@ -12,7 +12,7 @@ import (
 // @Schemes
 // @Description	list users
 // @Tags		user
-// @Param		poolId	path	string	true	"user pool id"
+// @Param		poolId	path	integer	true	"user pool id"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users [get]
 func (o Controller) listUser(c *gin.Context) {
@@ -34,7 +34,7 @@ func (o Controller) listUser(c *gin.Context) {
 // @Schemes
 // @Description	list user
 // @Tags		user
-// @Param		poolId	path	string	true	"user pool id"
+// @Param		poolId	path	integer	true	"user pool id"
 // @Param		userId	path	string	true	"user id"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users/{userId} [get]
@@ -57,7 +57,7 @@ func (o Controller) getUser(c *gin.Context) {
 // @Schemes
 // @Description	create user
 // @Tags		user
-// @Param		poolId	path	string			true	"user pool id"
+// @Param		poolId	path	integer			true	"user pool id"
 // @Param		bd		body	request.UserReq	true	"body"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users [post]
@@ -87,7 +87,7 @@ func (o Controller) createUser(c *gin.Context) {
 // @Schemes
 // @Description	modify user
 // @Tags		user
-// @Param		poolId	path	string			true	"user pool id"
+// @Param		poolId	path	integer			true	"user pool id"
 // @Param		userId	path	string			true	"user id"
 // @Param		bd		body	request.UserReq	true	"body"
 // @Success		200
@@ -99,7 +99,7 @@ func (o Controller) modifyUser(c *gin.Context) {
 		return
 	}
 
-	if err := o.svc.ModifyUser(in.ToModel()); err != nil {
+	if err := o.svc.ModifyUser(in.UserID, in.ToModel()); err != nil {
 		resp.ErrorUnknown(c, err, "modify user err")
 		return
 	}
@@ -110,7 +110,7 @@ func (o Controller) modifyUser(c *gin.Context) {
 // @Schemes
 // @Description	delete user
 // @Tags		user
-// @Param		poolId	path	string	true	"user pool id"
+// @Param		poolId	path	integer	true	"user pool id"
 // @Param		userId	path	string	true	"user id"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users/{userId} [delete]

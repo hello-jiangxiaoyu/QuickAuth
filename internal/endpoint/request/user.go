@@ -16,7 +16,6 @@ type UserReq struct {
 
 func (u *UserReq) ToModel() model.User {
 	return model.User{
-		ID:          u.UserID,
 		UserPoolID:  u.UserPoolID,
 		Username:    u.Username,
 		Password:    u.Password,
@@ -35,7 +34,6 @@ type UserPoolReq struct {
 
 func (u *UserPoolReq) ToModel() model.UserPool {
 	return model.UserPool{
-		ID:       u.PoolId,
 		Name:     u.Name,
 		Describe: u.Describe,
 	}

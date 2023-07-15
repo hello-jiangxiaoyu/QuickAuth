@@ -25,7 +25,7 @@ func NewOAuth2Api(svc *service.Service) Controller {
 // @Summary	oauth2 authorize
 // @Schemes
 // @Description	oauth2 authorize
-// @Tags		oauth2
+// @Tags		oidc
 // @Param		client_id		query	string	true	"client_id"
 // @Param		scope			query	string	true	"scope"
 // @Param		response_type	query	string	true	"response_type"
@@ -89,7 +89,7 @@ func (o Controller) getAuthCode(c *gin.Context) {
 // @Summary	oauth2 token
 // @Schemes
 // @Description	oauth2 token
-// @Tags		oauth2
+// @Tags		oidc
 // @Param		client_id		query		string	true	"client_id"
 // @Param		client_secret	query		string	false	"client_secret"
 // @Param		code			query		string	false	"code"
@@ -98,7 +98,7 @@ func (o Controller) getAuthCode(c *gin.Context) {
 // @Param		state			query		string	false	"state"
 // @Param		nonce			query		string	false	"nonce"
 // @Success		200
-// @Router		/v1/oauth2/token [post]
+// @Router		/api/quick/oauth2/token [post]
 func (o Controller) getToken(c *gin.Context) {
 	var in request.Token
 	if err := o.SetCtx(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {

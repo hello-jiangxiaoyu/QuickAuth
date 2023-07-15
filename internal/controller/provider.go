@@ -10,6 +10,7 @@ import (
 // @Schemes
 // @Description	list provider info
 // @Tags		provider
+// @Param		vhost	header	string	false	"tenant host"
 // @Success		200
 // @Router		/api/quick/providers [get]
 func (o Controller) listProvider(c *gin.Context) {
@@ -31,7 +32,8 @@ func (o Controller) listProvider(c *gin.Context) {
 // @Schemes
 // @Description	get provider details
 // @Tags		provider
-// @Param		providerId	path	string	true	"app id"
+// @Param		providerId	path	integer	true	"provider id"
+// @Param		vhost		header	string	false	"tenant host"
 // @Success		200
 // @Router		/api/quick/providers/{providerId} [get]
 func (o Controller) getProvider(c *gin.Context) {
@@ -49,20 +51,21 @@ func (o Controller) getProvider(c *gin.Context) {
 	resp.SuccessWithData(c, provider)
 }
 
-// @Summary	get provider details
+// @Summary	create provider
 // @Schemes
-// @Description	get provider details
+// @Description	create provider
 // @Tags		provider
-// @Param		providerId	path	string				true	"app id"
-// @Param		bd			body	request.ProviderReq	true	"body"
+// @Param		vhost	header	string				false	"tenant host"
+// @Param		bd		body	request.ProviderReq	true	"body"
 // @Success		200
-// @Router		/api/quick/providers/{providerId} [post]
+// @Router		/api/quick/providers [post]
 func (o Controller) createProvider(c *gin.Context) {
 	var in request.ProviderReq
 	if err := o.SetCtx(c).BindJson(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err, "invalid provider request param")
 		return
 	}
+
 	provider, err := o.svc.CreateProvider(in.ToModel())
 	if err != nil {
 		resp.ErrorSelect(c, err, "create provider err")
@@ -72,22 +75,23 @@ func (o Controller) createProvider(c *gin.Context) {
 	resp.SuccessWithData(c, provider)
 }
 
-// @Summary	get provider details
+// @Summary	modify provider
 // @Schemes
-// @Description	get provider details
+// @Description	modify provider
 // @Tags		provider
-// @Param		providerId	path	string				true	"app id"
+// @Param		providerId	path	integer				true	"provider id"
+// @Param		vhost		header	string				false	"tenant host"
 // @Param		bd			body	request.ProviderReq	true	"body"
 // @Success		200
 // @Router		/api/quick/providers/{providerId} [put]
 func (o Controller) modifyProvider(c *gin.Context) {
 	var in request.ProviderReq
-	if err := o.SetCtx(c).BindJson(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := o.SetCtx(c).BindUriAndJson(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err, "invalid provider request param")
 		return
 	}
 
-	if err := o.svc.ModifyProvider(in.ToModel()); err != nil {
+	if err := o.svc.ModifyProvider(in.ProviderId, in.ToModel()); err != nil {
 		resp.ErrorSelect(c, err, "modify provider err")
 		return
 	}
@@ -95,16 +99,17 @@ func (o Controller) modifyProvider(c *gin.Context) {
 	resp.Success(c)
 }
 
-// @Summary	get provider details
+// @Summary	delete provider
 // @Schemes
-// @Description	get provider details
+// @Description	delete provider
 // @Tags		provider
-// @Param		providerId	path	string	true	"app id"
+// @Param		providerId	path	integer	true	"provider id"
+// @Param		vhost		header	string	false	"tenant host"
 // @Success		200
 // @Router		/api/quick/providers/{providerId} [delete]
 func (o Controller) deleteProvider(c *gin.Context) {
 	var in request.ProviderReq
-	if err := o.SetCtx(c).BindUriAndJson(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := o.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err, "invalid provider request param")
 		return
 	}

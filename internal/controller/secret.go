@@ -56,7 +56,7 @@ func (o Controller) createAppSecret(c *gin.Context) {
 // @Description	create app secret
 // @Tags		app
 // @Param		appId		path	string					true	"app id"
-// @Param		secretId	path	string					true	"secret id"
+// @Param		secretId	path	integer					true	"secret id"
 // @Param		bd			body	request.AppSecretReq	true	"body"
 // @Success		200
 // @Router		/api/quick/apps/{appId}/secrets/{secretId} [put]
@@ -67,7 +67,7 @@ func (o Controller) modifyAppSecret(c *gin.Context) {
 		return
 	}
 
-	secret, err := o.svc.ModifyAppSecret(in.ToModel())
+	secret, err := o.svc.ModifyAppSecret(in.SecretId, in.ToModel())
 	if err != nil {
 		resp.ErrorUnknown(c, err, "modify app secret err")
 		return
@@ -80,7 +80,7 @@ func (o Controller) modifyAppSecret(c *gin.Context) {
 // @Description	delete app secret
 // @Tags		app
 // @Param		appId		path	string	true	"app id"
-// @Param		secretId	path	string	true	"secret id"
+// @Param		secretId	path	integer	true	"secret id"
 // @Success		200
 // @Router		/api/quick/apps/{appId}/secrets/{secretId} [delete]
 func (o Controller) deleteAppSecret(c *gin.Context) {

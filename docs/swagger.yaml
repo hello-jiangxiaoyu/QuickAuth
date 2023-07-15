@@ -64,6 +64,8 @@ definitions:
         type: string
       clientSecret:
         type: string
+      type:
+        type: string
     type: object
   request.RedirectUriReq:
     properties:
@@ -80,6 +82,10 @@ definitions:
         type: string
       describe:
         type: string
+      grantTypes:
+        items:
+          type: string
+        type: array
       host:
         type: string
       idExpire:
@@ -132,7 +138,7 @@ info:
   license:
     name: MIT
     url: https://github.com/hello-jiangxiaoyu/QuickAuth/blob/main/LICENSE
-  title: swagger 接口文档
+  title: Quick Auth 接口文档
   version: "1.0"
 paths:
   /api/quick/.well-known/jwks.json:
@@ -377,7 +383,7 @@ paths:
         in: path
         name: secretId
         required: true
-        type: string
+        type: integer
       responses:
         "200":
           description: OK
@@ -396,7 +402,7 @@ paths:
         in: path
         name: secretId
         required: true
-        type: string
+        type: integer
       - description: body
         in: body
         name: bd
@@ -411,7 +417,7 @@ paths:
       - app
   /api/quick/apps/{appId}/tenants:
     delete:
-      description: get provider details
+      description: delete tenant
       parameters:
       - description: app id
         in: path
@@ -425,11 +431,11 @@ paths:
       responses:
         "200":
           description: OK
-      summary: get provider details
+      summary: delete tenant
       tags:
       - tenant
     get:
-      description: list provider info
+      description: get tenant list
       parameters:
       - description: app id
         in: path
@@ -439,11 +445,11 @@ paths:
       responses:
         "200":
           description: OK
-      summary: provider info
+      summary: get tenant list
       tags:
       - tenant
     post:
-      description: get provider details
+      description: create tenant
       parameters:
       - description: app id
         in: path
@@ -463,11 +469,11 @@ paths:
       responses:
         "200":
           description: OK
-      summary: get provider details
+      summary: create tenant
       tags:
       - tenant
     put:
-      description: get provider details
+      description: modify tenant
       parameters:
       - description: app id
         in: path
@@ -487,12 +493,12 @@ paths:
       responses:
         "200":
           description: OK
-      summary: get provider details
+      summary: modify tenant
       tags:
       - tenant
   /api/quick/apps/{appId}/tenants/current:
     get:
-      description: get provider details
+      description: get tenant details
       parameters:
       - description: app id
         in: path
@@ -506,7 +512,7 @@ paths:
       responses:
         "200":
           description: OK
-      summary: get provider details
+      summary: get tenant details
       tags:
       - tenant
   /api/quick/login:
@@ -610,258 +616,8 @@ paths:
           description: Found
       summary: oauth2 authorize
       tags:
-      - oauth2
-  /api/quick/providers:
-    get:
-      description: list provider info
-      responses:
-        "200":
-          description: OK
-      summary: provider info
-      tags:
-      - provider
-  /api/quick/providers/{providerId}:
-    delete:
-      description: get provider details
-      parameters:
-      - description: app id
-        in: path
-        name: providerId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-      summary: get provider details
-      tags:
-      - provider
-    get:
-      description: get provider details
-      parameters:
-      - description: app id
-        in: path
-        name: providerId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-      summary: get provider details
-      tags:
-      - provider
-    post:
-      description: get provider details
-      parameters:
-      - description: app id
-        in: path
-        name: providerId
-        required: true
-        type: string
-      - description: body
-        in: body
-        name: bd
-        required: true
-        schema:
-          $ref: '#/definitions/request.ProviderReq'
-      responses:
-        "200":
-          description: OK
-      summary: get provider details
-      tags:
-      - provider
-    put:
-      description: get provider details
-      parameters:
-      - description: app id
-        in: path
-        name: providerId
-        required: true
-        type: string
-      - description: body
-        in: body
-        name: bd
-        required: true
-        schema:
-          $ref: '#/definitions/request.ProviderReq'
-      responses:
-        "200":
-          description: OK
-      summary: get provider details
-      tags:
-      - provider
-  /api/quick/user-pools:
-    get:
-      description: list user pool
-      responses:
-        "200":
-          description: OK
-      summary: user pools info
-      tags:
-      - user
-    post:
-      description: create user pool
-      parameters:
-      - description: body
-        in: body
-        name: bd
-        required: true
-        schema:
-          $ref: '#/definitions/request.UserPoolReq'
-      responses:
-        "200":
-          description: OK
-      summary: create user pool
-      tags:
-      - user
-  /api/quick/user-pools/{poolId}:
-    delete:
-      description: delete user pool
-      parameters:
-      - description: user pool id
-        in: path
-        name: poolId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-      summary: delete user pool
-      tags:
-      - user
-    get:
-      description: list user pool
-      parameters:
-      - description: user pool id
-        in: path
-        name: poolId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-      summary: user pool info
-      tags:
-      - user
-    put:
-      description: modify user pool
-      parameters:
-      - description: user pool id
-        in: path
-        name: poolId
-        required: true
-        type: string
-      - description: body
-        in: body
-        name: bd
-        required: true
-        schema:
-          $ref: '#/definitions/request.UserPoolReq'
-      responses:
-        "200":
-          description: OK
-      summary: modify user pool
-      tags:
-      - user
-  /api/quick/user-pools/{poolId}/users:
-    get:
-      description: list users
-      parameters:
-      - description: user pool id
-        in: path
-        name: poolId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-      summary: user info
-      tags:
-      - user
-    post:
-      description: create user
-      parameters:
-      - description: user pool id
-        in: path
-        name: poolId
-        required: true
-        type: string
-      - description: body
-        in: body
-        name: bd
-        required: true
-        schema:
-          $ref: '#/definitions/request.UserReq'
-      responses:
-        "200":
-          description: OK
-      summary: create user
-      tags:
-      - user
-  /api/quick/user-pools/{poolId}/users/{userId}:
-    delete:
-      description: delete user
-      parameters:
-      - description: user pool id
-        in: path
-        name: poolId
-        required: true
-        type: string
-      - description: user id
-        in: path
-        name: userId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-      summary: delete user
-      tags:
-      - user
-    get:
-      description: list user
-      parameters:
-      - description: user pool id
-        in: path
-        name: poolId
-        required: true
-        type: string
-      - description: user id
-        in: path
-        name: userId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-      summary: user info
-      tags:
-      - user
-    put:
-      description: modify user
-      parameters:
-      - description: user pool id
-        in: path
-        name: poolId
-        required: true
-        type: string
-      - description: user id
-        in: path
-        name: userId
-        required: true
-        type: string
-      - description: body
-        in: body
-        name: bd
-        required: true
-        schema:
-          $ref: '#/definitions/request.UserReq'
-      responses:
-        "200":
-          description: OK
-      summary: modify user
-      tags:
-      - user
-  /v1/oauth2/token:
+      - oidc
+  /api/quick/oauth2/token:
     post:
       description: oauth2 token
       parameters:
@@ -900,7 +656,297 @@ paths:
           description: OK
       summary: oauth2 token
       tags:
-      - oauth2
+      - oidc
+  /api/quick/providers:
+    get:
+      description: list provider info
+      parameters:
+      - description: tenant host
+        in: header
+        name: vhost
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: provider info
+      tags:
+      - provider
+    post:
+      description: create provider
+      parameters:
+      - description: tenant host
+        in: header
+        name: vhost
+        type: string
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/request.ProviderReq'
+      responses:
+        "200":
+          description: OK
+      summary: create provider
+      tags:
+      - provider
+  /api/quick/providers/{providerId}:
+    delete:
+      description: delete provider
+      parameters:
+      - description: provider id
+        in: path
+        name: providerId
+        required: true
+        type: integer
+      - description: tenant host
+        in: header
+        name: vhost
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: delete provider
+      tags:
+      - provider
+    get:
+      description: get provider details
+      parameters:
+      - description: provider id
+        in: path
+        name: providerId
+        required: true
+        type: integer
+      - description: tenant host
+        in: header
+        name: vhost
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: get provider details
+      tags:
+      - provider
+    put:
+      description: modify provider
+      parameters:
+      - description: provider id
+        in: path
+        name: providerId
+        required: true
+        type: integer
+      - description: tenant host
+        in: header
+        name: vhost
+        type: string
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/request.ProviderReq'
+      responses:
+        "200":
+          description: OK
+      summary: modify provider
+      tags:
+      - provider
+  /api/quick/register:
+    post:
+      description: login using username and password
+      parameters:
+      - description: username
+        in: formData
+        name: username
+        required: true
+        type: string
+      - description: password
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: next
+        in: query
+        name: next
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: login a user
+      tags:
+      - login
+  /api/quick/user-pools:
+    get:
+      description: list user pool
+      responses:
+        "200":
+          description: OK
+      summary: user pools info
+      tags:
+      - user
+    post:
+      description: create user pool
+      parameters:
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/request.UserPoolReq'
+      responses:
+        "200":
+          description: OK
+      summary: create user pool
+      tags:
+      - user
+  /api/quick/user-pools/{poolId}:
+    delete:
+      description: delete user pool
+      parameters:
+      - description: user pool id
+        in: path
+        name: poolId
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+      summary: delete user pool
+      tags:
+      - user
+    get:
+      description: list user pool
+      parameters:
+      - description: user pool id
+        in: path
+        name: poolId
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+      summary: user pool info
+      tags:
+      - user
+    put:
+      description: modify user pool
+      parameters:
+      - description: user pool id
+        in: path
+        name: poolId
+        required: true
+        type: integer
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/request.UserPoolReq'
+      responses:
+        "200":
+          description: OK
+      summary: modify user pool
+      tags:
+      - user
+  /api/quick/user-pools/{poolId}/users:
+    get:
+      description: list users
+      parameters:
+      - description: user pool id
+        in: path
+        name: poolId
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+      summary: user info
+      tags:
+      - user
+    post:
+      description: create user
+      parameters:
+      - description: user pool id
+        in: path
+        name: poolId
+        required: true
+        type: integer
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/request.UserReq'
+      responses:
+        "200":
+          description: OK
+      summary: create user
+      tags:
+      - user
+  /api/quick/user-pools/{poolId}/users/{userId}:
+    delete:
+      description: delete user
+      parameters:
+      - description: user pool id
+        in: path
+        name: poolId
+        required: true
+        type: integer
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: delete user
+      tags:
+      - user
+    get:
+      description: list user
+      parameters:
+      - description: user pool id
+        in: path
+        name: poolId
+        required: true
+        type: integer
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: user info
+      tags:
+      - user
+    put:
+      description: modify user
+      parameters:
+      - description: user pool id
+        in: path
+        name: poolId
+        required: true
+        type: integer
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: bd
+        required: true
+        schema:
+          $ref: '#/definitions/request.UserReq'
+      responses:
+        "200":
+          description: OK
+      summary: modify user
+      tags:
+      - user
 securityDefinitions:
   Login:
     in: header

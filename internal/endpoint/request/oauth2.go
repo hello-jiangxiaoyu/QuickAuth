@@ -43,8 +43,8 @@ type Token struct {
 
 type ProviderReq struct {
 	Tenant       model.Tenant `json:"-"`
-	Type         string       `json:"-"`
 	ProviderId   int64        `json:"-" uri:"providerId"`
+	Type         string       `json:"type"`
 	AgentID      string       `json:"agentId"`
 	ClientID     string       `json:"clientId"`
 	ClientSecret string       `json:"clientSecret"`
@@ -54,6 +54,7 @@ func (p *ProviderReq) ToModel() model.Provider {
 	return model.Provider{
 		TenantID:     p.Tenant.ID,
 		Type:         p.Type,
+		AppID:        p.Tenant.AppID,
 		AgentID:      p.AgentID,
 		ClientID:     p.ClientID,
 		ClientSecret: p.ClientSecret,

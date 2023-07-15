@@ -14,6 +14,7 @@ const TableNameProvider = "providers"
 type Provider struct {
 	ID           int64     `gorm:"column:id;type:bigint;primaryKey;autoIncrement:true" json:"id"`
 	TenantID     int64     `gorm:"column:tenant_id;type:bigint;not null" json:"tenantId"`
+	AppID        string    `gorm:"column:app_id;type:character(32);not null" json:"appId"`
 	Type         string    `gorm:"column:type;type:character varying(31);not null" json:"type"`
 	ClientID     string    `gorm:"column:client_id;type:character varying(255);not null" json:"clientId"`
 	ClientSecret string    `gorm:"column:client_secret;type:character varying(255);not null" json:"clientSecret"`

@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
     create_time  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     update_time  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX idx_users_user_pool_username ON users(username, user_pool_id);
+CREATE UNIQUE INDEX idx_users_user_pool_username ON users(user_pool_id, username);
 CREATE UNIQUE INDEX idx_users_email ON users(email);
 CREATE UNIQUE INDEX idx_users_phone ON users(phone);
 

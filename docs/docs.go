@@ -383,7 +383,7 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "secret id",
                         "name": "secretId",
                         "in": "path",
@@ -420,7 +420,7 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "secret id",
                         "name": "secretId",
                         "in": "path",
@@ -436,11 +436,11 @@ const docTemplate = `{
         },
         "/api/quick/apps/{appId}/tenants": {
             "get": {
-                "description": "list provider info",
+                "description": "get tenant list",
                 "tags": [
                     "tenant"
                 ],
-                "summary": "provider info",
+                "summary": "get tenant list",
                 "parameters": [
                     {
                         "type": "string",
@@ -457,11 +457,11 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "description": "get provider details",
+                "description": "modify tenant",
                 "tags": [
                     "tenant"
                 ],
-                "summary": "get provider details",
+                "summary": "modify tenant",
                 "parameters": [
                     {
                         "type": "string",
@@ -493,11 +493,11 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "get provider details",
+                "description": "create tenant",
                 "tags": [
                     "tenant"
                 ],
-                "summary": "get provider details",
+                "summary": "create tenant",
                 "parameters": [
                     {
                         "type": "string",
@@ -529,11 +529,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "get provider details",
+                "description": "delete tenant",
                 "tags": [
                     "tenant"
                 ],
-                "summary": "get provider details",
+                "summary": "delete tenant",
                 "parameters": [
                     {
                         "type": "string",
@@ -558,11 +558,11 @@ const docTemplate = `{
         },
         "/api/quick/apps/{appId}/tenants/current": {
             "get": {
-                "description": "get provider details",
+                "description": "get tenant details",
                 "tags": [
                     "tenant"
                 ],
-                "summary": "get provider details",
+                "summary": "get tenant details",
                 "parameters": [
                     {
                         "type": "string",
@@ -683,7 +683,7 @@ const docTemplate = `{
             "get": {
                 "description": "oauth2 authorize",
                 "tags": [
-                    "oauth2"
+                    "oidc"
                 ],
                 "summary": "oauth2 authorize",
                 "parameters": [
@@ -738,13 +738,59 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/providers": {
-            "get": {
-                "description": "list provider info",
+        "/api/quick/oauth2/token": {
+            "post": {
+                "description": "oauth2 token",
                 "tags": [
-                    "provider"
+                    "oidc"
                 ],
-                "summary": "provider info",
+                "summary": "oauth2 token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "client_id",
+                        "name": "client_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "client_secret",
+                        "name": "client_secret",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "code",
+                        "name": "code",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "grant_type",
+                        "name": "grant_type",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "redirect_uri",
+                        "name": "redirect_uri",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "state",
+                        "name": "state",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "nonce",
+                        "name": "nonce",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -752,20 +798,19 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/providers/{providerId}": {
+        "/api/quick/providers": {
             "get": {
-                "description": "get provider details",
+                "description": "list provider info",
                 "tags": [
                     "provider"
                 ],
-                "summary": "get provider details",
+                "summary": "provider info",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "app id",
-                        "name": "providerId",
-                        "in": "path",
-                        "required": true
+                        "description": "tenant host",
+                        "name": "vhost",
+                        "in": "header"
                     }
                 ],
                 "responses": {
@@ -774,19 +819,18 @@ const docTemplate = `{
                     }
                 }
             },
-            "put": {
-                "description": "get provider details",
+            "post": {
+                "description": "create provider",
                 "tags": [
                     "provider"
                 ],
-                "summary": "get provider details",
+                "summary": "create provider",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "app id",
-                        "name": "providerId",
-                        "in": "path",
-                        "required": true
+                        "description": "tenant host",
+                        "name": "vhost",
+                        "in": "header"
                     },
                     {
                         "description": "body",
@@ -803,8 +847,10 @@ const docTemplate = `{
                         "description": "OK"
                     }
                 }
-            },
-            "post": {
+            }
+        },
+        "/api/quick/providers/{providerId}": {
+            "get": {
                 "description": "get provider details",
                 "tags": [
                     "provider"
@@ -812,11 +858,44 @@ const docTemplate = `{
                 "summary": "get provider details",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "app id",
+                        "type": "integer",
+                        "description": "provider id",
                         "name": "providerId",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "tenant host",
+                        "name": "vhost",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "put": {
+                "description": "modify provider",
+                "tags": [
+                    "provider"
+                ],
+                "summary": "modify provider",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "provider id",
+                        "name": "providerId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "tenant host",
+                        "name": "vhost",
+                        "in": "header"
                     },
                     {
                         "description": "body",
@@ -835,18 +914,60 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "get provider details",
+                "description": "delete provider",
                 "tags": [
                     "provider"
                 ],
-                "summary": "get provider details",
+                "summary": "delete provider",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "app id",
+                        "type": "integer",
+                        "description": "provider id",
                         "name": "providerId",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "tenant host",
+                        "name": "vhost",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/register": {
+            "post": {
+                "description": "login using username and password",
+                "tags": [
+                    "login"
+                ],
+                "summary": "login a user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "username",
+                        "name": "username",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "password",
+                        "name": "password",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "next",
+                        "name": "next",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -902,7 +1023,7 @@ const docTemplate = `{
                 "summary": "user pool info",
                 "parameters": [
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
                         "in": "path",
@@ -923,7 +1044,7 @@ const docTemplate = `{
                 "summary": "modify user pool",
                 "parameters": [
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
                         "in": "path",
@@ -953,7 +1074,7 @@ const docTemplate = `{
                 "summary": "delete user pool",
                 "parameters": [
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
                         "in": "path",
@@ -976,7 +1097,7 @@ const docTemplate = `{
                 "summary": "user info",
                 "parameters": [
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
                         "in": "path",
@@ -997,7 +1118,7 @@ const docTemplate = `{
                 "summary": "create user",
                 "parameters": [
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
                         "in": "path",
@@ -1029,7 +1150,7 @@ const docTemplate = `{
                 "summary": "user info",
                 "parameters": [
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
                         "in": "path",
@@ -1057,7 +1178,7 @@ const docTemplate = `{
                 "summary": "modify user",
                 "parameters": [
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
                         "in": "path",
@@ -1094,7 +1215,7 @@ const docTemplate = `{
                 "summary": "delete user",
                 "parameters": [
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
                         "in": "path",
@@ -1106,66 +1227,6 @@ const docTemplate = `{
                         "name": "userId",
                         "in": "path",
                         "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
-        "/v1/oauth2/token": {
-            "post": {
-                "description": "oauth2 token",
-                "tags": [
-                    "oauth2"
-                ],
-                "summary": "oauth2 token",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "client_id",
-                        "name": "client_id",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "client_secret",
-                        "name": "client_secret",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "code",
-                        "name": "code",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "grant_type",
-                        "name": "grant_type",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "redirect_uri",
-                        "name": "redirect_uri",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "state",
-                        "name": "state",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "nonce",
-                        "name": "nonce",
-                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -1275,6 +1336,9 @@ const docTemplate = `{
                 },
                 "clientSecret": {
                     "type": "string"
+                },
+                "type": {
+                    "type": "string"
                 }
             }
         },
@@ -1300,6 +1364,12 @@ const docTemplate = `{
                 },
                 "describe": {
                     "type": "string"
+                },
+                "grantTypes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "host": {
                     "type": "string"
@@ -1389,7 +1459,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "swagger 接口文档",
+	Title:            "Quick Auth 接口文档",
 	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

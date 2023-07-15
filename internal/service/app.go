@@ -31,8 +31,8 @@ func (s *Service) CreateApp(app model.App) (*model.App, error) {
 	return &app, nil
 }
 
-func (s *Service) ModifyApp(app model.App) error {
-	if err := s.db.Where("id = ?", app.ID).Updates(&app).Error; err != nil {
+func (s *Service) ModifyApp(appId string, app model.App) error {
+	if err := s.db.Where("id = ?", appId).Updates(&app).Error; err != nil {
 		return err
 	}
 	return nil
@@ -70,9 +70,9 @@ func (s *Service) CreateAppSecret(secret model.AppSecret) (*model.AppSecret, err
 	return &secret, nil
 }
 
-func (s *Service) ModifyAppSecret(secret model.AppSecret) (*model.AppSecret, error) {
+func (s *Service) ModifyAppSecret(secretId int64, secret model.AppSecret) (*model.AppSecret, error) {
 	if err := s.db.Select("scope", "access_expire", "refresh_expire", "describe").
-		Where("id = ? AND app_id = ?", secret.ID, secret.AppID).Save(&secret).Error; err != nil {
+		Where("id = ? AND app_id = ?", secretId, secret.AppID).Updates(&secret).Error; err != nil {
 		return nil, err
 	}
 	return &secret, nil

@@ -6,9 +6,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Summary	provider info
+// @Summary	get tenant list
 // @Schemes
-// @Description	list provider info
+// @Description	get tenant list
 // @Tags		tenant
 // @Param		appId	path	string	true	"app id"
 // @Success		200
@@ -29,9 +29,9 @@ func (o Controller) listTenant(c *gin.Context) {
 	resp.SuccessArray(c, len(tenants), tenants)
 }
 
-// @Summary	get provider details
+// @Summary	get tenant details
 // @Schemes
-// @Description	get provider details
+// @Description	get tenant details
 // @Tags		tenant
 // @Param		appId	path	string	true	"app id"
 // @Param		vhost	header	string	false	"tenant host"
@@ -47,9 +47,9 @@ func (o Controller) getTenant(c *gin.Context) {
 	resp.SuccessWithData(c, in.Tenant)
 }
 
-// @Summary	get provider details
+// @Summary	create tenant
 // @Schemes
-// @Description	get provider details
+// @Description	create tenant
 // @Tags		tenant
 // @Param		appId	path	string				true	"app id"
 // @Param		vhost	header	string				false	"tenant host"
@@ -72,9 +72,9 @@ func (o Controller) createTenant(c *gin.Context) {
 	resp.SuccessWithData(c, tenant)
 }
 
-// @Summary	get provider details
+// @Summary	modify tenant
 // @Schemes
-// @Description	get provider details
+// @Description	modify tenant
 // @Tags		tenant
 // @Param		appId	path	string				true	"app id"
 // @Param		vhost	header	string				false	"tenant host"
@@ -88,7 +88,7 @@ func (o Controller) modifyTenant(c *gin.Context) {
 		return
 	}
 
-	if err := o.svc.ModifyTenant(in.ToModel()); err != nil {
+	if err := o.svc.ModifyTenant(in.Tenant.ID, in.ToModel()); err != nil {
 		resp.ErrorSelect(c, err, "modify tenant err")
 		return
 	}
@@ -96,9 +96,9 @@ func (o Controller) modifyTenant(c *gin.Context) {
 	resp.Success(c)
 }
 
-// @Summary	get provider details
+// @Summary	delete tenant
 // @Schemes
-// @Description	get provider details
+// @Description	delete tenant
 // @Tags		tenant
 // @Param		appId		path	string	true	"app id"
 // @Param		vhost		header	string	false	"tenant host"
