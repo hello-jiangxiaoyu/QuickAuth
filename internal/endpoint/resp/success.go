@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	CodeSuccess = 0
-	CodeAccept  = 0
+	CodeSuccess = http.StatusOK
+	CodeAccept  = http.StatusAccepted
 	MsgSuccess  = ""
 )
 

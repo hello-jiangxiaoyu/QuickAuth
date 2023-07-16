@@ -13,6 +13,7 @@ const (
 	CodeForbidden   = 1001
 	CodeNoLogin     = 1002
 	CodeNoSuchHost  = 1003
+	CodeNoSuchRoute = 1003
 )
 
 func errorResponse(ctx context.Context, code int, errCode uint, msg string, isArray []bool) {

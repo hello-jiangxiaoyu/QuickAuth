@@ -2,6 +2,7 @@ package controller
 
 import (
 	_ "QuickAuth/docs"
+	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/internal/global"
 	"QuickAuth/internal/middleware"
 	"QuickAuth/internal/service"
@@ -85,6 +86,6 @@ func NewOauth2Router(repo *global.Repository, e *gin.Engine) {
 	e.GET("/api/quick/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	e.GET("/api/quick/health", func(c *gin.Context) { c.String(http.StatusOK, "ok") }) // 健康探测
 	e.NoRoute(func(c *gin.Context) {
-		c.JSON(http.StatusNotFound, gin.H{"message": "no such router"})
+		resp.ErrorNoRoute(c)
 	})
 }

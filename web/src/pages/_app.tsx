@@ -3,7 +3,7 @@ import zhCN from '@arco-design/web-react/es/locale/zh-CN';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 import '@/mock';
 import '@/style/global.less';
-import { ConfigProvider } from '@arco-design/web-react';
+import {ConfigProvider, Message} from '@arco-design/web-react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
@@ -16,7 +16,7 @@ import Layout from './layout';
 import NProgress from 'nprogress';
 import {checkLogin} from '@/store/localStorage';
 import changeTheme from '@/utils/changeTheme';
-import {fetchUserInfo} from "@/http/users";
+import {fetchUserInfo, fetchOIDC} from "@/http/users";
 
 interface RenderConfig {
   arcoLang?: string;
@@ -59,6 +59,11 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
     };
   }, [router]);
 
+  fetchOIDC().then(r => {
+    if (r.code !== 200) {Message.error(r.msg)} else {
+      console.log(r.data)
+    }
+  })
   return (
     <>
       <Head>

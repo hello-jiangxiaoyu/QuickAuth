@@ -12,3 +12,7 @@ func ErrorPanic(ctx context.Context) {
 func ErrorHost(ctx context.Context) {
 	errorResponse(ctx, http.StatusForbidden, CodeNoSuchHost, "no such host", nil)
 }
+
+func ErrorNoRoute(ctx context.Context) {
+	errorResponse(ctx, http.StatusNotFound, CodeNoSuchRoute, "no such route", nil)
+}
