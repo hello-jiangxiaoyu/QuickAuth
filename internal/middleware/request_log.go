@@ -33,17 +33,32 @@ func RequestLog() gin.HandlerFunc {
 			zap.Int("status", c.Writer.Status()),
 			zap.String("method", c.Request.Method),
 			zap.String("path", c.Request.URL.Path),
-			zap.String("query", c.Request.URL.RawQuery),
+			zap.String("args", c.Request.URL.RawQuery),
 			zap.String("client_ip", c.ClientIP()),
+			zap.String("server_ip", GetServerIp(c.Request.RemoteAddr)),
 			zap.String("host", c.Request.Host),
 			zap.Duration("cost", time.Since(start)),
 			zap.Int64("request_length", c.Request.ContentLength),
 			zap.Int("body_bytes_sent", c.Writer.Size()),
-			zap.String("http_referer", c.Request.Referer()),
-			zap.String("user_agent", c.Request.UserAgent()),
+			zap.String("referer", c.Request.Referer()),
+			zap.String("proto", c.Request.Proto),
+			zap.String("ua", c.Request.UserAgent()),
 			zap.String("errors", c.Errors.ByType(gin.ErrorTypePrivate).String()),
 		)
 
 		// todo: upload to clickhouse
 	}
+}
+
+func GetServerIp(remoteIp string) string {
+	if len(remoteIp) > 0 && remoteIp[0] == ':' {
+		return remoteIp
+	}
+	for i := len(remoteIp) - 1; i >= 0; i-- {
+		if remoteIp[i] == ':' {
+			remoteIp = remoteIp[:i]
+			break
+		}
+	}
+	return remoteIp
 }

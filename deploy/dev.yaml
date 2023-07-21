@@ -1,6 +1,6 @@
 
 server:
-  listen: ":80"
+  listen: "localhost:80"
   uploadSwitch: true
   wildcardSwitch: false
   wildcardSuffix: ".example.com"
@@ -20,7 +20,7 @@ database:
   dbType: "postgres"
   host: "localhost"
   port: 5432
-  dbName: "quick_auth"
+  dbName: "dev_quick_auth"
   username: "admin"
   password: "admin"
 

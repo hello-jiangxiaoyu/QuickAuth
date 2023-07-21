@@ -11,6 +11,7 @@ const setting = require("./src/settings.json");
 
 module.exports = withLess(
   withTM({
+    styledComponents: true,  // 解决 Warning: Prop `className` did not match.
     lessLoaderOptions: {
       lessOptions: {
         modifyVars: {

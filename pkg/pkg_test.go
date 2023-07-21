@@ -4,7 +4,7 @@ import (
 	"QuickAuth/pkg/tools/utils"
 	"fmt"
 	"github.com/pkg/errors"
-	"net/url"
+	"strings"
 	"testing"
 )
 
@@ -18,6 +18,23 @@ func TestError(t *testing.T) {
 	fmt.Println(errors.Unwrap(err))
 }
 
+func amendPath(p string) string {
+	if strings.HasPrefix(p, "/applications/") && len(p) > len("/applications/") {
+		for i := len("/applications/"); i < len(p); i++ {
+			if p[i] == '/' {
+				return "/applications/[appId]" + p[i:]
+			}
+		}
+		return "applications/[appId]/"
+	}
+	return p
+}
+
 func TestTemp(t *testing.T) {
-	fmt.Println(url.QueryUnescape("https%3A%2F%2Fdouyin.com"))
+	fmt.Println(amendPath("/applications/123"))
+	fmt.Println(amendPath("/applications/123/"))
+	fmt.Println(amendPath("/applications/123/messages/"))
+	fmt.Println(amendPath("/applications/123/messages"))
+	fmt.Println(amendPath("/application/messages/"))
+	fmt.Println(amendPath("/applications/1asdfasdfa232rl-asdf/messages/"))
 }

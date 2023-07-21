@@ -1,9 +1,7 @@
 package resp
 
 import (
-	"QuickAuth/internal/global"
 	"context"
-	"go.uber.org/zap"
 	"net/http"
 )
 
@@ -18,29 +16,24 @@ const (
 
 // ErrorUnknown 未知错误
 func ErrorUnknown(ctx context.Context, err error, respMsg string, isArray ...bool) {
-	errorResponse(ctx, http.StatusInternalServerError, CodeUnknown, respMsg, isArray)
-	global.Log.Error(respMsg, zap.Error(err))
+	errorResponse(ctx, http.StatusInternalServerError, CodeUnknown, err, respMsg, isArray)
 }
 
 // ErrorSqlModify SQL修改失败
 func ErrorSqlModify(ctx context.Context, err error, respMsg string, isArray ...bool) {
-	errorResponse(ctx, http.StatusInternalServerError, CodeSqlModify, respMsg, isArray)
-	global.Log.Error(respMsg, zap.Error(err))
+	errorResponse(ctx, http.StatusInternalServerError, CodeSqlModify, err, respMsg, isArray)
 }
 
 // ErrorSelect 数据库查询错误
 func ErrorSelect(ctx context.Context, err error, respMsg string, isArray ...bool) {
-	errorResponse(ctx, http.StatusInternalServerError, CodeSqlSelect, respMsg, isArray)
-	global.Log.Error(respMsg, zap.Error(err))
+	errorResponse(ctx, http.StatusInternalServerError, CodeSqlSelect, err, respMsg, isArray)
 }
 
 // ErrorNotFound 资源未找到
 func ErrorNotFound(ctx context.Context, err error, respMsg string, isArray ...bool) {
-	errorResponse(ctx, http.StatusInternalServerError, CodeNotFound, respMsg, isArray)
-	global.Log.Error(respMsg, zap.Error(err))
+	errorResponse(ctx, http.StatusInternalServerError, CodeNotFound, err, respMsg, isArray)
 }
 
 func ErrorSaveSession(ctx context.Context, err error, isArray ...bool) {
-	errorResponse(ctx, http.StatusInternalServerError, CodeSaveSession, "failed to save session", isArray)
-	global.Log.Error("failed to save session: ", zap.Error(err))
+	errorResponse(ctx, http.StatusInternalServerError, CodeSaveSession, err, "failed to save session", isArray)
 }

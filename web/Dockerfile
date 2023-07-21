@@ -1,7 +1,7 @@
 ##
 ## bulid web
 ##
-FROM node:19-alpine as build
+FROM node:18-alpine as build
 WORKDIR /app
 COPY . .
 

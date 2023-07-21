@@ -1,16 +1,18 @@
 import store from "@/store/mobx";
-import axios from "axios";
-import {Root, fetchData} from "@/http/common";
+import {Root, GET} from "@/http/common";
 
 export function fetchUserInfo() {
-  store.setUserLoading(true)
-  axios.get('/api/user/userInfo').then((res) => {
-    store.setUserLoading(false)
-    store.setUserInfo({userInfo: res.data, userLoading: false })
-  });
+  store.setUserLoading(false)
+  store.setUserInfo({userInfo: {
+      name: '王立群',
+      avatar: 'https://lf1-xgcdn-tos.pstatp.com/obj/vcloud/vadmin/start.8e0e4855ee346a46ccff8ff3e24db27b.png',
+      job: 'frontend',
+      organization: 'Frontend',
+      location: 'beijing',
+      email: 'wangliqun@email.com',
+      permissions: {},
+    }, userLoading: false });
 }
-
-
 
 export interface Keys {
   use: string;
@@ -21,12 +23,8 @@ export interface Keys {
   e: string;
 }
 
-export interface Data {
-  keys: Keys[];
-}
-
 export async function fetchOIDC():Promise<Root<Keys[]>> {
-  return await fetchData<Keys[]>('http://localhost/api/quick/.well-known/jwks.json')
+  return await GET<Keys[]>('/api/quick/.well-known/openid-configuration')
 }
 
 

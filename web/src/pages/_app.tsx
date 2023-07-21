@@ -16,7 +16,7 @@ import Layout from './layout';
 import NProgress from 'nprogress';
 import {checkLogin} from '@/store/localStorage';
 import changeTheme from '@/utils/changeTheme';
-import {fetchUserInfo, fetchOIDC} from "@/http/users";
+import {fetchUserInfo} from "@/http/users";
 
 interface RenderConfig {
   arcoLang?: string;
@@ -59,11 +59,6 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
     };
   }, [router]);
 
-  fetchOIDC().then(r => {
-    if (r.code !== 200) {Message.error(r.msg)} else {
-      console.log(r.data)
-    }
-  })
   return (
     <>
       <Head>

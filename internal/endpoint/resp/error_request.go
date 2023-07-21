@@ -1,10 +1,10 @@
 package resp
 
 import (
-	"QuickAuth/internal/global"
 	"context"
+	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
 	"net/http"
 )
 
@@ -16,7 +16,7 @@ const (
 	CodeNoSuchRoute = 1003
 )
 
-func errorResponse(ctx context.Context, code int, errCode uint, msg string, isArray []bool) {
+func errorResponse(ctx context.Context, code int, errCode uint, err error, msg string, isArray []bool) {
 	c, ok := ctx.(*gin.Context)
 	if !ok {
 		return
@@ -27,27 +27,31 @@ func errorResponse(ctx context.Context, code int, errCode uint, msg string, isAr
 	} else {
 		c.JSON(code, &ArrayResponse{Code: errCode, Msg: msg, Total: 0, Data: []struct{}{}})
 	}
+
+	if err != nil {
+		_ = c.Error(fmt.Errorf("%s: %v", msg, err))
+	} else {
+		_ = c.Error(errors.New(msg))
+	}
 	c.Abort()
 }
 
 // ErrorRequest 请求参数错误
 func ErrorRequest(ctx context.Context, err error, msg string, isArray ...bool) {
-	errorResponse(ctx, http.StatusBadRequest, CodeRequestPara, msg, isArray)
-	global.Log.Error(msg, zap.Error(err))
+	errorResponse(ctx, http.StatusBadRequest, CodeRequestPara, err, msg, isArray)
 }
 
 // ErrorRequestWithMsg 请求参数错误
 func ErrorRequestWithMsg(ctx context.Context, err error, msg string, isArray ...bool) {
-	errorResponse(ctx, http.StatusBadRequest, CodeRequestPara, msg, isArray)
-	global.Log.Error(msg, zap.Error(err))
+	errorResponse(ctx, http.StatusBadRequest, CodeRequestPara, err, msg, isArray)
 }
 
 // ErrorForbidden 无权访问
 func ErrorForbidden(ctx context.Context, msg string, isArray ...bool) {
-	errorResponse(ctx, http.StatusForbidden, CodeForbidden, msg, isArray)
+	errorResponse(ctx, http.StatusForbidden, CodeForbidden, nil, msg, isArray)
 }
 
 // ErrorNoLogin 用户未登录
 func ErrorNoLogin(ctx context.Context, isArray ...bool) {
-	errorResponse(ctx, http.StatusUnauthorized, CodeNoLogin, "user not login", isArray)
+	errorResponse(ctx, http.StatusUnauthorized, CodeNoLogin, nil, "user not login", isArray)
 }
