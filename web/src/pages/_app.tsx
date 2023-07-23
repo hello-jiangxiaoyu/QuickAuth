@@ -3,7 +3,7 @@ import zhCN from '@arco-design/web-react/es/locale/zh-CN';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 import '@/mock';
 import '@/style/global.less';
-import {ConfigProvider, Message} from '@arco-design/web-react';
+import {ConfigProvider} from '@arco-design/web-react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 

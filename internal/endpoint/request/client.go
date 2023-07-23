@@ -8,12 +8,16 @@ import (
 type AppReq struct {
 	AppId    string `json:"-" uri:"appId"`
 	Name     string `json:"name"`
+	Tag      string `json:"tag"`
+	Icon     string `json:"icon"`
 	Describe string `json:"describe"`
 }
 
 func (c *AppReq) ToModel() model.App {
 	return model.App{
 		Name:     c.Name,
+		Tag:      c.Tag,
+		Icon:     c.Icon,
 		Describe: c.Describe,
 	}
 }

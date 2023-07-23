@@ -34,8 +34,8 @@ type Tenant struct {
 	IsDeviceFlow  int32          `gorm:"column:is_device_flow;type:integer;not null" json:"isDeviceFlow"`
 	Describe      string         `gorm:"column:describe;type:character varying(127);not null" json:"describe"`
 	IsDisabled    int32          `gorm:"column:is_disabled;type:integer;not null" json:"isDisabled"`
-	CreateTime    time.Time      `gorm:"column:create_time;type:timestamp with time zone;not null;default:now()" json:"createTime"`
-	UpdateTime    time.Time      `gorm:"column:update_time;type:timestamp with time zone;not null;default:now()" json:"updateTime"`
+	CreatedAt     time.Time      `gorm:"column:created_at;type:timestamp with time zone;not null;default:now()" json:"createdAt"`
+	UpdatedAt     time.Time      `gorm:"column:updated_at;type:timestamp with time zone;not null;default:now()" json:"updatedAt"`
 }
 
 // TableName Tenant's table name

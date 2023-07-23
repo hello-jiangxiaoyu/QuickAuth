@@ -4,11 +4,14 @@ import (
 	"QuickAuth/pkg/model"
 	"QuickAuth/pkg/tools/safe"
 	"QuickAuth/pkg/tools/utils"
+	"errors"
 )
+
+var ErrorDeleteDefaultApp = errors.New("do not delete the default app")
 
 func (s *Service) ListApps() ([]model.App, error) {
 	var apps []model.App
-	if err := s.db.Select("id", "name", "create_time").Find(&apps).Error; err != nil {
+	if err := s.db.Select("id", "name", "icon", "describe").Find(&apps).Error; err != nil {
 		return nil, err
 	}
 
@@ -39,8 +42,10 @@ func (s *Service) ModifyApp(appId string, app model.App) error {
 }
 
 func (s *Service) DeleteApp(appId string) error {
-	if _, err := s.GetApp(appId); err != nil {
+	if app, err := s.GetApp(appId); err != nil {
 		return err
+	} else if app.Name == "default" {
+		return ErrorDeleteDefaultApp
 	}
 	if err := s.db.Where("id = ?", appId).Delete(model.App{}).Error; err != nil {
 		return err

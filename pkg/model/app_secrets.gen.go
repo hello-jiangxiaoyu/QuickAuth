@@ -19,8 +19,8 @@ type AppSecret struct {
 	AccessExpire  int32     `gorm:"column:access_expire;type:integer;not null;default:604800" json:"accessExpire"`
 	RefreshExpire int32     `gorm:"column:refresh_expire;type:integer;not null;default:2592000" json:"refreshExpire"`
 	Describe      string    `gorm:"column:describe;type:character varying(127);not null" json:"describe"`
-	CreateTime    time.Time `gorm:"column:create_time;type:timestamp with time zone;not null;default:now()" json:"createTime"`
-	UpdateTime    time.Time `gorm:"column:update_time;type:timestamp with time zone;not null;default:now()" json:"updateTime"`
+	CreatedAt     time.Time `gorm:"column:created_at;type:timestamp with time zone;not null;default:now()" json:"createdAt"`
+	UpdatedAt     time.Time `gorm:"column:updated_at;type:timestamp with time zone;not null;default:now()" json:"updatedAt"`
 }
 
 // TableName AppSecret's table name

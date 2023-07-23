@@ -28,7 +28,7 @@ func UserDto(u model.User) *UserDtoModel {
 		Phone:       u.Phone,
 		Type:        u.Type,
 		IsDisabled:  u.IsDisabled,
-		CreateTime:  u.CreateTime,
-		UpdateTime:  u.UpdateTime,
+		CreateTime:  u.CreatedAt,
+		UpdateTime:  u.UpdatedAt,
 	}
 }

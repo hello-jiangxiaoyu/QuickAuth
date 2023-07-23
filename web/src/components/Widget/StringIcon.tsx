@@ -14,5 +14,5 @@ export default function MyIcon(props: {name: string, color?: string, size?: numb
       style: iconStyle,
     }
   );
-  return <>{allIcon(props.name)}</>
+  return <div style={{alignSelf:'center'}}>{allIcon(props.name)}</div>
 }

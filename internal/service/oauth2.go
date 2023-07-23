@@ -23,7 +23,7 @@ func (s *Service) GetAccessCode(appId string, codeName string) (*model.Code, err
 		s.log.Error("clear code err: ", zap.Error(err))
 	}
 
-	if code.CreateTime.After(time.Now()) {
+	if code.CreatedAt.After(time.Now()) {
 		return nil, ErrorCodeExpired
 	}
 

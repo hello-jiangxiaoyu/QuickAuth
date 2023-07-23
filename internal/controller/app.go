@@ -3,7 +3,9 @@ package controller
 import (
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
+	"QuickAuth/internal/service"
 	"github.com/gin-gonic/gin"
+	"strings"
 )
 
 // @Summary	apps info
@@ -59,7 +61,11 @@ func (o Controller) createApp(c *gin.Context) {
 
 	app, err := o.svc.CreateApp(in.ToModel())
 	if err != nil {
-		resp.ErrorUnknown(c, err, "create app err")
+		if strings.HasPrefix(err.Error(), "ERROR: duplicate key value violates unique constraint") {
+			resp.ErrorSqlCreate(c, err, "app name should be unique")
+		} else {
+			resp.ErrorSqlCreate(c, err, "create app err")
+		}
 		return
 	}
 	resp.SuccessWithData(c, app)
@@ -96,7 +102,11 @@ func (o Controller) modifyApp(c *gin.Context) {
 // @Router		/api/quick/apps/{appId} [delete]
 func (o Controller) deleteApp(c *gin.Context) {
 	if err := o.svc.DeleteApp(c.Param("appId")); err != nil {
-		resp.ErrorUnknown(c, err, "delete app err")
+		if err == service.ErrorDeleteDefaultApp {
+			resp.ErrorUnknown(c, err, err.Error())
+		} else {
+			resp.ErrorUnknown(c, err, "delete app err")
+		}
 		return
 	}
 	resp.Success(c)

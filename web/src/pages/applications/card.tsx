@@ -1,24 +1,43 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Router from "next/router"
-import {Button, Popover, Card, Space} from '@arco-design/web-react';
+import {Button, Popover, Card, Space, Modal, Form, Input, Select, Message} from '@arco-design/web-react';
 import MyIcon from "@/components/Widget/StringIcon";
+import {IconPlusCircle} from "@arco-design/web-react/icon";
+import {App, createApp, deleteApp} from "@/http/app";
 
 // application card with dynamic icon
 export default function MyCard(props: { appId: string, name: string, type: string, icon?: string}) {
   let icon = 'IconCodeSandbox';
-  if (props.icon != undefined && props.icon != '') {
+  if (typeof props.icon == 'string' && props.icon != '') {
     icon = props.icon;
   }
 
+  console.log("icon:", icon, props.icon)
   function onClickCard() {
     Router.push(`applications/${props.appId}`).then();
+    console.log(typeof '');
+  }
+
+  function confirm() {
+    Modal.confirm({
+      title: 'Confirm deletion',
+      content: 'Are you sure you want to delete the app.',
+      okButtonProps: {status: 'danger'},
+      onOk: () => {
+        deleteApp(props.appId).then( r => {
+          if (r.code !== 200) {Message.error(r.msg)} else {
+            Message.success('Success !');
+          }
+        })
+      },
+    });
   }
 
   function MoreButton(props: { appId: string}) {
     return (
       <Popover position='top'
         content={
-          <Button type='text' status='danger' style={{height:25}} key={props.appId}>
+          <Button type='text' status='danger' style={{height:25}} key={props.appId} onClick={confirm}>
             删除应用
           </Button>
         }
@@ -46,5 +65,59 @@ export default function MyCard(props: { appId: string, name: string, type: strin
         </div>
       </Card>
     </>
+  );
+}
+
+
+export function AddApp() {
+  const [visible, setVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [form] = Form.useForm();
+
+
+  function onOk() {
+    form.validate().then((app:App) => {
+      setConfirmLoading(true);
+      createApp(app).then(r => {
+        if (r.code !== 200) {Message.error(r.msg)} else {
+          Message.success('Success !');
+          setVisible(false);
+        }
+        setConfirmLoading(false);
+      }).catch()
+
+    }).catch((err) => {
+      Message.error(err.toString());
+    });
+  }
+
+  return (
+    <Popover content={"Add App"} position='bottom'>
+      <Card hoverable style={{ width:330, height: 180, marginLeft:12, cursor:'pointer',
+        boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 12px 0 rgba(0, 0, 0, 0.19)' }} onClick={() => setVisible(true)}
+      >
+        <IconPlusCircle style={{color:"#2f6af1", width:60, height: 60, position:'absolute', top:'30%', left:'38%'}}></IconPlusCircle>
+      </Card>
+      <Modal title='Create app' visible={visible} onOk={onOk} style={{width: 600}}
+        confirmLoading={confirmLoading} onCancel={() => setVisible(false)}
+      >
+        <Form form={form} labelCol={{style: { flexBasis: 100 }}}
+          wrapperCol={{style: { flexBasis: 'calc(100% - 100px)' }}} initialValues={{tag:'Single Tenant'}}
+        >
+          <Form.Item label='Name' field='name' rules={[{ required: true }]}>
+            <Input placeholder='app name' />
+          </Form.Item>
+          <Form.Item label='Type' required field='tag' rules={[{ required: false }]}>
+            <Select options={["Single Tenant", "Multi Tenant"]}/>
+          </Form.Item>
+          <Form.Item label='Icon' required field='icon' rules={[{ required: true }]}>
+            <Input placeholder='icon url' />
+          </Form.Item>
+          <Form.Item label='Describe' required field='describe' rules={[{ required: false }]}>
+            <Input.TextArea placeholder='' />
+          </Form.Item>
+        </Form>
+      </Modal>
+    </Popover>
   );
 }

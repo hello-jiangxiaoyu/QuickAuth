@@ -1,12 +1,14 @@
 
 CREATE TABLE IF NOT EXISTS apps (
     id             CHAR(32) PRIMARY KEY,
-    name           VARCHAR(127) NOT NULL,
-    describe       VARCHAR(127) NOT NULL,
+    tag            VARCHAR(127) NOT NULL,
+    name           VARCHAR(127) NOT NULL UNIQUE,
+    describe       VARCHAR(255) NOT NULL,
     icon           VARCHAR(127) NOT NULL,
-    create_time    TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    update_time    TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+    created_at    TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at    TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+CREATE UNIQUE INDEX idx_app_create ON apps (created_at);
 
 CREATE TABLE IF NOT EXISTS app_secrets (
     id              BIGSERIAL PRIMARY KEY,
@@ -16,8 +18,8 @@ CREATE TABLE IF NOT EXISTS app_secrets (
     access_expire   INTEGER NOT NULL DEFAULT 604800,
     refresh_expire  INTEGER NOT NULL DEFAULT 2592000,
     describe        VARCHAR(127) NOT NULL,
-    create_time     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    update_time     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+    created_at     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX idx_app_secret_id ON app_secrets (app_id, secret);
 
@@ -44,8 +46,8 @@ CREATE TABLE IF NOT EXISTS tenants (
     is_device_flow  INTEGER NOT NULL DEFAULT 0,  -- 是否开启device_flow
     describe        VARCHAR(127) NOT NULL,
     is_disabled     INTEGER NOT NULL DEFAULT 0,
-    create_time     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    update_time     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+    created_at     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX idx_tenants_host ON tenants(host);
 CREATE INDEX idx_tenants_client_user_pool_id ON tenants(app_id, user_pool_id);

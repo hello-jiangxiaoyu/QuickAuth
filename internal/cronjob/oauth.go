@@ -19,7 +19,7 @@ func ClearExpiredCode() {
 			<-t.C
 
 			earliest := time.Now().Add(-2 * time.Minute)
-			if err := global.DB.Where("create_time < ?", earliest).Delete(model.Code{}).Error; err != nil {
+			if err := global.DB.Where("created_at < ?", earliest).Delete(model.Code{}).Error; err != nil {
 				global.Log.Error("clear expired code err: ", zap.Error(err))
 			}
 		}

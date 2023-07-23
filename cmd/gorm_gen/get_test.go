@@ -13,7 +13,7 @@ import (
 )
 
 func TestGen(*testing.T) {
-	generator, err := getG("quick_auth")
+	generator, err := getG("dev_quick_auth")
 	if err != nil {
 		fmt.Println("get generator err: ", err)
 		return

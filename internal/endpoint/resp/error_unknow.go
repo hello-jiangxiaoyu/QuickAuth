@@ -8,10 +8,13 @@ import (
 const (
 	ServerPanic     = 2000
 	CodeUnknown     = 2001
-	CodeSqlSelect   = 2002
-	CodeSqlModify   = 2002
-	CodeNotFound    = 2003
-	CodeSaveSession = 2004
+	CodeNotFound    = 2002
+	CodeSaveSession = 2003
+
+	CodeSqlSelect = 3000
+	CodeSqlModify = 3001
+	CodeSqlCreate = 3002
+	CodeSqlDelete = 3003
 )
 
 // ErrorUnknown 未知错误
@@ -22,6 +25,10 @@ func ErrorUnknown(ctx context.Context, err error, respMsg string, isArray ...boo
 // ErrorSqlModify SQL修改失败
 func ErrorSqlModify(ctx context.Context, err error, respMsg string, isArray ...bool) {
 	errorResponse(ctx, http.StatusInternalServerError, CodeSqlModify, err, respMsg, isArray)
+}
+
+func ErrorSqlCreate(ctx context.Context, err error, respMsg string, isArray ...bool) {
+	errorResponse(ctx, http.StatusInternalServerError, CodeSqlCreate, err, respMsg, isArray)
 }
 
 // ErrorSelect 数据库查询错误
