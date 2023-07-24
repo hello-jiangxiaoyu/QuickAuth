@@ -1,32 +1,36 @@
-import React, {useState} from 'react';
+import React, {useState } from 'react';
 import Router from "next/router"
 import {Button, Popover, Card, Space, Modal, Form, Input, Select, Message} from '@arco-design/web-react';
 import MyIcon from "@/components/Widget/StringIcon";
 import {IconPlusCircle} from "@arco-design/web-react/icon";
-import {App, createApp, deleteApp} from "@/http/app";
+import {App, createApp, deleteApp, fetchAppList} from "@/http/app";
+import {apps} from "@/store/mobx";
 
 // application card with dynamic icon
 export default function MyCard(props: { appId: string, name: string, type: string, icon?: string}) {
   let icon = 'IconCodeSandbox';
-  if (typeof props.icon == 'string' && props.icon != '') {
+  if (typeof props.icon == 'string' && props.icon.startsWith('Icon')) {
     icon = props.icon;
   }
 
-  console.log("icon:", icon, props.icon)
   function onClickCard() {
     Router.push(`applications/${props.appId}`).then();
     console.log(typeof '');
   }
 
   function confirm() {
-    Modal.confirm({
-      title: 'Confirm deletion',
+    Modal.confirm({title: 'Confirm deletion',
       content: 'Are you sure you want to delete the app.',
       okButtonProps: {status: 'danger'},
       onOk: () => {
         deleteApp(props.appId).then( r => {
           if (r.code !== 200) {Message.error(r.msg)} else {
-            Message.success('Success !');
+            Message.success('Delete success !');
+            fetchAppList().then(r => {
+              if (r.code !== 200) {Message.error("Get app list err: " + r.msg)} else {
+                apps.updateApps(r.data)
+              }
+            })
           }
         })
       },
@@ -81,6 +85,11 @@ export function AddApp() {
       createApp(app).then(r => {
         if (r.code !== 200) {Message.error(r.msg)} else {
           Message.success('Success !');
+          fetchAppList().then(r => {
+            if (r.code !== 200) {Message.error("Get app list err: " + r.msg)} else {
+              apps.updateApps(r.data)
+            }
+          })
           setVisible(false);
         }
         setConfirmLoading(false);

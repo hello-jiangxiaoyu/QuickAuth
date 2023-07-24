@@ -1,5 +1,7 @@
 import {makeAutoObservable} from 'mobx'
 import env from './env.json'
+import {App, fetchAppList} from '@/http/app'
+import {Message} from "@arco-design/web-react";
 
 export interface GlobalState {
   userInfo?: {
@@ -29,11 +31,35 @@ class GlobalStatus {
   setCollapsed = (collapsed: boolean) => {
     this.menuWidth = collapsed ? env.menuCollapseWith : env.menuWidth; this.menuCollapsed = collapsed;
   }
+}
+
+class GlobalApplications {
+  constructor() {makeAutoObservable(this)}
+
+  list: Array<App> = [];
+  updateApps = (apps: Array<App>) => {
+    this.list = apps;
+  }
 
   multiTenant = false;
   setMultiTenant = (multiTenant: boolean) => {this.multiTenant = multiTenant};
 }
 
-const store = new GlobalStatus()
-export default store
+class GlobalUser {
+  constructor() {makeAutoObservable(this)}
+
+  apps: Array<App> = [];
+  updateApps = (apps: Array<App>) => {
+    this.apps = apps;
+  }
+
+  multiTenant = false;
+  setMultiTenant = (multiTenant: boolean) => {this.multiTenant = multiTenant};
+}
+
+export const apps = new GlobalApplications();
+export const user = new GlobalUser();
+
+const store = new GlobalStatus();
+export default store;
 

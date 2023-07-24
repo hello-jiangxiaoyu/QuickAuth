@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import MyCard, {AddApp} from './card'
-import {Grid, Message} from "@arco-design/web-react";
-import {fetchAppList, App} from "@/http/app";
+import {Grid} from "@arco-design/web-react";
+import {apps} from "@/store/mobx";
+import {observer} from "mobx-react";
 
 function Page() {
   //   {name: 'default', tag: 'auth', icon: 'IconSafe', appId: '1'},
@@ -10,20 +11,10 @@ function Page() {
   //   {name: 'feng', tag: 'insert', icon: 'IconBook', appId: '4'},
   //   {name: 'qiang', tag: 'python', icon: 'IconRobot', appId: '5'},
 
-  const [apps, setApps] = useState<Array<App>>([])
-  useEffect(() => {
-    fetchAppList().then(r => {
-      if (r.code !== 200) {Message.error(r.msg)} else {
-        console.log(r.data)
-        setApps(r.data);
-      }
-    })
-  }, []);
-
   return (
     <div style={{ minHeight:'80vh' }}>
       <Grid.Row gutter={24} style={{minHeight:'200', width:'100%'}}>
-        {apps.map((item, index) => (
+        {apps.list.map((item, index) => (
           <Grid.Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} key={index} style={{ marginBottom: 16 }} flex='100px'>
             <MyCard appId={item.id} name={item.name} type={item.describe} icon={item.icon}></MyCard>
           </Grid.Col>
@@ -34,4 +25,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default observer(Page);

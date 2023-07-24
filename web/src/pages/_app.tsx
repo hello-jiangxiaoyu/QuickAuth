@@ -3,7 +3,7 @@ import zhCN from '@arco-design/web-react/es/locale/zh-CN';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 import '@/mock';
 import '@/style/global.less';
-import {ConfigProvider} from '@arco-design/web-react';
+import {ConfigProvider, Message} from '@arco-design/web-react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
@@ -17,6 +17,8 @@ import NProgress from 'nprogress';
 import {checkLogin} from '@/store/localStorage';
 import changeTheme from '@/utils/changeTheme';
 import {fetchUserInfo} from "@/http/users";
+import {fetchAppList} from "@/http/app";
+import {apps} from "@/store/mobx";
 
 interface RenderConfig {
   arcoLang?: string;
@@ -40,6 +42,12 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
     } else if (window.location.pathname.replace(/\//g, '') !== 'login') {
       window.location.pathname = '/login';
     }
+
+    fetchAppList().then(r => {
+      if (r.code !== 200) {Message.error(r.msg)} else {
+        apps.updateApps(r.data)
+      }
+    })
   }, []);
 
   const router = useRouter();

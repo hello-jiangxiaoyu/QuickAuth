@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import {Button, Card, Input} from "@arco-design/web-react";
-import store from "@/store/mobx";
+import {apps} from "@/store/mobx";
 import {observer} from "mobx-react";
 
 function Page() {
@@ -8,7 +8,7 @@ function Page() {
   return (
     <Card style={{minHeight:'80vh', width:'100%'}}>
       <Input ref={inputRef} style={{ width: 350 }} allowClear placeholder='Please Enter something' />
-      <Button onClick={()=>{store.setMultiTenant(!store.multiTenant);console.log(store.multiTenant)}}>Clear</Button>
+      <Button onClick={()=>{apps.setMultiTenant(!apps.multiTenant);console.log(apps.multiTenant)}}>Clear</Button>
     </Card>
   );
 }
