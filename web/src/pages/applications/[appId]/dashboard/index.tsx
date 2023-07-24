@@ -8,7 +8,7 @@ function Page() {
   return (
     <Card style={{minHeight:'80vh', width:'100%'}}>
       <Input ref={inputRef} style={{ width: 350 }} allowClear placeholder='Please Enter something' />
-      <Button onClick={()=>{apps.setMultiTenant(!apps.multiTenant);console.log(apps.multiTenant)}}>Clear</Button>
+      <Button onClick={()=>{apps.setMultiTenant(!apps.multiTenant)}}>Clear</Button>
     </Card>
   );
 }

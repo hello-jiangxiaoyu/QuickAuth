@@ -15,7 +15,6 @@ export default function MyCard(props: { appId: string, name: string, type: strin
 
   function onClickCard() {
     Router.push(`applications/${props.appId}`).then();
-    console.log(typeof '');
   }
 
   function confirm() {

@@ -51,7 +51,7 @@ function ApplicationSelector() {
         </Space>
       )}
 
-      <Button onClick={()=>{apps.setMultiTenant(!apps.multiTenant);console.log(apps.multiTenant)}}>租户</Button>
+      <Button onClick={()=>{apps.setMultiTenant(!apps.multiTenant)}}>租户</Button>
       {apps.multiTenant && (
         <Space style={{marginLeft:20}}>
           <div>租户:</div>
