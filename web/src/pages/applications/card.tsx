@@ -116,7 +116,7 @@ export function AddApp() {
             <Input placeholder='app name' />
           </Form.Item>
           <Form.Item label='Type' required field='tag' rules={[{ required: false }]}>
-            <Select options={["Single Tenant", "Multi Tenant"]}/>
+            <Select options={["single_tenant", "multi_tenant"]}/>
           </Form.Item>
           <Form.Item label='Icon' required field='icon' rules={[{ required: true }]}>
             <Input placeholder='icon url' />

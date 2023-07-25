@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import MyCard, {AddApp} from './card'
 import {Grid} from "@arco-design/web-react";
 import {apps} from "@/store/mobx";

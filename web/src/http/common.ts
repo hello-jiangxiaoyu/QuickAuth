@@ -8,7 +8,7 @@ export interface Root<T> {
 }
 
 export async function GET<T>(uri: string):Promise<Root<T>> {
-  let errorReason = ''
+  let errorReason = '';
   const url = env.devHost + uri;
   const response:Root<T> = await fetch(url).then((resp) => resp.json()).catch((reason) => {
     errorReason = reason;
@@ -25,8 +25,8 @@ export async function GET<T>(uri: string):Promise<Root<T>> {
   return response;
 }
 
-export async function POST<T>(uri: string, data:T):Promise<Root<T>> {
-  let errorReason = ''
+export async function POST<T>(uri: string, data:object):Promise<Root<T>> {
+  let errorReason = '';
   const url = env.devHost + uri;
   const response  = await fetch(url, {method:'POST', body:JSON.stringify(data)}).then((resp) => resp.json()).catch((reason) => {
     errorReason = reason;
@@ -44,8 +44,8 @@ export async function POST<T>(uri: string, data:T):Promise<Root<T>> {
   return response;
 }
 
-export async function PUT(uri: string, data:object = {}):Promise<Root<object>> {
-  let errorReason = ''
+export async function PUT(uri: string, data:object):Promise<Root<object>> {
+  let errorReason = '';
   const url = env.devHost + uri;
   const response  = await fetch(url, {method:'PUT', body:JSON.stringify(data)}).then((resp) => resp.json()).catch((reason) => {
     errorReason = reason;
@@ -64,7 +64,7 @@ export async function PUT(uri: string, data:object = {}):Promise<Root<object>> {
 }
 
 export async function DELETE(uri: string):Promise<Root<object>> {
-  let errorReason = ''
+  let errorReason = '';
   const url = env.devHost + uri;
   const response  = await fetch(url, {method:'DELETE'}).then((resp) => resp.json()).catch((reason) => {
     errorReason = reason;

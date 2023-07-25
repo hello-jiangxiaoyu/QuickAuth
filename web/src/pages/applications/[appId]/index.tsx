@@ -1,11 +1,14 @@
-import React  from "react";
+import React, {useEffect} from "react";
 import Router, { useRouter } from 'next/router';
-import {Card, Tabs, Typography} from '@arco-design/web-react';
+import {Card, Message, Tabs, Typography} from '@arco-design/web-react';
 import LoginAuth from '@/pages/applications/[appId]/login'
 import AppInfo from '@/pages/applications/[appId]/appInfo'
 import ClientCredential from "@/pages/applications/[appId]/credentials";
 import Tenants from "@/pages/applications/[appId]/tenants"
 import {getRouterPara} from "@/utils/stringTools";
+import {fetchApp} from "@/http/app";
+import {apps} from "@/store/mobx";
+import {fetchTenantList} from "@/http/tenant";
 
 function Page() {
   const router = useRouter();
@@ -18,8 +21,21 @@ function Page() {
     {key: 'tenants', title: '租户管理', content: <Tenants appId={appId}></Tenants>},
   ];
   if (!tables.some(ele => ele.key === tableKey)) {
-    tableKey = 'app'
+    tableKey = 'app';
   }
+
+  useEffect(() => {
+    fetchApp(appId).then(r => {
+      if (r.code !== 200) {Message.error(r.msg)} else {
+        apps.setCurrentApp(r.data);
+      }
+    })
+    fetchTenantList(appId).then(r => {
+      if (r.code !== 200) {Message.error(r.msg)} else {
+        apps.setTenantList(r.data);
+      }
+    })
+  }, [appId])
 
   return (
     <Card style={{minHeight:'80vh'}}>

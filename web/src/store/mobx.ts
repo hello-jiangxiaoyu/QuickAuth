@@ -2,6 +2,7 @@ import {makeAutoObservable} from 'mobx'
 import env from './env.json'
 import {App, fetchAppList} from '@/http/app'
 import {Message} from "@arco-design/web-react";
+import {Tenant, TenantDetail} from "@/http/tenant";
 
 export interface GlobalState {
   userInfo?: {
@@ -42,22 +43,16 @@ class GlobalApplications {
     this.appList = apps;
   }
 
-  setCurrentApp = (appId: string) => {
-    for (const i of this.appList) {
-      if (i.id === appId) {
-        this.currentApp = i;
-        return true
-      }
-    }
-    return false;
+  setCurrentApp = (app: App) => {
+    this.currentApp = app;
+    this.multiTenant = (app.tag === 'multi_tenant');
   }
 
-  tenantList = '';
-  currentTenant = '';
+  tenantList: Array<Tenant> = [];
+  currentTenant: TenantDetail;
   multiTenant = false;
-  setMultiTenant = (multiTenant: boolean) => {this.multiTenant = multiTenant};
-
-  setCurrentTenant = (tenant: string) => {this.currentTenant = tenant};
+  setTenantList = (tenants: Array<Tenant>) => {this.tenantList = tenants}
+  setCurrentTenant = (tenant: TenantDetail) => {this.currentTenant = tenant};
 }
 
 class GlobalUser {

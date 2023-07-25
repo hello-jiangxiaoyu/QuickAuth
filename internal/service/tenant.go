@@ -17,7 +17,7 @@ func (s *Service) GetTenant(_ string, tenantId int64) (*model.Tenant, error) {
 
 func (s *Service) ListTenant(appId string) ([]model.Tenant, error) {
 	var tenant []model.Tenant
-	if err := s.db.Select("id", "app_id", "user_pool_id", "type", "host", "name", "company", "created_at", "updated_at").
+	if err := s.db.Select("id", "app_id", "user_pool_id", "type", "host", "name", "company", "created_at").
 		Where("app_id = ?", appId).Find(&tenant).Error; err != nil {
 		return nil, err
 	}

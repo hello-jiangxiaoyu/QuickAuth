@@ -45,7 +45,7 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
 
     fetchAppList().then(r => {
       if (r.code !== 200) {Message.error(r.msg)} else {
-        apps.updateApps(r.data)
+        apps.updateApps(r.data);
       }
     })
   }, []);
