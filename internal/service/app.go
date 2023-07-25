@@ -2,8 +2,8 @@ package service
 
 import (
 	"QuickAuth/pkg/model"
-	"QuickAuth/pkg/tools/safe"
-	"QuickAuth/pkg/tools/utils"
+	"QuickAuth/pkg/safe"
+	"QuickAuth/pkg/utils"
 	"errors"
 )
 

@@ -7,10 +7,9 @@ import (
 	"net/url"
 )
 
-func (s *Service) GetTenant(appId string, tenantId int64) (*model.Tenant, error) {
+func (s *Service) GetTenant(_ string, tenantId int64) (*model.Tenant, error) {
 	var tenant model.Tenant
-	if err := s.db.Where("id = ? AND app_id = ?", tenantId, appId).
-		First(&tenant).Error; err != nil {
+	if err := s.db.Where("id = ?", tenantId).First(&tenant).Error; err != nil {
 		return nil, err
 	}
 	return &tenant, nil
@@ -73,42 +72,42 @@ func (s *Service) IsRedirectUriValid(appId string, tenantId int64, uri string) (
 	return false, nil
 }
 
-func (s *Service) ListRedirectUri(appId string, tenantId int64) ([]string, error) {
+func (s *Service) ListRedirectUri(tenantId int64) ([]string, error) {
 	var apps []string
 	if err := s.db.Model(model.Tenant{}).Select("redirect_uris").
-		Where("id = ? AND app_id = ?", tenantId, appId).Find(&apps).Error; err != nil {
+		Where("id = ?", tenantId).Find(&apps).Error; err != nil {
 		return nil, err
 	}
 
 	return apps, nil
 }
 
-func (s *Service) CreateRedirectUri(appId string, tenantId int64, uri string) error {
-	sql := `update tenants set redirect_uris = array_prepend(?, redirect_uris) where id = ? and app_id = ?;`
-	if err := s.db.Exec(sql, uri, tenantId, appId).Error; err != nil {
+func (s *Service) CreateRedirectUri(tenantId int64, uri string) error {
+	sql := `update tenants set redirect_uris = array_prepend(?, redirect_uris) where id = ?;`
+	if err := s.db.Exec(sql, uri, tenantId).Error; err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (s *Service) ModifyRedirectUri(appId string, tenantId int64, uriId uint, uri string) error {
-	sql := `update tenants set redirect_uris[?] = ? where id = ? and app_id = ?;`
-	if err := s.db.Exec(sql, uriId, uri, tenantId, appId).Error; err != nil {
+func (s *Service) ModifyRedirectUri(tenantId int64, uriId uint, uri string) error {
+	sql := `update tenants set redirect_uris[?] = ? where id = ?;`
+	if err := s.db.Exec(sql, uriId, uri, tenantId).Error; err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (s *Service) DeleteRedirectUri(appId string, tenantId int64, uri string) error {
+func (s *Service) DeleteRedirectUri(tenantId int64, uri string) error {
 	uri, err := url.QueryUnescape(uri)
 	if err != nil {
 		return errors.Wrap(err, "invalid uri")
 	}
 
-	sql := `update tenants set redirect_uris = array_remove(redirect_uris, ?) where id = ? and app_id = ?;`
-	if err = s.db.Exec(sql, uri, tenantId, appId).Error; err != nil {
+	sql := `update tenants set redirect_uris = array_remove(redirect_uris, ?) where id = ?;`
+	if err = s.db.Exec(sql, uri, tenantId).Error; err != nil {
 		return err
 	}
 

@@ -10,10 +10,9 @@ import (
 // @Schemes
 // @Description	get redirect uri list
 // @Tags		tenant
-// @Param		appId	path		string	true	"app id"
 // @Param		vhost	header		string	false	"tenant host"
 // @Success		200		{object}	[]string
-// @Router		/api/quick/apps/{appId}/redirect-uri [get]
+// @Router		/api/quick/redirect-uri [get]
 func (o Controller) listRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := o.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
@@ -21,7 +20,7 @@ func (o Controller) listRedirectUri(c *gin.Context) {
 		return
 	}
 
-	uris, err := o.svc.ListRedirectUri(in.AppId, in.Tenant.ID)
+	uris, err := o.svc.ListRedirectUri(in.Tenant.ID)
 	if err != nil {
 		resp.ErrorSelect(c, err, "list redirect uri err")
 		return
@@ -33,11 +32,10 @@ func (o Controller) listRedirectUri(c *gin.Context) {
 // @Schemes
 // @Description	create app redirect uri
 // @Tags		tenant
-// @Param		appId	path	string					true	"app id"
 // @Param		vhost	header	string					false	"tenant host"
 // @Param		bd		body	request.RedirectUriReq	true	"body"
 // @Success		200
-// @Router		/api/quick/apps/{appId}/redirect-uri [post]
+// @Router		/api/quick/redirect-uri [post]
 func (o Controller) createRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).SetTenant(&in.Tenant).Error; err != nil {
@@ -45,7 +43,7 @@ func (o Controller) createRedirectUri(c *gin.Context) {
 		return
 	}
 
-	if err := o.svc.CreateRedirectUri(in.AppId, in.Tenant.ID, in.Uri); err != nil {
+	if err := o.svc.CreateRedirectUri(in.Tenant.ID, in.Uri); err != nil {
 		resp.ErrorUnknown(c, err, "create redirect uri err")
 		return
 	}
@@ -56,19 +54,18 @@ func (o Controller) createRedirectUri(c *gin.Context) {
 // @Schemes
 // @Description	modify app
 // @Tags		tenant
-// @Param		appId	path	string					true	"app id"
 // @Param		vhost	header	string					false	"tenant host"
 // @Param		uriId	path	string					true	"uri id"
 // @Param		bd		body	request.RedirectUriReq	true	"body"
 // @Success		200
-// @Router		/api/quick/apps/{appId}/redirect-uri/{uriId} [put]
+// @Router		/api/quick/redirect-uri/{uriId} [put]
 func (o Controller) modifyRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err, "invalid redirect-uri request param")
 		return
 	}
-	if err := o.svc.ModifyRedirectUri(in.AppId, in.Tenant.ID, in.UriId, in.Uri); err != nil {
+	if err := o.svc.ModifyRedirectUri(in.Tenant.ID, in.UriId, in.Uri); err != nil {
 		resp.ErrorUnknown(c, err, "modify redirect uri err")
 		return
 	}
@@ -79,11 +76,10 @@ func (o Controller) modifyRedirectUri(c *gin.Context) {
 // @Schemes
 // @Description	delete app
 // @Tags		tenant
-// @Param		appId	path	string	true	"app id"
 // @Param		vhost	header	string	false	"tenant host"
 // @Param		uri		path	string	true	"uri name"
 // @Success		200
-// @Router		/api/quick/apps/{appId}/redirect-uri/{uri} [delete]
+// @Router		/api/quick/redirect-uri/{uri} [delete]
 func (o Controller) deleteRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := o.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
@@ -92,7 +88,7 @@ func (o Controller) deleteRedirectUri(c *gin.Context) {
 	}
 
 	uri := c.Param("uri")
-	if err := o.svc.DeleteRedirectUri(in.AppId, in.Tenant.ID, uri); err != nil {
+	if err := o.svc.DeleteRedirectUri(in.Tenant.ID, uri); err != nil {
 		resp.ErrorUnknown(c, err, "delete redirect uri err")
 		return
 	}

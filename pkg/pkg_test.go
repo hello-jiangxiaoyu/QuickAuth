@@ -1,7 +1,7 @@
 package pkg
 
 import (
-	"QuickAuth/pkg/tools/utils"
+	"QuickAuth/pkg/utils"
 	"fmt"
 	"github.com/pkg/errors"
 	"strings"

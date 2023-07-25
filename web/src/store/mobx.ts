@@ -36,13 +36,28 @@ class GlobalStatus {
 class GlobalApplications {
   constructor() {makeAutoObservable(this)}
 
-  list: Array<App> = [];
+  appList: Array<App> = [];
+  currentApp:App;
   updateApps = (apps: Array<App>) => {
-    this.list = apps;
+    this.appList = apps;
   }
 
+  setCurrentApp = (appId: string) => {
+    for (const i of this.appList) {
+      if (i.id === appId) {
+        this.currentApp = i;
+        return true
+      }
+    }
+    return false;
+  }
+
+  tenantList = '';
+  currentTenant = '';
   multiTenant = false;
   setMultiTenant = (multiTenant: boolean) => {this.multiTenant = multiTenant};
+
+  setCurrentTenant = (tenant: string) => {this.currentTenant = tenant};
 }
 
 class GlobalUser {
@@ -52,9 +67,6 @@ class GlobalUser {
   updateApps = (apps: Array<App>) => {
     this.apps = apps;
   }
-
-  multiTenant = false;
-  setMultiTenant = (multiTenant: boolean) => {this.multiTenant = multiTenant};
 }
 
 export const apps = new GlobalApplications();

@@ -15,7 +15,7 @@ export async function createApp(data:App):Promise<Root<App>> {
 }
 
 export async function modifyApp(appId:string, data:App):Promise<Root<object>> {
-  return await PUT<object>(`/api/quick/apps/${appId}`, data)
+  return await PUT(`/api/quick/apps/${appId}`, data)
 }
 
 export async function deleteApp(appId:string):Promise<Root<object>> {

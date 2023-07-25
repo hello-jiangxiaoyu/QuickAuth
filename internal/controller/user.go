@@ -3,7 +3,7 @@ package controller
 import (
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/pkg/tools/safe"
+	"QuickAuth/pkg/safe"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )

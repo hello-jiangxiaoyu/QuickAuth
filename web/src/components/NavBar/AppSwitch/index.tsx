@@ -42,7 +42,7 @@ function ApplicationSelector() {
                   style={{width:'fit-content', minWidth:120, maxWidth:250, backgroundColor:'var(--color-fill-2)'}}
                   dropdownRender={(menu) => (<div>{menu}<Divider style={{ margin: 0 }} /><CreateApplication/></div>)}
           >
-            {apps.list.map((option) => (
+            {apps.appList.map((option) => (
               <Select.Option key={option.id} value={option.id} style={{height:50, textAlign:'left', display:'block'}}>
                 {option.name}
               </Select.Option>
@@ -60,7 +60,7 @@ function ApplicationSelector() {
                   style={{width:'fit-content', minWidth:120, maxWidth:250, backgroundColor:'var(--color-fill-2)', visibility: visibility}}
                   dropdownRender={(menu) => (<div>{menu}<Divider style={{ margin: 0 }} /><CreateApplication/></div>)}
           >
-            {apps.list.map((option) => (
+            {apps.appList.map((option) => (
               <Select.Option key={option.id} value={option.id} style={{height:50, textAlign:'left', display:'block'}}>
                 {option.name}
               </Select.Option>

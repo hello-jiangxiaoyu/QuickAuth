@@ -1,7 +1,7 @@
 package idp
 
 import (
-	"QuickAuth/pkg/tools/utils"
+	utils2 "QuickAuth/pkg/utils"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -131,7 +131,7 @@ func (idp *DingTalkIdProvider) GetUserInfo(token *oauth2.Token) (*UserInfo, erro
 	if err != nil {
 		return nil, err
 	}
-	defer utils.DeferErr(resp.Body.Close)
+	defer utils2.DeferErr(resp.Body.Close)
 	data, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
@@ -142,7 +142,7 @@ func (idp *DingTalkIdProvider) GetUserInfo(token *oauth2.Token) (*UserInfo, erro
 		return nil, err
 	}
 
-	countryCode, err := utils.GetCountryCode(dtUserInfo.StateCode, dtUserInfo.Mobile)
+	countryCode, err := utils2.GetCountryCode(dtUserInfo.StateCode, dtUserInfo.Mobile)
 	if err != nil {
 		return nil, err
 	}
@@ -196,7 +196,7 @@ func (idp *DingTalkIdProvider) postWithBody(body interface{}, url string) ([]byt
 	if err != nil {
 		return nil, err
 	}
-	defer utils.DeferErr(resp.Body.Close)
+	defer utils2.DeferErr(resp.Body.Close)
 	return data, nil
 }
 

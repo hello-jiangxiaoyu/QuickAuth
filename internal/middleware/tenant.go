@@ -12,6 +12,9 @@ func TenantHost() gin.HandlerFunc {
 		var tenant model.Tenant
 		host := c.Request.Header.Get("vhost")
 		if host == "" {
+			host = c.Query("vhost")
+		}
+		if host == "" {
 			host = c.Request.Host
 		}
 		if err := global.DB.Where("host = ?", host).First(&tenant).Error; err != nil {

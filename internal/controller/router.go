@@ -45,28 +45,24 @@ func NewOauth2Router(repo *global.Repository, e *gin.Engine) {
 		app.PUT("/apps/:appId/secrets/:secretId", o.modifyAppSecret)
 		app.DELETE("/apps/:appId/secrets/:secretId", o.deleteAppSecret)
 
+		app.GET("/apps/:appId/tenants", o.listTenant)
+		app.GET("/apps/:appId/tenants/:tenantId", o.getTenant)
+		app.POST("/apps/:appId/tenants", o.createTenant)
+		app.PUT("/apps/:appId/tenants/:tenantId", o.modifyTenant)
+		app.DELETE("/apps/:appId/tenants/:tenantId", o.deleteTenant)
 	}
 
-	tenant := e.Group("/api/quick/apps/:appId", middleware.TenantHost())
+	tenant := e.Group("/api/quick", middleware.TenantHost())
 	{
-		tenant.GET("/tenants", o.listTenant)
-		tenant.GET("/tenants/current", o.getTenant)
-		tenant.POST("/tenants", o.createTenant)
-		tenant.PUT("/tenants", o.modifyTenant)
-		tenant.DELETE("/tenants", o.deleteTenant)
-
 		tenant.GET("/redirect-uri", o.listRedirectUri)
 		tenant.POST("/redirect-uri", o.createRedirectUri)
 		tenant.PUT("/redirect-uri/:uriId", o.modifyRedirectUri)
 		tenant.DELETE("/redirect-uri/:uri", o.deleteRedirectUri)
-	}
 
-	provider := e.Group("/api/quick", middleware.TenantHost())
-	{
-		provider.GET("/providers/:providerId", o.getProvider)
-		provider.POST("/providers", o.createProvider)
-		provider.PUT("/providers/:providerId", o.modifyProvider)
-		provider.DELETE("/providers/:providerId", o.deleteProvider)
+		tenant.GET("/providers/:providerId", o.getProvider)
+		tenant.POST("/providers", o.createProvider)
+		tenant.PUT("/providers/:providerId", o.modifyProvider)
+		tenant.DELETE("/providers/:providerId", o.deleteProvider)
 	}
 
 	user := e.Group("/api/quick")

@@ -18,7 +18,7 @@ func GetServer() *gin.Engine {
 	cookieSecret := []byte("QuickAuth")
 	store := cookie.NewStore(cookieSecret)
 	store.Options(sessions.Options{
-		MaxAge: 60 * 60 * 24 * 3,
+		MaxAge: 60 * 60 * 24 * 7,
 		Path:   "/",
 	})
 	r.Use(sessions.Sessions("QuickAuth", store))

@@ -1,7 +1,7 @@
 package idp
 
 import (
-	"QuickAuth/pkg/tools/utils"
+	"QuickAuth/pkg/utils"
 	"encoding/json"
 	"errors"
 	"fmt"

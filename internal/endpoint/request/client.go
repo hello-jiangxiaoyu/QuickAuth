@@ -42,14 +42,13 @@ func (c *AppSecretReq) ToModel() model.AppSecret {
 
 type RedirectUriReq struct {
 	Tenant model.Tenant `json:"-"`
-	AppId  string       `json:"-" uri:"appId"`
 	UriId  uint         `json:"-" uri:"uriId"`
 	Uri    string       `json:"uri"`
 }
 
 type TenantReq struct {
-	Tenant        model.Tenant   `json:"-"`
 	AppID         string         `json:"-" uri:"appId"`
+	TenantID      int64          `json:"-" uri:"tenantId"`
 	UserPoolID    int64          `json:"userPoolId"`
 	Type          int32          `json:"type"`
 	Name          string         `json:"name"`

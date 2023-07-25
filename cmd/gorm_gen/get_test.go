@@ -5,7 +5,7 @@
 package main
 
 import (
-	"QuickAuth/pkg/tools/utils"
+	"QuickAuth/pkg/utils"
 	"fmt"
 	_ "github.com/lib/pq"
 	"gorm.io/gen"

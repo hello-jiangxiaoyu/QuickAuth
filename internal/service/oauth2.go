@@ -2,7 +2,7 @@ package service
 
 import (
 	"QuickAuth/pkg/model"
-	"QuickAuth/pkg/tools/safe"
+	"QuickAuth/pkg/safe"
 	"errors"
 	"go.uber.org/zap"
 	"time"

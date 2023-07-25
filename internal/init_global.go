@@ -3,8 +3,8 @@ package internal
 import (
 	"QuickAuth/internal/global"
 	"QuickAuth/pkg/conf"
-	"QuickAuth/pkg/tools/log"
-	"QuickAuth/pkg/tools/orm"
+	"QuickAuth/pkg/log"
+	"QuickAuth/pkg/orm"
 	"errors"
 )
 

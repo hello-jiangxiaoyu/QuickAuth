@@ -2,7 +2,7 @@ package service
 
 import (
 	"QuickAuth/pkg/model"
-	"QuickAuth/pkg/tools/utils"
+	"QuickAuth/pkg/utils"
 	"github.com/pkg/errors"
 )
 

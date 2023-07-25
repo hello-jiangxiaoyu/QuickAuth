@@ -44,7 +44,7 @@ export async function POST<T>(uri: string, data:T):Promise<Root<T>> {
   return response;
 }
 
-export async function PUT<T>(uri: string, data:object = {}):Promise<Root<T>> {
+export async function PUT(uri: string, data:object = {}):Promise<Root<object>> {
   let errorReason = ''
   const url = env.devHost + uri;
   const response  = await fetch(url, {method:'PUT', body:JSON.stringify(data)}).then((resp) => resp.json()).catch((reason) => {

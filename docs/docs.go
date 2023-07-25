@@ -162,158 +162,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/apps/{appId}/redirect-uri": {
-            "get": {
-                "description": "get redirect uri list",
-                "tags": [
-                    "tenant"
-                ],
-                "summary": "get redirect uri list",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "app id",
-                        "name": "appId",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "tenant host",
-                        "name": "vhost",
-                        "in": "header"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "create app redirect uri",
-                "tags": [
-                    "tenant"
-                ],
-                "summary": "create app redirect uri",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "app id",
-                        "name": "appId",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "tenant host",
-                        "name": "vhost",
-                        "in": "header"
-                    },
-                    {
-                        "description": "body",
-                        "name": "bd",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.RedirectUriReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
-        "/api/quick/apps/{appId}/redirect-uri/{uriId}": {
-            "put": {
-                "description": "modify app",
-                "tags": [
-                    "tenant"
-                ],
-                "summary": "modify app redirect uri",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "app id",
-                        "name": "appId",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "tenant host",
-                        "name": "vhost",
-                        "in": "header"
-                    },
-                    {
-                        "type": "string",
-                        "description": "uri id",
-                        "name": "uriId",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "body",
-                        "name": "bd",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.RedirectUriReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
-        "/api/quick/apps/{appId}/redirect-uri/{uri}": {
-            "delete": {
-                "description": "delete app",
-                "tags": [
-                    "tenant"
-                ],
-                "summary": "delete app",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "app id",
-                        "name": "appId",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "tenant host",
-                        "name": "vhost",
-                        "in": "header"
-                    },
-                    {
-                        "type": "string",
-                        "description": "uri name",
-                        "name": "uri",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
         "/api/quick/apps/{appId}/secrets": {
             "get": {
                 "description": "list app secret",
@@ -456,12 +304,12 @@ const docTemplate = `{
                     }
                 }
             },
-            "put": {
-                "description": "modify tenant",
+            "post": {
+                "description": "create tenant",
                 "tags": [
                     "tenant"
                 ],
-                "summary": "modify tenant",
+                "summary": "create tenant",
                 "parameters": [
                     {
                         "type": "string",
@@ -469,12 +317,6 @@ const docTemplate = `{
                         "name": "appId",
                         "in": "path",
                         "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "tenant host",
-                        "name": "vhost",
-                        "in": "header"
                     },
                     {
                         "description": "body",
@@ -491,13 +333,15 @@ const docTemplate = `{
                         "description": "OK"
                     }
                 }
-            },
-            "post": {
-                "description": "create tenant",
+            }
+        },
+        "/api/quick/apps/{appId}/tenants/{tenantId}": {
+            "get": {
+                "description": "get tenant details",
                 "tags": [
                     "tenant"
                 ],
-                "summary": "create tenant",
+                "summary": "get tenant details",
                 "parameters": [
                     {
                         "type": "string",
@@ -507,10 +351,39 @@ const docTemplate = `{
                         "required": true
                     },
                     {
+                        "type": "integer",
+                        "description": "tenant id",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "put": {
+                "description": "modify tenant",
+                "tags": [
+                    "tenant"
+                ],
+                "summary": "modify tenant",
+                "parameters": [
+                    {
                         "type": "string",
-                        "description": "tenant host",
-                        "name": "vhost",
-                        "in": "header"
+                        "description": "app id",
+                        "name": "appId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tenant id",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
                     },
                     {
                         "description": "body",
@@ -543,39 +416,11 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "string",
-                        "description": "tenant host",
-                        "name": "vhost",
-                        "in": "header"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
-        "/api/quick/apps/{appId}/tenants/current": {
-            "get": {
-                "description": "get tenant details",
-                "tags": [
-                    "tenant"
-                ],
-                "summary": "get tenant details",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "app id",
-                        "name": "appId",
+                        "type": "integer",
+                        "description": "tenant id",
+                        "name": "tenantId",
                         "in": "path",
                         "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "tenant host",
-                        "name": "vhost",
-                        "in": "header"
                     }
                 ],
                 "responses": {
@@ -932,6 +777,130 @@ const docTemplate = `{
                         "description": "tenant host",
                         "name": "vhost",
                         "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/redirect-uri": {
+            "get": {
+                "description": "get redirect uri list",
+                "tags": [
+                    "tenant"
+                ],
+                "summary": "get redirect uri list",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "tenant host",
+                        "name": "vhost",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "create app redirect uri",
+                "tags": [
+                    "tenant"
+                ],
+                "summary": "create app redirect uri",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "tenant host",
+                        "name": "vhost",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "bd",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.RedirectUriReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/redirect-uri/{uriId}": {
+            "put": {
+                "description": "modify app",
+                "tags": [
+                    "tenant"
+                ],
+                "summary": "modify app redirect uri",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "tenant host",
+                        "name": "vhost",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "uri id",
+                        "name": "uriId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body",
+                        "name": "bd",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.RedirectUriReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/redirect-uri/{uri}": {
+            "delete": {
+                "description": "delete app",
+                "tags": [
+                    "tenant"
+                ],
+                "summary": "delete app",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "tenant host",
+                        "name": "vhost",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "uri name",
+                        "name": "uri",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1303,7 +1272,13 @@ const docTemplate = `{
                 "describe": {
                     "type": "string"
                 },
+                "icon": {
+                    "type": "string"
+                },
                 "name": {
+                    "type": "string"
+                },
+                "tag": {
                     "type": "string"
                 }
             }
