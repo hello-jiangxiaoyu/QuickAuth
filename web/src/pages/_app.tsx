@@ -8,7 +8,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
 import cookies from 'next-cookies';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import useStorage from '@/utils/useStorage';
 import { GlobalContext } from '@/context';
 
@@ -17,8 +17,10 @@ import NProgress from 'nprogress';
 import {checkLogin} from '@/store/localStorage';
 import changeTheme from '@/utils/changeTheme';
 import {fetchUserInfo} from "@/http/users";
-import {fetchAppList} from "@/http/app";
+import {fetchApp, fetchAppList} from "@/http/app";
 import {apps} from "@/store/mobx";
+import {getRouterPara} from "@/utils/stringTools";
+import {fetchTenantList} from "@/http/tenant";
 
 interface RenderConfig {
   arcoLang?: string;
@@ -35,6 +37,29 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
     return zhCN;
   }, [lang]);
 
+  const router = useRouter();
+  const appId = getRouterPara(router.query.appId);
+  useEffect(() => { // app发生变化，重新加载app和tenant信息
+    if (typeof appId === 'string' && appId.length > 0 && apps.currentApp?.id !== appId) {
+      fetchApp(appId).then(r => {
+        if (r.code !== 200) {
+          Message.error(r.msg);
+          setTimeout(() => Router.push(`/applications/`).then(), 2000);
+          return;
+        }
+        apps.setCurrentApp(r.data);
+        fetchTenantList(appId).then(r => {
+          if (r.code !== 200) {Message.error(r.msg)} else {
+            apps.setTenantList(r.data);
+            if (r.data.length > 0) {
+              apps.setCurrentTenant(r.data[0])
+            }
+          }
+        })
+      })
+    }
+  }, [appId]);
+
   useEffect(() => {changeTheme(theme)}, [lang, theme]);
   useEffect(() => {
     if (checkLogin()) {
@@ -50,7 +75,6 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
     })
   }, []);
 
-  const router = useRouter();
   useEffect(() => { // 页面渲染进度条
     const handleStart = () => {
       NProgress.set(0.4);

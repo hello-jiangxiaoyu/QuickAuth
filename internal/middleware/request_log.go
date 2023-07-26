@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"QuickAuth/internal/global"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"time"
@@ -23,16 +24,32 @@ type LogFormat struct {
 	Errors        string        `json:"errors"`
 }
 
+func getContextValue(c *gin.Context, k string) string {
+	res, ok := c.Get(k)
+	if !ok {
+		return ""
+	}
+	return fmt.Sprintf("%v", res)
+}
+
 func RequestLog() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
 		c.Next()
 
+		appId := getContextValue(c, "appId")
+		tenantId := getContextValue(c, "tenantId")
+		poolId := getContextValue(c, "poolId")
+		tag := getContextValue(c, "tag")
 		global.AccessLog.Info("",
 			zap.String("ts", time.Now().Format(time.RFC3339)),
 			zap.Int("status", c.Writer.Status()),
 			zap.String("method", c.Request.Method),
 			zap.String("path", c.Request.URL.Path),
+			zap.String("app_id", appId),
+			zap.String("tenant_id", tenantId),
+			zap.String("pool_id", poolId),
+			zap.String("tag", tag),
 			zap.String("full_path", c.FullPath()),
 			zap.String("query", c.Request.URL.RawQuery),
 			zap.String("client_ip", c.ClientIP()),

@@ -21,3 +21,9 @@ export function isValidUri(uri: string, path: string): boolean {
   const regex = new RegExp(`^${regexPath}$`);
   return regex.test(uri);
 }
+
+
+export function isIPAddress(str: string): boolean {
+  const ipAddressRegex = /^((\d{1,3}\.){3}\d{1,3})$/;
+  return ipAddressRegex.test(str);
+}

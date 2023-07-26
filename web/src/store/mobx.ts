@@ -1,8 +1,8 @@
 import {makeAutoObservable} from 'mobx'
 import env from './env.json'
-import {App, fetchAppList} from '@/http/app'
-import {Message} from "@arco-design/web-react";
+import {App} from '@/http/app'
 import {Tenant, TenantDetail} from "@/http/tenant";
+import {isIPAddress} from "@/utils/is";
 
 export interface GlobalState {
   userInfo?: {
@@ -49,10 +49,10 @@ class GlobalApplications {
   }
 
   tenantList: Array<Tenant> = [];
-  currentTenant: TenantDetail;
+  currentTenant: Tenant;
   multiTenant = false;
   setTenantList = (tenants: Array<Tenant>) => {this.tenantList = tenants}
-  setCurrentTenant = (tenant: TenantDetail) => {this.currentTenant = tenant};
+  setCurrentTenant = (tenant: Tenant) => {this.currentTenant = tenant};
 }
 
 class GlobalUser {

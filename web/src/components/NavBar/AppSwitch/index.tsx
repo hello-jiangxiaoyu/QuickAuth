@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
-import {Button, Divider, Select, Space} from "@arco-design/web-react";
+import React from 'react';
+import {Button, Divider, Message, Select, Space, Typography} from "@arco-design/web-react";
 import {IconPlus} from "@arco-design/web-react/icon";
 import Router, {useRouter} from "next/router";
 import {getRouterPara, replaceUriAppId} from "@/utils/stringTools";
 import {observer} from "mobx-react";
 import {apps} from "@/store/mobx";
+import {fetchTenant} from "@/http/tenant";
 
 function ApplicationSelector() {
   const router = useRouter();
@@ -14,7 +15,7 @@ function ApplicationSelector() {
     console.log('add item')
   };
 
-  function onChange(value: string) {
+  function onAppChange(value: string) {
     const newUri = replaceUriAppId(value, router.asPath);
     if (newUri === router.asPath) {
       return
@@ -22,11 +23,19 @@ function ApplicationSelector() {
     Router.push(newUri).then();
   }
 
-  function CreateApplication() {
+  function onTenantChange(value: number) {
+    fetchTenant(appId, value).then(r => {
+      if (r.code !== 200) {Message.error(r.msg)} else {
+        apps.setCurrentTenant(r.data);
+      }
+    })
+  }
+
+  function CreateApplication(props:{text:string}) {
     return (
       <div style={{display: 'flex', alignItems: 'center', padding: '10px 12px'}}>
         <Button style={{ fontSize: 14, padding: '0 6px', marginRight:30, marginLeft:30, alignSelf:'center' }} type='text' size='mini' onClick={addItem}>
-          <IconPlus />创建新应用
+          <IconPlus />{props.text}
         </Button>
       </div>
     );
@@ -36,11 +45,11 @@ function ApplicationSelector() {
     <div style={{marginLeft:10}}>
       {appId !== '' && (
         <Space>
-          <div>应用:</div>
-          <Select dropdownMenuStyle={{ maxHeight: 400 }} value={appId} onChange={onChange} bordered={false}
+          <Typography.Text>应用:</Typography.Text>
+          <Select dropdownMenuStyle={{ maxHeight: 400 }} value={apps.currentApp?.name} onChange={onAppChange} bordered={false}
                   triggerProps={{autoAlignPopupWidth: false, autoAlignPopupMinWidth: true, position: 'bl'}}
                   style={{width:'fit-content', minWidth:120, maxWidth:250, backgroundColor:'var(--color-fill-2)'}}
-                  dropdownRender={(menu) => (<div>{menu}<Divider style={{ margin: 0 }} /><CreateApplication/></div>)}
+                  dropdownRender={(menu) => (<div>{menu}<Divider style={{ margin: 0 }} /><CreateApplication text='创建应用'/></div>)}
           >
             {apps.appList.map((option) => (
               <Select.Option key={option.id} value={option.id} style={{height:50, textAlign:'left', display:'block'}}>
@@ -53,13 +62,13 @@ function ApplicationSelector() {
 
       {apps.multiTenant && (
         <Space style={{marginLeft:20}}>
-          <div>租户:</div>
-          <Select dropdownMenuStyle={{ maxHeight: 400 }} value={appId} onChange={onChange} bordered={false}
+          <Typography.Text>租户:</Typography.Text>
+          <Select dropdownMenuStyle={{ maxHeight: 400 }} value={apps.currentTenant?.name} onChange={onTenantChange} bordered={false}
                   triggerProps={{autoAlignPopupWidth: false, autoAlignPopupMinWidth: true, position: 'bl'}}
                   style={{width:'fit-content', minWidth:120, maxWidth:250, backgroundColor:'var(--color-fill-2)', visibility: visibility}}
-                  dropdownRender={(menu) => (<div>{menu}<Divider style={{ margin: 0 }} /><CreateApplication/></div>)}
+                  dropdownRender={(menu) => (<div>{menu}<Divider style={{ margin: 0 }} /><CreateApplication text='创建租户'/></div>)}
           >
-            {apps.appList.map((option) => (
+            {apps.tenantList.map((option) => (
               <Select.Option key={option.id} value={option.id} style={{height:50, textAlign:'left', display:'block'}}>
                 {option.name}
               </Select.Option>

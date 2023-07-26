@@ -21,3 +21,5 @@ export async function modifyApp(appId:string, data:App):Promise<Root<object>> {
 export async function deleteApp(appId:string):Promise<Root<object>> {
   return await DELETE(`/api/quick/apps/${appId}`);
 }
+
+

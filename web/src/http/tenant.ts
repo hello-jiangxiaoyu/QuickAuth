@@ -39,8 +39,8 @@ export async function fetchTenantList(appId:string):Promise<Root<Tenant[]>> {
   return await GET<Tenant[]>(`/api/quick/apps/${appId}/tenants`);
 }
 
-export async function fetchTenant(appId:string, tenantId:string):Promise<Root<Tenant>> {
-  return await GET<Tenant>(`/api/quick/apps/${appId}/tenants/${tenantId}`);
+export async function fetchTenant(appId:string, tenantId:number):Promise<Root<TenantDetail>> {
+  return await GET<TenantDetail>(`/api/quick/apps/${appId}/tenants/${tenantId}`);
 }
 
 export async function createTenant(appId:string, data:Tenant):Promise<Root<Tenant>> {

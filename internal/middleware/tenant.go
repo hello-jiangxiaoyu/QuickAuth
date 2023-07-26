@@ -22,5 +22,8 @@ func TenantHost() gin.HandlerFunc {
 			return
 		}
 		c.Set("tenant", tenant)
+		c.Set("appId", tenant.AppID)
+		c.Set("tenantId", tenant.ID)
+		c.Set("poolId", tenant.UserPoolID)
 	}
 }

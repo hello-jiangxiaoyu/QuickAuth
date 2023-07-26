@@ -1,8 +1,7 @@
 import React from 'react';
 import {Button, Card, Table, TableColumnProps} from "@arco-design/web-react";
-import store from "@/store/mobx";
 
-function Tenants(props:{appId:string}) {
+function Tenants() {
   const columns: TableColumnProps[] = [
     {title: '租户名', dataIndex: 'name', align:'center'},
     {title: '租户ID', dataIndex: 'tenantID', align:'center'},
