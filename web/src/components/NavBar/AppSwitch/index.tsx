@@ -4,63 +4,62 @@ import {IconPlus} from "@arco-design/web-react/icon";
 import Router, {useRouter} from "next/router";
 import {getRouterPara, replaceUriAppId} from "@/utils/stringTools";
 import {observer} from "mobx-react";
+import {fetchTenantList, Tenant} from "@/http/tenant";
+import {App, fetchAppList} from "@/http/app";
 import {apps} from "@/store/mobx";
-import {fetchTenant, fetchTenantList} from "@/http/tenant";
-import {fetchApp} from "@/http/app";
+import useStorage from "@/utils/useStorage";
+
+function getAppById(id: string, appList:Array<App>): App {
+  return appList.find((app: App) => app.id === id);
+}
 
 function ApplicationSelector() {
   const router = useRouter();
   const appId = getRouterPara(router.query.appId);
   const visibility = appId === '' ? 'hidden' : 'visible';
-  const [appName, setApp] = useState('')
-  const [tenantName, setTenant] = useState('')
+  const [appName, setAppName] = useState('');
+  const [multiTenant, setMultiTenant] = useState(false);
+  const [tenantName, setTenantName] = useState('');
+  const [appList, setAppList] = useState([] as Array<App>);
+  const [tenantList, setTenantList] = useState([] as Array<Tenant>);
 
-  function updateTenant() {
-    fetchTenantList(appId).then(r => {
+  useEffect(() => { // 首次加载
+    fetchAppList().then(r => {
       if (r.code !== 200) {Message.error(r.msg)} else {
-        apps.setTenantList(r.data);
-        if (r.data.length > 0) {
-          apps.setCurrentTenant(r.data[0]);
-        } else {
-          setTenant('');
-        }
+        apps.setAppList(r.data)
+        setAppList(r.data)
+        setAppName(appId)
+        setMultiTenant(getAppById(appId, r.data)?.tag === 'multi_tenant')
       }
     })
-  }
-  useEffect(() => {
-    if (typeof appId === 'string' && appId !== '') {
-      fetchApp(appId).then(r => {
-        if (r.code !== 200) {Message.error(r.msg)} else {
-          setApp(r.data.name);
-          apps.setCurrentApp(r.data);
-        }
-      })
-      updateTenant()
-    }
+    updateTenantList(appId)
   }, [appId])
 
+  function updateTenantList(appId:string) {
+    if (typeof appId === 'string' && appId !== '') {
+      fetchTenantList(appId).then(r => {
+        if (r.code !== 200) {Message.error(r.msg)} else {
+          setTenantList(r.data);
+          if (r.data.length !== 0) {
+            setTenantName(r.data[0].name);
+          } else {
+            setTenantName('');
+          }
+        }
+      })
+    }
+  }
+
   function onAppChange(value: string) {
+    setAppName(value)
     const newUri = replaceUriAppId(value, router.asPath);
     if (newUri === router.asPath) {
       return
     }
-    Router.push(newUri).then(() => {
-      updateTenant()
-    });
+    Router.push(newUri).then();
   }
 
-  function onTenantChange(value: number) {
-    fetchTenant(appId, value).then(r => {
-      if (r.code !== 200) {Message.error(r.msg)} else {
-        apps.setCurrentTenant(r.data);
-        setTenant(r.data[0]);
-      }
-    })
-  }
-
-  const addItem = () => {
-    console.log('add item')
-  };
+  const addItem = () => {console.log('add item')};
 
   function CreateApplication(props:{text:string}) {
     return (
@@ -82,7 +81,7 @@ function ApplicationSelector() {
                   style={{width:'fit-content', minWidth:120, maxWidth:250, backgroundColor:'var(--color-fill-2)'}}
                   dropdownRender={(menu) => (<div>{menu}<Divider style={{ margin: 0 }} /><CreateApplication text='创建应用'/></div>)}
           >
-            {apps.appList.map((option) => (
+            {appList.map((option) => (
               <Select.Option key={option.id} value={option.id} style={{height:50, textAlign:'left', display:'block'}}>
                 {option.name}
               </Select.Option>
@@ -91,16 +90,16 @@ function ApplicationSelector() {
         </Space>
       )}
 
-      {apps.multiTenant && (
+      {multiTenant && (
         <Space style={{marginLeft:20}}>
           <Typography.Text>租户:</Typography.Text>
-          <Select dropdownMenuStyle={{ maxHeight: 400 }} value={tenantName} onChange={onTenantChange} bordered={false}
+          <Select dropdownMenuStyle={{ maxHeight: 400 }} value={tenantName} onChange={setTenantName} bordered={false}
                   triggerProps={{autoAlignPopupWidth: false, autoAlignPopupMinWidth: true, position: 'bl'}}
                   style={{width:'fit-content', minWidth:120, maxWidth:250, backgroundColor:'var(--color-fill-2)', visibility: visibility}}
                   dropdownRender={(menu) => (<div>{menu}<Divider style={{ margin: 0 }} /><CreateApplication text='创建租户'/></div>)}
           >
-            {apps.tenantList.map((option) => (
-              <Select.Option key={option.id} value={option.id} style={{height:50, textAlign:'left', display:'block'}}>
+            {tenantList.map((option) => (
+              <Select.Option key={option.id} value={option.name} style={{height:50, textAlign:'left', display:'block'}}>
                 {option.name}
               </Select.Option>
             ))}

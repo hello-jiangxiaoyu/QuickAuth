@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS apps (
     created_at    TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at    TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX idx_app_create ON apps (created_at);
+CREATE UNIQUE INDEX idx_app_name ON apps (name);
 
 CREATE TABLE IF NOT EXISTS app_secrets (
     id              BIGSERIAL PRIMARY KEY,

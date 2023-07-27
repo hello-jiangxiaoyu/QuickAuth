@@ -38,21 +38,12 @@ class GlobalApplications {
   constructor() {makeAutoObservable(this)}
 
   appList: Array<App> = [];
-  currentApp:App;
-  updateApps = (apps: Array<App>) => {
+  setAppList = (apps: Array<App>) => {
     this.appList = apps;
   }
 
-  setCurrentApp = (app: App) => {
-    this.currentApp = app;
-    this.multiTenant = (app.tag === 'multi_tenant');
-  }
-
   tenantList: Array<Tenant> = [];
-  currentTenant: Tenant;
-  multiTenant = false;
   setTenantList = (tenants: Array<Tenant>) => {this.tenantList = tenants}
-  setCurrentTenant = (tenant: Tenant) => {this.currentTenant = tenant};
 }
 
 class GlobalUser {

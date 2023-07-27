@@ -27,7 +27,7 @@ export default function MyCard(props: { appId: string, name: string, type: strin
             Message.success('Delete success !');
             fetchAppList().then(r => {
               if (r.code !== 200) {Message.error("Get app list err: " + r.msg)} else {
-                apps.updateApps(r.data)
+                apps.setAppList(r.data)
               }
             })
           }
@@ -86,7 +86,7 @@ export function AddApp() {
           Message.success('Success !');
           fetchAppList().then(r => {
             if (r.code !== 200) {Message.error("Get app list err: " + r.msg)} else {
-              apps.updateApps(r.data)
+              apps.setAppList(r.data)
             }
           })
           setVisible(false);

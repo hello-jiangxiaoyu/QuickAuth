@@ -3,12 +3,12 @@ import zhCN from '@arco-design/web-react/es/locale/zh-CN';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 import '@/mock';
 import '@/style/global.less';
-import {ConfigProvider, Message} from '@arco-design/web-react';
+import {ConfigProvider} from '@arco-design/web-react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
 import cookies from 'next-cookies';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import useStorage from '@/utils/useStorage';
 import { GlobalContext } from '@/context';
 
@@ -17,10 +17,6 @@ import NProgress from 'nprogress';
 import {checkLogin} from '@/store/localStorage';
 import changeTheme from '@/utils/changeTheme';
 import {fetchUserInfo} from "@/http/users";
-import {fetchApp, fetchAppList} from "@/http/app";
-import {apps} from "@/store/mobx";
-import {getRouterPara} from "@/utils/stringTools";
-import {fetchTenantList} from "@/http/tenant";
 
 interface RenderConfig {
   arcoLang?: string;
@@ -45,12 +41,6 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
     } else if (window.location.pathname.replace(/\//g, '') !== 'login') {
       window.location.pathname = '/login';
     }
-
-    fetchAppList().then(r => {
-      if (r.code !== 200) {Message.error(r.msg)} else {
-        apps.updateApps(r.data);
-      }
-    })
   }, []);
 
   useEffect(() => { // 页面渲染进度条

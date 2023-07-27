@@ -1,8 +1,8 @@
 import React from 'react';
 import MyCard, {AddApp} from './card'
 import {Grid} from "@arco-design/web-react";
-import {apps} from "@/store/mobx";
 import {observer} from "mobx-react";
+import {apps} from "@/store/mobx";
 
 function Page() {
   //   {name: 'default', tag: 'auth', icon: 'IconSafe', appId: '1'},

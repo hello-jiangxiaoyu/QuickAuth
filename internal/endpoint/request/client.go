@@ -6,7 +6,7 @@ import (
 )
 
 type AppReq struct {
-	AppId    string `json:"-" uri:"appId"`
+	AppId    string `json:"-" form:"-" uri:"appId"`
 	Name     string `json:"name"`
 	Tag      string `json:"tag"`
 	Icon     string `json:"icon"`
@@ -47,8 +47,8 @@ type RedirectUriReq struct {
 }
 
 type TenantReq struct {
-	AppID         string         `json:"-" uri:"appId"`
-	TenantID      int64          `json:"-" uri:"tenantId"`
+	AppID         string         `json:"-" form:"-" uri:"appId"`
+	TenantID      int64          `json:"-" form:"-" uri:"tenantId"`
 	UserPoolID    int64          `json:"userPoolId"`
 	Type          int32          `json:"type"`
 	Name          string         `json:"name"`

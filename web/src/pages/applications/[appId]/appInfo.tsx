@@ -2,11 +2,12 @@ import {Button, Card, Descriptions, Form, Input, Link, Message, Space} from "@ar
 import React, {useEffect, useState} from "react";
 import {IconDelete} from "@arco-design/web-react/icon";
 import {apps} from "@/store/mobx";
-import {fetchTenant} from "@/http/tenant";
+import {fetchTenant, Tenant} from "@/http/tenant";
 import {isIPAddress} from "@/utils/is";
 import {useRouter} from "next/router";
 import {getRouterPara} from "@/utils/stringTools";
 import {observer} from "mobx-react";
+import useStorage from "@/utils/useStorage";
 
 function BasicInfo() {
   return (
@@ -46,15 +47,14 @@ function AuthInformation() {
   const router = useRouter();
   const appId = getRouterPara(router.query.appId);
   const [domain, setDomain] = useState('')
+
   useEffect(() => {
-    if (typeof apps.currentTenant?.id === 'number') {
-      fetchTenant(appId, apps.currentTenant?.id).then(r => {
-        if (r.code !== 200) {Message.error(r.msg)} else {
-          setDomain(getHostWithScheme(r.data.host))
-        }
-      })
-    }
-  }, [apps.currentTenant])
+    fetchTenant(appId, 1).then(r => {
+      if (r.code !== 200) {Message.error(r.msg)} else {
+        setDomain(getHostWithScheme(r.data.host))
+      }
+    });
+  }, [appId])
 
   const data = [
     {

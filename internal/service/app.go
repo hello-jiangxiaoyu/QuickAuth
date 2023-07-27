@@ -11,7 +11,7 @@ var ErrorDeleteDefaultApp = errors.New("do not delete the default app")
 
 func (s *Service) ListApps() ([]model.App, error) {
 	var apps []model.App
-	if err := s.db.Select("id", "name", "icon", "describe").Find(&apps).Error; err != nil {
+	if err := s.db.Select("id", "name", "icon", "tag").Find(&apps).Error; err != nil {
 		return nil, err
 	}
 
