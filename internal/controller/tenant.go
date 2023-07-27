@@ -3,7 +3,9 @@ package controller
 import (
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
+	"QuickAuth/pkg/model"
 	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
 // @Summary	get tenant list
@@ -20,13 +22,15 @@ func (o Controller) listTenant(c *gin.Context) {
 		return
 	}
 
-	tenants, err := o.svc.ListTenant(in.AppID)
+	tenants, err, _ := sg.Do("get-tenant-list-"+in.AppID, func() (interface{}, error) {
+		return o.svc.ListTenant(in.AppID)
+	})
 	if err != nil {
 		resp.ErrorSelect(c, err, "get tenant list err")
 		return
 	}
 
-	resp.SuccessArray(c, len(tenants), tenants)
+	resp.SuccessArray(c, len(tenants.([]model.Tenant)), tenants)
 }
 
 // @Summary	get tenant details
@@ -44,7 +48,9 @@ func (o Controller) getTenant(c *gin.Context) {
 		return
 	}
 
-	tenant, err := o.svc.GetTenant(in.AppID, in.TenantID)
+	tenant, err, _ := sg.Do("get-tenant-"+strconv.FormatInt(in.TenantID, 10), func() (interface{}, error) {
+		return o.svc.GetTenant(in.AppID, in.TenantID)
+	})
 	if err != nil {
 		resp.ErrorSelect(c, err, "get tenant err")
 		return

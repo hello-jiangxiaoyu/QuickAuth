@@ -4,9 +4,13 @@ import (
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/internal/service"
+	"QuickAuth/pkg/model"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/sync/singleflight"
 	"strings"
 )
+
+var sg singleflight.Group
 
 // @Summary	apps info
 // @Schemes
@@ -15,12 +19,14 @@ import (
 // @Success		200
 // @Router		/api/quick/apps [get]
 func (o Controller) listApp(c *gin.Context) {
-	apps, err := o.svc.ListApps()
+	apps, err, _ := sg.Do("get-app-list", func() (interface{}, error) {
+		return o.svc.ListApps()
+	})
 	if err != nil {
 		resp.ErrorSelect(c, err, "list apps err")
 		return
 	}
-	resp.SuccessArray(c, len(apps), apps)
+	resp.SuccessArray(c, len(apps.([]model.App)), apps)
 }
 
 // @Summary	apps info
@@ -37,7 +43,9 @@ func (o Controller) getApp(c *gin.Context) {
 		return
 	}
 
-	app, err := o.svc.GetApp(in.AppId)
+	app, err, _ := sg.Do("get-app-"+in.AppId, func() (interface{}, error) {
+		return o.svc.GetApp(in.AppId)
+	})
 	if err != nil {
 		resp.ErrorUnknown(c, err, "no such app")
 		return

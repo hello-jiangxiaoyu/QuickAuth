@@ -2,9 +2,8 @@ package resp
 
 import (
 	"context"
-	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/pkg/errors"
 	"net/http"
 )
 
@@ -29,7 +28,7 @@ func errorResponse(ctx context.Context, code int, errCode uint, err error, msg s
 	}
 
 	if err != nil {
-		_ = c.Error(fmt.Errorf("%s: %v", msg, err))
+		_ = c.Error(errors.WithMessage(err, msg))
 	} else {
 		_ = c.Error(errors.New(msg))
 	}

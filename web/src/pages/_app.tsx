@@ -38,28 +38,6 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
   }, [lang]);
 
   const router = useRouter();
-  const appId = getRouterPara(router.query.appId);
-  useEffect(() => { // app发生变化，重新加载app和tenant信息
-    if (typeof appId === 'string' && appId.length > 0 && apps.currentApp?.id !== appId) {
-      fetchApp(appId).then(r => {
-        if (r.code !== 200) {
-          Message.error(r.msg);
-          setTimeout(() => Router.push(`/applications/`).then(), 2000);
-          return;
-        }
-        apps.setCurrentApp(r.data);
-        fetchTenantList(appId).then(r => {
-          if (r.code !== 200) {Message.error(r.msg)} else {
-            apps.setTenantList(r.data);
-            if (r.data.length > 0) {
-              apps.setCurrentTenant(r.data[0])
-            }
-          }
-        })
-      })
-    }
-  }, [appId]);
-
   useEffect(() => {changeTheme(theme)}, [lang, theme]);
   useEffect(() => {
     if (checkLogin()) {
