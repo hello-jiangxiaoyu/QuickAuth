@@ -7,7 +7,6 @@ import (
 	"QuickAuth/pkg/model"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/sync/singleflight"
-	"strings"
 )
 
 var sg singleflight.Group
@@ -69,11 +68,7 @@ func (o Controller) createApp(c *gin.Context) {
 
 	app, err := o.svc.CreateApp(in.ToModel(), in.Host, in.PoolId)
 	if err != nil {
-		if strings.HasPrefix(err.Error(), "ERROR: duplicate key value violates unique constraint") {
-			resp.ErrorSqlCreate(c, err, "app name should be unique")
-		} else {
-			resp.ErrorSqlCreate(c, err, "create app err")
-		}
+		resp.ErrorSqlCreate(c, err, "create app err")
 		return
 	}
 	resp.SuccessWithData(c, app)

@@ -6,6 +6,7 @@ import (
 	"QuickAuth/pkg/utils"
 	"errors"
 	"github.com/lib/pq"
+	"gorm.io/gorm"
 )
 
 var ErrorDeleteDefaultApp = errors.New("do not delete the default app")
@@ -29,24 +30,43 @@ func (s *Service) GetApp(id string) (*model.App, error) {
 
 func (s *Service) CreateApp(app model.App, host string, poolId int64) (*model.App, error) {
 	app.ID = utils.GetNoLineUUID()
-	if err := s.db.Create(&app).Error; err != nil {
+	err := s.db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Create(&app).Error; err != nil {
+			return err
+		}
+
+		userPool := model.UserPool{
+			Name:     app.Name,
+			Describe: "default " + app.Name + " user pool",
+		}
+		if poolId == 0 {
+			if err := tx.Create(&userPool).Error; err != nil {
+				return err
+			}
+			poolId = userPool.ID
+		}
+		t := model.Tenant{
+			AppID:        app.ID,
+			UserPoolID:   poolId,
+			Type:         1,
+			Name:         "default",
+			Company:      "default",
+			Host:         host,
+			Describe:     "default tenant created by app",
+			RedirectUris: pq.StringArray{"http://localhost"},
+			GrantTypes:   pq.StringArray{},
+		}
+		if err := tx.Select("app_id", "user_pool_id", "type", "name", "host", "company", "grant_types", "redirect_uris", "describe").
+			Create(&t).Error; err != nil {
+			return err
+		}
+		return nil
+	})
+
+	if err != nil {
 		return nil, err
 	}
-	t := model.Tenant{
-		AppID:        app.ID,
-		UserPoolID:   poolId,
-		Type:         1,
-		Name:         "default",
-		Company:      "default",
-		Host:         host,
-		Describe:     "default tenant created by app",
-		RedirectUris: pq.StringArray{"http://localhost"},
-		GrantTypes:   pq.StringArray{},
-	}
-	if err := s.db.Select("app_id", "user_pool_id", "type", "name", "host", "company", "grant_types", "redirect_uris", "describe").
-		Create(&t).Error; err != nil {
-		return nil, err
-	}
+
 	return &app, nil
 }
 

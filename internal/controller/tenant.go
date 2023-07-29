@@ -76,7 +76,7 @@ func (o Controller) createTenant(c *gin.Context) {
 
 	tenant, err := o.svc.CreatTenant(in.ToModel())
 	if err != nil {
-		resp.ErrorSelect(c, err, "create tenant err")
+		resp.ErrorSqlCreate(c, err, "create tenant err")
 		return
 	}
 

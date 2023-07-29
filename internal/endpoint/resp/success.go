@@ -13,13 +13,13 @@ const (
 )
 
 type Response struct {
-	Code uint   `json:"code"`
+	Code int    `json:"code"`
 	Msg  string `json:"msg"`
 	Data any    `json:"data"`
 }
 
 type ArrayResponse struct {
-	Code  uint   `json:"code"`
+	Code  int    `json:"code"`
 	Msg   string `json:"msg"`
 	Total int    `json:"total"`
 	Data  any    `json:"data"`
@@ -36,6 +36,8 @@ func success(ctx context.Context, data any, total int, isArray bool) {
 	} else {
 		c.JSON(http.StatusOK, &ArrayResponse{Code: CodeSuccess, Msg: MsgSuccess, Total: total, Data: data})
 	}
+
+	c.Set("code", 200)
 	c.Abort()
 }
 

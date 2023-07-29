@@ -12,7 +12,7 @@ type AppReq struct {
 	Icon     string `json:"icon" binding:"required"`
 	Describe string `json:"describe" binding:"required"`
 	Host     string `json:"host" binding:"required"`
-	PoolId   int64  `json:"poolId" binding:"required"`
+	PoolId   int64  `json:"poolId"`
 }
 
 func (c *AppReq) ToModel() model.App {

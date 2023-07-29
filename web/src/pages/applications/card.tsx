@@ -7,7 +7,8 @@ import {dispatchAppList} from "@/store/redux";
 import App from "@/http/app";
 import api from "@/http/api";
 
-export default function MyCard(props: { appId: string, name: string, type: string, icon?: string}) {
+// 应用展示选项卡
+export default function ApplicationCard(props: { appId: string, name: string, type: string, icon?: string}) {
   let icon = 'IconCodeSandbox';
   if (typeof props.icon == 'string' && props.icon.startsWith('Icon')) {
     icon = props.icon;
@@ -26,7 +27,7 @@ export default function MyCard(props: { appId: string, name: string, type: strin
           if (r.code !== 200) {Message.error(r.msg)} else {
             Message.success('Delete success !');
             api.fetchAppList().then(r => {  // 刷新页面app列表
-              if (r.code !== 200) {Message.error("Get app list err: " + r.msg)} else {
+              if (r.code !== 200) {Message.error(r.msg)} else {
                 dispatchAppList(r.data)
               }
             })
@@ -71,8 +72,8 @@ export default function MyCard(props: { appId: string, name: string, type: strin
   );
 }
 
-
-export function AddApp() {
+// 创建一个应用
+export function AddApplication() {
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [form] = Form.useForm();
@@ -84,7 +85,7 @@ export function AddApp() {
         if (r.code !== 200) {Message.error(r.msg)} else {
           Message.success('Success !');
           api.fetchAppList().then(r => {
-            if (r.code !== 200) {Message.error("Get app list err: " + r.msg)} else {
+            if (r.code !== 200) {Message.error(r.msg)} else {
               dispatchAppList(r.data)
             }
           })
@@ -116,10 +117,13 @@ export function AddApp() {
           <Form.Item label='Type' required field='tag' rules={[{ required: false }]}>
             <Select options={["Single Tenant", "Multi Tenant"]}/>
           </Form.Item>
+          <Form.Item label='Host' required field='host' rules={[{ required: false }]}>
+            <Input placeholder='do not start with http:// or https://' />
+          </Form.Item>
           <Form.Item label='Icon' required field='icon' rules={[{ required: true }]}>
             <Input placeholder='icon url' />
           </Form.Item>
-          <Form.Item label='Describe' required field='describe' rules={[{ required: false }]}>
+          <Form.Item label='Describe' required field='describe' rules={[{ required: true }]}>
             <Input.TextArea placeholder='' />
           </Form.Item>
         </Form>

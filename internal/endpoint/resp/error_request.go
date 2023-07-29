@@ -15,7 +15,7 @@ const (
 	CodeNoSuchRoute = 1003
 )
 
-func errorResponse(ctx context.Context, code int, errCode uint, err error, msg string, isArray []bool) {
+func errorResponse(ctx context.Context, code int, errCode int, err error, msg string, isArray []bool) {
 	c, ok := ctx.(*gin.Context)
 	if !ok {
 		return
@@ -32,6 +32,8 @@ func errorResponse(ctx context.Context, code int, errCode uint, err error, msg s
 	} else {
 		_ = c.Error(errors.New(msg))
 	}
+
+	c.Set("code", errCode)
 	c.Abort()
 }
 

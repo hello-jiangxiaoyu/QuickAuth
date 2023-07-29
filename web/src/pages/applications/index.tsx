@@ -1,5 +1,5 @@
 import React from 'react';
-import MyCard, {AddApp} from './card'
+import ApplicationCard, {AddApplication} from './card'
 import {Grid} from "@arco-design/web-react";
 import {useSelector} from "react-redux";
 import {GlobalState} from "@/store/redux";
@@ -17,10 +17,10 @@ function Page() {
       <Grid.Row gutter={24} style={{minHeight:'200', width:'100%'}}>
         {appList && appList.map((item, index) => (
           <Grid.Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} key={index} style={{ marginBottom: 16 }} flex='100px'>
-            <MyCard appId={item.id} name={item.name} type={item.tag} icon={item.icon}></MyCard>
+            <ApplicationCard appId={item.id} name={item.name} type={item.tag} icon={item.icon}></ApplicationCard>
           </Grid.Col>
         ))}
-        <AddApp></AddApp>
+        <AddApplication></AddApplication>
       </Grid.Row>
     </div>
   );
