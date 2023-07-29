@@ -72,21 +72,21 @@ export function dispatchAppList(data: Array<App>) {
 
 export function dispatchApp(data: App) {
   store.dispatch({
-    type: DispatchAppList,
+    type: DispatchApp,
     payload: {currentApp: data},
   })
 }
 
 export function dispatchTenantList(data: Array<Tenant>) {
   store.dispatch({
-    type: DispatchAppList,
+    type: DispatchTenantList,
     payload: {tenantList: data},
   })
 }
 
 export function dispatchTenant(data: Tenant) {
   store.dispatch({
-    type: DispatchAppList,
+    type: DispatchTenant,
     payload: {currentTenant: data},
   })
 }

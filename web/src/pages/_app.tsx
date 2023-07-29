@@ -19,8 +19,10 @@ import {checkLogin} from '@/store/localStorage';
 import changeTheme from '@/utils/changeTheme';
 import {fetchUserInfo} from "@/http/users";
 
-import {dispatchAppList, store} from '@/store/redux';
-import {fetchAppList} from "@/http/app";
+import {dispatchApp, dispatchAppList, dispatchTenant, dispatchTenantList, store} from '@/store/redux';
+import {fetchApp, fetchAppList} from "@/http/app";
+import {getRouterPara} from "@/utils/stringTools";
+import {fetchTenantList, Tenant} from "@/http/tenant";
 
 function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: {arcoLang?: string; arcoTheme?: string} }) {
   const { arcoLang, arcoTheme } = renderConfig;
@@ -32,6 +34,8 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
     return zhCN;
   }, [lang]);
 
+  const router = useRouter();
+  const appId = getRouterPara(router.query.appId);
   useEffect(() => {changeTheme(theme)}, [lang, theme]);
   useEffect(() => {
     if (checkLogin()) {
@@ -44,9 +48,25 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
         dispatchAppList(r.data);
       }
     });
-  }, []);
+    if (typeof appId === 'string' && appId !== '') {
+      fetchApp(appId).then(r => {
+        if (r.code !== 200) {Message.error(r.msg)} else {
+          dispatchApp(r.data);
+        }
+      })
+      fetchTenantList(appId).then(r => {
+        if (r.code !== 200) {Message.error(r.msg)} else {
+          dispatchTenantList(r.data);
+          if (r.data.length > 0) {
+            dispatchTenant(r.data[0]);
+          } else {
+            dispatchTenant({} as Tenant);
+          }
+        }
+      })
+    }
+  }, [appId]);
 
-  const router = useRouter();
   useEffect(() => { // 页面渲染进度条
     const handleStart = () => {
       NProgress.set(0.4);

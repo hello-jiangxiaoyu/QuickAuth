@@ -18,7 +18,7 @@ function Page() {
       <Grid.Row gutter={24} style={{minHeight:'200', width:'100%'}}>
         {appList && appList.map((item, index) => (
           <Grid.Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} key={index} style={{ marginBottom: 16 }} flex='100px'>
-            <MyCard appId={item.id} name={item.name} type={item.describe} icon={item.icon}></MyCard>
+            <MyCard appId={item.id} name={item.name} type={item.tag} icon={item.icon}></MyCard>
           </Grid.Col>
         ))}
         <AddApp></AddApp>

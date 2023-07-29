@@ -1,21 +1,21 @@
-import {Button, Card, Descriptions, Form, Input, Link, Message, Space} from "@arco-design/web-react";
-import React, {useEffect, useState} from "react";
+import {Button, Card, Descriptions, Form, Input, Link, Space} from "@arco-design/web-react";
+import React from "react";
 import {IconDelete} from "@arco-design/web-react/icon";
-import {fetchTenant, Tenant} from "@/http/tenant";
 import {isIPAddress} from "@/utils/is";
 import {useRouter} from "next/router";
 import {getRouterPara} from "@/utils/stringTools";
 import { useSelector } from 'react-redux';
 import {GlobalState} from "@/store/redux";
 
-function BasicInfo(props:{tenant:Tenant}) {
+function BasicInfo() {
+  const {currentApp} = useSelector((state: GlobalState) => state);
   return (
-    <Form style={{ width:600 }} autoComplete='off'>
+    <Form style={{ width:600 }} autoComplete='off'  initialValues={{name:currentApp?.name, describe:currentApp.describe}}>
       <h3 style={{marginLeft:20}}>基本信息</h3>
-      <Form.Item label={'应用名称'} rules={[{ required: true }]}>
+      <Form.Item label={'应用名称'} field='name' rules={[{ required: true }]}>
         <Input placeholder='please enter your app name...' />
       </Form.Item>
-      <Form.Item label={'应用描述'}>
+      <Form.Item field='describe' label={'应用描述'}>
         <Input.TextArea placeholder='please enter app description...' />
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 5 }}>
@@ -45,15 +45,8 @@ function getHostWithScheme(host:string):string {
 function AuthInformation() {
   const router = useRouter();
   const appId = getRouterPara(router.query.appId);
-  const [domain, setDomain] = useState('')
-
-  useEffect(() => {
-    fetchTenant(appId, 1).then(r => {
-      if (r.code !== 200) {Message.error(r.msg)} else {
-        setDomain(getHostWithScheme(r.data.host))
-      }
-    });
-  }, [appId])
+  const {currentTenant} = useSelector((state: GlobalState) => state);
+  const domain = getHostWithScheme(currentTenant.host);
 
   const data = [
     {
@@ -93,10 +86,9 @@ function AuthInformation() {
 }
 
 function AppInfo() {
-  const { tenantList, currentTenant } = useSelector((state: GlobalState) => state);
   return (
     <>
-      <BasicInfo tenant={currentTenant}></BasicInfo>
+      <BasicInfo></BasicInfo>
       <AuthInformation></AuthInformation>
       <Card style={{ width:500, height:80, marginTop:50, backgroundColor:'var(--color-fill-2)'}}>
         <Space size={80}>

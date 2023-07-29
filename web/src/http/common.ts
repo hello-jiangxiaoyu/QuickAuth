@@ -7,7 +7,7 @@ export interface Root<T> {
   data: T;
 }
 
-export async function GET<T>(uri: string):Promise<Root<T>> {
+export async function GET<T>(uri: string, wrapMsg?:string):Promise<Root<T>> {
   let errorReason = '';
   const url = env.devHost + uri;
   const response:Root<T> = await fetch(url).then((resp) => resp.json()).catch((reason) => {
@@ -20,6 +20,9 @@ export async function GET<T>(uri: string):Promise<Root<T>> {
 
   if (response?.code !== 200) {
     response.msg = format("%s (%d)", response?.msg, response?.code);
+    if (typeof wrapMsg === 'string' && wrapMsg !== '') {
+      response.msg = wrapMsg + ': ' + response.msg
+    }
   }
 
   return response;
