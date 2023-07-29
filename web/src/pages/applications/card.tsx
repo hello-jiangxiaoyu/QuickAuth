@@ -4,9 +4,8 @@ import {Button, Popover, Card, Space, Modal, Form, Input, Select, Message} from 
 import MyIcon from "@/components/Widget/StringIcon";
 import {IconPlusCircle} from "@arco-design/web-react/icon";
 import {App, createApp, deleteApp, fetchAppList} from "@/http/app";
-import {apps} from "@/store/mobx";
+import {dispatchAppList} from "@/store/redux";
 
-// application card with dynamic icon
 export default function MyCard(props: { appId: string, name: string, type: string, icon?: string}) {
   let icon = 'IconCodeSandbox';
   if (typeof props.icon == 'string' && props.icon.startsWith('Icon')) {
@@ -27,7 +26,7 @@ export default function MyCard(props: { appId: string, name: string, type: strin
             Message.success('Delete success !');
             fetchAppList().then(r => {
               if (r.code !== 200) {Message.error("Get app list err: " + r.msg)} else {
-                apps.setAppList(r.data)
+                dispatchAppList(r.data)
               }
             })
           }
@@ -77,7 +76,6 @@ export function AddApp() {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [form] = Form.useForm();
 
-
   function onOk() {
     form.validate().then((app:App) => {
       setConfirmLoading(true);
@@ -86,14 +84,13 @@ export function AddApp() {
           Message.success('Success !');
           fetchAppList().then(r => {
             if (r.code !== 200) {Message.error("Get app list err: " + r.msg)} else {
-              apps.setAppList(r.data)
+              dispatchAppList(r.data)
             }
           })
           setVisible(false);
         }
         setConfirmLoading(false);
-      }).catch()
-
+      }).catch();
     }).catch((err) => {
       Message.error(err.toString());
     });

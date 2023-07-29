@@ -2,7 +2,8 @@ import React from 'react';
 import MyCard, {AddApp} from './card'
 import {Grid} from "@arco-design/web-react";
 import {observer} from "mobx-react";
-import {apps} from "@/store/mobx";
+import {useSelector} from "react-redux";
+import {GlobalState} from "@/store/redux";
 
 function Page() {
   //   {name: 'default', tag: 'auth', icon: 'IconSafe', appId: '1'},
@@ -11,10 +12,11 @@ function Page() {
   //   {name: 'feng', tag: 'insert', icon: 'IconBook', appId: '4'},
   //   {name: 'qiang', tag: 'python', icon: 'IconRobot', appId: '5'},
 
+  const appList = useSelector((state: GlobalState) => state.appList);
   return (
     <div style={{ minHeight:'80vh' }}>
       <Grid.Row gutter={24} style={{minHeight:'200', width:'100%'}}>
-        {apps.appList.map((item, index) => (
+        {appList && appList.map((item, index) => (
           <Grid.Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6} key={index} style={{ marginBottom: 16 }} flex='100px'>
             <MyCard appId={item.id} name={item.name} type={item.describe} icon={item.icon}></MyCard>
           </Grid.Col>

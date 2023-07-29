@@ -4,7 +4,7 @@ import Link from "next/link";
 import {IconApps, IconHistory, IconHome, IconLock, IconMenuFold, IconMenuUnfold, IconMessage, IconSafe, IconUserGroup} from "@arco-design/web-react/icon";
 import useLocale from "@/utils/useLocale";
 import styles from "@/style/layout.module.less";
-import store from "@/store/mobx";
+import mobxStore from "@/store/mobx";
 import env from "@/store/env.json";
 import {observer} from "mobx-react";
 import {getRouterPara} from "@/utils/stringTools";
@@ -39,12 +39,12 @@ function ApplicationSiderWithRouter() {
   ];
 
   return (
-    <Layout.Sider collapsed={store.menuCollapsed} onCollapse={store.setCollapsed} collapsible
-      className={styles['layout-sider']} style={{ paddingTop: 60 }} width={env.menuWidth} collapsedWidth={env.menuCollapseWith} breakpoint="xl" trigger={null}
+    <Layout.Sider collapsed={mobxStore.menuCollapsed} onCollapse={mobxStore.setCollapsed} collapsible
+                  className={styles['layout-sider']} style={{ paddingTop: 60 }} width={env.menuWidth} collapsedWidth={env.menuCollapseWith} breakpoint="xl" trigger={null}
     >
       <div className={styles['menu-wrapper']}>
-        <Menu collapse={store.menuCollapsed} selectedKeys={selectedKeys}
-          onClickMenuItem={(key)=>setSelectedKeys([key])}
+        <Menu collapse={mobxStore.menuCollapsed} selectedKeys={selectedKeys}
+              onClickMenuItem={(key)=>setSelectedKeys([key])}
         >
           <Menu.Item key="1">
           </Menu.Item>
@@ -57,8 +57,8 @@ function ApplicationSiderWithRouter() {
           ))}
         </Menu>
       </div>
-      <div className={styles['collapse-btn']} onClick={store.switchCollapsed}>
-        {store.menuCollapsed ? <IconMenuUnfold /> : <IconMenuFold />}
+      <div className={styles['collapse-btn']} onClick={mobxStore.switchCollapsed}>
+        {mobxStore.menuCollapsed ? <IconMenuUnfold /> : <IconMenuFold />}
       </div>
     </Layout.Sider>
   );

@@ -1,15 +1,14 @@
 import {Button, Card, Descriptions, Form, Input, Link, Message, Space} from "@arco-design/web-react";
 import React, {useEffect, useState} from "react";
 import {IconDelete} from "@arco-design/web-react/icon";
-import {apps} from "@/store/mobx";
 import {fetchTenant, Tenant} from "@/http/tenant";
 import {isIPAddress} from "@/utils/is";
 import {useRouter} from "next/router";
 import {getRouterPara} from "@/utils/stringTools";
-import {observer} from "mobx-react";
-import useStorage from "@/utils/useStorage";
+import { useSelector } from 'react-redux';
+import {GlobalState} from "@/store/redux";
 
-function BasicInfo() {
+function BasicInfo(props:{tenant:Tenant}) {
   return (
     <Form style={{ width:600 }} autoComplete='off'>
       <h3 style={{marginLeft:20}}>基本信息</h3>
@@ -94,9 +93,10 @@ function AuthInformation() {
 }
 
 function AppInfo() {
+  const { tenantList, currentTenant } = useSelector((state: GlobalState) => state);
   return (
     <>
-      <BasicInfo></BasicInfo>
+      <BasicInfo tenant={currentTenant}></BasicInfo>
       <AuthInformation></AuthInformation>
       <Card style={{ width:500, height:80, marginTop:50, backgroundColor:'var(--color-fill-2)'}}>
         <Space size={80}>
@@ -108,4 +108,4 @@ function AppInfo() {
   );
 }
 
-export default observer(AppInfo)
+export default AppInfo;

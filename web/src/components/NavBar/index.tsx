@@ -11,7 +11,7 @@ import { GlobalContext } from '@/context';
 import useLocale from '@/utils/useLocale';
 import defaultLocale from '@/locale';
 import useStorage from '@/utils/useStorage';
-import store from "@/store/mobx";
+import mobxStore from "@/store/mobx";
 import {observer} from "mobx-react";
 import Link from "next/link";
 
@@ -75,11 +75,11 @@ function Navbar() {
             <IconButton icon={<IconNotification />} />
           </MessageBox>
         </li>
-        {store.userInfo && (
+        {mobxStore.userInfo && (
           <li>
             <Dropdown droplist={dropList} position="br">
               <Avatar size={32} style={{ cursor: 'pointer' }}>
-                <img alt="avatar" src={store.userInfo.avatar} />
+                <img alt="avatar" src={mobxStore.userInfo.avatar} />
               </Avatar>
             </Dropdown>
           </li>

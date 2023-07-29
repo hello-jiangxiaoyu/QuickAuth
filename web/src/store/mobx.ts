@@ -1,8 +1,5 @@
 import {makeAutoObservable} from 'mobx'
 import env from './env.json'
-import {App} from '@/http/app'
-import {Tenant, TenantDetail} from "@/http/tenant";
-import {isIPAddress} from "@/utils/is";
 
 export interface GlobalState {
   userInfo?: {
@@ -34,30 +31,5 @@ class GlobalStatus {
   }
 }
 
-class GlobalApplications {
-  constructor() {makeAutoObservable(this)}
-
-  appList: Array<App> = [];
-  setAppList = (apps: Array<App>) => {
-    this.appList = apps;
-  }
-
-  tenantList: Array<Tenant> = [];
-  setTenantList = (tenants: Array<Tenant>) => {this.tenantList = tenants}
-}
-
-class GlobalUser {
-  constructor() {makeAutoObservable(this)}
-
-  apps: Array<App> = [];
-  updateApps = (apps: Array<App>) => {
-    this.apps = apps;
-  }
-}
-
-export const apps = new GlobalApplications();
-export const user = new GlobalUser();
-
-const store = new GlobalStatus();
-export default store;
-
+const mobxStore = new GlobalStatus();
+export default mobxStore;

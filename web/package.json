@@ -16,6 +16,7 @@
     "@arco-design/web-react": "^2.32.2",
     "@arco-themes/react-arco-pro": "^0.0.7",
     "@loadable/component": "^5.13.2",
+    "@reduxjs/toolkit": "^1.9.5",
     "@turf/turf": "^6.5.0",
     "arco-design-pro": "^2.8.0",
     "axios": "^0.24.0",
@@ -31,7 +32,8 @@
     "query-string": "^7.0.1",
     "react": "17.0.2",
     "react-color": "^2.19.3",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-redux": "^7.2.6"
   },
   "devDependencies": {
     "@svgr/webpack": "^5.5.0",

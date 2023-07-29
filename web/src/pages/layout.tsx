@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import NoAccess from '@/pages/exception/403';
 import { useRouter } from 'next/router';
 import styles from '@/style/layout.module.less';
-import store from "@/store/mobx"
+import mobxStore from "@/store/mobx"
 import {observer} from "mobx-react";
 
 function PageLayout({ children }: { children: ReactNode }) {
@@ -17,10 +17,10 @@ function PageLayout({ children }: { children: ReactNode }) {
       <div className={styles['layout-navbar']}>
         <Navbar/>
       </div>
-      {store.userLoading ? (<Spin className={styles['spin']} />) : (
+      {mobxStore.userLoading ? (<Spin className={styles['spin']} />) : (
         <Layout>
           <ApplicationSiderWithRouter></ApplicationSiderWithRouter>
-          <Layout className={styles['layout-content']} style={{ paddingLeft:store.menuWidth, paddingTop:60 }}>
+          <Layout className={styles['layout-content']} style={{ paddingLeft:mobxStore.menuWidth, paddingTop:60 }}>
             <div className={styles['layout-content-wrapper']}>
               <Layout.Content>
                 {pathname !== '/_error' ? children : <NoAccess />/*routeMap.current.has(pathname) ? children : <NoAccess />*/}
