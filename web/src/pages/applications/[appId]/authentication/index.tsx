@@ -1,6 +1,5 @@
 import React from 'react';
 import {Card, Tabs, Typography} from "@arco-design/web-react";
-import {observer} from "mobx-react";
 
 function Page() {
   const tables = [
@@ -24,4 +23,4 @@ function Page() {
   );
 }
 
-export default observer(Page);
+export default Page;

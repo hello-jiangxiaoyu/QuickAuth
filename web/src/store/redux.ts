@@ -1,19 +1,19 @@
-import {App} from "@/http/app";
-import { Tenant } from "@/http/tenant";
+import App from "@/http/app";
+import {Tenant, TenantDetail} from "@/http/tenant";
 import {configureStore} from "@reduxjs/toolkit";
 
 export interface GlobalState{
   appList:  Array<App>;
   currentApp:  App;
   tenantList:  Array<Tenant>;
-  currentTenant:  Tenant;
+  currentTenant:  TenantDetail;
 }
 const initialState:GlobalState = {
   appList:  [] as Array<App>,
   currentApp: {} as App,
 
   tenantList: [] as Array<Tenant>,
-  currentTenant: {} as Tenant,
+  currentTenant: {} as TenantDetail,
 };
 
 export const DispatchAppList = 'update-app-list';
@@ -84,7 +84,7 @@ export function dispatchTenantList(data: Array<Tenant>) {
   })
 }
 
-export function dispatchTenant(data: Tenant) {
+export function dispatchTenant(data: TenantDetail) {
   store.dispatch({
     type: DispatchTenant,
     payload: {currentTenant: data},

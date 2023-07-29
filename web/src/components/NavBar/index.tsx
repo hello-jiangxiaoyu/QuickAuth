@@ -42,7 +42,7 @@ function Navbar() {
       <div style={{display:'flex',alignItems:'center', width:'fit-content'}}>
         <div style={{display:'flex', alignItems:'center', width:'200px', paddingLeft:'20px', boxSizing:'border-box'}}>
           <Popover content={<span>回到首页</span>}>
-            <div style={{cursor:'pointer'}}><Link href='/applications'><Logo  /></Link></div>
+            <div style={{cursor:'pointer'}}><Link href='/applications/'><Logo  /></Link></div>
           </Popover>
           <div className={styles['logo-name']}>Quick Auth</div>
           <div style={{height:25, width:15, borderRight:2, borderRightStyle:'solid', borderRightColor:'#BBBBBB'}}/>

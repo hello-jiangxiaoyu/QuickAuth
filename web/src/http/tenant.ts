@@ -47,7 +47,7 @@ export async function createTenant(appId:string, data:Tenant):Promise<Root<Tenan
   return await POST<Tenant>(`/api/quick/apps/${appId}/tenants`, data);
 }
 
-export async function modifyTenant(appId:string, tenantId:string, data:Tenant):Promise<Root<object>> {
+export async function modifyTenant(appId:string, tenantId:string, data:TenantDetail):Promise<Root<object>> {
   return await PUT(`/api/quick/apps/${appId}/tenants/${tenantId}`, data);
 }
 

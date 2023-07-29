@@ -7,10 +7,12 @@ import (
 
 type AppReq struct {
 	AppId    string `json:"-" form:"-" uri:"appId"`
-	Name     string `json:"name"`
-	Tag      string `json:"tag"`
-	Icon     string `json:"icon"`
-	Describe string `json:"describe"`
+	Name     string `json:"name" binding:"required"`
+	Tag      string `json:"tag" binding:"required"`
+	Icon     string `json:"icon" binding:"required"`
+	Describe string `json:"describe" binding:"required"`
+	Host     string `json:"host" binding:"required"`
+	PoolId   int64  `json:"poolId" binding:"required"`
 }
 
 func (c *AppReq) ToModel() model.App {
@@ -47,13 +49,13 @@ type RedirectUriReq struct {
 }
 
 type TenantReq struct {
-	AppID         string         `json:"-" form:"-" uri:"appId"`
+	AppID         string         `json:"-" form:"-" uri:"appId" binding:"required"`
 	TenantID      int64          `json:"-" form:"-" uri:"tenantId"`
-	UserPoolID    int64          `json:"userPoolId"`
+	UserPoolID    int64          `json:"userPoolId" binding:"required"`
 	Type          int32          `json:"type"`
-	Name          string         `json:"name"`
-	Host          string         `json:"host"`
-	Company       string         `json:"company"`
+	Name          string         `json:"name" binding:"required"`
+	Host          string         `json:"host" binding:"required"`
+	Company       string         `json:"company" binding:"required"`
 	GrantTypes    []string       `json:"grantTypes"`
 	RedirectUris  pq.StringArray `json:"-"`
 	CodeExpire    int32          `json:"codeExpire"`

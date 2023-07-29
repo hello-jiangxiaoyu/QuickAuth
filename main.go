@@ -24,6 +24,10 @@ func initSystem() error {
 		fmt.Println("init gorm err: ", err)
 		return err
 	}
+	if _, err = internal.GetValidator(); err != nil {
+		fmt.Println("init validator err: ", err)
+		return err
+	}
 
 	return nil
 }

@@ -3,8 +3,9 @@ import Router from "next/router"
 import {Button, Popover, Card, Space, Modal, Form, Input, Select, Message} from '@arco-design/web-react';
 import MyIcon from "@/components/Widget/StringIcon";
 import {IconPlusCircle} from "@arco-design/web-react/icon";
-import {App, createApp, deleteApp, fetchAppList} from "@/http/app";
 import {dispatchAppList} from "@/store/redux";
+import App from "@/http/app";
+import api from "@/http/api";
 
 export default function MyCard(props: { appId: string, name: string, type: string, icon?: string}) {
   let icon = 'IconCodeSandbox';
@@ -21,10 +22,10 @@ export default function MyCard(props: { appId: string, name: string, type: strin
       content: 'Are you sure you want to delete the app.',
       okButtonProps: {status: 'danger'},
       onOk: () => {
-        deleteApp(props.appId).then( r => {
+        api.deleteApp(props.appId).then( r => { // 删除app
           if (r.code !== 200) {Message.error(r.msg)} else {
             Message.success('Delete success !');
-            fetchAppList().then(r => {
+            api.fetchAppList().then(r => {  // 刷新页面app列表
               if (r.code !== 200) {Message.error("Get app list err: " + r.msg)} else {
                 dispatchAppList(r.data)
               }
@@ -79,10 +80,10 @@ export function AddApp() {
   function onOk() {
     form.validate().then((app:App) => {
       setConfirmLoading(true);
-      createApp(app).then(r => {
+      api.createApp(app).then(r => {
         if (r.code !== 200) {Message.error(r.msg)} else {
           Message.success('Success !');
-          fetchAppList().then(r => {
+          api.fetchAppList().then(r => {
             if (r.code !== 200) {Message.error("Get app list err: " + r.msg)} else {
               dispatchAppList(r.data)
             }

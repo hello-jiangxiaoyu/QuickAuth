@@ -1,7 +1,6 @@
 import React from 'react';
 import MyCard, {AddApp} from './card'
 import {Grid} from "@arco-design/web-react";
-import {observer} from "mobx-react";
 import {useSelector} from "react-redux";
 import {GlobalState} from "@/store/redux";
 
@@ -27,4 +26,4 @@ function Page() {
   );
 }
 
-export default observer(Page);
+export default Page;

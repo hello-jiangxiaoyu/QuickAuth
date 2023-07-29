@@ -5,6 +5,7 @@ import (
 	"QuickAuth/pkg/safe"
 	"QuickAuth/pkg/utils"
 	"errors"
+	"github.com/lib/pq"
 )
 
 var ErrorDeleteDefaultApp = errors.New("do not delete the default app")
@@ -26,9 +27,24 @@ func (s *Service) GetApp(id string) (*model.App, error) {
 	return &app, nil
 }
 
-func (s *Service) CreateApp(app model.App) (*model.App, error) {
+func (s *Service) CreateApp(app model.App, host string, poolId int64) (*model.App, error) {
 	app.ID = utils.GetNoLineUUID()
 	if err := s.db.Create(&app).Error; err != nil {
+		return nil, err
+	}
+	t := model.Tenant{
+		AppID:        app.ID,
+		UserPoolID:   poolId,
+		Type:         1,
+		Name:         "default",
+		Company:      "default",
+		Host:         host,
+		Describe:     "default tenant created by app",
+		RedirectUris: pq.StringArray{"http://localhost"},
+		GrantTypes:   pq.StringArray{},
+	}
+	if err := s.db.Select("app_id", "user_pool_id", "type", "name", "host", "company", "grant_types", "redirect_uris", "describe").
+		Create(&t).Error; err != nil {
 		return nil, err
 	}
 	return &app, nil

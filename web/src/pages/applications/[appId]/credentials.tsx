@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Table, TableColumnProps} from "@arco-design/web-react";
 
-function ClientCredential(props:{appId:string}) {
+function ClientCredential() {
   const columns: TableColumnProps[] = [
     {title: '名称', dataIndex: 'name', align:'center'},
     {title: '密钥', dataIndex: 'clientSecret', align:'center'},

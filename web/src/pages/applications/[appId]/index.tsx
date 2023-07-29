@@ -13,8 +13,8 @@ function Page() {
   let tableKey = getRouterPara(router.query.tab);
   const tables = [
     {key: 'app', title: '应用信息', content: <AppInfo></AppInfo>},
-    {key: 'login', title: '登录控制', content: <LoginAuth appId={appId}></LoginAuth>},
-    {key: 'credential', title: '访问凭证', content: <ClientCredential appId={appId}></ClientCredential>},
+    {key: 'login', title: '登录控制', content: <LoginAuth></LoginAuth>},
+    {key: 'credential', title: '访问凭证', content: <ClientCredential></ClientCredential>},
     {key: 'tenants', title: '租户管理', content: <Tenants></Tenants>},
   ];
   if (!tables.some(ele => ele.key === tableKey)) {

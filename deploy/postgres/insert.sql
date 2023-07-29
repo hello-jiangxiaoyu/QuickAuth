@@ -5,7 +5,7 @@ insert into user_pools (name, describe) values ('test', 'default client test use
 insert into user_pools (name, describe) values ('test2', 'default client test user pool2');
 
 insert into tenants (app_id, type, name, host, company, describe, redirect_uris, grant_types)
- VALUES ('de8de8e1769c4f3ca17b089c89bbcf50', 1, 'default', 'localhost', 'local', 'localhost test tenant', '{localhost}', '{read_user}');
+ VALUES ('764e2e6b5f9b4ac983d2d18ec845b923', 1, 'default', 'localhost:3000', 'local', 'localhost test tenant', '{http://localhost}', '{read_user}');
 
 
 

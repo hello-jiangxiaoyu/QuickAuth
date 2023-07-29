@@ -33,7 +33,7 @@ func (s *Service) CreatTenant(t model.Tenant) (*model.Tenant, error) {
 	}
 
 	t.RedirectUris = pq.StringArray{"https://" + t.Host, "http://" + t.Host}
-	t.GrantTypes = pq.StringArray{"authorization_code", "client_credential", "refresh_token"}
+	t.GrantTypes = pq.StringArray{""}
 	if err := s.db.Select("app_id", "user_pool_id", "type", "name", "host", "company", "grant_types", "redirect_uris", "describe").
 		Create(&t).Error; err != nil {
 		return nil, err

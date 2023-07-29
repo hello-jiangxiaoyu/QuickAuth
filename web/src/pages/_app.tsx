@@ -17,12 +17,38 @@ import Layout from './layout';
 import NProgress from 'nprogress';
 import {checkLogin} from '@/store/localStorage';
 import changeTheme from '@/utils/changeTheme';
-import {fetchUserInfo} from "@/http/users";
 
 import {dispatchApp, dispatchAppList, dispatchTenant, dispatchTenantList, store} from '@/store/redux';
-import {fetchApp, fetchAppList} from "@/http/app";
 import {getRouterPara} from "@/utils/stringTools";
-import {fetchTenantList, Tenant} from "@/http/tenant";
+import {TenantDetail} from "@/http/tenant";
+import api from "@/http/api";
+
+async function updateAppAndTenant(appId:string):Promise<string> {
+  const respApp = await api.fetchApp(appId);
+  dispatchApp(respApp.data);
+  if (respApp.code !== 200) {
+    return respApp.msg;
+  }
+
+  const respTenantList = await api.fetchTenantList(appId);
+  dispatchTenantList(respTenantList.data);
+  if (respTenantList.code !== 200) {
+    return respTenantList.msg;
+  }
+
+  if (respTenantList.data.length === 0) {
+    dispatchTenant({} as TenantDetail);
+    return respTenantList.msg;
+  }
+
+  const respTenant = await api.fetchTenant(appId, respTenantList.data[0].id);
+  dispatchTenant(respTenant.data);
+  if (respTenant.code !== 200) {
+    return respTenant.msg;
+  }
+
+  return ''
+}
 
 function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: {arcoLang?: string; arcoTheme?: string} }) {
   const { arcoLang, arcoTheme } = renderConfig;
@@ -37,37 +63,27 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
   const router = useRouter();
   const appId = getRouterPara(router.query.appId);
   useEffect(() => {changeTheme(theme)}, [lang, theme]);
-  useEffect(() => {
+  useEffect(() => { // 首次加载，以及appId发生变化
     if (checkLogin()) {
-      fetchUserInfo();
+      api.fetchUserInfo();
     } else if (window.location.pathname.replace(/\//g, '') !== 'login') {
       window.location.pathname = '/login';
     }
-    fetchAppList().then(r => {
+    api.fetchAppList().then(r => {
       if (r.code !== 200) {Message.error(r.msg)} else {
         dispatchAppList(r.data);
       }
     });
     if (typeof appId === 'string' && appId !== '') {
-      fetchApp(appId).then(r => {
-        if (r.code !== 200) {Message.error(r.msg)} else {
-          dispatchApp(r.data);
-        }
-      })
-      fetchTenantList(appId).then(r => {
-        if (r.code !== 200) {Message.error(r.msg)} else {
-          dispatchTenantList(r.data);
-          if (r.data.length > 0) {
-            dispatchTenant(r.data[0]);
-          } else {
-            dispatchTenant({} as Tenant);
-          }
+      updateAppAndTenant(appId).then(msg => {
+        if (typeof msg === 'string' && msg !== '') {
+          Message.error(msg);
         }
       })
     }
   }, [appId]);
 
-  useEffect(() => { // 页面渲染进度条
+  useEffect(() => { // 页面加载进度条
     const handleStart = () => {
       NProgress.set(0.4);
       NProgress.start();

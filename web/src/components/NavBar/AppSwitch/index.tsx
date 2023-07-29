@@ -40,7 +40,7 @@ function ApplicationSelector() {
       {appId !== '' && (
         <Space>
           <Typography.Text>应用:</Typography.Text>
-          <Select dropdownMenuStyle={{ maxHeight: 400 }} value={currentApp.id} onChange={onAppChange} bordered={false}
+          <Select dropdownMenuStyle={{ maxHeight: 400 }} value={currentApp?.id} onChange={onAppChange} bordered={false}
                   triggerProps={{autoAlignPopupWidth: false, autoAlignPopupMinWidth: true, position: 'bl'}}
                   style={{width:'fit-content', minWidth:120, maxWidth:250, backgroundColor:'var(--color-fill-2)'}}
                   dropdownRender={(menu) => (<div>{menu}<Divider style={{ margin: 0 }} /><CreateItem text='创建应用'/></div>)}
@@ -54,7 +54,7 @@ function ApplicationSelector() {
         </Space>
       )}
 
-      {currentApp.tag === 'Multi Tenant' && (
+      {currentApp?.tag === 'Multi Tenant' && (
         <Space style={{marginLeft:20}}>
           <Typography.Text>租户:</Typography.Text>
           <Select dropdownMenuStyle={{ maxHeight: 400 }} value={currentTenant.name} onChange={onTenantChange} bordered={false}

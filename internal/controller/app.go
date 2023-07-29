@@ -67,7 +67,7 @@ func (o Controller) createApp(c *gin.Context) {
 		return
 	}
 
-	app, err := o.svc.CreateApp(in.ToModel())
+	app, err := o.svc.CreateApp(in.ToModel(), in.Host, in.PoolId)
 	if err != nil {
 		if strings.HasPrefix(err.Error(), "ERROR: duplicate key value violates unique constraint") {
 			resp.ErrorSqlCreate(c, err, "app name should be unique")
