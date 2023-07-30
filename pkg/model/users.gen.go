@@ -20,7 +20,7 @@ type User struct {
 	Email       string    `gorm:"column:email;type:character varying(127);not null" json:"email"`
 	Phone       string    `gorm:"column:phone;type:character varying(20);not null" json:"phone"`
 	Type        int32     `gorm:"column:type;type:integer;not null" json:"type"`
-	IsDisabled  int32     `gorm:"column:is_disabled;type:integer;not null" json:"isDisabled"`
+	IsDisabled  bool      `gorm:"column:is_disabled;type:boolean;not null" json:"isDisabled"`
 	CreatedAt   time.Time `gorm:"column:created_at;type:timestamp with time zone;not null;default:now()" json:"createdAt"`
 	UpdatedAt   time.Time `gorm:"column:updated_at;type:timestamp with time zone;not null;default:now()" json:"updatedAt"`
 }

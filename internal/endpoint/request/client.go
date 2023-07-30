@@ -62,11 +62,11 @@ type TenantReq struct {
 	IDExpire      int32          `json:"idExpire"`
 	AccessExpire  int32          `json:"accessExpire"`
 	RefreshExpire int32          `json:"refreshExpire"`
-	IsCode        int32          `json:"isCode"`
-	IsRefresh     int32          `json:"isRefresh"`
-	IsPassword    int32          `json:"isPassword"`
-	IsCredential  int32          `son:"isCredential"`
-	IsDeviceFlow  int32          `json:"isDeviceFlow"`
+	IsCode        bool           `json:"isCode"`
+	IsRefresh     bool           `json:"isRefresh"`
+	IsPassword    bool           `json:"isPassword"`
+	IsCredential  bool           `son:"isCredential"`
+	IsDeviceFlow  bool           `json:"isDeviceFlow"`
 	Describe      string         `json:"describe"`
 	IsDisabled    int32          `json:"isDisabled"`
 }

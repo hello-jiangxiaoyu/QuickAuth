@@ -1,8 +1,9 @@
 import React, {useState} from "react";
-import {Input, Button, Space, Checkbox, InputNumber, Form, Grid} from '@arco-design/web-react';
-import { IconDelete, IconEdit } from '@arco-design/web-react/icon';
+import {Button, Checkbox, Form, Grid, Input, InputNumber, Space} from '@arco-design/web-react';
+import {IconDelete, IconEdit} from '@arco-design/web-react/icon';
 import {useSelector} from "react-redux";
 import {GlobalState} from "@/store/redux";
+import {TenantDetail} from "@/http/tenant";
 
 export default function LoginAuth() {
   const {currentTenant} = useSelector((state: GlobalState) => state);
@@ -38,38 +39,55 @@ export default function LoginAuth() {
   }
 
   function ProtoConfig() {
+    const [form] = Form.useForm();
+    function onSave() {
+      form.validate().then((tenant:TenantDetail) => {
+        console.log("form tenant: ", tenant)
+      });
+    }
+
     return (
-      <Form style={{marginTop:50}} layout='inline'>
+      <Form form={form} initialValues={currentTenant} style={{marginTop:50}} layout='inline'>
         <h3>协议配置</h3>
         <Grid.Col style={{ marginBottom:20, marginTop:10}}>
           <Space size={40}>
-            <Checkbox defaultChecked={currentTenant.isCode === 1}>authorization_code</Checkbox>
-            <Checkbox defaultChecked={currentTenant.isRefresh === 1}>refresh_token</Checkbox>
-            <Checkbox defaultChecked={currentTenant.isPassword === 1}>password</Checkbox>
-            <Checkbox defaultChecked={currentTenant.isCredential === 1}>client_credentials</Checkbox>
-            <Checkbox defaultChecked={currentTenant.isDeviceFlow === 1}>device_flow</Checkbox>
+            <Form.Item label='' field='isCode' layout='inline' >
+              <Checkbox defaultChecked={currentTenant.isCode}>authorization_code</Checkbox>
+            </Form.Item>
+            <Form.Item label='' field='isRefresh' layout='inline'>
+              <Checkbox defaultChecked={currentTenant.isRefresh}>refresh_token</Checkbox>
+            </Form.Item>
+            <Form.Item label='' field='isPassword' layout='inline'>
+              <Checkbox defaultChecked={currentTenant.isPassword}>password</Checkbox>
+            </Form.Item>
+            <Form.Item label='' field='isCredential' layout='inline'>
+             <Checkbox defaultChecked={currentTenant.isCredential}>client_credentials</Checkbox>
+            </Form.Item>
+            <Form.Item label='' field='isDeviceFlow' layout='inline'>
+              <Checkbox defaultChecked={currentTenant.isDeviceFlow}>device_flow</Checkbox>
+            </Form.Item>
           </Space>
         </Grid.Col>
 
         <Grid.Row gutter={[24, 12]} style={{width:800}}>
           <Grid.Col span={12}>
-            <Form.Item label='code过期时间:' layout='inline' style={{marginLeft:52}}>
-              <InputNumber style={{ width: 100}} min={30} defaultValue={currentTenant.codeExpire} suffix='s'/>
+            <Form.Item label='code过期时间:' field='codeExpire' layout='inline' style={{marginLeft:52}}>
+              <InputNumber style={{ width: 100}} min={30} suffix='s'/>
             </Form.Item>
           </Grid.Col>
           <Grid.Col span={12}>
-            <Form.Item label='id_token过期时间:' layout='inline' style={{marginLeft:32}}>
-              <InputNumber style={{ width: 100}} min={30} defaultValue={currentTenant.idExpire} suffix='s'/>
+            <Form.Item label='id_token过期时间:' field='idExpire' layout='inline' style={{marginLeft:32}}>
+              <InputNumber style={{ width: 100}} min={30} suffix='s'/>
             </Form.Item>
           </Grid.Col>
           <Grid.Col span={12}>
-            <Form.Item label='access_token过期时间:' layout='inline'>
-              <InputNumber style={{ width: 100}} min={30} defaultValue={currentTenant.accessExpire} suffix='s'/>
+            <Form.Item label='access_token过期时间:' field='accessExpire' layout='inline'>
+              <InputNumber style={{ width: 100}} min={30} suffix='s'/>
             </Form.Item>
           </Grid.Col>
           <Grid.Col span={12}>
-            <Form.Item label='refresh_token过期时间:' layout='inline'>
-              <InputNumber style={{ width: 100}} min={30} defaultValue={currentTenant.refreshExpire} suffix='s'/>
+            <Form.Item label='refresh_token过期时间:' field='refreshExpire' layout='inline'>
+              <InputNumber style={{ width: 100}} min={30} suffix='s'/>
             </Form.Item>
           </Grid.Col>
         </Grid.Row>
@@ -77,7 +95,7 @@ export default function LoginAuth() {
         <Grid.Col style={{marginTop:30}}>
           <Form.Item>
             <Space size='medium'>
-              <Button type='primary'>保存</Button>
+              <Button type='primary' onClick={onSave}>保存</Button>
               <Button type='secondary'>重置</Button>
             </Space>
           </Form.Item>

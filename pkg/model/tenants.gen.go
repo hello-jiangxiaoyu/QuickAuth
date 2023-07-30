@@ -27,13 +27,13 @@ type Tenant struct {
 	IDExpire      int32          `gorm:"column:id_expire;type:integer;not null;default:604800" json:"idExpire"`
 	AccessExpire  int32          `gorm:"column:access_expire;type:integer;not null;default:604800" json:"accessExpire"`
 	RefreshExpire int32          `gorm:"column:refresh_expire;type:integer;not null;default:2592000" json:"refreshExpire"`
-	IsCode        int32          `gorm:"column:is_code;type:integer;not null;default:1" json:"isCode"`
-	IsRefresh     int32          `gorm:"column:is_refresh;type:integer;not null;default:1" json:"isRefresh"`
-	IsPassword    int32          `gorm:"column:is_password;type:integer;not null" json:"isPassword"`
-	IsCredential  int32          `gorm:"column:is_credential;type:integer;not null;default:1" json:"isCredential"`
-	IsDeviceFlow  int32          `gorm:"column:is_device_flow;type:integer;not null" json:"isDeviceFlow"`
+	IsCode        bool           `gorm:"column:is_code;type:boolean;not null;default:true" json:"isCode"`
+	IsRefresh     bool           `gorm:"column:is_refresh;type:boolean;not null;default:true" json:"isRefresh"`
+	IsPassword    bool           `gorm:"column:is_password;type:boolean;not null" json:"isPassword"`
+	IsCredential  bool           `gorm:"column:is_credential;type:boolean;not null;default:true" json:"isCredential"`
+	IsDeviceFlow  bool           `gorm:"column:is_device_flow;type:boolean;not null" json:"isDeviceFlow"`
 	Describe      string         `gorm:"column:describe;type:character varying(127);not null" json:"describe"`
-	IsDisabled    int32          `gorm:"column:is_disabled;type:integer;not null" json:"isDisabled"`
+	IsDisabled    bool           `gorm:"column:is_disabled;type:boolean;not null" json:"isDisabled"`
 	CreatedAt     time.Time      `gorm:"column:created_at;type:timestamp with time zone;not null;default:now()" json:"createdAt"`
 	UpdatedAt     time.Time      `gorm:"column:updated_at;type:timestamp with time zone;not null;default:now()" json:"updatedAt"`
 }

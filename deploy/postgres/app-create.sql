@@ -39,15 +39,17 @@ CREATE TABLE IF NOT EXISTS tenants (
     id_expire       INTEGER NOT NULL DEFAULT 604800,  -- id_token过期时间，默认7天
     access_expire   INTEGER NOT NULL DEFAULT 604800,  -- access_token过期时间，默认7天
     refresh_expire  INTEGER NOT NULL DEFAULT 2592000, -- refresh_token过期时间，默认30天
-    is_code         INTEGER NOT NULL DEFAULT 1,  -- 是否开启authorization_code
-    is_refresh      INTEGER NOT NULL DEFAULT 1,  -- 是否返回refresh_token
-    is_password     INTEGER NOT NULL DEFAULT 0,  -- 是否开启password授权模式
-    is_credential   INTEGER NOT NULL DEFAULT 1,  -- 是否开启client_credential
-    is_device_flow  INTEGER NOT NULL DEFAULT 0,  -- 是否开启device_flow
+    is_code         BOOLEAN NOT NULL DEFAULT true,  -- 是否开启authorization_code
+    is_refresh      BOOLEAN NOT NULL DEFAULT true,  -- 是否返回refresh_token
+    is_password     BOOLEAN NOT NULL DEFAULT false,  -- 是否开启password授权模式
+    is_credential   BOOLEAN NOT NULL DEFAULT true,  -- 是否开启client_credential
+    is_device_flow  BOOLEAN NOT NULL DEFAULT false,  -- 是否开启device_flow
     describe        VARCHAR(127) NOT NULL,
-    is_disabled     INTEGER NOT NULL DEFAULT 0,
-    created_at     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+    is_disabled     BOOLEAN NOT NULL DEFAULT false,
+    created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX idx_tenants_host ON tenants(host);
-CREATE INDEX idx_tenants_client_user_pool_id ON tenants(app_id, user_pool_id);
+CREATE UNIQUE INDEX idx_tenants_name ON tenants(app_id, name);
+CREATE INDEX idx_tenants_client_user_pool_id ON tenants(user_pool_id);
+

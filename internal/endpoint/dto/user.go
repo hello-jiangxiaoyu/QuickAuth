@@ -13,7 +13,7 @@ type UserDtoModel struct {
 	Email       string    `json:"email"`
 	Phone       string    `json:"phone"`
 	Type        int32     `json:"type"`
-	IsDisabled  int32     `json:"isDisabled"`
+	IsDisabled  bool      `json:"isDisabled"`
 	CreateTime  time.Time `json:"createTime"`
 	UpdateTime  time.Time `json:"updateTime"`
 }

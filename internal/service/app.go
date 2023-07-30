@@ -120,10 +120,11 @@ func (s *Service) ListAppSecrets(appId string) ([]model.AppSecret, error) {
 	return secrets, nil
 }
 
-func (s *Service) CreateAppSecret(secret model.AppSecret) (*model.AppSecret, error) {
-	if _, err := s.GetApp(secret.AppID); err != nil {
+func (s *Service) CreateAppSecret(appId string, secret model.AppSecret) (*model.AppSecret, error) {
+	if _, err := s.GetApp(appId); err != nil {
 		return nil, err
 	}
+	secret.AppID = appId
 	secret.Secret = safe.Rand62(63)
 	if err := s.db.Create(&secret).Error; err != nil {
 		return nil, err

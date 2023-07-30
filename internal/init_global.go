@@ -77,10 +77,10 @@ func InitDefaultTenant() error {
 		return err
 	}
 
+	global.App = *app
 	if err = global.DB.Where("app_id = ?", global.App.ID).First(&global.Tenant).Error; err != nil {
 		return err
 	}
-	global.App = *app
 
 	return nil
 }

@@ -14,13 +14,13 @@ export interface TenantDetail {
   idExpire: number;
   accessExpire: number;
   refreshExpire: number;
-  isCode: number;
-  isRefresh: number;
-  isPassword: number;
-  isCredential: number;
-  isDeviceFlow: number;
+  isCode: boolean;
+  isRefresh: boolean;
+  isPassword: boolean;
+  isCredential: boolean;
+  isDeviceFlow: boolean;
   describe: string;
-  isDisabled: number;
+  isDisabled: boolean;
   createdAt: string;
   updatedAt: string;
 }

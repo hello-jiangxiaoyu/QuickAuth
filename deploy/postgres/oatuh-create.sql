@@ -29,9 +29,9 @@ CREATE TABLE IF NOT EXISTS user_pools (
     id          BIGSERIAL PRIMARY KEY,
     name        VARCHAR(127) NOT NULL,
     describe    VARCHAR(127) NOT NULL,
-    is_disabled INTEGER NOT NULL DEFAULT 0,
-    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+    is_disabled BOOLEAN NOT NULL DEFAULT false,
+    created_at  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 CREATE TABLE IF NOT EXISTS users (
     id           CHAR(32) PRIMARY KEY,
@@ -42,9 +42,9 @@ CREATE TABLE IF NOT EXISTS users (
     email        VARCHAR(127) NOT NULL,
     phone        VARCHAR(20) NOT NULL,
     type         INTEGER NOT NULL,
-    is_disabled  INTEGER NOT NULL DEFAULT 0,
-    created_at  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+    is_disabled  BOOLEAN NOT NULL DEFAULT false,
+    created_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX idx_users_user_pool_username ON users(user_pool_id, username);
 CREATE UNIQUE INDEX idx_users_email ON users(email);

@@ -17,7 +17,7 @@ export default function CreateTenantDialog(props:{visible: boolean, setVisible: 
           Message.success('Success !');
           api.fetchTenantList(currentApp.id).then(r => {
             if (r.code !== 200) {Message.error(r.msg)} else {
-              dispatchTenantList(r.data)
+              dispatchTenantList(r.data);
             }
           })
           props.setVisible(false);

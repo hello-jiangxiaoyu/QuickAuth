@@ -15,7 +15,7 @@ type UserPool struct {
 	ID         int64     `gorm:"column:id;type:bigint;primaryKey;autoIncrement:true" json:"id"`
 	Name       string    `gorm:"column:name;type:character varying(127);not null" json:"name"`
 	Describe   string    `gorm:"column:describe;type:character varying(127);not null" json:"describe"`
-	IsDisabled int32     `gorm:"column:is_disabled;type:integer;not null" json:"isDisabled"`
+	IsDisabled bool      `gorm:"column:is_disabled;type:boolean;not null" json:"isDisabled"`
 	CreatedAt  time.Time `gorm:"column:created_at;type:timestamp with time zone;not null;default:now()" json:"createdAt"`
 	UpdatedAt  time.Time `gorm:"column:updated_at;type:timestamp with time zone;not null;default:now()" json:"updatedAt"`
 }

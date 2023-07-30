@@ -43,7 +43,7 @@ func (o Controller) createAppSecret(c *gin.Context) {
 		return
 	}
 
-	secret, err := o.svc.CreateAppSecret(in.ToModel())
+	secret, err := o.svc.CreateAppSecret(in.AppId, in.ToModel())
 	if err != nil {
 		resp.ErrorUnknown(c, err, "create app secret err")
 		return

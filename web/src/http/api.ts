@@ -1,4 +1,5 @@
 import {fetchAppList, fetchApp, createApp, modifyApp, deleteApp} from "@/http/app";
+import {fetchSecretList, fetchSecret, createSecret, deleteSecret} from "@/http/secret";
 import {fetchTenantList, fetchTenant, createTenant, modifyTenant, deleteTenant} from "@/http/tenant";
 import {fetchUserInfo} from "@/http/users";
 
@@ -19,6 +20,11 @@ class QuickAuthBackendApi {
   createTenant = createTenant;
   modifyTenant = modifyTenant;
   deleteTenant = deleteTenant;
+
+  fetchSecretList = fetchSecretList;
+  fetchSecret = fetchSecret;
+  createSecret = createSecret;
+  deleteSecret = deleteSecret;
 }
 
 const api = new QuickAuthBackendApi

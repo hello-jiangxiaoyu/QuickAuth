@@ -6,6 +6,7 @@ import {dispatchAppList} from "@/store/redux";
 
 export default function CreateAppDialog(props:{visible: boolean, setVisible: React.Dispatch<React.SetStateAction<boolean>>}) {
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const [form] = Form.useForm();
 
   function onOk() {
     form.validate().then((app:App) => {
@@ -27,7 +28,6 @@ export default function CreateAppDialog(props:{visible: boolean, setVisible: Rea
     });
   }
 
-  const [form] = Form.useForm();
   return (
     <Modal title='Create app' visible={props.visible} onOk={onOk} style={{width: 600}}
            confirmLoading={confirmLoading} onCancel={() => props.setVisible(false)}
