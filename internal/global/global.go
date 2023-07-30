@@ -2,6 +2,7 @@ package global
 
 import (
 	"QuickAuth/pkg/conf"
+	"QuickAuth/pkg/model"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
@@ -11,6 +12,8 @@ var (
 	Config    *conf.SystemConfig
 	Log       *zap.Logger
 	AccessLog *zap.Logger
+	App       model.App
+	Tenant    model.Tenant
 )
 
 type Repository struct {

@@ -14,8 +14,8 @@ type UserReq struct {
 	Type        int32  `json:"type"`
 }
 
-func (u *UserReq) ToModel() model.User {
-	return model.User{
+func (u *UserReq) ToModel() *model.User {
+	return &model.User{
 		UserPoolID:  u.UserPoolID,
 		Username:    u.Username,
 		Password:    u.Password,
@@ -32,8 +32,8 @@ type UserPoolReq struct {
 	Describe string `json:"describe"`
 }
 
-func (u *UserPoolReq) ToModel() model.UserPool {
-	return model.UserPool{
+func (u *UserPoolReq) ToModel() *model.UserPool {
+	return &model.UserPool{
 		Name:     u.Name,
 		Describe: u.Describe,
 	}

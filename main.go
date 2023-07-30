@@ -20,12 +20,16 @@ func initSystem() error {
 		fmt.Println("init logger err: ", err)
 		return err
 	}
+	if _, err = internal.GetValidator(); err != nil {
+		fmt.Println("init validator err: ", err)
+		return err
+	}
 	if err = internal.InitGorm(); err != nil {
 		fmt.Println("init gorm err: ", err)
 		return err
 	}
-	if _, err = internal.GetValidator(); err != nil {
-		fmt.Println("init validator err: ", err)
+	if err = internal.InitDefaultTenant(); err != nil {
+		fmt.Println("init tenant err: ", err)
 		return err
 	}
 

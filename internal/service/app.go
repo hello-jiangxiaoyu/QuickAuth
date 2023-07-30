@@ -4,8 +4,8 @@ import (
 	"QuickAuth/pkg/model"
 	"QuickAuth/pkg/safe"
 	"QuickAuth/pkg/utils"
-	"errors"
 	"github.com/lib/pq"
+	"github.com/pkg/errors"
 	"gorm.io/gorm"
 )
 
@@ -28,11 +28,11 @@ func (s *Service) GetApp(id string) (*model.App, error) {
 	return &app, nil
 }
 
-func (s *Service) CreateApp(app model.App, host string, poolId int64) (*model.App, error) {
+func (s *Service) CreateApp(app *model.App, host string, poolId int64) (*model.App, error) {
 	app.ID = utils.GetNoLineUUID()
 	err := s.db.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Create(&app).Error; err != nil {
-			return err
+		if err := tx.Create(app).Error; err != nil {
+			return errors.WithMessage(err, "create app err")
 		}
 
 		userPool := model.UserPool{
@@ -41,7 +41,7 @@ func (s *Service) CreateApp(app model.App, host string, poolId int64) (*model.Ap
 		}
 		if poolId == 0 {
 			if err := tx.Create(&userPool).Error; err != nil {
-				return err
+				return errors.WithMessage(err, "create default user pool err")
 			}
 			poolId = userPool.ID
 		}
@@ -58,7 +58,7 @@ func (s *Service) CreateApp(app model.App, host string, poolId int64) (*model.Ap
 		}
 		if err := tx.Select("app_id", "user_pool_id", "type", "name", "host", "company", "grant_types", "redirect_uris", "describe").
 			Create(&t).Error; err != nil {
-			return err
+			return errors.WithMessage(err, "create default tenant err")
 		}
 		return nil
 	})
@@ -67,11 +67,11 @@ func (s *Service) CreateApp(app model.App, host string, poolId int64) (*model.Ap
 		return nil, err
 	}
 
-	return &app, nil
+	return app, nil
 }
 
-func (s *Service) ModifyApp(appId string, app model.App) error {
-	if err := s.db.Where("id = ?", appId).Updates(&app).Error; err != nil {
+func (s *Service) ModifyApp(appId string, app *model.App) error {
+	if err := s.db.Where("id = ?", appId).Updates(app).Error; err != nil {
 		return err
 	}
 	return nil
@@ -83,9 +83,29 @@ func (s *Service) DeleteApp(appId string) error {
 	} else if app.Name == "default" {
 		return ErrorDeleteDefaultApp
 	}
-	if err := s.db.Where("id = ?", appId).Delete(model.App{}).Error; err != nil {
+
+	var tenants []string
+	if err := s.db.Model(&model.Tenant{}).Select("id").Find(&tenants).Error; err != nil {
+		return errors.WithMessage(err, "get tenant id list err")
+	}
+
+	err := s.db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Where("app_id = ?", appId).Delete(model.Tenant{}).Error; err != nil {
+			return errors.WithMessage(err, "delete tenant err")
+		}
+		if err := tx.Where("app_id = ?", appId).Delete(model.Provider{}).Error; err != nil {
+			return errors.WithMessage(err, "delete provider err")
+		}
+		if err := tx.Where("id = ?", appId).Delete(model.App{}).Error; err != nil {
+			return errors.WithMessage(err, "delete app err")
+		}
+		return nil
+	})
+
+	if err != nil {
 		return err
 	}
+
 	return nil
 }
 

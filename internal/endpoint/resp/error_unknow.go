@@ -30,7 +30,7 @@ func ErrorSqlModify(ctx context.Context, err error, respMsg string, isArray ...b
 }
 
 func ErrorSqlCreate(ctx context.Context, err error, respMsg string, isArray ...bool) {
-	if strings.HasPrefix(err.Error(), "ERROR: duplicate key value violates unique constraint") {
+	if err != nil && strings.HasPrefix(err.Error(), "ERROR: duplicate key value violates unique constraint") {
 		errorResponse(ctx, http.StatusInternalServerError, CodeSqlCreateDuplicate, err, "Duplicate field name", isArray)
 	} else {
 		errorResponse(ctx, http.StatusInternalServerError, CodeSqlCreate, err, respMsg, isArray)

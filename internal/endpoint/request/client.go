@@ -15,8 +15,8 @@ type AppReq struct {
 	PoolId   int64  `json:"poolId"`
 }
 
-func (c *AppReq) ToModel() model.App {
-	return model.App{
+func (c *AppReq) ToModel() *model.App {
+	return &model.App{
 		Name:     c.Name,
 		Tag:      c.Tag,
 		Icon:     c.Icon,
@@ -71,8 +71,8 @@ type TenantReq struct {
 	IsDisabled    int32          `json:"isDisabled"`
 }
 
-func (t *TenantReq) ToModel() model.Tenant {
-	return model.Tenant{
+func (t *TenantReq) ToModel() *model.Tenant {
+	return &model.Tenant{
 		AppID:         t.AppID,
 		UserPoolID:    t.UserPoolID,
 		Type:          t.Type,

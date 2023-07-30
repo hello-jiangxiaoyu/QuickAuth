@@ -2,10 +2,13 @@ package internal
 
 import (
 	"QuickAuth/internal/global"
+	"QuickAuth/internal/service"
 	"QuickAuth/pkg/conf"
 	"QuickAuth/pkg/log"
+	"QuickAuth/pkg/model"
 	"QuickAuth/pkg/orm"
 	"errors"
+	"gorm.io/gorm"
 )
 
 func InitConfig() error {
@@ -49,5 +52,35 @@ func InitLogger() error {
 
 	global.Log = errorLog
 	global.AccessLog = accessLog
+	return nil
+}
+
+func InitDefaultTenant() error {
+	if global.DB == nil {
+		return errors.New("gorm db is not initialized")
+	}
+	if err := global.DB.Where("name = ?", "default").First(&global.App).Error; err == nil {
+		return global.DB.Where("app_id = ?", global.App.ID).First(&global.Tenant).Error
+	} else if err != nil && err != gorm.ErrRecordNotFound {
+		return err
+	}
+
+	svc := service.NewService(global.NewRepository(global.DB, global.Log, global.Config))
+	app := &model.App{
+		Name:     "default",
+		Tag:      "Single Tenant",
+		Icon:     "IconSafe",
+		Describe: "quick auth app",
+	}
+	app, err := svc.CreateApp(app, "localhost", 0)
+	if err != nil {
+		return err
+	}
+
+	if err = global.DB.Where("app_id = ?", global.App.ID).First(&global.Tenant).Error; err != nil {
+		return err
+	}
+	global.App = *app
+
 	return nil
 }

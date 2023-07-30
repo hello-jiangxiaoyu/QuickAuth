@@ -6,6 +6,7 @@ import {IconPlusCircle} from "@arco-design/web-react/icon";
 import {dispatchAppList} from "@/store/redux";
 import App from "@/http/app";
 import api from "@/http/api";
+import CreateAppDialog from "@/components/Dialog/app";
 
 // 应用展示选项卡
 export default function ApplicationCard(props: { appId: string, name: string, type: string, icon?: string}) {
@@ -75,29 +76,6 @@ export default function ApplicationCard(props: { appId: string, name: string, ty
 // 创建一个应用
 export function AddApplication() {
   const [visible, setVisible] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [form] = Form.useForm();
-
-  function onOk() {
-    form.validate().then((app:App) => {
-      setConfirmLoading(true);
-      api.createApp(app).then(r => {
-        if (r.code !== 200) {Message.error(r.msg)} else {
-          Message.success('Success !');
-          api.fetchAppList().then(r => {
-            if (r.code !== 200) {Message.error(r.msg)} else {
-              dispatchAppList(r.data)
-            }
-          })
-          setVisible(false);
-        }
-        setConfirmLoading(false);
-      }).catch();
-    }).catch((err) => {
-      Message.error(err.toString());
-    });
-  }
-
   return (
     <Popover content={"Add App"} position='bottom'>
       <Card hoverable style={{ width:330, height: 180, marginLeft:12, cursor:'pointer',
@@ -105,29 +83,7 @@ export function AddApplication() {
       >
         <IconPlusCircle style={{color:"#2f6af1", width:60, height: 60, position:'absolute', top:'30%', left:'38%'}}></IconPlusCircle>
       </Card>
-      <Modal title='Create app' visible={visible} onOk={onOk} style={{width: 600}}
-        confirmLoading={confirmLoading} onCancel={() => setVisible(false)}
-      >
-        <Form form={form} labelCol={{style: { flexBasis: 100 }}}
-          wrapperCol={{style: { flexBasis: 'calc(100% - 100px)' }}} initialValues={{tag:'Single Tenant'}}
-        >
-          <Form.Item label='Name' field='name' rules={[{ required: true }]}>
-            <Input placeholder='app name' />
-          </Form.Item>
-          <Form.Item label='Type' required field='tag' rules={[{ required: false }]}>
-            <Select options={["Single Tenant", "Multi Tenant"]}/>
-          </Form.Item>
-          <Form.Item label='Host' required field='host' rules={[{ required: false }]}>
-            <Input placeholder='do not start with http:// or https://' />
-          </Form.Item>
-          <Form.Item label='Icon' required field='icon' rules={[{ required: true }]}>
-            <Input placeholder='icon url' />
-          </Form.Item>
-          <Form.Item label='Describe' required field='describe' rules={[{ required: true }]}>
-            <Input.TextArea placeholder='' />
-          </Form.Item>
-        </Form>
-      </Modal>
+      <CreateAppDialog visible={visible} setVisible={setVisible}></CreateAppDialog>
     </Popover>
   );
 }

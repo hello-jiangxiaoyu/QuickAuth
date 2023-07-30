@@ -8,7 +8,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
 import cookies from 'next-cookies';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import useStorage from '@/utils/useStorage';
 import { GlobalContext } from '@/context';
 import {Provider} from 'react-redux';
@@ -78,6 +78,9 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
       updateAppAndTenant(appId).then(msg => {
         if (typeof msg === 'string' && msg !== '') {
           Message.error(msg);
+          setTimeout(()=>{
+            Router.push('/applications/').then();
+          }, 2000);
         }
       })
     }

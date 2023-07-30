@@ -35,27 +35,27 @@ func (s *Service) ListUser(poolId int64) ([]model.User, error) {
 	return user, nil
 }
 
-func (s *Service) CreateUser(u model.User) (*model.User, error) {
+func (s *Service) CreateUser(u *model.User) (*model.User, error) {
 	if _, err := s.GetUserPool(u.UserPoolID); err != nil {
 		return nil, errors.Wrap(err, "no such user pool")
 	}
 
 	u.ID = utils.GetNoLineUUID()
-	if err := s.db.Create(&u).Error; err != nil {
+	if err := s.db.Create(u).Error; err != nil {
 		return nil, err
 	}
 	u.Password = ""
-	return &u, nil
+	return u, nil
 }
 
-func (s *Service) ModifyUser(userId string, u model.User) error {
+func (s *Service) ModifyUser(userId string, u *model.User) error {
 	if _, err := s.GetUserPool(u.UserPoolID); err != nil {
 		return errors.Wrap(err, "no such user pool")
 	}
 
 	if err := s.db.Select("display_name", "email", "phone").
 		Where("id = ? AND user_pool_id = ?", userId, u.UserPoolID).
-		Updates(&u).Error; err != nil {
+		Updates(u).Error; err != nil {
 		return err
 	}
 	return nil
@@ -86,15 +86,15 @@ func (s *Service) ListUserPool() ([]model.UserPool, error) {
 	return pool, nil
 }
 
-func (s *Service) CreateUserPool(pool model.UserPool) (*model.UserPool, error) {
-	if err := s.db.Create(&pool).Error; err != nil {
+func (s *Service) CreateUserPool(pool *model.UserPool) (*model.UserPool, error) {
+	if err := s.db.Create(pool).Error; err != nil {
 		return nil, err
 	}
-	return &pool, nil
+	return pool, nil
 }
 
-func (s *Service) ModifyUserPool(poolId int64, pool model.UserPool) error {
-	if err := s.db.Where("id = ?", poolId).Updates(&pool).Error; err != nil {
+func (s *Service) ModifyUserPool(poolId int64, pool *model.UserPool) error {
+	if err := s.db.Where("id = ?", poolId).Updates(pool).Error; err != nil {
 		return err
 	}
 	return nil

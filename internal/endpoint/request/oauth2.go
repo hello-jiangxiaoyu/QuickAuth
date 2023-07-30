@@ -50,8 +50,8 @@ type ProviderReq struct {
 	ClientSecret string       `json:"clientSecret"`
 }
 
-func (p *ProviderReq) ToModel() model.Provider {
-	return model.Provider{
+func (p *ProviderReq) ToModel() *model.Provider {
+	return &model.Provider{
 		TenantID:     p.Tenant.ID,
 		Type:         p.Type,
 		AppID:        p.Tenant.AppID,

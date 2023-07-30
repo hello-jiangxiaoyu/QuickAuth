@@ -34,17 +34,17 @@ func (s *Service) GetProvider(tenantId int64, providerId int64) (*model.Provider
 	return &provider, nil
 }
 
-func (s *Service) CreateProvider(prd model.Provider) (*model.Provider, error) {
+func (s *Service) CreateProvider(prd *model.Provider) (*model.Provider, error) {
 	prd.ID = 0
-	if err := s.db.Create(&prd).Error; err != nil {
+	if err := s.db.Create(prd).Error; err != nil {
 		return nil, err
 	}
-	return &prd, nil
+	return prd, nil
 }
 
-func (s *Service) ModifyProvider(providerId int64, prd model.Provider) error {
+func (s *Service) ModifyProvider(providerId int64, prd *model.Provider) error {
 	if err := s.db.Where("id = ? AND tenant_id = ?", providerId, prd.TenantID).
-		Updates(&prd).Error; err != nil {
+		Updates(prd).Error; err != nil {
 		return err
 	}
 	return nil
