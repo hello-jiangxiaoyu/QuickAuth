@@ -27,6 +27,9 @@ async function updateAppAndTenant(appId:string):Promise<string> {
   const respApp = await api.fetchApp(appId);
   dispatchApp(respApp.data);
   if (respApp.code !== 200) {
+    setTimeout(()=>{
+      Router.push('/applications/').then();
+    }, 2000);
     return respApp.msg;
   }
 
@@ -78,9 +81,6 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
       updateAppAndTenant(appId).then(msg => {
         if (typeof msg === 'string' && msg !== '') {
           Message.error(msg);
-          setTimeout(()=>{
-            Router.push('/applications/').then();
-          }, 2000);
         }
       })
     }

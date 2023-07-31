@@ -21,7 +21,7 @@ func StaticWebFile() gin.HandlerFunc {
 		root:       root,
 		indexes:    false,
 	}
-	fileserver := http.FileServer(fs)
+	fileServer := http.FileServer(fs)
 
 	return func(c *gin.Context) {
 		urlPath := c.Request.URL.Path
@@ -46,7 +46,7 @@ func StaticWebFile() gin.HandlerFunc {
 			}
 			req := c.Request.Clone(c)
 			req.URL.Path = urlPath
-			fileserver.ServeHTTP(c.Writer, req)
+			fileServer.ServeHTTP(c.Writer, req)
 			c.Abort()
 		}
 	}

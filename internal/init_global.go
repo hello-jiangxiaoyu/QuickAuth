@@ -61,7 +61,7 @@ func InitDefaultTenant() error {
 	}
 	if err := global.DB.Where("name = ?", "default").First(&global.App).Error; err == nil {
 		return global.DB.Where("app_id = ?", global.App.ID).First(&global.Tenant).Error
-	} else if err != nil && err != gorm.ErrRecordNotFound {
+	} else if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		return err
 	}
 
