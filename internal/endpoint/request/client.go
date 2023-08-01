@@ -68,7 +68,7 @@ type TenantReq struct {
 	IsCredential  bool           `son:"isCredential"`
 	IsDeviceFlow  bool           `json:"isDeviceFlow"`
 	Describe      string         `json:"describe"`
-	IsDisabled    int32          `json:"isDisabled"`
+	IsDisabled    bool           `json:"isDisabled"`
 }
 
 func (t *TenantReq) ToModel() *model.Tenant {
@@ -91,5 +91,6 @@ func (t *TenantReq) ToModel() *model.Tenant {
 		IsCredential:  t.IsCredential,
 		IsDeviceFlow:  t.IsDeviceFlow,
 		Describe:      t.Describe,
+		IsDisabled:    t.IsDisabled,
 	}
 }

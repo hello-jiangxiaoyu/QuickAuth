@@ -78,6 +78,7 @@ export function dispatchApp(data: App) {
 }
 
 export function dispatchTenantList(data: Array<Tenant>) {
+  console.log(data)
   store.dispatch({
     type: DispatchTenantList,
     payload: {tenantList: data},

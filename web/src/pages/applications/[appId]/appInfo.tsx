@@ -1,11 +1,13 @@
-import {Button, Card, Descriptions, Form, Input, Link, Space} from "@arco-design/web-react";
+import {Button, Card, Descriptions, Form, Input, Link, Message, Space} from "@arco-design/web-react";
 import React from "react";
 import {IconDelete} from "@arco-design/web-react/icon";
 import {isIPAddress} from "@/utils/is";
 import {useRouter} from "next/router";
 import {getRouterPara} from "@/utils/stringTools";
 import { useSelector } from 'react-redux';
-import {GlobalState} from "@/store/redux";
+import {dispatchApp, GlobalState} from "@/store/redux";
+import App from "@/http/app";
+import api from "@/http/api";
 
 
 function getHostWithScheme(host:string):string {
@@ -23,20 +25,47 @@ function getHostWithScheme(host:string):string {
 
 
 function AppInfo() {
-  const {currentApp} = useSelector((state: GlobalState) => state);
+  const {currentApp, currentTenant} = useSelector((state: GlobalState) => state);
+  const [form] = Form.useForm();
+  function onOk() {
+    form.validate().then((value: { name:string,describe:string }) => {
+      const res = {} as App;
+      Object.assign(res, currentApp);
+      if (res?.name === value.name && res?.describe === value.describe) {
+        Message.success('Success !');
+        return
+      }
+      res.name = value.name;
+      res.describe = value.describe;
+      res.host = currentTenant.host;
+      api.modifyApp(currentApp.id, res).then(r => {
+        if (r.code !== 200) {Message.error(r.msg)} else {
+          Message.success('Success !');
+          api.fetchApp(currentApp.id).then(r => {
+            if (r.code !== 200) {Message.error(r.msg)} else {
+              dispatchApp(r.data);
+            }
+          })
+        }
+      }).catch();
+    }).catch((err) => {
+      Message.error("validator " + err.toString());
+    });
+  }
+
   function BasicInfo() {
     return (
-      <Form style={{ width:600 }} autoComplete='off'  initialValues={{name:currentApp?.name, describe:currentApp?.describe}}>
+      <Form form={form} style={{ width:600 }} autoComplete='off' initialValues={{name:currentApp?.name, describe:currentApp?.describe}}>
         <h3 style={{marginLeft:20}}>基本信息</h3>
         <Form.Item label={'应用名称'} field='name' rules={[{ required: true }]}>
           <Input placeholder='please enter your app name...' />
         </Form.Item>
-        <Form.Item field='describe' label={'应用描述'}>
+        <Form.Item field='describe' label={'应用描述'} rules={[{ required: true }]}>
           <Input.TextArea placeholder='please enter app description...' />
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 5 }}>
           <Space size='medium'>
-            <Button type='primary'>保存</Button>
+            <Button type='primary' onClick={onOk}>保存</Button>
             <Button type='secondary'>重置</Button>
           </Space>
         </Form.Item>

@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {Form, Input, Message, Modal, Select} from "@arco-design/web-react";
+import {Form, Input, Message, Modal} from "@arco-design/web-react";
 import App from "@/http/app";
 import api from "@/http/api";
-import {dispatchAppList, dispatchTenantList, GlobalState} from "@/store/redux";
+import {dispatchTenantList, GlobalState} from "@/store/redux";
 import {useSelector} from "react-redux";
 
 export default function CreateTenantDialog(props:{visible: boolean, setVisible: React.Dispatch<React.SetStateAction<boolean>>}) {
