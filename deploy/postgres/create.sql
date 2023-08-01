@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS apps (
     created_at    TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at    TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX idx_app_name ON apps (name);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_app_name ON apps (name);
 
 CREATE TABLE IF NOT EXISTS app_secrets (
     id              BIGSERIAL PRIMARY KEY,
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS app_secrets (
     created_at     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX idx_app_secret_id ON app_secrets (app_id, secret);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_app_secret_id ON app_secrets (app_id, secret);
 
 
 
@@ -49,9 +49,9 @@ CREATE TABLE IF NOT EXISTS tenants (
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX idx_tenants_host ON tenants(host);
-CREATE UNIQUE INDEX idx_tenants_name ON tenants(app_id, name);
-CREATE INDEX idx_tenants_client_user_pool_id ON tenants(user_pool_id);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_tenants_host ON tenants(host);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_tenants_name ON tenants(app_id, name);
+CREATE INDEX IF NOT EXISTS idx_tenants_client_user_pool_id ON tenants(user_pool_id);
 
 
 
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS codes (
     created_at  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX idx_codes_tenant_user_id ON codes(code, app_id);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_codes_tenant_user_id ON codes(code, app_id);
 
 
 CREATE TABLE IF NOT EXISTS providers (
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS providers (
     created_at     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE INDEX idx_provider_tenant_type_id ON providers(tenant_id, app_id);
+CREATE INDEX IF NOT EXISTS idx_provider_tenant_type_id ON providers(tenant_id, app_id);
 
 
 CREATE TABLE IF NOT EXISTS user_pools (
@@ -103,9 +103,9 @@ CREATE TABLE IF NOT EXISTS users (
     created_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX idx_users_user_pool_username ON users(user_pool_id, username);
-CREATE UNIQUE INDEX idx_users_email ON users(email);
-CREATE UNIQUE INDEX idx_users_phone ON users(phone);
-CREATE UNIQUE INDEX idx_users_create ON users (created_at);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_users_user_pool_username ON users(user_pool_id, username);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email ON users(email);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_users_phone ON users(phone);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_users_create ON users (created_at);
 
 
