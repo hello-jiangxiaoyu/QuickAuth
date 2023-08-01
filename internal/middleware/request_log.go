@@ -23,43 +23,31 @@ type LogFormat struct {
 	Errors        string        `json:"errors"`
 }
 
-func getStringValue(c *gin.Context, k string) string {
-	res, ok := c.Get(k)
-	if !ok {
-		return ""
-	}
-	return res.(string)
-}
-
-func getIntValue(c *gin.Context, k string) int {
-	res, ok := c.Get(k)
-	if !ok {
-		return 0
-	}
-	return res.(int)
-}
-
 func RequestLog() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
 		c.Next()
 
-		appId := getStringValue(c, "appId")
-		tenantId := getStringValue(c, "tenantId")
-		poolId := getStringValue(c, "poolId")
-		tag := getStringValue(c, "tag")
-		code := getIntValue(c, "code")
+		appId := c.GetString("appId")
+		tenantId := c.GetInt("tenantId")
+		userId := c.GetString("userId")
+		poolId := c.GetInt("poolId")
+		tag := c.GetString("tag")
+		code := c.GetInt("code")
+		requestID := c.GetString("requestID")
 		global.AccessLog.Info("",
 			zap.String("ts", time.Now().Format(time.RFC3339)),
+			zap.String("request_id", requestID),
 			zap.Int("status", c.Writer.Status()),
-			zap.Int("code", code),
+			zap.Int("error_code", code),
 			zap.String("method", c.Request.Method),
 			zap.String("path", c.Request.URL.Path),
-			zap.String("app_id", appId),
-			zap.String("tenant_id", tenantId),
-			zap.String("pool_id", poolId),
-			zap.String("tag", tag),
 			zap.String("full_path", c.FullPath()),
+			zap.String("app_id", appId),
+			zap.Int("tenant_id", tenantId),
+			zap.String("user_id", userId),
+			zap.Int("pool_id", poolId),
+			zap.String("tag", tag),
 			zap.String("query", c.Request.URL.RawQuery),
 			zap.String("client_ip", c.ClientIP()),
 			zap.String("server_ip", GetServerIp(c.Request.RemoteAddr)),

@@ -37,7 +37,6 @@ func success(ctx context.Context, data any, total int, isArray bool) {
 		c.JSON(http.StatusOK, &ArrayResponse{Code: CodeSuccess, Msg: MsgSuccess, Total: total, Data: data})
 	}
 
-	c.Set("code", 200)
 	c.Abort()
 }
 

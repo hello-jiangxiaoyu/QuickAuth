@@ -14,7 +14,7 @@ func GetServer() *gin.Engine {
 	r := gin.Default()
 	// r := gin.New()
 	// gin.SetMode(gin.ReleaseMode)
-	r.Use(middleware.Recovery(), middleware.RequestLog(), cors.Default())
+	r.Use(middleware.Recovery(), middleware.RequestLog(), cors.Default(), middleware.GenerateRequestID())
 	cookieSecret := []byte("QuickAuth")
 	store := cookie.NewStore(cookieSecret)
 	store.Options(sessions.Options{
