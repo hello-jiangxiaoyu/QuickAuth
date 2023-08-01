@@ -1,9 +1,11 @@
 import React, {useState} from "react";
-import {Button, Checkbox, Form, Grid, Input, InputNumber, Space} from '@arco-design/web-react';
+import {Button, Checkbox, Form, Grid, Input, InputNumber, Message, Space} from '@arco-design/web-react';
 import {IconDelete, IconEdit} from '@arco-design/web-react/icon';
 import {useSelector} from "react-redux";
-import {GlobalState} from "@/store/redux";
+import {dispatchApp, dispatchTenant, GlobalState} from "@/store/redux";
 import {TenantDetail} from "@/http/tenant";
+import App from "@/http/app";
+import api from "@/http/api";
 
 export default function LoginAuth() {
   const {currentTenant} = useSelector((state: GlobalState) => state);
@@ -40,9 +42,36 @@ export default function LoginAuth() {
 
   function ProtoConfig() {
     const [form] = Form.useForm();
+    const {currentApp, currentTenant} = useSelector((state: GlobalState) => state);
     function onSave() {
-      form.validate().then((tenant:TenantDetail) => {
-        console.log("form tenant: ", tenant)
+      form.validate().then((value:TenantDetail) => {
+        const res = {} as TenantDetail;
+        Object.assign(res, currentTenant);
+        res.isCode = value.isCode;
+        res.isRefresh = value.isRefresh;
+        res.isPassword = value.isPassword;
+        res.isCredential = value.isCredential;
+        res.isDeviceFlow = value.isDeviceFlow;
+        res.codeExpire = value.codeExpire;
+        res.idExpire = value.idExpire;
+        res.accessExpire = value.accessExpire;
+        res.refreshExpire = value.refreshExpire;
+        if (res === currentTenant) {
+          Message.success('Success !');
+          return
+        }
+        api.modifyTenant(currentTenant.appId, currentTenant.id, res).then(r => {
+          if (r.code !== 200) {Message.error(r.msg)} else {
+            Message.success('Success !');
+            api.fetchTenant(currentApp.id, currentTenant.id).then(r => {
+              if (r.code !== 200) {Message.error(r.msg)} else {
+                dispatchTenant(r.data);
+              }
+            })
+          }
+        }).catch();
+      }).catch((err) => {
+        Message.error("validator " + err.toString());
       });
     }
 
