@@ -24,6 +24,6 @@ export async function createSecret(appId:string, data:Secret):Promise<Root<Secre
   return await POST<Secret>(`/api/quick/apps/${appId}/secrets`, data);
 }
 
-export async function deleteSecret(appId:string, secretId:string):Promise<Root<object>> {
+export async function deleteSecret(appId:string, secretId:number):Promise<Root<object>> {
   return await DELETE(`/api/quick/apps/${appId}/secrets/${secretId}`);
 }

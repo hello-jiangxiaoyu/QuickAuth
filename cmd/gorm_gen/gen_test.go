@@ -23,6 +23,7 @@ func TestGen(*testing.T) {
 	opt := []gen.ModelOpt{jsonField}
 	opt = append(opt, gen.FieldType("grant_types", "pq.StringArray"))
 	opt = append(opt, gen.FieldType("redirect_uris", "pq.StringArray"))
+	opt = append(opt, gen.FieldType("scope", "pq.StringArray"))
 	generator.GenerateAllTable(opt...)
 	generator.Execute()
 

@@ -25,12 +25,12 @@ func (c *AppReq) ToModel() *model.App {
 }
 
 type AppSecretReq struct {
-	AppId         string `json:"-" uri:"appId"`
-	SecretId      int64  `json:"-" uri:"secretId"`
-	Describe      string `json:"describe"`
-	AccessExpire  int32  `json:"accessExpire"`
-	RefreshExpire int32  `json:"refreshExpire"`
-	Scope         string `json:"scope"`
+	AppId         string   `json:"-" uri:"appId"`
+	SecretId      int64    `json:"-" uri:"secretId"`
+	Describe      string   `json:"describe"`
+	AccessExpire  int32    `json:"accessExpire"`
+	RefreshExpire int32    `json:"refreshExpire"`
+	Scope         []string `json:"scope"`
 }
 
 func (c *AppSecretReq) ToModel() model.AppSecret {

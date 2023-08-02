@@ -5,8 +5,8 @@ CREATE TABLE IF NOT EXISTS apps (
     name           VARCHAR(127) NOT NULL UNIQUE,
     describe       VARCHAR(255) NOT NULL,
     icon           VARCHAR(127) NOT NULL,
-    created_at    TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at    TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+    created_at     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS idx_app_name ON apps (name);
 
@@ -14,12 +14,12 @@ CREATE TABLE IF NOT EXISTS app_secrets (
     id              BIGSERIAL PRIMARY KEY,
     app_id          CHAR(32) NOT NULL,
     secret          CHAR(63) NOT NULL,    -- 客户端凭证密钥
-    scope           VARCHAR(255) NOT NULL,     -- 客户端凭证权限范围
+    scope           VARCHAR(127) ARRAY NOT NULL,     -- 客户端凭证权限范围
     access_expire   INTEGER NOT NULL DEFAULT 604800,
     refresh_expire  INTEGER NOT NULL DEFAULT 2592000,
     describe        VARCHAR(127) NOT NULL,
-    created_at     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+    created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS idx_app_secret_id ON app_secrets (app_id, secret);
 
@@ -62,8 +62,8 @@ CREATE TABLE IF NOT EXISTS codes (
     code         CHAR(32) NOT NULL,
     scope        VARCHAR(255) NOT NULL,
     state        CHAR(63) NOT NULL,
-    created_at  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+    created_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS idx_codes_tenant_user_id ON codes(code, app_id);
 
@@ -76,8 +76,8 @@ CREATE TABLE IF NOT EXISTS providers (
     client_id       VARCHAR(255) NOT NULL,
     client_secret   VARCHAR(255) NOT NULL,
     agent_id        VARCHAR(255) NOT NULL,
-    created_at     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+    created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS idx_provider_tenant_type_id ON providers(tenant_id, app_id);
 

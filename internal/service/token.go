@@ -10,13 +10,13 @@ import (
 )
 
 type Claims struct {
-	TokenType string `json:"tokenType,omitempty"`
-	Nonce     string `json:"nonce,omitempty"`
-	Scope     string `json:"scope,omitempty"`
+	TokenType string   `json:"tokenType,omitempty"`
+	Nonce     string   `json:"nonce,omitempty"`
+	Scope     []string `json:"scope,omitempty"`
 	jwt.RegisteredClaims
 }
 
-func (s *Service) CreateAccessToken(app model.App, tenantName, host, userId, nonce, scope string) (string, error) {
+func (s *Service) CreateAccessToken(app model.App, tenantName, host, userId, nonce string, scope []string) (string, error) {
 	var token *jwt.Token
 	nowTime := time.Now()
 	expireTime := nowTime.Add(time.Duration(24) * time.Hour)
