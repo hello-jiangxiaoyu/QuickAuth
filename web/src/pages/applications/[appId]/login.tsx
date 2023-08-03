@@ -2,9 +2,8 @@ import React, {useState} from "react";
 import {Button, Checkbox, Form, Grid, Input, InputNumber, Message, Space} from '@arco-design/web-react';
 import {IconDelete, IconEdit} from '@arco-design/web-react/icon';
 import {useSelector} from "react-redux";
-import {dispatchApp, dispatchTenant, GlobalState} from "@/store/redux";
+import {dispatchTenant, GlobalState} from "@/store/redux";
 import {TenantDetail} from "@/http/tenant";
-import App from "@/http/app";
 import api from "@/http/api";
 
 export default function LoginAuth() {
@@ -60,19 +59,11 @@ export default function LoginAuth() {
           Message.success('Success !');
           return
         }
-        api.modifyTenant(currentTenant.appId, currentTenant.id, res).then(r => {
-          if (r.code !== 200) {Message.error(r.msg)} else {
-            Message.success('Success !');
-            api.fetchTenant(currentApp.id, currentTenant.id).then(r => {
-              if (r.code !== 200) {Message.error(r.msg)} else {
-                dispatchTenant(r.data);
-              }
-            })
-          }
-        }).catch();
-      }).catch((err) => {
-        Message.error("validator " + err.toString());
-      });
+        api.modifyTenant(currentTenant.appId, currentTenant.id, res).then(() => {
+          Message.success('Success !');
+          api.fetchTenant(currentApp.id, currentTenant.id).then(r => {dispatchTenant(r.data)})
+        }).catch(e => Message.error(e.toString()));
+      }).catch((e) => Message.error("validator " + e.toString()));
     }
 
     return (

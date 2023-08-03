@@ -5,7 +5,11 @@ import Secret from "@/http/secret";
 import {useRouter} from "next/router";
 import {getRouterPara} from "@/utils/stringTools";
 
-export default function CreateSecretDialog(props:{visible: boolean, setVisible: React.Dispatch<React.SetStateAction<boolean>>}) {
+export default function CreateSecretDialog(props:{
+  visible: boolean,
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>
+  setSecret: React.Dispatch<React.SetStateAction<Array<Secret>>>
+}) {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [form] = Form.useForm();
   const router = useRouter();
@@ -14,16 +18,13 @@ export default function CreateSecretDialog(props:{visible: boolean, setVisible: 
   function onOk() {
     form.validate().then((secret:Secret) => {
       setConfirmLoading(true);
-      api.createSecret(appId, secret).then(r => {
-        if (r.code !== 200) {Message.error(r.msg)} else {
-          Message.success('Success !');
-        }
-        setConfirmLoading(false);
+      api.createSecret(appId, secret).then(() => {
+        Message.success('Success !');
+        api.fetchSecretList(appId).then(r => props.setSecret(r.data))
+           .catch(e => Message.error(e.toString()));
         props.setVisible(false);
-      }).catch();
-    }).catch((err) => {
-      Message.error(err.toString());
-    });
+      }).catch(e => Message.error(e.toString())).finally(() => setConfirmLoading(false));
+    }).catch((e) => Message.error(e.toString()));
   }
 
   return (

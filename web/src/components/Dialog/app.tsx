@@ -7,25 +7,17 @@ import {dispatchAppList} from "@/store/redux";
 export default function CreateAppDialog(props:{visible: boolean, setVisible: React.Dispatch<React.SetStateAction<boolean>>}) {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [form] = Form.useForm();
-
   function onOk() {
     form.validate().then((app:App) => {
       setConfirmLoading(true);
-      api.createApp(app).then(r => {
-        if (r.code !== 200) {Message.error(r.msg)} else {
-          Message.success('Success !');
-          api.fetchAppList().then(r => {
-            if (r.code !== 200) {Message.error(r.msg)} else {
-              dispatchAppList(r.data)
-            }
-          })
-        }
-        setConfirmLoading(false);
+      api.createApp(app).then(() => {
+        Message.success('Success !');
+        api.fetchAppList().then(r => {
+          dispatchAppList(r.data);
+        }).catch(e => {Message.error(e.toString())})
         props.setVisible(false);
-      }).catch();
-    }).catch((err) => {
-      Message.error(err.toString());
-    });
+      }).catch(e => Message.error(e.toString())).finally(() => setConfirmLoading(false));
+    }).catch((e) => Message.error(e.toString()));
   }
 
   return (

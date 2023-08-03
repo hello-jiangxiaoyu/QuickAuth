@@ -7,26 +7,18 @@ import {useSelector} from "react-redux";
 
 export default function CreateTenantDialog(props:{visible: boolean, setVisible: React.Dispatch<React.SetStateAction<boolean>>}) {
   const [confirmLoading, setConfirmLoading] = useState(false);
-
   const currentApp = useSelector((state: GlobalState) => state.currentApp);
   function onOk() {
     form.validate().then((app:App) => {
       setConfirmLoading(true);
-      api.createApp(app).then(r => {
-        if (r.code !== 200) {Message.error(r.msg)} else {
+      api.createApp(app).then(() => {
           Message.success('Success !');
           api.fetchTenantList(currentApp.id).then(r => {
-            if (r.code !== 200) {Message.error(r.msg)} else {
-              dispatchTenantList(r.data);
-            }
-          })
+            dispatchTenantList(r.data);
+          }).catch(e => Message.error(e.toString()));
           props.setVisible(false);
-        }
-        setConfirmLoading(false);
-      }).catch();
-    }).catch((err) => {
-      Message.error(err.toString());
-    });
+      }).catch(e => Message.error(e.toString())).finally(() => setConfirmLoading(false));
+    }).catch((e) => Message.error(e.toString()));
   }
 
   const [form] = Form.useForm();

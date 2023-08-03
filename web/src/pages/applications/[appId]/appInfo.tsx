@@ -38,18 +38,12 @@ function AppInfo() {
       res.name = value.name;
       res.describe = value.describe;
       res.host = currentTenant.host;
-      api.modifyApp(currentApp.id, res).then(r => {
-        if (r.code !== 200) {Message.error(r.msg)} else {
-          Message.success('Success !');
-          api.fetchApp(currentApp.id).then(r => {
-            if (r.code !== 200) {Message.error(r.msg)} else {
-              dispatchApp(r.data);
-            }
-          })
-        }
-      }).catch();
-    }).catch((err) => {
-      Message.error("validator " + err.toString());
+      api.modifyApp(currentApp.id, res).then(() => {
+        Message.success('Success !');
+        api.fetchApp(currentApp.id).then(r => dispatchApp(r.data)).catch(e => Message.error(e.toString()));
+      }).catch(e => Message.error(e.toString()));
+    }).catch((e) => {
+      Message.error("validator " + e.toString());
     });
   }
 

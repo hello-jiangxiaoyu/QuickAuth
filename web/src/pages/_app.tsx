@@ -26,31 +26,17 @@ import api from "@/http/api";
 async function updateAppAndTenant(appId:string):Promise<string> {
   const respApp = await api.fetchApp(appId);
   dispatchApp(respApp.data);
-  if (respApp.code !== 200) {
-    setTimeout(()=>{
-      Router.push('/applications/').then();
-    }, 2000);
-    return respApp.msg;
-  }
 
   const respTenantList = await api.fetchTenantList(appId);
   dispatchTenantList(respTenantList.data);
-  if (respTenantList.code !== 200) {
-    return respTenantList.msg;
-  }
 
   if (respTenantList.data.length === 0) {
     dispatchTenant({} as TenantDetail);
-    return respTenantList.msg;
+    return
   }
 
   const respTenant = await api.fetchTenant(appId, respTenantList.data[0].id);
   dispatchTenant(respTenant.data);
-  if (respTenant.code !== 200) {
-    return respTenant.msg;
-  }
-
-  return ''
 }
 
 function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: {arcoLang?: string; arcoTheme?: string} }) {
@@ -72,17 +58,12 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
     } else if (window.location.pathname.replace(/\//g, '') !== 'login') {
       window.location.pathname = '/login';
     }
-    api.fetchAppList().then(r => {
-      if (r.code !== 200) {Message.error(r.msg)} else {
-        dispatchAppList(r.data);
-      }
-    });
+    api.fetchAppList().then(r => dispatchAppList(r.data)).catch(e => Message.error(e.toString()));
     if (typeof appId === 'string' && appId !== '') {
-      updateAppAndTenant(appId).then(msg => {
-        if (typeof msg === 'string' && msg !== '') {
-          Message.error(msg);
-        }
-      })
+      updateAppAndTenant(appId).then().catch(e => {
+        Message.error(e.toString());
+        setTimeout(()=>{Router.push('/applications/').then()}, 2000);
+      });
     }
   }, [appId]);
 

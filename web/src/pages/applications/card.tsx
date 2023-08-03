@@ -23,16 +23,11 @@ export default function ApplicationCard(props: { appId: string, name: string, ty
       content: 'Are you sure you want to delete the app.',
       okButtonProps: {status: 'danger'},
       onOk: () => {
-        api.deleteApp(props.appId).then( r => { // 删除app
-          if (r.code !== 200) {Message.error(r.msg)} else {
-            Message.success('Delete success !');
-            api.fetchAppList().then(r => {  // 刷新页面app列表
-              if (r.code !== 200) {Message.error(r.msg)} else {
-                dispatchAppList(r.data)
-              }
-            })
-          }
-        })
+        api.deleteApp(props.appId).then(() => { // 删除app
+          Message.success('Delete success !');
+          api.fetchAppList().then(r => dispatchAppList(r.data))// 刷新页面app列表
+            .catch(e => Message.error(e.toString()));
+        }).catch(e => Message.error(e.toString()));
       },
     });
   }

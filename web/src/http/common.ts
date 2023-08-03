@@ -8,21 +8,16 @@ export interface Root<T> {
 }
 
 async function SendHttpRequest<T>(method:string, uri:string, wrapMsg?:string, data?:object):Promise<Root<T>> {
-  let errorReason = '';
   const url = env.devHost + uri;
   let response:Root<T>;
   if (method === 'GET' || method === 'DELETE') {
-    response = await fetch(url, {method:method}).then((resp) => resp.json()).catch((reason) => {
-      errorReason = reason;
-    });
+    response = await fetch(url, {method:method}).then((resp) => resp.json());
   } else {
-    response = await fetch(url, {method:method, body:JSON.stringify(data)}).then((resp) => resp.json()).catch((reason) => {
-      errorReason = reason;
-    });
+    response = await fetch(url, {method:method, body:JSON.stringify(data)}).then((resp) => resp.json());
   }
 
   if (typeof response !== 'object') {
-    return { code:500, msg:"Server error: " + errorReason, data: null};
+    return Promise.reject("Invalid server response type");
   }
 
   if (response?.code !== 200) {
@@ -30,6 +25,7 @@ async function SendHttpRequest<T>(method:string, uri:string, wrapMsg?:string, da
     if (typeof wrapMsg === 'string' && wrapMsg !== '') {
       response.msg = wrapMsg + ' error: ' + response.msg
     }
+    return Promise.reject(response.msg);
   }
 
   return response;

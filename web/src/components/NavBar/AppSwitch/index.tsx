@@ -26,10 +26,8 @@ export default function ApplicationSelector() {
   function onTenantChange(value: number) {
     console.log("tenant changed: ", value);
     api.fetchTenant(appId, value).then(r => {
-      if (r.code !== 200) {Message.error(r.msg)} else {
-        dispatchTenant(r.data);
-      }
-    })
+      dispatchTenant(r.data);
+    }).catch(e => Message.error(e.toString()));
   }
 
   function CreateItem(props:{text:string, isApp:boolean}) {

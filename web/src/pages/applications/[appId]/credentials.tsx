@@ -12,16 +12,10 @@ function ClientCredential() {
   const [secrets, setSecrets] = useState([] as Array<Secret>);
 
   function onDeleteSecret(record:Secret) {
-    deleteSecret(appId, record.id).then(r => {
-      if (r.code !== 200) {Message.error(r.msg)} else {
-        Message.success("Success !")
-        api.fetchSecretList(appId).then(r => {
-          if (r.code !== 200) {Message.error(r.msg)} else {
-            setSecrets(r.data);
-          }
-        })
-      }
-    })
+    deleteSecret(appId, record.id).then(() => {
+      Message.success("Success !")
+      api.fetchSecretList(appId).then(r => setSecrets(r.data)).catch(e => Message.error(e.toString()));
+    }).catch(e => Message.error(e.toString()));
   }
 
   const columns: TableColumnProps[] = [
@@ -30,23 +24,19 @@ function ClientCredential() {
     {title: '创建时间', dataIndex: 'createdAt', align:'center'},
     {title: '操作', dataIndex: 'op', align:'center', render: (_, record) => (
       <>
-        <Button type='text' size='small' status='danger' onClick={()=>onDeleteSecret(record)}>删除</Button>
         <Button type='text' size='small'>权限</Button>
+        <Button type='primary' size='small' status='danger' onClick={()=>onDeleteSecret(record)}>删除</Button>
       </>
       )},
   ];
 
   useEffect(() => {
-    api.fetchSecretList(appId).then(r => {
-      if (r.code !== 200) {Message.error(r.msg)} else {
-        setSecrets(r.data);
-      }
-    })
+    api.fetchSecretList(appId).then(r => setSecrets(r.data)).catch(e => Message.error(e.toString()));
   }, [appId]);
 
   const [visible, setVisible] = useState(false);
   return (
-    <>
+    <div style={{width:'97%', marginLeft:20}}>
       <Grid.Row className='grid-demo' style={{ marginBottom: 16 }}>
         <Grid.Col span={12}>
           <h3>客户端凭证</h3>
@@ -56,8 +46,8 @@ function ClientCredential() {
         </Grid.Col>
       </Grid.Row>
       <Table columns={columns} data={secrets} />
-      <CreateSecretDialog visible={visible} setVisible={setVisible}></CreateSecretDialog>
-    </>
+      <CreateSecretDialog visible={visible} setVisible={setVisible} setSecret={setSecrets}/>
+    </div>
   );
 }
 
