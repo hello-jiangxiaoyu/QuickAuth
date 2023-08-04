@@ -15,6 +15,8 @@ var sg singleflight.Group
 // @Schemes
 // @Description	list apps
 // @Tags		app
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
 // @Success		200
 // @Router		/api/quick/apps [get]
 func (o Controller) listApp(c *gin.Context) {
@@ -32,7 +34,9 @@ func (o Controller) listApp(c *gin.Context) {
 // @Schemes
 // @Description	list apps
 // @Tags		app
-// @Param		appId	path	string	true	"app id"
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
+// @Param		appId		path	string	true	"app id"
 // @Success		200
 // @Router		/api/quick/apps/{appId} [get]
 func (o Controller) getApp(c *gin.Context) {
@@ -56,7 +60,9 @@ func (o Controller) getApp(c *gin.Context) {
 // @Schemes
 // @Description	create app
 // @Tags		app
-// @Param		bd		body	request.AppReq	true	"body"
+// @Param		X-User-ID	header	string			false	"user id"
+// @Param		X-Pool-ID	header	string			false	"user pool id"
+// @Param		bd			body	request.AppReq	true	"body"
 // @Success		200
 // @Router		/api/quick/apps [post]
 func (o Controller) createApp(c *gin.Context) {
@@ -78,8 +84,10 @@ func (o Controller) createApp(c *gin.Context) {
 // @Schemes
 // @Description	modify app
 // @Tags		app
-// @Param		appId	path	string			true	"app id"
-// @Param		bd		body	request.AppReq	true	"body"
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
+// @Param		appId		path	string			true	"app id"
+// @Param		bd			body	request.AppReq	true	"body"
 // @Success		200
 // @Router		/api/quick/apps/{appId} [put]
 func (o Controller) modifyApp(c *gin.Context) {
@@ -100,7 +108,9 @@ func (o Controller) modifyApp(c *gin.Context) {
 // @Schemes
 // @Description	delete app
 // @Tags		app
-// @Param		appId	path	string	true	"app id"
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
+// @Param		appId		path	string	true	"app id"
 // @Success		200
 // @Router		/api/quick/apps/{appId} [delete]
 func (o Controller) deleteApp(c *gin.Context) {

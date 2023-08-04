@@ -10,7 +10,9 @@ import (
 // @Schemes
 // @Description	get redirect uri list
 // @Tags		tenant
-// @Param		vhost	header		string	false	"tenant host"
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
+// @Param		vhost		header	string	false	"tenant host"
 // @Success		200		{object}	[]string
 // @Router		/api/quick/redirect-uri [get]
 func (o Controller) listRedirectUri(c *gin.Context) {
@@ -32,8 +34,10 @@ func (o Controller) listRedirectUri(c *gin.Context) {
 // @Schemes
 // @Description	create app redirect uri
 // @Tags		tenant
-// @Param		vhost	header	string					false	"tenant host"
-// @Param		bd		body	request.RedirectUriReq	true	"body"
+// @Param		X-User-ID	header	string					false	"user id"
+// @Param		X-Pool-ID	header	string					false	"user pool id"
+// @Param		vhost		header	string					false	"tenant host"
+// @Param		bd			body	request.RedirectUriReq	true	"body"
 // @Success		200
 // @Router		/api/quick/redirect-uri [post]
 func (o Controller) createRedirectUri(c *gin.Context) {
@@ -54,9 +58,11 @@ func (o Controller) createRedirectUri(c *gin.Context) {
 // @Schemes
 // @Description	modify app
 // @Tags		tenant
-// @Param		vhost	header	string					false	"tenant host"
-// @Param		uriId	path	string					true	"uri id"
-// @Param		bd		body	request.RedirectUriReq	true	"body"
+// @Param		X-User-ID	header	string					false	"user id"
+// @Param		X-Pool-ID	header	string					false	"user pool id"
+// @Param		vhost		header	string					false	"tenant host"
+// @Param		uriId		path	string					true	"uri id"
+// @Param		bd			body	request.RedirectUriReq	true	"body"
 // @Success		200
 // @Router		/api/quick/redirect-uri/{uriId} [put]
 func (o Controller) modifyRedirectUri(c *gin.Context) {
@@ -76,8 +82,10 @@ func (o Controller) modifyRedirectUri(c *gin.Context) {
 // @Schemes
 // @Description	delete app
 // @Tags		tenant
-// @Param		vhost	header	string	false	"tenant host"
-// @Param		uri		path	string	true	"uri name"
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
+// @Param		vhost		header	string	false	"tenant host"
+// @Param		uri			path	string	true	"uri name"
 // @Success		200
 // @Router		/api/quick/redirect-uri/{uri} [delete]
 func (o Controller) deleteRedirectUri(c *gin.Context) {

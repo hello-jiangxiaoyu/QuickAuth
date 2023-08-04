@@ -13,17 +13,17 @@ export default interface Secret {
 }
 
 export async function fetchSecretList(appId:string):Promise<Root<Secret[]>> {
-  return await GET<Secret[]>(`/api/quick/apps/${appId}/secrets`);
+  return await GET<Secret[]>(`/api/quick/apps/${appId}/secrets`, 'Get secret list');
 }
 
 export async function fetchSecret(appId:string, secretId:number):Promise<Root<Secret>> {
-  return await GET<Secret>(`/api/quick/apps/${appId}/secrets/${secretId}`);
+  return await GET<Secret>(`/api/quick/apps/${appId}/secrets/${secretId}`, 'Get secret');
 }
 
 export async function createSecret(appId:string, data:Secret):Promise<Root<Secret>> {
-  return await POST<Secret>(`/api/quick/apps/${appId}/secrets`, data);
+  return await POST<Secret>(`/api/quick/apps/${appId}/secrets`, data, 'Create secret');
 }
 
 export async function deleteSecret(appId:string, secretId:number):Promise<Root<object>> {
-  return await DELETE(`/api/quick/apps/${appId}/secrets/${secretId}`);
+  return await DELETE(`/api/quick/apps/${appId}/secrets/${secretId}`, 'Delete secret');
 }

@@ -10,7 +10,9 @@ import (
 // @Schemes
 // @Description	list app secret
 // @Tags		app
-// @Param		appId	path	string	true	"app id"
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
+// @Param		appId		path	string	true	"app id"
 // @Success		200
 // @Router		/api/quick/apps/{appId}/secrets [get]
 func (o Controller) listAppSecret(c *gin.Context) {
@@ -32,8 +34,10 @@ func (o Controller) listAppSecret(c *gin.Context) {
 // @Schemes
 // @Description	create app secret
 // @Tags		app
-// @Param		appId	path	string					true	"app id"
-// @Param		bd		body	request.AppSecretReq	true	"body"
+// @Param		X-User-ID	header	string					false	"user id"
+// @Param		X-Pool-ID	header	string					false	"user pool id"
+// @Param		appId		path	string					true	"app id"
+// @Param		bd			body	request.AppSecretReq	true	"body"
 // @Success		200
 // @Router		/api/quick/apps/{appId}/secrets [post]
 func (o Controller) createAppSecret(c *gin.Context) {
@@ -55,6 +59,8 @@ func (o Controller) createAppSecret(c *gin.Context) {
 // @Schemes
 // @Description	create app secret
 // @Tags		app
+// @Param		X-User-ID	header	string					false	"user id"
+// @Param		X-Pool-ID	header	string					false	"user pool id"
 // @Param		appId		path	string					true	"app id"
 // @Param		secretId	path	integer					true	"secret id"
 // @Param		bd			body	request.AppSecretReq	true	"body"
@@ -79,6 +85,8 @@ func (o Controller) modifyAppSecret(c *gin.Context) {
 // @Schemes
 // @Description	delete app secret
 // @Tags		app
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
 // @Param		appId		path	string	true	"app id"
 // @Param		secretId	path	integer	true	"secret id"
 // @Success		200

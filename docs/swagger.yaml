@@ -42,12 +42,22 @@ definitions:
     properties:
       describe:
         type: string
+      host:
+        type: string
       icon:
         type: string
       name:
         type: string
+      poolId:
+        type: integer
       tag:
         type: string
+    required:
+    - describe
+    - host
+    - icon
+    - name
+    - tag
     type: object
   request.AppSecretReq:
     properties:
@@ -58,7 +68,9 @@ definitions:
       refreshExpire:
         type: integer
       scope:
-        type: string
+        items:
+          type: string
+        type: array
     type: object
   request.ProviderReq:
     properties:
@@ -95,17 +107,17 @@ definitions:
       idExpire:
         type: integer
       isCode:
-        type: integer
+        type: boolean
       isCredential:
-        type: integer
+        type: boolean
       isDeviceFlow:
-        type: integer
+        type: boolean
       isDisabled:
-        type: integer
+        type: boolean
       isPassword:
-        type: integer
+        type: boolean
       isRefresh:
-        type: integer
+        type: boolean
       name:
         type: string
       refreshExpire:
@@ -114,6 +126,11 @@ definitions:
         type: integer
       userPoolId:
         type: integer
+    required:
+    - company
+    - host
+    - name
+    - userPoolId
     type: object
   request.UserPoolReq:
     properties:
@@ -168,6 +185,15 @@ paths:
   /api/quick/apps:
     get:
       description: list apps
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       responses:
         "200":
           description: OK
@@ -177,6 +203,14 @@ paths:
     post:
       description: create app
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: body
         in: body
         name: bd
@@ -193,6 +227,14 @@ paths:
     delete:
       description: delete app
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: app id
         in: path
         name: appId
@@ -207,6 +249,14 @@ paths:
     get:
       description: list apps
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: app id
         in: path
         name: appId
@@ -221,6 +271,14 @@ paths:
     put:
       description: modify app
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: app id
         in: path
         name: appId
@@ -242,6 +300,14 @@ paths:
     get:
       description: list app secret
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: app id
         in: path
         name: appId
@@ -256,6 +322,14 @@ paths:
     post:
       description: create app secret
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: app id
         in: path
         name: appId
@@ -277,6 +351,14 @@ paths:
     delete:
       description: delete app secret
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: app id
         in: path
         name: appId
@@ -296,6 +378,14 @@ paths:
     put:
       description: create app secret
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: app id
         in: path
         name: appId
@@ -322,6 +412,14 @@ paths:
     get:
       description: get tenant list
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: app id
         in: path
         name: appId
@@ -336,6 +434,14 @@ paths:
     post:
       description: create tenant
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: app id
         in: path
         name: appId
@@ -357,6 +463,14 @@ paths:
     delete:
       description: delete tenant
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: app id
         in: path
         name: appId
@@ -376,6 +490,14 @@ paths:
     get:
       description: get tenant details
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: app id
         in: path
         name: appId
@@ -395,6 +517,14 @@ paths:
     put:
       description: modify tenant
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: app id
         in: path
         name: appId
@@ -563,6 +693,14 @@ paths:
     get:
       description: list provider info
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: tenant host
         in: header
         name: vhost
@@ -576,6 +714,14 @@ paths:
     post:
       description: create provider
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: tenant host
         in: header
         name: vhost
@@ -614,15 +760,23 @@ paths:
     get:
       description: get provider details
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: tenant host
+        in: header
+        name: vhost
+        type: string
       - description: provider id
         in: path
         name: providerId
         required: true
         type: integer
-      - description: tenant host
-        in: header
-        name: vhost
-        type: string
       responses:
         "200":
           description: OK
@@ -657,6 +811,14 @@ paths:
     get:
       description: get redirect uri list
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: tenant host
         in: header
         name: vhost
@@ -674,6 +836,14 @@ paths:
     post:
       description: create app redirect uri
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: tenant host
         in: header
         name: vhost
@@ -694,6 +864,14 @@ paths:
     delete:
       description: delete app
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: tenant host
         in: header
         name: vhost
@@ -713,6 +891,14 @@ paths:
     put:
       description: modify app
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: tenant host
         in: header
         name: vhost
@@ -761,6 +947,15 @@ paths:
   /api/quick/user-pools:
     get:
       description: list user pool
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       responses:
         "200":
           description: OK
@@ -770,6 +965,14 @@ paths:
     post:
       description: create user pool
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: body
         in: body
         name: bd
@@ -786,6 +989,14 @@ paths:
     delete:
       description: delete user pool
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: user pool id
         in: path
         name: poolId
@@ -800,6 +1011,14 @@ paths:
     get:
       description: list user pool
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: user pool id
         in: path
         name: poolId
@@ -814,6 +1033,14 @@ paths:
     put:
       description: modify user pool
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: user pool id
         in: path
         name: poolId
@@ -835,6 +1062,14 @@ paths:
     get:
       description: list users
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: user pool id
         in: path
         name: poolId
@@ -849,6 +1084,14 @@ paths:
     post:
       description: create user
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: user pool id
         in: path
         name: poolId
@@ -870,6 +1113,14 @@ paths:
     delete:
       description: delete user
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: user pool id
         in: path
         name: poolId
@@ -889,6 +1140,14 @@ paths:
     get:
       description: list user
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: user pool id
         in: path
         name: poolId
@@ -908,6 +1167,14 @@ paths:
     put:
       description: modify user
       parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
       - description: user pool id
         in: path
         name: poolId

@@ -36,21 +36,21 @@ export interface Tenant {
 }
 
 export async function fetchTenantList(appId:string):Promise<Root<Tenant[]>> {
-  return await GET<Tenant[]>(`/api/quick/apps/${appId}/tenants`);
+  return await GET<Tenant[]>(`/api/quick/apps/${appId}/tenants`, 'Get tenant list');
 }
 
 export async function fetchTenant(appId:string, tenantId:number):Promise<Root<TenantDetail>> {
-  return await GET<TenantDetail>(`/api/quick/apps/${appId}/tenants/${tenantId}`);
+  return await GET<TenantDetail>(`/api/quick/apps/${appId}/tenants/${tenantId}`, 'Get tenant');
 }
 
 export async function createTenant(appId:string, data:Tenant):Promise<Root<Tenant>> {
-  return await POST<Tenant>(`/api/quick/apps/${appId}/tenants`, data);
+  return await POST<Tenant>(`/api/quick/apps/${appId}/tenants`, data, 'Create tenant');
 }
 
 export async function modifyTenant(appId:string, tenantId:number, data:TenantDetail):Promise<Root<object>> {
-  return await PUT(`/api/quick/apps/${appId}/tenants/${tenantId}`, data);
+  return await PUT(`/api/quick/apps/${appId}/tenants/${tenantId}`, data, 'Modify tenant');
 }
 
-export async function deleteTenant(appId:string, tenantId:string):Promise<Root<object>> {
-  return await DELETE(`/api/quick/apps/${appId}/tenants/${tenantId}`);
+export async function deleteTenant(appId:string, tenantId:number):Promise<Root<object>> {
+  return await DELETE(`/api/quick/apps/${appId}/tenants/${tenantId}`, 'Delete tenant');
 }

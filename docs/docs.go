@@ -58,6 +58,20 @@ const docTemplate = `{
                     "app"
                 ],
                 "summary": "apps info",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -71,6 +85,18 @@ const docTemplate = `{
                 ],
                 "summary": "create app",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "description": "body",
                         "name": "bd",
@@ -98,6 +124,18 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -117,6 +155,18 @@ const docTemplate = `{
                 ],
                 "summary": "modify app",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "app id",
@@ -149,6 +199,18 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -172,6 +234,18 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -191,6 +265,18 @@ const docTemplate = `{
                 ],
                 "summary": "create app secret",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "app id",
@@ -223,6 +309,18 @@ const docTemplate = `{
                 ],
                 "summary": "create app secret",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "app id",
@@ -262,6 +360,18 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -292,6 +402,18 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -311,6 +433,18 @@ const docTemplate = `{
                 ],
                 "summary": "create tenant",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "app id",
@@ -345,6 +479,18 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -371,6 +517,18 @@ const docTemplate = `{
                 ],
                 "summary": "modify tenant",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "app id",
@@ -408,6 +566,18 @@ const docTemplate = `{
                 ],
                 "summary": "delete tenant",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "app id",
@@ -653,6 +823,18 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
                         "description": "tenant host",
                         "name": "vhost",
                         "in": "header"
@@ -671,6 +853,18 @@ const docTemplate = `{
                 ],
                 "summary": "create provider",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "tenant host",
@@ -703,17 +897,29 @@ const docTemplate = `{
                 "summary": "get provider details",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "provider id",
-                        "name": "providerId",
-                        "in": "path",
-                        "required": true
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
                     },
                     {
                         "type": "string",
                         "description": "tenant host",
                         "name": "vhost",
                         "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "provider id",
+                        "name": "providerId",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -796,6 +1002,18 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
                         "description": "tenant host",
                         "name": "vhost",
                         "in": "header"
@@ -820,6 +1038,18 @@ const docTemplate = `{
                 ],
                 "summary": "create app redirect uri",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "tenant host",
@@ -851,6 +1081,18 @@ const docTemplate = `{
                 ],
                 "summary": "modify app redirect uri",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "tenant host",
@@ -889,6 +1131,18 @@ const docTemplate = `{
                 ],
                 "summary": "delete app",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "tenant host",
@@ -953,6 +1207,20 @@ const docTemplate = `{
                     "user"
                 ],
                 "summary": "user pools info",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -966,6 +1234,18 @@ const docTemplate = `{
                 ],
                 "summary": "create user pool",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "description": "body",
                         "name": "bd",
@@ -992,6 +1272,18 @@ const docTemplate = `{
                 "summary": "user pool info",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
                         "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
@@ -1012,6 +1304,18 @@ const docTemplate = `{
                 ],
                 "summary": "modify user pool",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "integer",
                         "description": "user pool id",
@@ -1043,6 +1347,18 @@ const docTemplate = `{
                 "summary": "delete user pool",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
                         "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
@@ -1066,6 +1382,18 @@ const docTemplate = `{
                 "summary": "user info",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
                         "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
@@ -1086,6 +1414,18 @@ const docTemplate = `{
                 ],
                 "summary": "create user",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "integer",
                         "description": "user pool id",
@@ -1119,6 +1459,18 @@ const docTemplate = `{
                 "summary": "user info",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
                         "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
@@ -1146,6 +1498,18 @@ const docTemplate = `{
                 ],
                 "summary": "modify user",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "integer",
                         "description": "user pool id",
@@ -1183,6 +1547,18 @@ const docTemplate = `{
                 ],
                 "summary": "delete user",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "integer",
                         "description": "user pool id",
@@ -1268,8 +1644,18 @@ const docTemplate = `{
         },
         "request.AppReq": {
             "type": "object",
+            "required": [
+                "describe",
+                "host",
+                "icon",
+                "name",
+                "tag"
+            ],
             "properties": {
                 "describe": {
+                    "type": "string"
+                },
+                "host": {
                     "type": "string"
                 },
                 "icon": {
@@ -1277,6 +1663,9 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
+                },
+                "poolId": {
+                    "type": "integer"
                 },
                 "tag": {
                     "type": "string"
@@ -1296,7 +1685,10 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "scope": {
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },
@@ -1327,6 +1719,12 @@ const docTemplate = `{
         },
         "request.TenantReq": {
             "type": "object",
+            "required": [
+                "company",
+                "host",
+                "name",
+                "userPoolId"
+            ],
             "properties": {
                 "accessExpire": {
                     "type": "integer"
@@ -1353,22 +1751,22 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "isCode": {
-                    "type": "integer"
+                    "type": "boolean"
                 },
                 "isCredential": {
-                    "type": "integer"
+                    "type": "boolean"
                 },
                 "isDeviceFlow": {
-                    "type": "integer"
+                    "type": "boolean"
                 },
                 "isDisabled": {
-                    "type": "integer"
+                    "type": "boolean"
                 },
                 "isPassword": {
-                    "type": "integer"
+                    "type": "boolean"
                 },
                 "isRefresh": {
-                    "type": "integer"
+                    "type": "boolean"
                 },
                 "name": {
                     "type": "string"

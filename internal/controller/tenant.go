@@ -12,7 +12,9 @@ import (
 // @Schemes
 // @Description	get tenant list
 // @Tags		tenant
-// @Param		appId	path	string	true	"app id"
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
+// @Param		appId		path	string	true	"app id"
 // @Success		200
 // @Router		/api/quick/apps/{appId}/tenants [get]
 func (o Controller) listTenant(c *gin.Context) {
@@ -37,6 +39,8 @@ func (o Controller) listTenant(c *gin.Context) {
 // @Schemes
 // @Description	get tenant details
 // @Tags		tenant
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
 // @Param		appId		path	string	true	"app id"
 // @Param		tenantId	path	integer	true	"tenant id"
 // @Success		200
@@ -63,8 +67,10 @@ func (o Controller) getTenant(c *gin.Context) {
 // @Schemes
 // @Description	create tenant
 // @Tags		tenant
-// @Param		appId	path	string				true	"app id"
-// @Param		bd		body	request.TenantReq	true	"body"
+// @Param		X-User-ID	header	string				false	"user id"
+// @Param		X-Pool-ID	header	string				false	"user pool id"
+// @Param		appId		path	string				true	"app id"
+// @Param		bd			body	request.TenantReq	true	"body"
 // @Success		200
 // @Router		/api/quick/apps/{appId}/tenants [post]
 func (o Controller) createTenant(c *gin.Context) {
@@ -87,6 +93,8 @@ func (o Controller) createTenant(c *gin.Context) {
 // @Schemes
 // @Description	modify tenant
 // @Tags		tenant
+// @Param		X-User-ID	header	string				false	"user id"
+// @Param		X-Pool-ID	header	string				false	"user pool id"
 // @Param		appId		path	string				true	"app id"
 // @Param		tenantId	path	integer				true	"tenant id"
 // @Param		bd			body	request.TenantReq	true	"body"
@@ -111,6 +119,8 @@ func (o Controller) modifyTenant(c *gin.Context) {
 // @Schemes
 // @Description	delete tenant
 // @Tags		tenant
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
 // @Param		appId		path	string	true	"app id"
 // @Param		tenantId	path	integer	true	"tenant id"
 // @Success		200

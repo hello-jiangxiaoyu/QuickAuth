@@ -10,6 +10,8 @@ import (
 // @Schemes
 // @Description	list user pool
 // @Tags		user
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
 // @Success		200
 // @Router		/api/quick/user-pools [get]
 func (o Controller) listUserPool(c *gin.Context) {
@@ -25,7 +27,9 @@ func (o Controller) listUserPool(c *gin.Context) {
 // @Schemes
 // @Description	list user pool
 // @Tags		user
-// @Param		poolId	path	integer	true	"user pool id"
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
+// @Param		poolId		path	integer	true	"user pool id"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId} [get]
 func (o Controller) getUserPool(c *gin.Context) {
@@ -47,7 +51,9 @@ func (o Controller) getUserPool(c *gin.Context) {
 // @Schemes
 // @Description	create user pool
 // @Tags		user
-// @Param		bd		body	request.UserPoolReq	true	"body"
+// @Param		X-User-ID	header	string				false	"user id"
+// @Param		X-Pool-ID	header	string				false	"user pool id"
+// @Param		bd			body	request.UserPoolReq	true	"body"
 // @Success		200
 // @Router		/api/quick/user-pools [post]
 func (o Controller) createUserPool(c *gin.Context) {
@@ -68,8 +74,10 @@ func (o Controller) createUserPool(c *gin.Context) {
 // @Schemes
 // @Description	modify user pool
 // @Tags		user
-// @Param		poolId	path	integer				true	"user pool id"
-// @Param		bd		body	request.UserPoolReq	true	"body"
+// @Param		X-User-ID	header	string				false	"user id"
+// @Param		X-Pool-ID	header	string				false	"user pool id"
+// @Param		poolId		path	integer				true	"user pool id"
+// @Param		bd			body	request.UserPoolReq	true	"body"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId} [put]
 func (o Controller) modifyUserPool(c *gin.Context) {
@@ -90,7 +98,9 @@ func (o Controller) modifyUserPool(c *gin.Context) {
 // @Schemes
 // @Description	delete user pool
 // @Tags		user
-// @Param		poolId	path	integer	true	"user pool id"
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
+// @Param		poolId		path	integer	true	"user pool id"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId} [delete]
 func (o Controller) deleteUserPool(c *gin.Context) {

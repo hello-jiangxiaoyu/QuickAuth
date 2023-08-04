@@ -48,6 +48,20 @@
                     "app"
                 ],
                 "summary": "apps info",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -61,6 +75,18 @@
                 ],
                 "summary": "create app",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "description": "body",
                         "name": "bd",
@@ -88,6 +114,18 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -107,6 +145,18 @@
                 ],
                 "summary": "modify app",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "app id",
@@ -139,6 +189,18 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -162,6 +224,18 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -181,6 +255,18 @@
                 ],
                 "summary": "create app secret",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "app id",
@@ -213,6 +299,18 @@
                 ],
                 "summary": "create app secret",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "app id",
@@ -252,6 +350,18 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -282,6 +392,18 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -301,6 +423,18 @@
                 ],
                 "summary": "create tenant",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "app id",
@@ -335,6 +469,18 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -361,6 +507,18 @@
                 ],
                 "summary": "modify tenant",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "app id",
@@ -398,6 +556,18 @@
                 ],
                 "summary": "delete tenant",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "app id",
@@ -643,6 +813,18 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
                         "description": "tenant host",
                         "name": "vhost",
                         "in": "header"
@@ -661,6 +843,18 @@
                 ],
                 "summary": "create provider",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "tenant host",
@@ -693,17 +887,29 @@
                 "summary": "get provider details",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "provider id",
-                        "name": "providerId",
-                        "in": "path",
-                        "required": true
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
                     },
                     {
                         "type": "string",
                         "description": "tenant host",
                         "name": "vhost",
                         "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "provider id",
+                        "name": "providerId",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -786,6 +992,18 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
                         "description": "tenant host",
                         "name": "vhost",
                         "in": "header"
@@ -810,6 +1028,18 @@
                 ],
                 "summary": "create app redirect uri",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "tenant host",
@@ -841,6 +1071,18 @@
                 ],
                 "summary": "modify app redirect uri",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "tenant host",
@@ -879,6 +1121,18 @@
                 ],
                 "summary": "delete app",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "string",
                         "description": "tenant host",
@@ -943,6 +1197,20 @@
                     "user"
                 ],
                 "summary": "user pools info",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -956,6 +1224,18 @@
                 ],
                 "summary": "create user pool",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "description": "body",
                         "name": "bd",
@@ -982,6 +1262,18 @@
                 "summary": "user pool info",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
                         "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
@@ -1002,6 +1294,18 @@
                 ],
                 "summary": "modify user pool",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "integer",
                         "description": "user pool id",
@@ -1033,6 +1337,18 @@
                 "summary": "delete user pool",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
                         "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
@@ -1056,6 +1372,18 @@
                 "summary": "user info",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
                         "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
@@ -1076,6 +1404,18 @@
                 ],
                 "summary": "create user",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "integer",
                         "description": "user pool id",
@@ -1109,6 +1449,18 @@
                 "summary": "user info",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
                         "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
@@ -1136,6 +1488,18 @@
                 ],
                 "summary": "modify user",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "integer",
                         "description": "user pool id",
@@ -1173,6 +1537,18 @@
                 ],
                 "summary": "delete user",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
                     {
                         "type": "integer",
                         "description": "user pool id",
@@ -1258,8 +1634,18 @@
         },
         "request.AppReq": {
             "type": "object",
+            "required": [
+                "describe",
+                "host",
+                "icon",
+                "name",
+                "tag"
+            ],
             "properties": {
                 "describe": {
+                    "type": "string"
+                },
+                "host": {
                     "type": "string"
                 },
                 "icon": {
@@ -1267,6 +1653,9 @@
                 },
                 "name": {
                     "type": "string"
+                },
+                "poolId": {
+                    "type": "integer"
                 },
                 "tag": {
                     "type": "string"
@@ -1286,7 +1675,10 @@
                     "type": "integer"
                 },
                 "scope": {
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },
@@ -1317,6 +1709,12 @@
         },
         "request.TenantReq": {
             "type": "object",
+            "required": [
+                "company",
+                "host",
+                "name",
+                "userPoolId"
+            ],
             "properties": {
                 "accessExpire": {
                     "type": "integer"
@@ -1343,22 +1741,22 @@
                     "type": "integer"
                 },
                 "isCode": {
-                    "type": "integer"
+                    "type": "boolean"
                 },
                 "isCredential": {
-                    "type": "integer"
+                    "type": "boolean"
                 },
                 "isDeviceFlow": {
-                    "type": "integer"
+                    "type": "boolean"
                 },
                 "isDisabled": {
-                    "type": "integer"
+                    "type": "boolean"
                 },
                 "isPassword": {
-                    "type": "integer"
+                    "type": "boolean"
                 },
                 "isRefresh": {
-                    "type": "integer"
+                    "type": "boolean"
                 },
                 "name": {
                     "type": "string"

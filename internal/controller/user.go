@@ -12,7 +12,9 @@ import (
 // @Schemes
 // @Description	list users
 // @Tags		user
-// @Param		poolId	path	integer	true	"user pool id"
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
+// @Param		poolId		path	integer	true	"user pool id"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users [get]
 func (o Controller) listUser(c *gin.Context) {
@@ -34,8 +36,10 @@ func (o Controller) listUser(c *gin.Context) {
 // @Schemes
 // @Description	list user
 // @Tags		user
-// @Param		poolId	path	integer	true	"user pool id"
-// @Param		userId	path	string	true	"user id"
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
+// @Param		poolId		path	integer	true	"user pool id"
+// @Param		userId		path	string	true	"user id"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users/{userId} [get]
 func (o Controller) getUser(c *gin.Context) {
@@ -57,8 +61,10 @@ func (o Controller) getUser(c *gin.Context) {
 // @Schemes
 // @Description	create user
 // @Tags		user
-// @Param		poolId	path	integer			true	"user pool id"
-// @Param		bd		body	request.UserReq	true	"body"
+// @Param		X-User-ID	header	string			false	"user id"
+// @Param		X-Pool-ID	header	string			false	"user pool id"
+// @Param		poolId		path	integer			true	"user pool id"
+// @Param		bd			body	request.UserReq	true	"body"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users [post]
 func (o Controller) createUser(c *gin.Context) {
@@ -87,9 +93,11 @@ func (o Controller) createUser(c *gin.Context) {
 // @Schemes
 // @Description	modify user
 // @Tags		user
-// @Param		poolId	path	integer			true	"user pool id"
-// @Param		userId	path	string			true	"user id"
-// @Param		bd		body	request.UserReq	true	"body"
+// @Param		X-User-ID	header	string			false	"user id"
+// @Param		X-Pool-ID	header	string			false	"user pool id"
+// @Param		poolId		path	integer			true	"user pool id"
+// @Param		userId		path	string			true	"user id"
+// @Param		bd			body	request.UserReq	true	"body"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users/{userId} [put]
 func (o Controller) modifyUser(c *gin.Context) {
@@ -110,8 +118,10 @@ func (o Controller) modifyUser(c *gin.Context) {
 // @Schemes
 // @Description	delete user
 // @Tags		user
-// @Param		poolId	path	integer	true	"user pool id"
-// @Param		userId	path	string	true	"user id"
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
+// @Param		poolId		path	integer	true	"user pool id"
+// @Param		userId		path	string	true	"user id"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users/{userId} [delete]
 func (o Controller) deleteUser(c *gin.Context) {

@@ -10,7 +10,9 @@ import (
 // @Schemes
 // @Description	list provider info
 // @Tags		provider
-// @Param		vhost	header	string	false	"tenant host"
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
+// @Param		vhost		header	string	false	"tenant host"
 // @Success		200
 // @Router		/api/quick/providers [get]
 func (o Controller) listProvider(c *gin.Context) {
@@ -32,8 +34,10 @@ func (o Controller) listProvider(c *gin.Context) {
 // @Schemes
 // @Description	get provider details
 // @Tags		provider
-// @Param		providerId	path	integer	true	"provider id"
+// @Param		X-User-ID	header	string	false	"user id"
+// @Param		X-Pool-ID	header	string	false	"user pool id"
 // @Param		vhost		header	string	false	"tenant host"
+// @Param		providerId	path	integer	true	"provider id"
 // @Success		200
 // @Router		/api/quick/providers/{providerId} [get]
 func (o Controller) getProvider(c *gin.Context) {
@@ -55,8 +59,10 @@ func (o Controller) getProvider(c *gin.Context) {
 // @Schemes
 // @Description	create provider
 // @Tags		provider
-// @Param		vhost	header	string				false	"tenant host"
-// @Param		bd		body	request.ProviderReq	true	"body"
+// @Param		X-User-ID	header	string				false	"user id"
+// @Param		X-Pool-ID	header	string				false	"user pool id"
+// @Param		vhost		header	string				false	"tenant host"
+// @Param		bd			body	request.ProviderReq	true	"body"
 // @Success		200
 // @Router		/api/quick/providers [post]
 func (o Controller) createProvider(c *gin.Context) {
