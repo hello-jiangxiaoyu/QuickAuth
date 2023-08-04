@@ -21,6 +21,7 @@ func errorResponse(ctx context.Context, code int, errCode int, err error, msg st
 		return
 	}
 
+	c.Header("X-Request-Id", c.GetString("requestID"))
 	if len(isArray) == 0 {
 		c.JSON(code, &Response{Code: errCode, Msg: msg, Data: struct{}{}})
 	} else {

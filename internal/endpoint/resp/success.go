@@ -31,6 +31,7 @@ func success(ctx context.Context, data any, total int, isArray bool) {
 		return
 	}
 
+	c.Header("X-Request-Id", c.GetString("requestID"))
 	if !isArray {
 		c.JSON(http.StatusOK, &Response{Code: CodeSuccess, Msg: MsgSuccess, Data: data})
 	} else {
