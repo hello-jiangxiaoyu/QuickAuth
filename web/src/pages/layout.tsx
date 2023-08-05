@@ -2,7 +2,7 @@ import React, {ReactNode, useEffect} from 'react';
 import { Layout, Spin } from '@arco-design/web-react';
 import Navbar from '@/components/NavBar';
 import ApplicationSiderWithRouter from "@/components/SiderMenu";
-import Footer from '@/components/Footer';
+import Footer from 'components/Widget/Footer';
 import NoAccess from '@/pages/exception/403';
 import { useRouter } from 'next/router';
 import styles from '@/style/layout.module.less';

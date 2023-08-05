@@ -23,8 +23,8 @@ export default function PoolSiderWithRouter() {
   }
 
   const poolsRoutes: IRoute[] = [
-    {name: 'menu.user', key: `/pools/users/`, icon: <IconIdcard style={iconStyle}/>},
     {name: 'menu.pool', key: `/pools/`, icon: <IconUserGroup style={iconStyle}/>},
+    {name: 'menu.user', key: `/pools/users/`, icon: <IconIdcard style={iconStyle}/>},
   ];
   return (
     <Layout.Sider

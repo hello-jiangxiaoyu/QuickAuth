@@ -80,7 +80,7 @@ func (s *Service) GetUserPool(poolId int64) (*model.UserPool, error) {
 
 func (s *Service) ListUserPool() ([]model.UserPool, error) {
 	var pool []model.UserPool
-	if err := s.db.Select("id", "name", "created_at").Find(&pool).Error; err != nil {
+	if err := s.db.Select("id", "name", "describe", "created_at").Find(&pool).Error; err != nil {
 		return nil, err
 	}
 	return pool, nil

@@ -62,7 +62,7 @@ function Navbar() {
                   onClickMenuItem={(key)=>setSelectedKeys([key])}
             >
               <Menu.Item key='1'><Link href={'/applications/'}>应用管理</Link></Menu.Item>
-              <Menu.Item key='2'><Link href={'/pools/'}>用户池管理</Link></Menu.Item>
+              <Menu.Item key='2'><Link href={'/pools/'}>用户管理</Link></Menu.Item>
             </Menu>
           </div>:
           <ApplicationSelector/>}

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Footer from '@/components/Footer';
+import Footer from 'components/Widget/Footer';
 import LoginForm from './form';
 import styles from './style/index.module.less';
 
