@@ -18,7 +18,14 @@ import NProgress from 'nprogress';
 import {checkLogin} from '@/store/localStorage';
 import changeTheme from '@/utils/changeTheme';
 
-import {dispatchApp, dispatchAppList, dispatchTenant, dispatchTenantList, store} from '@/store/redux';
+import {
+  dispatchApp,
+  dispatchAppList,
+  dispatchMenuCollapse,
+  dispatchTenant,
+  dispatchTenantList,
+  store
+} from '@/store/redux';
 import {getRouterPara} from "@/utils/stringTools";
 import {TenantDetail} from "@/http/tenant";
 import api from "@/http/api";
@@ -69,6 +76,13 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
       });
     }
   }, [appId]);
+  useEffect(() => { // 菜单栏收起和展开
+    if (router.pathname === '/applications') {
+      dispatchMenuCollapse(true);
+    } else {
+      dispatchMenuCollapse(false);
+    }
+  }, [router.pathname]);
 
   useEffect(() => { // 页面加载进度条
     const handleStart = () => {

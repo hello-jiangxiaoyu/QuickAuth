@@ -32,6 +32,7 @@ export const DispatchTenant     = 'update-tenant';      // 更新当前租户信
 export const DispatchCollapsed  = 'set-menu-collapsed'; // 设置侧边栏收起或展开
 
 export default function reducer(state = initialState, action) {
+  console.log("--dispatch: ", action.type);
   switch (action.type) {
     case DispatchAppList: {
       const { appList } = action.payload;
@@ -91,7 +92,7 @@ export function dispatchTenant(data:TenantDetail) {
 }
 
 // 设置侧边栏收起或展开
-export function dispatchPoolMenuCollapse(collapsed:boolean) {
+export function dispatchMenuCollapse(collapsed:boolean) {
   const menuWidth = collapsed ? env.menuCollapseWith : env.menuWidth;
   store.dispatch({
     type: DispatchCollapsed,

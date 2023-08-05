@@ -2,22 +2,21 @@ import React, {useState} from 'react';
 import {IconUserGroup, IconIdcard, IconMenuFold, IconMenuUnfold} from "@arco-design/web-react/icon";
 import {IRoute} from "@/components/SiderMenu/index";
 import {Layout, Menu} from "@arco-design/web-react";
-import mobxStore from "@/store/mobx";
 import styles from "@/style/layout.module.less";
 import env from "@/store/env.json";
 import Link from "next/link";
 import useLocale from "@/utils/useLocale";
 import {useRouter} from "next/router";
-import {getRouterPara} from "@/utils/stringTools";
-import {observer} from "mobx-react";
+import {useSelector} from "react-redux";
+import {dispatchMenuCollapse, GlobalState} from "@/store/redux";
 
 const iconStyle = {fontSize:'18px', verticalAlign:'text-bottom'};
 
-function PoolSiderWithRouter() {
+export default function PoolSiderWithRouter() {
   const locale = useLocale();
   const router = useRouter();
-  const appId = getRouterPara(router.query.appId);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([router.asPath]);
+  const {collapsed} = useSelector((state: GlobalState) => state);
 
   if (!router.pathname.startsWith('/pools')) {
     return <></>;
@@ -29,12 +28,12 @@ function PoolSiderWithRouter() {
   ];
   return (
     <Layout.Sider
-      collapsed={mobxStore.menuCollapsed} onCollapse={mobxStore.setCollapsed} collapsible
+      collapsed={collapsed} onCollapse={dispatchMenuCollapse} collapsible
       className={styles['layout-sider']} style={{ paddingTop: 60 }} width={env.menuWidth}
       collapsedWidth={env.menuCollapseWith} breakpoint="xl" trigger={null}
     >
       <div className={styles['menu-wrapper']}>
-        <Menu collapse={mobxStore.menuCollapsed} selectedKeys={selectedKeys}
+        <Menu collapse={collapsed} selectedKeys={selectedKeys}
               onClickMenuItem={(key)=>setSelectedKeys([key])}
         >
           {poolsRoutes.map(route => (
@@ -46,11 +45,9 @@ function PoolSiderWithRouter() {
           ))}
         </Menu>
       </div>
-      <div className={styles['collapse-btn']} onClick={mobxStore.switchCollapsed}>
-        {mobxStore.menuCollapsed ? <IconMenuUnfold /> : <IconMenuFold />}
+      <div className={styles['collapse-btn']} onClick={()=>dispatchMenuCollapse(!collapsed)}>
+        {collapsed ? <IconMenuUnfold /> : <IconMenuFold />}
       </div>
     </Layout.Sider>
   );
 }
-
-export default observer(PoolSiderWithRouter);

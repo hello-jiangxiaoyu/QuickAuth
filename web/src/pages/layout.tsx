@@ -9,10 +9,14 @@ import styles from '@/style/layout.module.less';
 import mobxStore from "@/store/mobx"
 import {observer} from "mobx-react";
 import PoolSiderWithRouter from "@/components/SiderMenu/Pool";
+import {useSelector} from "react-redux";
+import {GlobalState} from "@/store/redux";
 
 function PageLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = router.pathname;
+  const {menuWidth} = useSelector((state: GlobalState) => state);
+
   return (
     <Layout className={styles.layout}>
       <div className={styles['layout-navbar']}>
@@ -22,7 +26,7 @@ function PageLayout({ children }: { children: ReactNode }) {
         <Layout>
           <ApplicationSiderWithRouter></ApplicationSiderWithRouter>
           <PoolSiderWithRouter></PoolSiderWithRouter>
-          <Layout className={styles['layout-content']} style={{ paddingLeft:mobxStore.menuWidth, paddingTop:60 }}>
+          <Layout className={styles['layout-content']} style={{ paddingLeft:menuWidth, paddingTop:60 }}>
             <div className={styles['layout-content-wrapper']}>
               <Layout.Content>
                 {pathname !== '/_error' ? children : <NoAccess />/*routeMap.current.has(pathname) ? children : <NoAccess />*/}

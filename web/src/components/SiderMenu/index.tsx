@@ -4,11 +4,11 @@ import Link from "next/link";
 import {IconApps, IconHistory, IconHome, IconLock, IconMenuFold, IconMenuUnfold, IconMessage, IconSafe} from "@arco-design/web-react/icon";
 import useLocale from "@/utils/useLocale";
 import styles from "@/style/layout.module.less";
-import mobxStore from "@/store/mobx";
 import env from "@/store/env.json";
-import {observer} from "mobx-react";
 import {getRouterPara, removeQueryParams} from "@/utils/stringTools";
 import {useRouter} from "next/router";
+import {useSelector} from "react-redux";
+import {dispatchMenuCollapse, GlobalState} from "@/store/redux";
 
 export type IRoute = {
   name: string;
@@ -19,7 +19,7 @@ export type IRoute = {
 
 const iconStyle = {fontSize:'18px', verticalAlign:'text-bottom'}
 
-function ApplicationSiderWithRouter() {
+export default function ApplicationSiderWithRouter() {
   const locale = useLocale();
   const router = useRouter();
   const appId = getRouterPara(router.query.appId);
@@ -28,10 +28,8 @@ function ApplicationSiderWithRouter() {
     setSelectedKeys([removeQueryParams(router.asPath)]);
   }, [router.asPath])
 
+  const {collapsed} = useSelector((state: GlobalState) => state);
   if (appId === "") {
-    if (router.pathname === '/applications') {
-      mobxStore.setCollapsed(true);
-    }
     return <></>;
   }
 
@@ -46,12 +44,12 @@ function ApplicationSiderWithRouter() {
 
   return (
     <Layout.Sider
-      collapsed={mobxStore.menuCollapsed} onCollapse={mobxStore.setCollapsed} collapsible
+      collapsed={collapsed} onCollapse={dispatchMenuCollapse} collapsible
       className={styles['layout-sider']} style={{ paddingTop: 60 }} width={env.menuWidth}
       collapsedWidth={env.menuCollapseWith} breakpoint="xl" trigger={null}
     >
       <div className={styles['menu-wrapper']}>
-        <Menu collapse={mobxStore.menuCollapsed} selectedKeys={selectedKeys}
+        <Menu collapse={collapsed} selectedKeys={selectedKeys}
               onClickMenuItem={(key)=>setSelectedKeys([key])}
         >
           {sideRoutes.map(route => (
@@ -63,11 +61,9 @@ function ApplicationSiderWithRouter() {
           ))}
         </Menu>
       </div>
-      <div className={styles['collapse-btn']} onClick={mobxStore.switchCollapsed}>
-        {mobxStore.menuCollapsed ? <IconMenuUnfold /> : <IconMenuFold />}
+      <div className={styles['collapse-btn']} onClick={()=>dispatchMenuCollapse(!collapsed)}>
+        {collapsed ? <IconMenuUnfold /> : <IconMenuFold />}
       </div>
     </Layout.Sider>
   );
 }
-
-export default observer(ApplicationSiderWithRouter);
