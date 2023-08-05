@@ -32,7 +32,7 @@ export const DispatchTenant     = 'update-tenant';      // 更新当前租户信
 export const DispatchCollapsed  = 'set-menu-collapsed'; // 设置侧边栏收起或展开
 
 export default function reducer(state = initialState, action) {
-  console.log("--dispatch: ", action.type);
+  console.log("--dispatch: ", action.type, action.payload);
   switch (action.type) {
     case DispatchAppList: {
       const { appList } = action.payload;

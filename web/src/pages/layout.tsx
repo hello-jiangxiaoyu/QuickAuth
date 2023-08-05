@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, {ReactNode, useEffect} from 'react';
 import { Layout, Spin } from '@arco-design/web-react';
 import Navbar from '@/components/NavBar';
 import ApplicationSiderWithRouter from "@/components/SiderMenu";
@@ -10,12 +10,18 @@ import mobxStore from "@/store/mobx"
 import {observer} from "mobx-react";
 import PoolSiderWithRouter from "@/components/SiderMenu/Pool";
 import {useSelector} from "react-redux";
-import {GlobalState} from "@/store/redux";
+import {dispatchMenuCollapse, GlobalState} from "@/store/redux";
 
 function PageLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = router.pathname;
-  const {menuWidth} = useSelector((state: GlobalState) => state);
+  const {menuWidth, collapsed} = useSelector((state: GlobalState) => state);
+
+  useEffect(() => { // 菜单栏收起和展开
+    if ((router.pathname === '/applications' && !collapsed) || (router.pathname !== '/applications' && collapsed)) {
+        dispatchMenuCollapse(!collapsed);
+    }
+  }, [router.pathname]);
 
   return (
     <Layout className={styles.layout}>
