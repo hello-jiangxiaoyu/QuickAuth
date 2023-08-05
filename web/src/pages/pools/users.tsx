@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Card, Divider, Message, Select, Table, TableColumnProps} from "@arco-design/web-react";
+import {Button, Card, Message, Select, Table, TableColumnProps} from "@arco-design/web-react";
 import {Pool, User} from "@/http/users";
 import api from "@/http/api";
 

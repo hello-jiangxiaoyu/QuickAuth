@@ -6,25 +6,16 @@ import '@/style/global.less';
 import {ConfigProvider, Message} from '@arco-design/web-react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-
 import cookies from 'next-cookies';
 import Router, { useRouter } from 'next/router';
 import useStorage from '@/utils/useStorage';
 import { GlobalContext } from '@/context';
 import {Provider} from 'react-redux';
-
 import Layout from './layout';
 import NProgress from 'nprogress';
 import {checkLogin} from '@/store/localStorage';
 import changeTheme from '@/utils/changeTheme';
-
-import {
-  dispatchApp,
-  dispatchAppList,
-  dispatchTenant,
-  dispatchTenantList,
-  store
-} from '@/store/redux';
+import {dispatchApp, dispatchAppList, dispatchTenant, dispatchTenantList, store} from '@/store/redux';
 import {getRouterPara} from "@/utils/stringTools";
 import {TenantDetail} from "@/http/tenant";
 import api from "@/http/api";

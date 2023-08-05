@@ -42,7 +42,7 @@ func (s *Service) CreatTenant(t *model.Tenant) (*model.Tenant, error) {
 }
 
 func (s *Service) ModifyTenant(tenantId int64, t *model.Tenant) error {
-	if err := s.db.Select("app_id", "user_pool_id", "type", "name", "host", "company", "grant_type", "describe",
+	if err := s.db.Select("type", "name", "host", "company", "grant_type", "describe",
 		"is_code", "is_refresh", "is_password", "is_credential", "is_device_flow",
 		"code_expire", "id_expire", "access_expire", "refresh_expire").
 		Where("id = ? AND app_id = ?", tenantId, t.AppID).Updates(t).Error; err != nil {

@@ -109,4 +109,5 @@ CREATE TABLE IF NOT EXISTS providers (
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS idx_provider_tenant_type_id ON providers(tenant_id, app_id);
+CREATE INDEX IF NOT EXISTS idx_provider_type ON providers(type);
 

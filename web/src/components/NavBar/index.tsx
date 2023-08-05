@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Tooltip, Avatar, Select, Dropdown, Menu, Divider, Message, Button, Popover} from '@arco-design/web-react';
+import {Tooltip, Avatar, Select, Dropdown, Menu, Divider, Message, Popover} from '@arco-design/web-react';
 import {IconLanguage, IconNotification, IconSunFill, IconMoonFill, IconPoweroff} from '@arco-design/web-react/icon';
 import ApplicationSelector from "@/components/NavBar/AppSwitch";
 import MessageBox from '@/components/MessageBox';
