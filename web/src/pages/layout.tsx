@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import styles from '@/style/layout.module.less';
 import mobxStore from "@/store/mobx"
 import {observer} from "mobx-react";
+import PoolSiderWithRouter from "@/components/SiderMenu/Pool";
 
 function PageLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
@@ -20,6 +21,7 @@ function PageLayout({ children }: { children: ReactNode }) {
       {mobxStore.userLoading ? (<Spin className={styles['spin']} />) : (
         <Layout>
           <ApplicationSiderWithRouter></ApplicationSiderWithRouter>
+          <PoolSiderWithRouter></PoolSiderWithRouter>
           <Layout className={styles['layout-content']} style={{ paddingLeft:mobxStore.menuWidth, paddingTop:60 }}>
             <div className={styles['layout-content-wrapper']}>
               <Layout.Content>

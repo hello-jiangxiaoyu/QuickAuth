@@ -1,13 +1,5 @@
 import React, {useState} from 'react';
-import {
-  IconApps,
-  IconHistory,
-  IconHome,
-  IconLock, IconMenuFold,
-  IconMenuUnfold,
-  IconMessage,
-  IconSafe
-} from "@arco-design/web-react/icon";
+import {IconUserGroup, IconIdcard, IconMenuFold, IconMenuUnfold} from "@arco-design/web-react/icon";
 import {IRoute} from "@/components/SiderMenu/index";
 import {Layout, Menu} from "@arco-design/web-react";
 import mobxStore from "@/store/mobx";
@@ -16,21 +8,24 @@ import env from "@/store/env.json";
 import Link from "next/link";
 import useLocale from "@/utils/useLocale";
 import {useRouter} from "next/router";
+import {getRouterPara} from "@/utils/stringTools";
+import {observer} from "mobx-react";
 
 const iconStyle = {fontSize:'18px', verticalAlign:'text-bottom'};
 
-export default function PoolSiderWithRouter() {
+function PoolSiderWithRouter() {
   const locale = useLocale();
   const router = useRouter();
+  const appId = getRouterPara(router.query.appId);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([router.asPath]);
 
+  if (!router.pathname.startsWith('/pools')) {
+    return <></>;
+  }
+
   const poolsRoutes: IRoute[] = [
-    {name: 'menu.dashboard', key: `/pools/dashboard/`, icon: <IconHome style={iconStyle}/>},
-    {name: 'menu.applications', key: `/pools/`, icon: <IconApps style={iconStyle}/>},
-    {name: 'menu.authentication', key: `/pools/authentication/`, icon: <IconSafe style={iconStyle}/>},
-    {name: 'menu.messages', key: `/pools/messages/`, icon: <IconMessage style={iconStyle}/>},
-    {name: 'menu.authorization', key: `/pools/authorization/`, icon: <IconLock style={iconStyle}/>},
-    {name: 'menu.audit', key: `/pools/audit/`, icon: <IconHistory style={iconStyle}/>},
+    {name: 'menu.user', key: `/pools/users/`, icon: <IconIdcard style={iconStyle}/>},
+    {name: 'menu.pool', key: `/pools/`, icon: <IconUserGroup style={iconStyle}/>},
   ];
   return (
     <Layout.Sider
@@ -57,3 +52,5 @@ export default function PoolSiderWithRouter() {
     </Layout.Sider>
   );
 }
+
+export default observer(PoolSiderWithRouter);

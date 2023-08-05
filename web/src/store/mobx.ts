@@ -27,7 +27,8 @@ class GlobalStatus {
   menuWidth = env.menuWidth;
   switchCollapsed = () => {this.setCollapsed(!this.menuCollapsed)}
   setCollapsed = (collapsed: boolean) => {
-    this.menuWidth = collapsed ? env.menuCollapseWith : env.menuWidth; this.menuCollapsed = collapsed;
+    this.menuWidth = collapsed ? env.menuCollapseWith : env.menuWidth;
+    this.menuCollapsed = collapsed;
   }
 }
 

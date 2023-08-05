@@ -29,7 +29,9 @@ function ApplicationSiderWithRouter() {
   }, [router.asPath])
 
   if (appId === "") {
-    mobxStore.setCollapsed(true);
+    if (router.pathname === '/applications') {
+      mobxStore.setCollapsed(true);
+    }
     return <></>;
   }
 

@@ -25,9 +25,9 @@ function Navbar() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setUserStatus] = useStorage('userStatus');
   const { setLang, lang, theme, setTheme } = useContext(GlobalContext);
-  const [selectedKeys, setSelectedKeys] = useState<string[]>([router.pathname!=='/pools'? '1':'2']);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([router.pathname.startsWith('/applications')? '1':'2']);
   useEffect(() => {
-    setSelectedKeys([router.pathname!=='/pools'? '1':'2']);
+    setSelectedKeys([router.pathname.startsWith('/applications')? '1':'2']);
   }, [router.pathname])
   function onMenuItemClick(key) {
     if (key === 'logout') {
