@@ -23,19 +23,22 @@ type IdProvider interface {
 }
 
 func GetIdProvider(typ string, clientId string, clientSecret string, redirectUrl string) IdProvider {
-	if typ == "github" {
+	switch typ {
+	case "github":
 		return NewGithubIdProvider(clientId, clientSecret, redirectUrl)
-	} else if typ == "qq" {
+	case "qq":
 		return NewQqIdProvider(clientId, clientSecret, redirectUrl)
-	} else if typ == "wechat" {
+	case "wechat":
 		return NewWeChatIdProvider(clientId, clientSecret, redirectUrl)
-	} else if typ == "dingtalk" {
-		return NewDingTalkIdProvider(clientId, clientSecret, redirectUrl)
-	} else if typ == "wecom" {
+	case "wecom":
 		return NewWeComInternalIdProvider(clientId, clientSecret, redirectUrl)
-	} else if typ == "lark" {
+	case "dingtalk":
+		return NewDingTalkIdProvider(clientId, clientSecret, redirectUrl)
+	case "lark":
 		return NewLarkIdProvider(clientId, clientSecret, redirectUrl)
+	case "google":
+		return NewGoogleIdProvider(clientId, clientSecret, redirectUrl)
+	default:
+		return nil
 	}
-
-	return nil
 }
