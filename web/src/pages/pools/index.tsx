@@ -3,7 +3,9 @@ import {Card} from "@arco-design/web-react";
 
 function Page() {
   return (
-    <Card style={{minHeight:'80vh', width:'100%'}}></Card>
+    <Card style={{minHeight:'80vh', width:'100%'}}>
+      User pool
+    </Card>
   );
 }
 

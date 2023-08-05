@@ -26,6 +26,7 @@ export interface TenantDetail {
 }
 
 export interface Tenant {
+  key: number;
   id: number;
   appId: string;
   userPoolId: number;

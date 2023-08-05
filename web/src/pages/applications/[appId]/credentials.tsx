@@ -4,21 +4,35 @@ import Secret, {deleteSecret} from "@/http/secret";
 import {useRouter} from "next/router";
 import {getRouterPara} from "@/utils/stringTools";
 import api from "@/http/api";
-import CreateSecretDialog from "@/components/Dialog/secret";
+import CreateSecretDialog from "@/components/Dialog/Secret";
 
 function ClientCredential() {
   const router = useRouter();
   const appId = getRouterPara(router.query.appId);
   const [secrets, setSecrets] = useState([] as Array<Secret>);
 
+  function updateSecretList(appId:string) {
+    api.fetchSecretList(appId).then(r => {
+      r.data.forEach((obj, index) => {
+        obj.key = index + 1;
+      });
+      setSecrets(r.data);
+    }).catch(e => Message.error(e.toString()));
+  }
+
+  useEffect(() => {
+    updateSecretList(appId);
+  }, [appId]);
+
   function onDeleteSecret(record:Secret) {
     deleteSecret(appId, record.id).then(() => {
       Message.success("Success !")
-      api.fetchSecretList(appId).then(r => setSecrets(r.data)).catch(e => Message.error(e.toString()));
+      updateSecretList(appId);
     }).catch(e => Message.error(e.toString()));
   }
 
   const columns: TableColumnProps[] = [
+    {title: '序号', dataIndex: 'key', align:'center'},
     {title: 'App Id', dataIndex: 'appId', align:'center'},
     {title: '密钥', dataIndex: 'secret', align:'center'},
     {title: '创建时间', dataIndex: 'createdAt', align:'center'},
@@ -30,9 +44,6 @@ function ClientCredential() {
       )},
   ];
 
-  useEffect(() => {
-    api.fetchSecretList(appId).then(r => setSecrets(r.data)).catch(e => Message.error(e.toString()));
-  }, [appId]);
 
   const [visible, setVisible] = useState(false);
   return (

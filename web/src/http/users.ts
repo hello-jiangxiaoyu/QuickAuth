@@ -1,5 +1,5 @@
 import mobxStore from "@/store/mobx";
-import {Root, GET} from "@/http/common";
+import {Root, GET, DELETE, PUT, POST} from "@/http/common";
 
 export function fetchUserInfo() {
   mobxStore.setUserLoading(false)
@@ -14,17 +14,29 @@ export function fetchUserInfo() {
     }, userLoading: false });
 }
 
-export interface Keys {
-  use: string;
-  kty: string;
-  kid: string;
-  alg: string;
-  n: string;
-  e: string;
+export interface Pool {
+  id: number;
+  name: string;
+  describe: string;
+  isDisabled: boolean;
 }
 
-export async function fetchOIDC():Promise<Root<Keys[]>> {
-  return await GET<Keys[]>('/api/quick/.well-known/openid-configuration')
+export async function fetchUserPoolList():Promise<Root<Pool[]>> {
+  return await GET<Pool[]>('/api/quick/user-pools')
 }
 
+export async function fetchUserPool(poolId:number):Promise<Root<Pool[]>> {
+  return await GET<Pool[]>(`/api/quick/user-pools/${poolId}`)
+}
 
+export async function createUserPool(data:Pool):Promise<Root<Pool>> {
+  return await POST<Pool>(`/api/quick/user-pools`, data)
+}
+
+export async function modifyUserPool(poolId:number, data:Pool):Promise<Root<object>> {
+  return await PUT(`/api/quick/user-pools/${poolId}`, data)
+}
+
+export async function deleteUserPool(poolId:number):Promise<Root<object>> {
+  return await DELETE(`/api/quick/user-pools/${poolId}`)
+}

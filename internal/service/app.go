@@ -60,6 +60,14 @@ func (s *Service) CreateApp(app *model.App, host string, poolId int64) (*model.A
 			Create(&t).Error; err != nil {
 			return errors.WithMessage(err, "create default tenant err")
 		}
+		if err := tx.Create(&model.AppSecret{
+			AppID:    app.ID,
+			Secret:   safe.Rand62(63),
+			Scope:    []string{"read_user"},
+			Describe: "default secret",
+		}).Error; err != nil {
+			return errors.WithMessage(err, "create default secret err")
+		}
 		return nil
 	})
 

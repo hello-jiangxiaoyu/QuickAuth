@@ -5,7 +5,7 @@ import MyIcon from "@/components/Widget/StringIcon";
 import {IconPlusCircle} from "@arco-design/web-react/icon";
 import {dispatchAppList} from "@/store/redux";
 import api from "@/http/api";
-import CreateAppDialog from "@/components/Dialog/app";
+import CreateAppDialog from "@/components/Dialog/App";
 
 // 应用展示选项卡
 export default function ApplicationCard(props: { appId: string, name: string, type: string, icon?: string}) {

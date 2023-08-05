@@ -28,6 +28,9 @@ async function updateAppAndTenant(appId:string):Promise<string> {
   dispatchApp(respApp.data);
 
   const respTenantList = await api.fetchTenantList(appId);
+  respTenantList.data.forEach((obj, index) => {
+    obj.key = index + 1;
+  });
   dispatchTenantList(respTenantList.data);
 
   if (respTenantList.data.length === 0) {

@@ -26,3 +26,11 @@ export function replaceUriAppId(appId: string, uri: string): string {
 
   return uri;
 }
+
+export function removeQueryParams(uri: string): string {
+  const index = uri.indexOf('?');
+  if (index !== -1) {
+    return uri.substring(0, index);
+  }
+  return uri;
+}

@@ -1,6 +1,7 @@
 import {DELETE, GET, POST, PUT, Root} from "@/http/common";
 
 export default interface Secret {
+  key: number;
   id: number;
   appId: string;
   secret: string;
@@ -22,6 +23,10 @@ export async function fetchSecret(appId:string, secretId:number):Promise<Root<Se
 
 export async function createSecret(appId:string, data:Secret):Promise<Root<Secret>> {
   return await POST<Secret>(`/api/quick/apps/${appId}/secrets`, data, 'Create secret');
+}
+
+export async function modifySecret(appId:string, data:Secret):Promise<Root<object>> {
+  return await PUT(`/api/quick/apps/${appId}/secrets`, data, 'Create secret');
 }
 
 export async function deleteSecret(appId:string, secretId:number):Promise<Root<object>> {
