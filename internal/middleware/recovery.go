@@ -9,6 +9,7 @@ import (
 	"net"
 	"os"
 	"strings"
+	"time"
 )
 
 func Recovery() gin.HandlerFunc {
@@ -37,7 +38,9 @@ func Recovery() gin.HandlerFunc {
 				} else {
 					resp.ErrorPanic(c)
 				}
+				zapLogRequest(c, time.Now())
 			}
 		}()
+		c.Next() // 不能省略
 	}
 }

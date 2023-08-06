@@ -86,7 +86,8 @@ func (o Controller) createUser(c *gin.Context) {
 		resp.ErrorUnknown(c, err, "create user err")
 		return
 	}
-	resp.SuccessWithData(c, user)
+
+	resp.SuccessWithData(c, user.Dto())
 }
 
 // @Summary	modify user

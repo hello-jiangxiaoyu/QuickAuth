@@ -5,8 +5,6 @@ import (
 	"QuickAuth/internal/global"
 	"QuickAuth/internal/middleware"
 	"github.com/gin-contrib/cors"
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,15 +12,9 @@ func GetServer() *gin.Engine {
 	r := gin.Default()
 	// r := gin.New()
 	// gin.SetMode(gin.ReleaseMode)
-	r.Use(middleware.Recovery(), middleware.RequestLog(), cors.Default(), middleware.GenerateRequestID())
-	cookieSecret := []byte("QuickAuth")
-	store := cookie.NewStore(cookieSecret)
-	store.Options(sessions.Options{
-		MaxAge: 60 * 60 * 24 * 7,
-		Path:   "/",
-	})
-	r.Use(sessions.Sessions("QuickAuth", store))
-
+	r.Use(middleware.Recovery(), cors.Default())
+	r.Use(middleware.RequestLog(), middleware.GenerateRequestID())
+	r.Use(middleware.TenantHost())
 	controller.NewOauth2Router(&global.Repository{Logger: global.Log, DB: global.DB, Config: global.Config}, r)
 	return r
 }

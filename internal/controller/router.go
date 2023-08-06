@@ -17,7 +17,6 @@ import (
 func NewOauth2Router(repo *global.Repository, e *gin.Engine) {
 	svc := service.NewService(repo)
 	o := NewOAuth2Api(svc)
-	e.Use(middleware.TenantHost())
 	r := e.Group("/api/quick")
 	{
 		r.GET("/.well-known/openid-configuration", o.getOIDC) // OIDC信息
@@ -66,7 +65,7 @@ func NewOauth2Router(repo *global.Repository, e *gin.Engine) {
 		tenant.DELETE("/providers/:providerId", o.deleteProvider)
 	}
 
-	user := e.Group("/api/quick")
+	user := e.Group("/api/quick", middleware.LoginAuth())
 	{
 		user.GET("/user-pools", o.listUserPool)
 		user.GET("/user-pools/:poolId", o.getUserPool)

@@ -6,8 +6,8 @@ import (
 
 type (
 	Login struct {
-		UserName string       `json:"username" binding:"required"`
-		Password string       `json:"password" binding:"required"`
+		UserName string       `form:"username" binding:"required"`
+		Password string       `form:"password" binding:"required"`
 		Tenant   model.Tenant `json:"-"`
 	}
 

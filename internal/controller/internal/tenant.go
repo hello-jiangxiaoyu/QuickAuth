@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/pkg/model"
 	"errors"
 )
@@ -10,7 +11,7 @@ func (a *Api) SetTenant(t *model.Tenant) *Api {
 		a.setError(errors.New("gin context should not be nil"))
 		return a
 	}
-	value, ok := a.c.Get("tenant")
+	value, ok := a.c.Get(resp.Tenant)
 	if !ok {
 		a.setError(errors.New("failed to get gin tenant"))
 		return a

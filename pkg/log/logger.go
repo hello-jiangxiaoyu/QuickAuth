@@ -15,7 +15,7 @@ var DictLogLevel = map[string]zapcore.Level{
 }
 
 func timeDivisionWriter(path string) (io.Writer, error) {
-	MaxAge := 7
+	MaxAge := 3
 	hook, err := rotate.New(
 		path+"_%Y-%m-%d.log",
 		rotate.WithMaxAge(time.Duration(int64(24*time.Hour)*int64(MaxAge))),

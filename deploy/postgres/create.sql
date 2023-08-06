@@ -26,8 +26,8 @@ CREATE TABLE IF NOT EXISTS users (
     password        VARCHAR(127) NOT NULL,
     nick_name       VARCHAR(127) NOT NULL,
     display_name    VARCHAR(127) NOT NULL,
-    gender          CHAR NOT NULL,          -- M:男性 F:女性 O:其他
-    birthdate       DATE NOT NULL,          -- 出生
+    gender          CHAR NOT NULL DEFAULT 0,  -- M:男性 F:女性 O:其他
+    birthdate       DATE,                     -- 出生日期
     email           VARCHAR(127) NOT NULL,
     email_verified  BOOLEAN NOT NULL DEFAULT false,
     phone           VARCHAR(20) NOT NULL,

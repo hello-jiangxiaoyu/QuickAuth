@@ -4,12 +4,12 @@ import (
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/pkg/idp"
+	"QuickAuth/pkg/model"
 	"QuickAuth/pkg/safe"
 	"QuickAuth/pkg/utils"
 	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/pkg/errors"
 	"net/http"
 )
 
@@ -24,17 +24,16 @@ import (
 // @Router		/api/quick/login [post]
 func (o Controller) login(c *gin.Context) {
 	var in request.Login
-	session := sessions.Default(c)
-	su := session.Get("user")
-	if su != nil {
+	if cookie, err := c.Cookie(resp.IDToken); err == nil && cookie != "" {
 		resp.DoNothing(c, "user is already logged in, nothing to do")
 		return
 	}
-	if err := o.SetCtx(c).BindQuery(&in).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := o.SetCtx(c).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err, "invalid login request param")
 		return
 	}
 
+	// 用户名和密码检查
 	user, err := o.svc.GetUserByName(in.Tenant.UserPoolID, in.UserName)
 	if err != nil {
 		resp.ErrorNotFound(c, err, "no such user")
@@ -45,13 +44,13 @@ func (o Controller) login(c *gin.Context) {
 		return
 	}
 
-	session.Set("tenant", in.Tenant.Name)
-	session.Set("user", user.Username)
-	session.Set("userId", user.ID)
-	if err = session.Save(); err != nil {
-		resp.ErrorSaveSession(c, errors.Wrap(err, "login err"))
+	// 生成包含用户信息的id_token
+	token, err := o.svc.CreateIdToken(in.Tenant.App, in.Tenant, *user, "")
+	if err != nil {
+		resp.ErrorUnknown(c, err, "create id token err")
 		return
 	}
+	c.SetCookie(resp.IDToken, token, int(in.Tenant.IDExpire), "/", "", false, true)
 	if next := c.Query("next"); next != "" {
 		c.Redirect(http.StatusFound, next)
 		return
@@ -66,19 +65,7 @@ func (o Controller) login(c *gin.Context) {
 // @Success		200
 // @Router		/api/quick/logout [get]
 func (o Controller) logout(c *gin.Context) {
-	session := sessions.Default(c)
-	user := session.Get("user")
-	if user == nil {
-		resp.ErrorNoLogin(c)
-		return
-	}
-	session.Delete("tenant")
-	session.Delete("user")
-	session.Delete("userId")
-	if err := session.Save(); err != nil {
-		resp.ErrorSaveSession(c, err)
-		return
-	}
+	c.SetCookie(resp.IDToken, "", -1, "/", "", false, true)
 	resp.Success(c)
 }
 
@@ -145,16 +132,27 @@ func (o Controller) providerCallback(c *gin.Context) {
 // @Router		/api/quick/register [post]
 func (o Controller) register(c *gin.Context) {
 	var in request.Login
-	session := sessions.Default(c)
-	su := session.Get("user")
-	if su != nil {
-		resp.DoNothing(c, "user is already logged in, nothing to do")
-		return
-	}
-	if err := o.SetCtx(c).BindQuery(&in).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := o.SetCtx(c).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err, "invalid login request param")
 		return
 	}
 
-	c.Status(http.StatusOK)
+	var err error
+	in.Password, err = safe.HashPassword(in.Password)
+	if err != nil {
+		resp.ErrorUnknown(c, err, "hash password err")
+		return
+	}
+
+	user, err := o.svc.CreateUser(&model.User{
+		UserPoolID: in.Tenant.UserPoolID,
+		Username:   in.UserName,
+		Password:   in.Password,
+	})
+	if err != nil {
+		resp.ErrorUnknown(c, err, "create user err")
+		return
+	}
+
+	resp.SuccessWithData(c, user.Dto())
 }

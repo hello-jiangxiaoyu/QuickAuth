@@ -37,7 +37,7 @@ func (s *Service) CreateApp(app *model.App, host string, poolId int64) (*model.A
 
 		userPool := model.UserPool{
 			Name:     app.Name,
-			Describe: "default " + app.Name + " user pool",
+			Describe: app.Name + " user pool",
 		}
 		if poolId == 0 {
 			if err := tx.Create(&userPool).Error; err != nil {

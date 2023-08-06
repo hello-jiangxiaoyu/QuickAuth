@@ -5,8 +5,8 @@ import (
 	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/internal/global"
 	"QuickAuth/internal/service"
-	"QuickAuth/pkg/model"
 	"crypto/rsa"
+	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
@@ -14,13 +14,17 @@ import (
 
 func LoginAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		cookie, err := c.Cookie("id_token")
+		cookie, err := c.Cookie(resp.IDToken)
 		if err != nil {
 			resp.ErrorNoLogin(c)
 			return
 		}
 
-		tenant := c.MustGet("tenant").(model.Tenant)
+		tenant, err := getTenant(c)
+		if err != nil {
+			resp.ErrorUnknown(c, err, "get gin tenant err")
+			return
+		}
 		keys, err := service.LoadRsaPrivateKeys(tenant.App.Name)
 		if err != nil {
 			resp.ErrorUnknown(c, err, "load rsa private key err")
@@ -47,5 +51,17 @@ func LoginAuth() gin.HandlerFunc {
 
 func setUserInfo(c *gin.Context, token *jwt.Token) {
 	claim, _ := token.Claims.(request.IDClaims)
-	c.Set("claim", claim)
+	c.Set(resp.Claim, claim)
+}
+
+func getUserInfo(c *gin.Context) (request.IDClaims, error) {
+	value, ok := c.Get(resp.Claim)
+	if !ok {
+		return request.IDClaims{}, errors.New("failed to get gin IDClaims")
+	}
+	claim, ok := value.(request.IDClaims)
+	if !ok {
+		return request.IDClaims{}, errors.New("failed to convert gin IDClaims")
+	}
+	return claim, nil
 }

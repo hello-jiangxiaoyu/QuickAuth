@@ -35,12 +35,16 @@ func (s *Service) CreateAccessToken(app model.App, tenant model.Tenant, userId s
 func (s *Service) CreateIdToken(app model.App, tenant model.Tenant, user model.User, nonce string) (string, error) {
 	nowTime := time.Now()
 	expireTime := nowTime.Add(time.Duration(tenant.IDExpire) * time.Hour)
+	birthdate := ""
+	if user.Birthdate != nil {
+		birthdate = user.Birthdate.Format("2006-01-02")
+	}
 	claims := request.IDClaims{
 		Nonce:     nonce,
 		Name:      user.DisplayName,
 		NickName:  user.NickName,
 		Gender:    user.Gender,
-		Birthdate: user.Birthdate.Format("2006-01-02"),
+		Birthdate: birthdate,
 		Picture:   user.Avatar,
 		Email:     user.Email,
 		Addr:      user.Addr,
