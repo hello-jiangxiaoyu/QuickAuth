@@ -9,6 +9,8 @@ import (
 	"fmt"
 	_ "github.com/lib/pq"
 	"gorm.io/gen"
+	"gorm.io/gen/field"
+	"os"
 	"testing"
 )
 
@@ -21,12 +23,57 @@ func TestGen(*testing.T) {
 
 	jsonField := gen.FieldJSONTagWithNS(func(columnName string) (tagContent string) { return columnName })
 	opt := []gen.ModelOpt{jsonField}
-	opt = append(opt, gen.FieldType("grant_types", "pq.StringArray"))
-	opt = append(opt, gen.FieldType("redirect_uris", "pq.StringArray"))
-	opt = append(opt, gen.FieldType("scope", "pq.StringArray"))
-	generator.GenerateAllTable(opt...)
+
+	// model定义
+	app := generator.GenerateModel("apps", opt...)
+	tenant := generator.GenerateModel("tenants", opt...)
+
+	appSecret := generator.GenerateModel("app_secrets", append(opt,
+		gen.FieldRelate(field.HasOne, "App", app, &field.RelateConfig{}),
+		gen.FieldType("scope", "pq.StringArray"),
+	)...)
+
+	code := generator.GenerateModel("codes", append(opt,
+		gen.FieldRelate(field.HasOne, "App", app, &field.RelateConfig{}),
+		gen.FieldType("scope", "pq.StringArray"),
+	)...)
+
+	provider := generator.GenerateModel("providers", append(opt,
+		gen.FieldRelate(field.HasOne, "App", app, &field.RelateConfig{}),
+		gen.FieldRelate(field.HasOne, "Tenant", tenant, &field.RelateConfig{}),
+	)...)
+	userPool := generator.GenerateModel("user_pools", append(opt,
+		gen.FieldRelate(field.HasMany, "Tenant", tenant, &field.RelateConfig{}),
+	)...)
+	user := generator.GenerateModel("users", append(opt,
+		gen.FieldRelate(field.HasOne, "UserPool", userPool, &field.RelateConfig{}),
+	)...)
+
+	// app 依赖修正
+	app = generator.GenerateModel("apps", append(opt,
+		gen.FieldRelate(field.HasMany, "Tenant", tenant, &field.RelateConfig{}),
+	)...)
+
+	// tenant 依赖修正
+	tenant = generator.GenerateModel("tenants", append(opt,
+		gen.FieldRelate(field.HasOne, "App", app, &field.RelateConfig{}),
+		gen.FieldRelate(field.HasOne, "UserPool", userPool, &field.RelateConfig{}),
+		gen.FieldType("grant_types", "pq.StringArray"),
+		gen.FieldType("redirect_uris", "pq.StringArray"),
+	)...)
+
+	// 生成model
+	generator.ApplyBasic(app, appSecret, code, provider, tenant, userPool, user)
 	generator.Execute()
 
+	// 删除query目录
+	if _, err = os.Stat(queryDir); err == nil {
+		if err = os.RemoveAll(queryDir); err != nil {
+			panic(err)
+		}
+	}
+
+	// 修正model文件json tag，将下划线转为小驼峰
 	if err = utils.AmendFile(modelDir, convertToCamelCase); err != nil {
 		panic(err)
 	}

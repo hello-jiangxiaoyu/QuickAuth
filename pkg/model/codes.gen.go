@@ -22,6 +22,7 @@ type Code struct {
 	State     string         `gorm:"column:state;type:character(63);not null" json:"state"`
 	CreatedAt time.Time      `gorm:"column:created_at;type:timestamp with time zone;not null;default:now()" json:"createdAt"`
 	UpdatedAt time.Time      `gorm:"column:updated_at;type:timestamp with time zone;not null;default:now()" json:"updatedAt"`
+	App       App            `json:"app"`
 }
 
 // TableName Code's table name

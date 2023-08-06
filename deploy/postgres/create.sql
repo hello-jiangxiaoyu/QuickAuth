@@ -20,22 +20,28 @@ CREATE TABLE IF NOT EXISTS user_pools (
     updated_at  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 CREATE TABLE IF NOT EXISTS users (
-    id           CHAR(32) PRIMARY KEY,
-    user_pool_id BIGSERIAL NOT NULL,
-    username     VARCHAR(127) NOT NULL,
-    password     VARCHAR(127) NOT NULL,
-    display_name VARCHAR(127) NOT NULL,
-    email        VARCHAR(127) NOT NULL,
-    phone        VARCHAR(20) NOT NULL,
-    type         INTEGER NOT NULL,
-    is_disabled  BOOLEAN NOT NULL DEFAULT false,
-    created_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+    id              CHAR(32) PRIMARY KEY,
+    user_pool_id    BIGSERIAL NOT NULL,
+    username        VARCHAR(127) NOT NULL,
+    password        VARCHAR(127) NOT NULL,
+    nick_name       VARCHAR(127) NOT NULL,
+    display_name    VARCHAR(127) NOT NULL,
+    gender          CHAR NOT NULL,          -- M:男性 F:女性 O:其他
+    birthdate       DATE NOT NULL,          -- 出生
+    email           VARCHAR(127) NOT NULL,
+    email_verified  BOOLEAN NOT NULL DEFAULT false,
+    phone           VARCHAR(20) NOT NULL,
+    phone_verified  BOOLEAN NOT NULL DEFAULT false,
+    addr            VARCHAR(255) NOT NULL,
+    avatar          VARCHAR(255) NOT NULL,
+    type            INTEGER NOT NULL,
+    is_disabled     BOOLEAN NOT NULL DEFAULT false,
+    created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS idx_users_user_pool_username ON users(user_pool_id, username);
 CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email ON users(email);
 CREATE UNIQUE INDEX IF NOT EXISTS idx_users_phone ON users(phone);
-CREATE UNIQUE INDEX IF NOT EXISTS idx_users_create ON users (created_at);
 
 
 
@@ -59,6 +65,7 @@ CREATE TABLE IF NOT EXISTS tenants (
     is_password     BOOLEAN NOT NULL DEFAULT false,  -- 是否开启password授权模式
     is_credential   BOOLEAN NOT NULL DEFAULT true,  -- 是否开启client_credential
     is_device_flow  BOOLEAN NOT NULL DEFAULT false,  -- 是否开启device_flow
+    config          JSONB NOT NULL,
     describe        VARCHAR(127) NOT NULL,
     is_disabled     BOOLEAN NOT NULL DEFAULT false,
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
@@ -94,7 +101,7 @@ CREATE TABLE IF NOT EXISTS codes (
     created_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX IF NOT EXISTS idx_codes_tenant_user_id ON codes(code, app_id);
+CREATE INDEX IF NOT EXISTS idx_codes_tenant_id ON codes(code, app_id);
 
 
 CREATE TABLE IF NOT EXISTS providers (

@@ -36,8 +36,7 @@ func (o Controller) handlerAuthorizationCode(req *request.Token) (*dto.TokenResp
 		return nil, err
 	}
 
-	token, err := o.svc.CreateAccessToken(req.App, req.Tenant.Name,
-		req.Tenant.Host, req.UserID, req.Nonce, code.Scope)
+	token, err := o.svc.CreateAccessToken(req.App, req.Tenant, req.UserID, req.Nonce, code.Scope)
 	if err != nil {
 		return nil, err
 	}
@@ -46,8 +45,7 @@ func (o Controller) handlerAuthorizationCode(req *request.Token) (*dto.TokenResp
 }
 
 func (o Controller) handlerClientCredential(req *request.Token) (*dto.TokenResponse, error) {
-	token, err := o.svc.CreateAccessToken(req.App, req.Tenant.Name,
-		req.Tenant.Host, req.UserID, req.Nonce, []string{req.State})
+	token, err := o.svc.CreateAccessToken(req.App, req.Tenant, req.UserID, req.Nonce, []string{req.State})
 	if err != nil {
 		return nil, err
 	}
@@ -57,8 +55,7 @@ func (o Controller) handlerClientCredential(req *request.Token) (*dto.TokenRespo
 }
 
 func (o Controller) handlerPassword(req *request.Token) (*dto.TokenResponse, error) {
-	token, err := o.svc.CreateAccessToken(req.App, req.Tenant.Name,
-		req.Tenant.Host, req.UserID, req.Nonce, []string{req.State})
+	token, err := o.svc.CreateAccessToken(req.App, req.Tenant, req.UserID, req.Nonce, []string{req.State})
 	if err != nil {
 		return nil, err
 	}
@@ -68,8 +65,7 @@ func (o Controller) handlerPassword(req *request.Token) (*dto.TokenResponse, err
 }
 
 func (o Controller) handlerRefreshToken(req *request.Token) (*dto.TokenResponse, error) {
-	token, err := o.svc.CreateAccessToken(req.App, req.Tenant.Name,
-		req.Tenant.Host, req.UserID, req.Nonce, []string{req.State})
+	token, err := o.svc.CreateAccessToken(req.App, req.Tenant, req.UserID, req.Nonce, []string{req.State})
 	if err != nil {
 		return nil, err
 	}

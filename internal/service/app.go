@@ -55,9 +55,10 @@ func (s *Service) CreateApp(app *model.App, host string, poolId int64) (*model.A
 			Describe:     "default tenant created by app",
 			RedirectUris: pq.StringArray{"http://localhost"},
 			GrantTypes:   pq.StringArray{},
+			Config:       "{}",
 		}
-		if err := tx.Select("app_id", "user_pool_id", "type", "name", "host", "company", "grant_types", "redirect_uris", "describe").
-			Create(&t).Error; err != nil {
+		if err := tx.Select("app_id", "user_pool_id", "type", "name", "host", "company", "grant_types",
+			"redirect_uris", "describe", "config").Create(&t).Error; err != nil {
 			return errors.WithMessage(err, "create default tenant err")
 		}
 		if err := tx.Create(&model.AppSecret{

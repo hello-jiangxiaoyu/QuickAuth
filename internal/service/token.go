@@ -1,6 +1,7 @@
 package service
 
 import (
+	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/pkg/model"
 	"QuickAuth/pkg/safe"
 	"QuickAuth/pkg/utils"
@@ -9,23 +10,15 @@ import (
 	"time"
 )
 
-type Claims struct {
-	TokenType string   `json:"tokenType,omitempty"`
-	Nonce     string   `json:"nonce,omitempty"`
-	Scope     []string `json:"scope,omitempty"`
-	jwt.RegisteredClaims
-}
-
-func (s *Service) CreateAccessToken(app model.App, tenantName, host, userId, nonce string, scope []string) (string, error) {
-	var token *jwt.Token
+// CreateAccessToken 创建Access Token
+func (s *Service) CreateAccessToken(app model.App, tenant model.Tenant, userId string, nonce string, scope []string) (string, error) {
 	nowTime := time.Now()
-	expireTime := nowTime.Add(time.Duration(24) * time.Hour)
-	claims := Claims{
-		TokenType: "access-token",
-		Nonce:     nonce,
-		Scope:     scope,
+	expireTime := nowTime.Add(time.Duration(tenant.AccessExpire) * time.Second)
+	claims := request.AccessClaims{
+		Nonce: nonce,
+		Scope: scope,
 		RegisteredClaims: jwt.RegisteredClaims{
-			Issuer:    utils.GetUrlByHost(host),
+			Issuer:    utils.GetUrlByHost(tenant.Host),
 			Subject:   userId,
 			Audience:  []string{app.ID},
 			ExpiresAt: jwt.NewNumericDate(expireTime),
@@ -34,8 +27,41 @@ func (s *Service) CreateAccessToken(app model.App, tenantName, host, userId, non
 			ID:        app.Name + "-" + safe.Rand62(31),
 		},
 	}
-	token = jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
-	keys, err := s.LoadRsaPrivateKeys(tenantName)
+
+	return s.getTokenString(claims, app.Name)
+}
+
+// CreateIdToken 创建ID Token
+func (s *Service) CreateIdToken(app model.App, tenant model.Tenant, user model.User, nonce string) (string, error) {
+	nowTime := time.Now()
+	expireTime := nowTime.Add(time.Duration(tenant.IDExpire) * time.Hour)
+	claims := request.IDClaims{
+		Nonce:     nonce,
+		Name:      user.DisplayName,
+		NickName:  user.NickName,
+		Gender:    user.Gender,
+		Birthdate: user.Birthdate.Format("2006-01-02"),
+		Picture:   user.Avatar,
+		Email:     user.Email,
+		Addr:      user.Addr,
+		Phone:     user.Phone,
+		RegisteredClaims: jwt.RegisteredClaims{
+			Issuer:    utils.GetUrlByHost(tenant.Host),
+			Subject:   user.ID,
+			Audience:  []string{app.ID},
+			ExpiresAt: jwt.NewNumericDate(expireTime),
+			NotBefore: jwt.NewNumericDate(nowTime),
+			IssuedAt:  jwt.NewNumericDate(nowTime),
+			ID:        app.Name + "-" + safe.Rand62(31),
+		},
+	}
+
+	return s.getTokenString(claims, app.Name)
+}
+
+func (s *Service) getTokenString(claims jwt.Claims, appName string) (string, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
+	keys, err := LoadRsaPrivateKeys(appName)
 	if err != nil {
 		return "", err
 	}

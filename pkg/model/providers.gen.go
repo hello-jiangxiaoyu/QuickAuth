@@ -21,6 +21,8 @@ type Provider struct {
 	AgentID      string    `gorm:"column:agent_id;type:character varying(255);not null" json:"agentId"`
 	CreatedAt    time.Time `gorm:"column:created_at;type:timestamp with time zone;not null;default:now()" json:"createdAt"`
 	UpdatedAt    time.Time `gorm:"column:updated_at;type:timestamp with time zone;not null;default:now()" json:"updatedAt"`
+	App          App       `json:"app"`
+	Tenant       Tenant    `json:"tenant"`
 }
 
 // TableName Provider's table name

@@ -17,13 +17,10 @@ func TenantHost() gin.HandlerFunc {
 		if host == "" {
 			host = c.Request.Host
 		}
-		if err := global.DB.Where("host = ?", host).First(&tenant).Error; err != nil {
+		if err := global.DB.Where("host = ?", host).Preload("App").Preload("UserPool").First(&tenant).Error; err != nil {
 			resp.ErrorHost(c)
 			return
 		}
 		c.Set("tenant", tenant)
-		c.Set("appId", tenant.AppID)
-		c.Set("tenantId", tenant.ID)
-		c.Set("poolId", tenant.UserPoolID)
 	}
 }

@@ -17,7 +17,8 @@ import (
 func NewOauth2Router(repo *global.Repository, e *gin.Engine) {
 	svc := service.NewService(repo)
 	o := NewOAuth2Api(svc)
-	r := e.Group("/api/quick", middleware.TenantHost())
+	e.Use(middleware.TenantHost())
+	r := e.Group("/api/quick")
 	{
 		r.GET("/.well-known/openid-configuration", o.getOIDC) // OIDC信息
 		r.GET("/.well-known/jwks.json", o.getJwks)            // jwk签名公钥
@@ -52,7 +53,7 @@ func NewOauth2Router(repo *global.Repository, e *gin.Engine) {
 		app.DELETE("/apps/:appId/tenants/:tenantId", o.deleteTenant)
 	}
 
-	tenant := e.Group("/api/quick", middleware.TenantHost())
+	tenant := e.Group("/api/quick")
 	{
 		tenant.GET("/redirect-uri", o.listRedirectUri)
 		tenant.POST("/redirect-uri", o.createRedirectUri)

@@ -43,7 +43,7 @@ func (s *Service) LoadRsaPublicKeys(tenant string) (*jose.JSONWebKeySet, error) 
 	return &jwkSet, nil
 }
 
-func (s *Service) LoadRsaPrivateKeys(tenantId string) (map[string]*rsa.PrivateKey, error) {
+func LoadRsaPrivateKeys(tenantId string) (map[string]*rsa.PrivateKey, error) {
 	res, err := safe.GetJWKs(tenantId)
 	if err != nil {
 		return nil, err
