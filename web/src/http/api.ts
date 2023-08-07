@@ -11,6 +11,7 @@ import {
   fetchUserPoolList, modifyUser,
   modifyUserPool
 } from "@/http/users";
+import {login} from "@/http/login";
 
 // backend http api
 class QuickAuthBackendApi {
@@ -47,6 +48,8 @@ class QuickAuthBackendApi {
   createUser = createUser;
   modifyUser = modifyUser;
   deleteUser = deleteUser;
+
+  login = login;
 }
 
 const api = new QuickAuthBackendApi

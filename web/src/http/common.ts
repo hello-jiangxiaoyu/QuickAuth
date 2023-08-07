@@ -7,13 +7,13 @@ export interface Root<T> {
   data: T;
 }
 
-async function SendHttpRequest<T>(method:string, uri:string, wrapMsg?:string, data?:object):Promise<Root<T>> {
+async function SendHttpRequest<T>(method:string, uri:string, wrapMsg?:string, data?:string|FormData):Promise<Root<T>> {
   const url = env.devHost + uri;
   let response:Root<T>;
   if (method === 'GET' || method === 'DELETE') {
     response = await fetch(url, {method:method}).then((resp) => resp.json());
   } else {
-    response = await fetch(url, {method:method, body:JSON.stringify(data)}).then((resp) => resp.json());
+    response = await fetch(url, {method:method, body:data}).then((resp) => resp.json());
   }
 
   if (typeof response !== 'object') {
@@ -36,13 +36,24 @@ export async function GET<T>(uri: string, wrapMsg?:string):Promise<Root<T>> {
 }
 
 export async function POST<T>(uri: string, data:object, wrapMsg?:string):Promise<Root<T>> {
-  return await SendHttpRequest<T>('POST', uri, wrapMsg, data);
+  return await SendHttpRequest<T>('POST', uri, wrapMsg, JSON.stringify(data));
 }
 
+
 export async function PUT(uri: string, data:object, wrapMsg?:string):Promise<Root<object>> {
-  return await SendHttpRequest<object>('PUT', uri, wrapMsg, data);
+  return await SendHttpRequest<object>('PUT', uri, wrapMsg, JSON.stringify(data));
 }
 
 export async function DELETE(uri: string, wrapMsg?:string):Promise<Root<object>> {
   return await SendHttpRequest<object>('DELETE', uri, wrapMsg);
+}
+
+export async function POSTForm<T>(uri: string, data:object, wrapMsg?:string):Promise<Root<T>> {
+  const formData = new FormData(this);
+  for (const key in data) {
+    if (data.hasOwnProperty(key)) {
+      formData.append(key, data[key]);
+    }
+  }
+  return await SendHttpRequest<T>('POST', uri, wrapMsg, formData);
 }

@@ -52,6 +52,7 @@ func TestGen(*testing.T) {
 	// app 依赖修正
 	app = generator.GenerateModel("apps", append(opt,
 		gen.FieldRelate(field.HasMany, "Tenant", tenant, &field.RelateConfig{}),
+		gen.FieldRelate(field.HasMany, "Secret", appSecret, &field.RelateConfig{}),
 	)...)
 
 	// tenant 依赖修正

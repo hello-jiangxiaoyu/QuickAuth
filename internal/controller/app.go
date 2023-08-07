@@ -46,14 +46,12 @@ func (o Controller) getApp(c *gin.Context) {
 		return
 	}
 
-	app, err, _ := sg.Do("get-app-"+in.AppId, func() (interface{}, error) {
-		return o.svc.GetApp(in.AppId)
-	})
+	app, err := o.svc.GetAppDetail(in.AppId)
 	if err != nil {
 		resp.ErrorUnknown(c, err, "no such app")
 		return
 	}
-	resp.SuccessWithData(c, app)
+	resp.SuccessWithData(c, app.Dto())
 }
 
 // @Summary	create app

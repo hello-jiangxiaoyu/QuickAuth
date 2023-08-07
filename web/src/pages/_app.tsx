@@ -24,18 +24,14 @@ async function updateAppAndTenant(appId:string):Promise<string> {
   const respApp = await api.fetchApp(appId);
   dispatchApp(respApp.data);
 
-  const respTenantList = await api.fetchTenantList(appId);
-  respTenantList.data.forEach((obj, index) => {
-    obj.key = index + 1;
-  });
-  dispatchTenantList(respTenantList.data);
+  dispatchTenantList(respApp.data.tenant);
 
-  if (respTenantList.data.length === 0) {
+  if (respApp.data.tenant.length === 0) {
     dispatchTenant({} as TenantDetail);
     return
   }
 
-  const respTenant = await api.fetchTenant(appId, respTenantList.data[0].id);
+  const respTenant = await api.fetchTenant(appId, respApp.data.tenant[0].id);
   dispatchTenant(respTenant.data);
 }
 

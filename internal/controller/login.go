@@ -55,7 +55,7 @@ func (o Controller) login(c *gin.Context) {
 		c.Redirect(http.StatusFound, next)
 		return
 	}
-	c.Status(http.StatusOK)
+	resp.Success(c)
 }
 
 // @Summary	logout current user

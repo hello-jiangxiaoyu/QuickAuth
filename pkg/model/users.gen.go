@@ -20,9 +20,9 @@ type User struct {
 	DisplayName   string     `gorm:"column:display_name;type:character varying(127);not null" json:"displayName"`
 	Gender        string     `gorm:"column:gender;type:character(1);not null;default:0" json:"gender"`
 	Birthdate     *time.Time `gorm:"column:birthdate;type:date" json:"birthdate"`
-	Email         string     `gorm:"column:email;type:character varying(127);not null" json:"email"`
+	Email         *string    `gorm:"column:email;type:character varying(127)" json:"email"`
 	EmailVerified bool       `gorm:"column:email_verified;type:boolean;not null" json:"emailVerified"`
-	Phone         string     `gorm:"column:phone;type:character varying(20);not null" json:"phone"`
+	Phone         *string    `gorm:"column:phone;type:character varying(20)" json:"phone"`
 	PhoneVerified bool       `gorm:"column:phone_verified;type:boolean;not null" json:"phoneVerified"`
 	Addr          string     `gorm:"column:addr;type:character varying(255);not null" json:"addr"`
 	Avatar        string     `gorm:"column:avatar;type:character varying(255);not null" json:"avatar"`

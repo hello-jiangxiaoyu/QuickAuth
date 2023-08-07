@@ -1,6 +1,7 @@
 import {DELETE, GET, POST, PUT, Root} from "@/http/common";
+import {Tenant} from "@/http/tenant";
 
-export default interface App {id?:string, name:string, host?:string, tag:string, icon:string, describe:string}
+export default interface App {id?:string, name:string, host?:string, tag:string, icon:string, describe:string, tenant:Array<Tenant>}
 
 export async function fetchAppList():Promise<Root<App[]>> {
   return await GET<App[]>('/api/quick/apps', 'Get application list');

@@ -10,8 +10,8 @@ type UserDtoModel struct {
 	UserPoolID  int64     `json:"userPoolId"`
 	Username    string    `json:"username"`
 	DisplayName string    `json:"displayName"`
-	Email       string    `json:"email"`
-	Phone       string    `json:"phone"`
+	Email       *string   `json:"email"`
+	Phone       *string   `json:"phone"`
 	Type        int32     `json:"type"`
 	IsDisabled  bool      `json:"isDisabled"`
 	CreateTime  time.Time `json:"createTime"`

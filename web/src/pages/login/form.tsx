@@ -4,7 +4,7 @@ import {
   Checkbox,
   Link,
   Button,
-  Space,
+  Space, Message,
 } from '@arco-design/web-react';
 import { FormInstance } from '@arco-design/web-react/es/Form';
 import { IconLock, IconUser } from '@arco-design/web-react/icon';
@@ -14,6 +14,8 @@ import useStorage from '@/utils/useStorage';
 import useLocale from '@/utils/useLocale';
 import locale from './locale';
 import styles from './style/index.module.less';
+import api from "@/http/api";
+import {loginForm} from "@/http/login";
 
 export default function LoginForm() {
   const formRef = useRef<FormInstance>();
@@ -34,19 +36,14 @@ export default function LoginForm() {
     window.location.href = '/';  // 跳转首页
   }
 
-  function login(params) {
+  function login(params:loginForm) {
     setErrorMessage('');
     setLoading(true);
-    axios.post('/api/user/login', params).then((res) => {
-        const { status, msg } = res.data;
-        if (status === 'ok') {
-          afterLoginSuccess(params);
-        } else {
-          setErrorMessage(msg || t['login.form.login.errMsg']);
-        }
-      }).finally(() => {
-        setLoading(false);
-      });
+    api.login(params).then(() => {
+      afterLoginSuccess(params);
+    }).catch(e=> Message.error(e.toString())).finally(() => {
+      setLoading(false);
+    })
   }
 
   function onSubmitClick() {
@@ -71,9 +68,9 @@ export default function LoginForm() {
       <div className={styles['login-form-sub-title']}>{t['login.form.subTitle']}</div>
       <div className={styles['login-form-error-msg']}>{errorMessage}</div>
       <Form className={styles['login-form']} layout="vertical" ref={formRef}
-        initialValues={{ userName: 'admin', password: 'admin' }}
+        initialValues={{ username: 'admin', password: 'admin' }}
       >
-        <Form.Item field="userName" rules={[{ required: true, message: t['login.form.userName.errMsg'] }]}>
+        <Form.Item field="username" rules={[{ required: true, message: t['login.form.userName.errMsg'] }]}>
           <Input
             prefix={<IconUser />} placeholder={t['login.form.userName.placeholder']} onPressEnter={onSubmitClick}
           />

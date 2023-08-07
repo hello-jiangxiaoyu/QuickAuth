@@ -28,6 +28,14 @@ func (s *Service) GetApp(id string) (*model.App, error) {
 	return &app, nil
 }
 
+func (s *Service) GetAppDetail(id string) (*model.App, error) {
+	var app model.App
+	if err := s.db.Where("id = ?", id).Preload("Tenant").First(&app).Error; err != nil {
+		return nil, err
+	}
+	return &app, nil
+}
+
 func (s *Service) CreateApp(app *model.App, host string, poolId int64) (*model.App, error) {
 	app.ID = utils.GetNoLineUUID()
 	err := s.db.Transaction(func(tx *gorm.DB) error {

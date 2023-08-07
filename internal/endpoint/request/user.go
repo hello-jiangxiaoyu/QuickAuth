@@ -3,15 +3,15 @@ package request
 import "QuickAuth/pkg/model"
 
 type UserReq struct {
-	UserID      string `json:"-" uri:"userId"`
-	UserPoolID  int64  `json:"-" uri:"poolId"`
-	OpenId      string `json:"-"`
-	Username    string `json:"username"`
-	Password    string `json:"password"`
-	DisplayName string `json:"displayName"`
-	Email       string `json:"email"`
-	Phone       string `json:"phone"`
-	Type        int32  `json:"type"`
+	UserID      string  `json:"-" uri:"userId"`
+	UserPoolID  int64   `json:"-" uri:"poolId"`
+	OpenId      string  `json:"-"`
+	Username    string  `json:"username"`
+	Password    string  `json:"password"`
+	DisplayName string  `json:"displayName"`
+	Email       *string `json:"email"`
+	Phone       *string `json:"phone"`
+	Type        int32   `json:"type"`
 }
 
 func (u *UserReq) ToModel() *model.User {

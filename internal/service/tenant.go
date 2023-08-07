@@ -9,7 +9,7 @@ import (
 
 func (s *Service) GetTenant(_ string, tenantId int64) (*model.Tenant, error) {
 	var tenant model.Tenant
-	if err := s.db.Where("id = ?", tenantId).First(&tenant).Error; err != nil {
+	if err := s.db.Where("id = ?", tenantId).Preload("App").Preload("UserPool").First(&tenant).Error; err != nil {
 		return nil, err
 	}
 	return &tenant, nil
