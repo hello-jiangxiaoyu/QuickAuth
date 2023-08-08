@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "proxy": "node server.js",
     "start": "next start",
     "export": "next export",
     "eslint": "eslint src/ --ext .ts,.tsx,.js,.jsx --fix --cache",
