@@ -1,32 +1,33 @@
 const express = require('express')
 const next = require('next')
-const createProxyMiddleware = require('http-proxy-middleware').createProxyMiddleware;
+const { createProxyMiddleware } = require("http-proxy-middleware")
 
-const hostname = 'localhost'
-const port = 3000
-const dev = process.env.NODE_ENV !== 'production' //只在开发环境使用
-const app = next({dev, hostname, port})
+const port = process.env.PORT || 3000
+const dev = process.env.NODE_ENV !== 'production'
+const app = next({ dev })
 const handle = app.getRequestHandler()
+
+const proxyTable = {
+  '/api': {
+    target: 'http://127.0.0.1',
+    pathRewrite: {'^/api': '/api'},
+    changeOrigin: true
+  }
+}
 
 app.prepare().then(() => {
   const server = express()
-  const devProxy = {
-    ['/api/quick']: {
-      target: 'http://localhost',
-      changeOrigin: true,
-      pathRewrite: {},
-    },
-  }
-  if (dev && devProxy) {
-    Object.keys(devProxy).forEach((context) => {
-      server.use(createProxyMiddleware(context, devProxy[context]))
-    })
+  if (dev) {
+    server.use('/api', createProxyMiddleware(proxyTable['/api']));
   }
 
-  server.all('*', (req, res) => handle(req, res))
-  server.listen(port, err => {
-    if (err) {
-      throw err
-    }
+  // 托管所有请求
+  server.all('*', (req, res) => {
+    return handle(req, res)
   })
-}).catch(e => console.log("error: ", e))
+
+  server.listen(port, (err) => {
+    if (err) throw err
+    console.log(`> Ready on http://localhost:${port}`)
+  })
+}).catch(err => console.log('Error:::::', err))

@@ -34,13 +34,7 @@ module.exports = withLess(
       return config;
     },
     async redirects() {
-      return [
-        {
-          source: '/',
-          destination: '/applications/',
-          permanent: true,
-        },
-      ];
+      return [{source: '/', destination: '/applications/', permanent: true}];
     },
     pageExtensions: ['tsx'],
     trailingSlash: true,
