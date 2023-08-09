@@ -4,7 +4,7 @@ import {fetchTenantList, fetchTenant, createTenant, modifyTenant, deleteTenant} 
 import {
   createUser,
   createUserPool, deleteUser,
-  deleteUserPool, fetchUser,
+  deleteUserPool, fetchMe, fetchUser,
   fetchUserInfo,
   fetchUserList,
   fetchUserPool,
@@ -50,6 +50,7 @@ class QuickAuthBackendApi {
   deleteUser = deleteUser;
 
   login = login;
+  fetchMe = fetchMe;
 }
 
 const api = new QuickAuthBackendApi

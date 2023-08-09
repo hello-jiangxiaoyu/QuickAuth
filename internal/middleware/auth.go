@@ -1,12 +1,10 @@
 package middleware
 
 import (
-	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/internal/global"
 	"QuickAuth/internal/service"
 	"crypto/rsa"
-	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
@@ -16,7 +14,7 @@ func LoginAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		cookie, err := c.Cookie(resp.IDToken)
 		if err != nil {
-			resp.ErrorNoLogin(c)
+			resp.ErrorNoLogin(c, err)
 			return
 		}
 
@@ -39,29 +37,21 @@ func LoginAuth() gin.HandlerFunc {
 			})
 
 			if err == nil && token.Valid {
-				setUserInfo(c, token)
+				setUserInfo(c, token.Claims)
 				return // ok
 			}
 			global.Log.Warn(fmt.Sprintf("%s token valid err: %s", "default", err))
 		}
 
-		resp.ErrorForbidden(c, "invalidated token")
+		resp.ErrorInvalidateToken(c, "invalidated token")
 	}
 }
 
-func setUserInfo(c *gin.Context, token *jwt.Token) {
-	claim, _ := token.Claims.(request.IDClaims)
-	c.Set(resp.Claim, claim)
-}
+func setUserInfo(c *gin.Context, claims jwt.Claims) {
+	claim, ok := claims.(jwt.MapClaims)
+	if !ok {
+		return
+	}
 
-func getUserInfo(c *gin.Context) (request.IDClaims, error) {
-	value, ok := c.Get(resp.Claim)
-	if !ok {
-		return request.IDClaims{}, errors.New("failed to get gin IDClaims")
-	}
-	claim, ok := value.(request.IDClaims)
-	if !ok {
-		return request.IDClaims{}, errors.New("failed to convert gin IDClaims")
-	}
-	return claim, nil
+	c.Set(resp.UserInfo, claim)
 }

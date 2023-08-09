@@ -20,18 +20,6 @@ export interface Pool {
   describe: string;
   isDisabled: boolean;
 }
-export interface User {
-  id: string;
-  userPoolId: number;
-  username: string;
-  displayName: string;
-  email: string;
-  phone: string;
-  type: number;
-  isDisabled: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
 
 // 用户池列表
 export async function fetchUserPoolList():Promise<Root<Pool[]>> {
@@ -54,6 +42,18 @@ export async function deleteUserPool(poolId:number):Promise<Root<object>> {
   return await DELETE(`/api/quick/user-pools/${poolId}`, 'Delete user pool');
 }
 
+export interface User {
+  id: string;
+  userPoolId: number;
+  username: string;
+  displayName: string;
+  email: string;
+  phone: string;
+  type: number;
+  isDisabled: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
 
 // 用户列表
 export async function fetchUserList(poolId:number):Promise<Root<User[]>> {
@@ -71,7 +71,12 @@ export async function createUser(poolId:number, data:User):Promise<Root<User>> {
 export async function modifyUser(poolId:number, userId:string, data:User):Promise<Root<object>> {
   return await PUT(`/api/quick/user-pools/${poolId}/users/${userId}`, data, 'Modify user');
 }
-//删除用户
+// 删除用户
 export async function deleteUser(poolId:number, userId:string):Promise<Root<object>> {
   return await DELETE(`/api/quick/user-pools/${poolId}/users/${userId}`, 'Delete user');
+}
+
+// 获取当前用户信息
+export async function fetchMe() {
+  return await GET('/api/quick/me/profile', 'Get me');
 }

@@ -1,8 +1,8 @@
 package resp
 
 const (
-	IDToken = "id_token"
-	Tenant  = "tenant"
-	VHost   = "vhost"
-	Claim   = "claim"
+	IDToken  = "id_token"
+	Tenant   = "tenant"
+	VHost    = "vhost"
+	UserInfo = "claim"
 )

@@ -8,11 +8,13 @@ import (
 )
 
 const (
-	CodeRequestPara = 1000
-	CodeForbidden   = 1001
-	CodeNoLogin     = 1002
-	CodeNoSuchHost  = 1003
-	CodeNoSuchRoute = 1003
+	CodeNoSuchRoute = 1000 // 系统相关错误码
+	CodeRequestPara = 1001
+	CodeForbidden   = 1002
+
+	CodeNoSuchHost   = 2000 // 业务相关错误码
+	CodeNotLogin     = 2001
+	CodeInvalidToken = 2002
 )
 
 func errorResponse(ctx context.Context, code int, errCode int, err error, msg string, isArray []bool) {
@@ -53,7 +55,12 @@ func ErrorForbidden(ctx context.Context, msg string, isArray ...bool) {
 	errorResponse(ctx, http.StatusForbidden, CodeForbidden, nil, msg, isArray)
 }
 
+// ErrorInvalidateToken token 无效
+func ErrorInvalidateToken(ctx context.Context, msg string, isArray ...bool) {
+	errorResponse(ctx, http.StatusForbidden, CodeInvalidToken, nil, msg, isArray)
+}
+
 // ErrorNoLogin 用户未登录
-func ErrorNoLogin(ctx context.Context, isArray ...bool) {
-	errorResponse(ctx, http.StatusUnauthorized, CodeNoLogin, nil, "user not login", isArray)
+func ErrorNoLogin(ctx context.Context, err error, isArray ...bool) {
+	errorResponse(ctx, http.StatusUnauthorized, CodeNotLogin, err, "user not login", isArray)
 }
