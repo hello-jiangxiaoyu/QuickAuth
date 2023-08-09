@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS tenants (
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS idx_tenants_host ON tenants(host);
-CREATE UNIQUE INDEX IF NOT EXISTS idx_tenants_name ON tenants(app_id, name);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_tenants_name ON tenants(app_id);
 CREATE INDEX IF NOT EXISTS idx_tenants_client_user_pool_id ON tenants(user_pool_id);
 
 
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS app_secrets (
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX IF NOT EXISTS idx_app_secret_id ON app_secrets (app_id, secret);
+CREATE INDEX IF NOT EXISTS idx_app_secret_id ON app_secrets (app_id, secret);
 
 CREATE TABLE IF NOT EXISTS codes (
     id           BIGSERIAL PRIMARY KEY,
@@ -117,4 +117,53 @@ CREATE TABLE IF NOT EXISTS providers (
 );
 CREATE INDEX IF NOT EXISTS idx_provider_tenant_type_id ON providers(tenant_id, app_id);
 CREATE INDEX IF NOT EXISTS idx_provider_type ON providers(type);
+
+
+
+
+--------------------------------- 权限 ---------------------------------
+CREATE TABLE IF NOT EXISTS resources (
+    id              BIGSERIAL PRIMARY KEY,
+    tenant_id       BIGSERIAL NOT NULL,
+    app_id          CHAR(32) NOT NULL,
+    type            VARCHAR(32) NOT NULL,
+    code            VARCHAR(63) NOT NULL,  -- 编程访问资源的唯一标识
+    value           JSONB NOT NULL,
+    created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS idx_resources_tenant_app_id ON resources(app_id);
+CREATE UNIQUE INDEX IF NOT EXISTS udx_resources_tenant_code_id ON resources(tenant_id, code);
+CREATE UNIQUE INDEX IF NOT EXISTS udx_resources_type ON resources(type);
+
+
+CREATE TABLE IF NOT EXISTS resource_roles (
+    id              BIGSERIAL PRIMARY KEY,
+    tenant_id       BIGSERIAL NOT NULL,
+    app_id          CHAR(32) NOT NULL,
+    type            VARCHAR(32) NOT NULL,
+    code            VARCHAR(63) NOT NULL,  -- 编程访问资源的唯一标识
+    name            VARCHAR(127) NOT NULL,
+    created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS idx_resources_roles_tenant_app_id ON resource_roles(app_id);
+CREATE UNIQUE INDEX IF NOT EXISTS udx_resources_roles_tenant_code_id ON resource_roles(tenant_id, code);
+CREATE UNIQUE INDEX IF NOT EXISTS udx_resources_roles_type ON resource_roles(type);
+
+
+CREATE TABLE IF NOT EXISTS resource_actions (
+    id              BIGSERIAL PRIMARY KEY,
+    tenant_id       BIGSERIAL NOT NULL,
+    app_id          CHAR(32) NOT NULL,
+    type            VARCHAR(32) NOT NULL,
+    code            VARCHAR(63) NOT NULL,  -- 编程访问资源的唯一标识
+    name            VARCHAR(127) NOT NULL,
+    created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS idx_resources_actions_tenant_app_id ON resources(app_id);
+CREATE UNIQUE INDEX IF NOT EXISTS udx_resources_actions_tenant_code_id ON resources(tenant_id, code);
+CREATE UNIQUE INDEX IF NOT EXISTS udx_resources_actions_type ON resources(type);
+
 
