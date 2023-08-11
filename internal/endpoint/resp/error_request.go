@@ -2,8 +2,6 @@ package resp
 
 import (
 	"context"
-	"github.com/gin-gonic/gin"
-	"github.com/pkg/errors"
 	"net/http"
 )
 
@@ -18,26 +16,7 @@ const (
 )
 
 func errorResponse(ctx context.Context, code int, errCode int, err error, msg string, isArray []bool) {
-	c, ok := ctx.(*gin.Context)
-	if !ok {
-		return
-	}
-
-	c.Header("X-Request-Id", c.GetString("requestID"))
-	if len(isArray) == 0 {
-		c.JSON(code, &Response{Code: errCode, Msg: msg, Data: struct{}{}})
-	} else {
-		c.JSON(code, &ArrayResponse{Code: errCode, Msg: msg, Total: 0, Data: []struct{}{}})
-	}
-
-	if err != nil {
-		_ = c.Error(errors.WithMessage(err, msg))
-	} else {
-		_ = c.Error(errors.New(msg))
-	}
-
-	c.Set("code", errCode)
-	c.Abort()
+	response(ctx, code, errCode, err, msg, nil, 0, isArray)
 }
 
 // ErrorRequest 请求参数错误

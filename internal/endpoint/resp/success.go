@@ -3,6 +3,7 @@ package resp
 import (
 	"context"
 	"github.com/gin-gonic/gin"
+	"github.com/pkg/errors"
 	"net/http"
 )
 
@@ -25,20 +26,36 @@ type ArrayResponse struct {
 	Data  any    `json:"data"`
 }
 
-func success(ctx context.Context, data any, total int, isArray bool) {
+func response(ctx context.Context, code int, errCode int, err error, msg string, data any, total int, isArray []bool) {
 	c, ok := ctx.(*gin.Context)
 	if !ok {
 		return
 	}
 
 	c.Header("X-Request-Id", c.GetString("requestID"))
-	if !isArray {
-		c.JSON(http.StatusOK, &Response{Code: CodeSuccess, Msg: MsgSuccess, Data: data})
+	if len(isArray) == 0 || !isArray[0] {
+		if data == nil {
+			data = struct{}{}
+		}
+		c.JSON(code, &Response{Code: errCode, Msg: msg, Data: data})
 	} else {
-		c.JSON(http.StatusOK, &ArrayResponse{Code: CodeSuccess, Msg: MsgSuccess, Total: total, Data: data})
+		if data == nil {
+			data = []struct{}{}
+		}
+		c.JSON(code, &ArrayResponse{Code: errCode, Msg: msg, Total: total, Data: data})
 	}
 
+	if err != nil {
+		_ = c.Error(errors.WithMessage(err, msg))
+	} else {
+		_ = c.Error(errors.New(msg))
+	}
+	c.Set("code", errCode)
 	c.Abort()
+}
+
+func success(ctx context.Context, data any, total int, isArray ...bool) {
+	response(ctx, http.StatusOK, CodeSuccess, nil, MsgSuccess, data, total, isArray)
 }
 
 func Success(ctx context.Context) {
@@ -52,16 +69,5 @@ func SuccessArray(ctx context.Context, total int, data any) {
 }
 
 func DoNothing(ctx context.Context, msg string, isArray ...bool) {
-	c, ok := ctx.(*gin.Context)
-	if !ok {
-		return
-	}
-
-	if len(isArray) == 0 {
-		c.JSON(http.StatusAccepted, &Response{Code: CodeAccept, Msg: msg, Data: struct{}{}})
-		c.Abort()
-	} else {
-		c.JSON(http.StatusAccepted, &ArrayResponse{Code: CodeAccept, Msg: msg, Total: 0, Data: []struct{}{}})
-		c.Abort()
-	}
+	response(ctx, http.StatusAccepted, CodeAccept, nil, msg, nil, 0, isArray)
 }
