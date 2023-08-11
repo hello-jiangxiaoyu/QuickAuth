@@ -17,7 +17,7 @@ import (
 func (o Controller) listUserPool(c *gin.Context) {
 	pools, err := o.svc.ListUserPool()
 	if err != nil {
-		resp.ErrorSelect(c, err, "list user pool err")
+		resp.ErrorSelect(c, err, "list user pool err", true)
 		return
 	}
 	resp.SuccessArray(c, len(pools), pools)

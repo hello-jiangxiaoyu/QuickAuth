@@ -18,13 +18,13 @@ import (
 func (o Controller) listRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := o.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid redirect-uri request param")
+		resp.ErrorRequest(c, err, "invalid redirect-uri request param", true)
 		return
 	}
 
 	uris, err := o.svc.ListRedirectUri(in.Tenant.ID)
 	if err != nil {
-		resp.ErrorSelect(c, err, "list redirect uri err")
+		resp.ErrorSelect(c, err, "list redirect uri err", true)
 		return
 	}
 	resp.SuccessArray(c, len(uris), uris)

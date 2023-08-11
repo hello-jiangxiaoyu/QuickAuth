@@ -20,13 +20,13 @@ import (
 func (o Controller) listUser(c *gin.Context) {
 	var in request.UserReq
 	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid user request param")
+		resp.ErrorRequest(c, err, "invalid user request param", true)
 		return
 	}
 
 	users, err := o.svc.ListUser(in.UserPoolID)
 	if err != nil {
-		resp.ErrorSelect(c, err, "invalid user request param")
+		resp.ErrorSelect(c, err, "get user list err", true)
 		return
 	}
 	resp.SuccessArray(c, len(users), users)

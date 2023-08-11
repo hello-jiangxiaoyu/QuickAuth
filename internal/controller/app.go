@@ -24,7 +24,7 @@ func (o Controller) listApp(c *gin.Context) {
 		return o.svc.ListApps()
 	})
 	if err != nil {
-		resp.ErrorSelect(c, err, "list apps err")
+		resp.ErrorSelect(c, err, "list apps err", true)
 		return
 	}
 	resp.SuccessArray(c, len(apps.([]model.App)), apps)

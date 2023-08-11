@@ -18,13 +18,13 @@ import (
 func (o Controller) listAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
 	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid app secret request param")
+		resp.ErrorRequest(c, err, "invalid app secret request param", true)
 		return
 	}
 
 	secrets, err := o.svc.ListAppSecrets(in.AppId)
 	if err != nil {
-		resp.ErrorSelect(c, err, "list app secret err")
+		resp.ErrorSelect(c, err, "list app secret err", true)
 		return
 	}
 	resp.SuccessArray(c, len(secrets), secrets)
