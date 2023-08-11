@@ -12,13 +12,13 @@ function Page() {
   function updateUserPool() {
     api.fetchUserPoolList().then(r => {
       setPools(r.data);
-    }).catch(e => Message.error(e.toString()));
+    }).catch();
   }
   function onDeletePool(record:Pool) {
     api.deleteUserPool(record.id).then(() => {
       Message.success("Success !")
       updateUserPool();
-    }).catch(e => Message.error(e.toString()));
+    }).catch();
   }
 
   const columns: TableColumnProps[] = [

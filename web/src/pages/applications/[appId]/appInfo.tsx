@@ -40,11 +40,9 @@ function AppInfo() {
       res.host = currentTenant.host;
       api.modifyApp(currentApp.id, res).then(() => {
         Message.success('Success !');
-        api.fetchApp(currentApp.id).then(r => dispatchApp(r.data)).catch(e => Message.error(e.toString()));
-      }).catch(e => Message.error(e.toString()));
-    }).catch((e) => {
-      Message.error("validator " + e.toString());
-    });
+        api.fetchApp(currentApp.id).then(r => dispatchApp(r.data)).catch();
+      }).catch();
+    }).catch(e => Message.error("validator " + e.toString()));
   }
 
   function BasicInfo() {

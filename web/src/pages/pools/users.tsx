@@ -17,12 +17,12 @@ function Page() {
   function updateUserPool() {
     api.fetchUserPoolList().then(r => {
       setPools(r.data);
-    }).catch(e => Message.error(e.toString()));
+    }).catch();
   }
   function updateUser() {
     api.fetchUserList(selectId).then(r => {
       setUsers(r.data);
-    }).catch(e => Message.error(e.toString()));
+    }).catch();
   }
 
   function UserPoolSelect() {

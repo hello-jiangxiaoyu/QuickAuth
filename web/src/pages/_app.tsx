@@ -3,7 +3,7 @@ import zhCN from '@arco-design/web-react/es/locale/zh-CN';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 import '@/mock';
 import '@/style/global.less';
-import {ConfigProvider, Message} from '@arco-design/web-react';
+import {ConfigProvider} from '@arco-design/web-react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import cookies from 'next-cookies';
@@ -48,18 +48,16 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
   const appId = getRouterPara(router.query.appId);
   useEffect(() => { // 刷新页面时，检查登录状态
     api.fetchUserInfo();
-    api.fetchMe().then().catch(e => {
-      Message.error(e.toString());
+    api.fetchMe().then().catch(() => {
       setTimeout(()=>{Router.push('/login').then()}, 2000); // 跳转到登录页
     })
+    api.fetchAppList().then(r => dispatchAppList(r.data)).catch();
   }, []);
 
   useEffect(() => {changeTheme(theme)}, [lang, theme]);
   useEffect(() => { // 首次加载，以及appId发生变化
-    api.fetchAppList().then(r => dispatchAppList(r.data)).catch(e => Message.error(e.toString()));
     if (typeof appId === 'string' && appId !== '') {
-      updateAppAndTenant(appId).then().catch(e => {
-        Message.error(e.toString());
+      updateAppAndTenant(appId).then().catch(() => {
         setTimeout(()=>{Router.push('/applications/').then()}, 2000);
       });
     }

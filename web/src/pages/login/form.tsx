@@ -1,15 +1,7 @@
-import {
-  Form,
-  Input,
-  Checkbox,
-  Link,
-  Button,
-  Space, Message,
-} from '@arco-design/web-react';
+import {Form, Input, Checkbox, Link, Button, Space} from '@arco-design/web-react';
 import { FormInstance } from '@arco-design/web-react/es/Form';
 import { IconLock, IconUser } from '@arco-design/web-react/icon';
 import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import useStorage from '@/utils/useStorage';
 import useLocale from '@/utils/useLocale';
 import locale from './locale';
@@ -41,7 +33,7 @@ export default function LoginForm() {
     setLoading(true);
     api.login(params).then(() => {
       afterLoginSuccess(params);
-    }).catch(e=> Message.error(e.toString())).finally(() => {
+    }).catch().finally(() => {
       setLoading(false);
     })
   }

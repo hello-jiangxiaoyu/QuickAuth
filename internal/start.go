@@ -72,7 +72,7 @@ func InitDefaultTenant() error {
 		Icon:     "IconSafe",
 		Describe: "quick auth app",
 	}
-	app, err := svc.CreateApp(app, "localhost", 0)
+	app, err := svc.CreateApp(app, "127.0.0.1", 0)
 	if err != nil {
 		return err
 	}

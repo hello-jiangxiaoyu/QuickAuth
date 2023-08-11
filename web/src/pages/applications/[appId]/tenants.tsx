@@ -38,13 +38,13 @@ function Tenants() {
         obj.key = index + 1;
       });
       dispatchTenantList(r.data);
-    }).catch(e => Message.error(e.toString()));
+    }).catch();
   }
   function onDeleteTenant(record:Tenant) {
     api.deleteTenant(appId, record.id).then(() => {
       Message.success("Success !");
       updateTenantList();
-    }).catch(e => Message.error(e.toString()))
+    }).catch()
   }
 
   return (

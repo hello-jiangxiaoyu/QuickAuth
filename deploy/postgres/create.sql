@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS user_pools (
 );
 CREATE TABLE IF NOT EXISTS users (
     id              CHAR(32) PRIMARY KEY,
-    user_pool_id    BIGSERIAL NOT NULL,
+    user_pool_id    BIGSERIAL NOT NULL REFERENCES user_pools(id),
     username        VARCHAR(127) NOT NULL,
     password        VARCHAR(127) NOT NULL,
     nick_name       VARCHAR(127) NOT NULL,
@@ -39,9 +39,9 @@ CREATE TABLE IF NOT EXISTS users (
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX IF NOT EXISTS idx_users_user_pool_username ON users(user_pool_id, username);
-CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email ON users(email);
-CREATE UNIQUE INDEX IF NOT EXISTS idx_users_phone ON users(phone);
+CREATE UNIQUE INDEX IF NOT EXISTS uk_users_user_pool_username ON users(user_pool_id, username);
+CREATE UNIQUE INDEX IF NOT EXISTS uk_users_email ON users(email);
+CREATE UNIQUE INDEX IF NOT EXISTS uk_users_phone ON users(phone);
 
 
 
@@ -60,27 +60,25 @@ CREATE TABLE IF NOT EXISTS tenants (
     id_expire       INTEGER NOT NULL DEFAULT 604800,  -- id_token过期时间，默认7天
     access_expire   INTEGER NOT NULL DEFAULT 604800,  -- access_token过期时间，默认7天
     refresh_expire  INTEGER NOT NULL DEFAULT 2592000, -- refresh_token过期时间，默认30天
-    is_code         BOOLEAN NOT NULL DEFAULT true,  -- 是否开启authorization_code
-    is_refresh      BOOLEAN NOT NULL DEFAULT true,  -- 是否返回refresh_token
-    is_password     BOOLEAN NOT NULL DEFAULT false,  -- 是否开启password授权模式
-    is_credential   BOOLEAN NOT NULL DEFAULT true,  -- 是否开启client_credential
-    is_device_flow  BOOLEAN NOT NULL DEFAULT false,  -- 是否开启device_flow
+    is_code         BOOLEAN NOT NULL DEFAULT true,    -- 是否开启authorization_code
+    is_refresh      BOOLEAN NOT NULL DEFAULT true,    -- 是否返回refresh_token
+    is_password     BOOLEAN NOT NULL DEFAULT false,   -- 是否开启password授权模式
+    is_credential   BOOLEAN NOT NULL DEFAULT true,    -- 是否开启client_credential
+    is_device_flow  BOOLEAN NOT NULL DEFAULT false,    -- 是否开启device_flow
     config          JSONB NOT NULL,
     describe        VARCHAR(127) NOT NULL,
     is_disabled     BOOLEAN NOT NULL DEFAULT false,
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX IF NOT EXISTS idx_tenants_host ON tenants(host);
-CREATE UNIQUE INDEX IF NOT EXISTS idx_tenants_name ON tenants(app_id);
-CREATE INDEX IF NOT EXISTS idx_tenants_client_user_pool_id ON tenants(user_pool_id);
+CREATE UNIQUE INDEX IF NOT EXISTS uk_tenants_host ON tenants(host);
 
 
 
 
 CREATE TABLE IF NOT EXISTS app_secrets (
     id              BIGSERIAL PRIMARY KEY,
-    app_id          CHAR(32) NOT NULL,
+    app_id          CHAR(32) NOT NULL REFERENCES apps(id),
     secret          CHAR(63) NOT NULL,    -- 客户端凭证密钥
     scope           VARCHAR(127) ARRAY NOT NULL,     -- 客户端凭证权限范围
     access_expire   INTEGER NOT NULL DEFAULT 604800,
@@ -89,25 +87,25 @@ CREATE TABLE IF NOT EXISTS app_secrets (
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE INDEX IF NOT EXISTS idx_app_secret_id ON app_secrets (app_id, secret);
+CREATE INDEX IF NOT EXISTS idx_app_secret_id ON app_secrets (secret);
 
 CREATE TABLE IF NOT EXISTS codes (
     id           BIGSERIAL PRIMARY KEY,
     user_id      BIGSERIAL NOT NULL,
-    app_id       CHAR(32) NOT NULL,
+    app_id       CHAR(32) NOT NULL REFERENCES apps(id),
     code         CHAR(32) NOT NULL,
     scope        VARCHAR(255) NOT NULL,
     state        CHAR(63) NOT NULL,
     created_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE INDEX IF NOT EXISTS idx_codes_tenant_id ON codes(code, app_id);
+CREATE INDEX IF NOT EXISTS idx_codes_tenant_id ON codes(code);
 
 
 CREATE TABLE IF NOT EXISTS providers (
     id              BIGSERIAL PRIMARY KEY,
-    tenant_id       BIGSERIAL NOT NULL,
-    app_id          CHAR(32) NOT NULL,
+    tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
+    app_id          CHAR(32) NOT NULL REFERENCES apps(id),
     type            VARCHAR(32) NOT NULL,
     client_id       VARCHAR(255) NOT NULL,
     client_secret   VARCHAR(255) NOT NULL,
@@ -115,55 +113,75 @@ CREATE TABLE IF NOT EXISTS providers (
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE INDEX IF NOT EXISTS idx_provider_tenant_type_id ON providers(tenant_id, app_id);
 CREATE INDEX IF NOT EXISTS idx_provider_type ON providers(type);
 
 
 
 
 --------------------------------- 权限 ---------------------------------
-CREATE TABLE IF NOT EXISTS resources (
+-- 资源表
+CREATE TABLE resource (
     id              BIGSERIAL PRIMARY KEY,
-    tenant_id       BIGSERIAL NOT NULL,
-    app_id          CHAR(32) NOT NULL,
-    type            VARCHAR(32) NOT NULL,
-    code            VARCHAR(63) NOT NULL,  -- 编程访问资源的唯一标识
-    value           JSONB NOT NULL,
+    name            VARCHAR(255),
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE INDEX IF NOT EXISTS idx_resources_tenant_app_id ON resources(app_id);
-CREATE UNIQUE INDEX IF NOT EXISTS udx_resources_tenant_code_id ON resources(tenant_id, code);
-CREATE UNIQUE INDEX IF NOT EXISTS udx_resources_type ON resources(type);
 
-
-CREATE TABLE IF NOT EXISTS resource_roles (
+-- 属性表
+CREATE TABLE attribute (
     id              BIGSERIAL PRIMARY KEY,
-    tenant_id       BIGSERIAL NOT NULL,
-    app_id          CHAR(32) NOT NULL,
-    type            VARCHAR(32) NOT NULL,
-    code            VARCHAR(63) NOT NULL,  -- 编程访问资源的唯一标识
-    name            VARCHAR(127) NOT NULL,
+    name            VARCHAR(255),
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE INDEX IF NOT EXISTS idx_resources_roles_tenant_app_id ON resource_roles(app_id);
-CREATE UNIQUE INDEX IF NOT EXISTS udx_resources_roles_tenant_code_id ON resource_roles(tenant_id, code);
-CREATE UNIQUE INDEX IF NOT EXISTS udx_resources_roles_type ON resource_roles(type);
 
-
-CREATE TABLE IF NOT EXISTS resource_actions (
-    id              BIGSERIAL PRIMARY KEY,
-    tenant_id       BIGSERIAL NOT NULL,
-    app_id          CHAR(32) NOT NULL,
-    type            VARCHAR(32) NOT NULL,
-    code            VARCHAR(63) NOT NULL,  -- 编程访问资源的唯一标识
-    name            VARCHAR(127) NOT NULL,
+-- 用户属性关联表
+CREATE TABLE user_attribute (
+    user_id         CHAR(32),
+    attribute_id    BIGSERIAL,
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    PRIMARY KEY (user_id, attribute_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (attribute_id) REFERENCES attribute(id)
 );
-CREATE INDEX IF NOT EXISTS idx_resources_actions_tenant_app_id ON resources(app_id);
-CREATE UNIQUE INDEX IF NOT EXISTS udx_resources_actions_tenant_code_id ON resources(tenant_id, code);
-CREATE UNIQUE INDEX IF NOT EXISTS udx_resources_actions_type ON resources(type);
 
+-- 资源属性关联表
+CREATE TABLE resource_attribute (
+    resource_id     BIGSERIAL,
+    attribute_id    BIGSERIAL,
+    created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    PRIMARY KEY (resource_id, attribute_id),
+    FOREIGN KEY (resource_id) REFERENCES resource(id),
+    FOREIGN KEY (attribute_id) REFERENCES attribute(id)
+);
 
+-- 许可表
+CREATE TABLE permission (
+    id                  BIGSERIAL PRIMARY KEY,
+    resource_id         BIGSERIAL,
+    attribute_id        BIGSERIAL,
+    operation           VARCHAR(255),
+    attribute_value     VARCHAR(255),
+    created_at          TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at          TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    FOREIGN KEY (resource_id) REFERENCES resource(id),
+    FOREIGN KEY (attribute_id) REFERENCES attribute(id)
+);
+
+-- JSON树状结构表
+CREATE TABLE resource_tree (
+    node_id         BIGSERIAL PRIMARY KEY,
+    parent_node_id  BIGSERIAL,
+    node_name       VARCHAR(255),
+    node_path       VARCHAR(255),
+    created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    FOREIGN KEY (parent_node_id) REFERENCES resource_tree (node_id)
+);
+CREATE TABLE resource_json (
+    id      BIGSERIAL PRIMARY KEY,
+    name    VARCHAR(255),
+    value   JSONB
+);

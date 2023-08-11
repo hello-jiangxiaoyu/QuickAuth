@@ -17,7 +17,7 @@ function ClientCredential() {
         obj.key = index + 1;
       });
       setSecrets(r.data);
-    }).catch(e => Message.error(e.toString()));
+    }).catch();
   }
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function ClientCredential() {
     deleteSecret(appId, record.id).then(() => {
       Message.success("Success !")
       updateSecretList(appId);
-    }).catch(e => Message.error(e.toString()));
+    }).catch();
   }
 
   const columns: TableColumnProps[] = [

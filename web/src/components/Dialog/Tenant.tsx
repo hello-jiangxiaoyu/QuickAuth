@@ -14,7 +14,7 @@ export default function CreateTenantDialog(props:{visible: boolean, setVisible: 
         obj.key = index + 1;
       });
       dispatchTenantList(r.data);
-    }).catch(e => Message.error(e.toString()));
+    }).catch();
   }
 
   function onOk() {
@@ -24,8 +24,8 @@ export default function CreateTenantDialog(props:{visible: boolean, setVisible: 
         Message.success('Success !');
         updateTenantList(currentApp.id);
         props.setVisible(false);
-      }).catch(e => Message.error(e.toString())).finally(() => setConfirmLoading(false));
-    }).catch((e) => Message.error(e.toString()));
+      }).catch().finally(() => setConfirmLoading(false));
+    }).catch(e => Message.error(e.toString()));
   }
 
   const [form] = Form.useForm();

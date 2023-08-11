@@ -1,30 +1,38 @@
 import {format} from "util";
 import env from "../store/env.json"
+import {Message} from "@arco-design/web-react";
 
 export interface Root<T> {
   code: number;
   msg: string;
-  data: T;
+  data?: T;
 }
 
-async function SendHttpRequest<T>(method:string, uri:string, wrapMsg?:string, data?:string|FormData):Promise<Root<T>> {
+async function SendHttpRequest<T>(
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+  uri:string,
+  wrapMsg?:string,
+  data?:string|FormData
+):Promise<Root<T>> {
   const url = env.devHost + uri;
-  let response:Root<T>;
-  if (method === 'GET' || method === 'DELETE') {
-    response = await fetch(url, {method:method}).then((resp) => resp.json());
-  } else {
-    response = await fetch(url, {method:method, body:data}).then((resp) => resp.json());
+  let err = ""
+  const response:Root<T> = await fetch(url, {method, body: data}).then((resp) => resp.json()).catch(e => {err = e.toString();});
+  if (err !== "") {
+    Message.error(err);
+    return Promise.reject("fetch error");
   }
 
   if (typeof response !== 'object') {
+    Message.error("Invalid server response type");
     return Promise.reject("Invalid server response type");
   }
 
-  if (response?.code !== 200) {
+  if (response?.code > 308) {
     response.msg = format("%s (%d)", response?.msg, response?.code);
     if (typeof wrapMsg === 'string' && wrapMsg !== '') {
       response.msg = wrapMsg + ' error: ' + response.msg
     }
+    Message.error(response.msg);
     return Promise.reject(response.msg);
   }
 
