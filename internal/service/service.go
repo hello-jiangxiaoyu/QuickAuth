@@ -1,8 +1,8 @@
 package service
 
 import (
+	"QuickAuth/conf"
 	"QuickAuth/internal/global"
-	"QuickAuth/pkg/conf"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )

@@ -1,9 +1,9 @@
 package internal
 
 import (
+	"QuickAuth/conf"
 	"QuickAuth/internal/global"
 	"QuickAuth/internal/service"
-	"QuickAuth/pkg/conf"
 	"QuickAuth/pkg/log"
 	"QuickAuth/pkg/model"
 	"QuickAuth/pkg/orm"

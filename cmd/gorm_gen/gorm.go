@@ -1,7 +1,7 @@
 package main
 
 import (
-	"QuickAuth/pkg/conf"
+	"QuickAuth/conf"
 	"QuickAuth/pkg/orm"
 	"fmt"
 	"golang.org/x/text/cases"

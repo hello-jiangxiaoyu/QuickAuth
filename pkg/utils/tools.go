@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"QuickAuth/pkg/conf"
 	"bytes"
 	"fmt"
 	"os"
@@ -39,7 +38,7 @@ func DtoFilter[S any, T any](s []S, f func(S) T) []T {
 func GetPanicStackInfo(req string, err any, skip int, fullStack bool) string {
 	pwd, _ := os.Getwd()
 	pwd = strings.ReplaceAll(pwd, `\`, "/") // handle windows path
-	res := fmt.Sprintf("[Recovery] %s panic recovered: %s\n%v", time.Now().Format(conf.DataTimeFormat), req, err)
+	res := fmt.Sprintf("[Recovery] %s panic recovered: %s\n%v", time.Now().Format("2006-01-02 15:04:05"), req, err)
 	for i := skip; ; i++ {
 		pc, file, line, ok := runtime.Caller(i)
 		if !ok {
