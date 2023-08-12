@@ -17,8 +17,9 @@ func (a *Api) SetCtx(c *gin.Context) *Api {
 	return a
 }
 
-func (a *Api) setError(err error) {
+func (a *Api) setError(err error) *Api {
 	if a.Error == nil {
 		a.Error = err
 	}
+	return a
 }
