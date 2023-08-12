@@ -7,12 +7,6 @@ import (
 	"net/http"
 )
 
-const (
-	CodeSuccess = http.StatusOK
-	CodeAccept  = http.StatusAccepted
-	MsgSuccess  = ""
-)
-
 type Response struct {
 	Code int    `json:"code"`
 	Msg  string `json:"msg"`

@@ -50,7 +50,7 @@ func (o Controller) login(c *gin.Context) {
 		resp.ErrorUnknown(c, err, "create id token err")
 		return
 	}
-	c.SetCookie(resp.IDToken, token, int(in.Tenant.IDExpire), "/", "", false, true)
+	c.SetCookie(resp.IDToken, token, int(in.Tenant.IDExpire), "/api/quick", "", false, true)
 	if next := c.Query("next"); next != "" {
 		c.Redirect(http.StatusFound, next)
 		return

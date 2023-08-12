@@ -5,16 +5,6 @@ import (
 	"net/http"
 )
 
-const (
-	CodeNoSuchRoute = 1000 // 系统相关错误码
-	CodeRequestPara = 1001
-	CodeForbidden   = 1002
-
-	CodeNoSuchHost   = 2000 // 业务相关错误码
-	CodeNotLogin     = 2001
-	CodeInvalidToken = 2002
-)
-
 func errorResponse(ctx context.Context, code int, errCode int, err error, msg string, isArray []bool) {
 	response(ctx, code, errCode, err, msg, nil, 0, isArray)
 }

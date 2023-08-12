@@ -80,19 +80,19 @@ function AppInfo() {
         value: <Link style={{paddingLeft:0}} href={`${domain}/api/quick/.well-known/jwks.json`}>{domain}/api/quick/.well-known/jwks.json</Link>,
       }, {
         label: 'Token 接口',
-        value: `${domain}/api/quick/token`,
+        value: `${domain}/api/quick/auth2/token`,
       }, {
         label: 'Issuer',
-        value: `${domain}`,
+        value: `${domain}/api/quick`,
       }, {
         label: '用户信息接口',
-        value: `${domain}/api/quick/me`,
+        value: <Link style={{paddingLeft:0}} href={`${domain}/api/quick/me/profile`}>{domain}/api/quick/me/profile</Link>,
       }, {
         label: '服务发现接口',
         value: <Link style={{paddingLeft:0}} href={`${domain}/api/quick/.well-known/openid-configuration`}>{domain}/api/quick/.well-known/openid-configuration</Link>,
       }, {
-        label: '登录页',
-        value: <Link style={{paddingLeft:0}} href={`${domain}/api/quick/login`}>{domain}/api/quick/login</Link>,
+        label: '登录接口',
+        value: `${domain}/api/quick/login`,
       }, {
         label: '登出接口',
         value: `${domain}/api/quick/oidc/session/end`,

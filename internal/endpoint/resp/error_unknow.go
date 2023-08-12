@@ -6,19 +6,6 @@ import (
 	"strings"
 )
 
-const (
-	ServerPanic     = 2000
-	CodeUnknown     = 2001
-	CodeNotFound    = 2002
-	CodeSaveSession = 2003
-
-	CodeSqlSelect          = 3000
-	CodeSqlModify          = 3001
-	CodeSqlCreate          = 3002
-	CodeSqlDelete          = 3003
-	CodeSqlCreateDuplicate = 3004
-)
-
 // ErrorUnknown 未知错误
 func ErrorUnknown(ctx context.Context, err error, respMsg string, isArray ...bool) {
 	errorResponse(ctx, http.StatusInternalServerError, CodeUnknown, err, respMsg, isArray)
