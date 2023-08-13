@@ -7,7 +7,6 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
-	"time"
 )
 
 // GetGoID get goroutine id
@@ -35,10 +34,10 @@ func DtoFilter[S any, T any](s []S, f func(S) T) []T {
 	return l
 }
 
-func GetPanicStackInfo(req string, err any, skip int, fullStack bool) string {
+func GetPanicStackInfo(msg string, err any, skip int, fullStack bool) string {
 	pwd, _ := os.Getwd()
 	pwd = strings.ReplaceAll(pwd, `\`, "/") // handle windows path
-	res := fmt.Sprintf("[Recovery] %s panic recovered: %s\n%v", time.Now().Format("2006-01-02 15:04:05"), req, err)
+	res := fmt.Sprintf("\n[Recovery] panic recovered: %s\n[Error] %v", msg, err)
 	for i := skip; ; i++ {
 		pc, file, line, ok := runtime.Caller(i)
 		if !ok {
