@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/global"
 	"QuickAuth/internal/service"
+	"QuickAuth/pkg/global"
 	"crypto/rsa"
 	"fmt"
 	"github.com/gin-gonic/gin"

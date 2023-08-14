@@ -1,7 +1,7 @@
 package dto
 
 import (
-	"QuickAuth/pkg/model"
+	"QuickAuth/internal/model"
 	"time"
 )
 

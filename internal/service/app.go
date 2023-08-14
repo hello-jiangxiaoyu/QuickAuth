@@ -1,7 +1,7 @@
 package service
 
 import (
-	"QuickAuth/pkg/model"
+	"QuickAuth/internal/model"
 	"QuickAuth/pkg/safe"
 	"QuickAuth/pkg/utils"
 	"github.com/lib/pq"

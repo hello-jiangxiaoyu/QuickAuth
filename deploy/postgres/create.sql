@@ -163,12 +163,13 @@ CREATE TABLE permission (
     resource_id         BIGSERIAL,
     attribute_id        BIGSERIAL,
     operation           VARCHAR(255),
-    attribute_value     VARCHAR(255),
     created_at          TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at          TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     FOREIGN KEY (resource_id) REFERENCES resource(id),
     FOREIGN KEY (attribute_id) REFERENCES attribute(id)
 );
+
+
 
 -- JSON树状结构表
 CREATE TABLE resource_tree (
@@ -185,3 +186,5 @@ CREATE TABLE resource_json (
     name    VARCHAR(255),
     value   JSONB
 );
+
+

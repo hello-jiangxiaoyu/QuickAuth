@@ -3,9 +3,9 @@ package controller
 import (
 	_ "QuickAuth/docs"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/global"
-	"QuickAuth/internal/middleware"
 	"QuickAuth/internal/service"
+	"QuickAuth/pkg/global"
+	"QuickAuth/pkg/middleware"
 	"strings"
 
 	"github.com/gin-gonic/gin"

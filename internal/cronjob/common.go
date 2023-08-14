@@ -1,7 +1,7 @@
 package cronjob
 
 import (
-	"QuickAuth/internal/global"
+	"QuickAuth/pkg/global"
 	"QuickAuth/pkg/utils"
 	"time"
 )

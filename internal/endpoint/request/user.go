@@ -1,6 +1,8 @@
 package request
 
-import "QuickAuth/pkg/model"
+import (
+	"QuickAuth/internal/model"
+)
 
 type UserReq struct {
 	UserID      string  `json:"-" uri:"userId"`

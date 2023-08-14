@@ -3,8 +3,8 @@ package controller
 import (
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
+	"QuickAuth/internal/model"
 	"QuickAuth/internal/service"
-	"QuickAuth/pkg/model"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/sync/singleflight"
 )

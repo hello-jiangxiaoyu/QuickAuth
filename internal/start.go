@@ -2,10 +2,10 @@ package internal
 
 import (
 	"QuickAuth/conf"
-	"QuickAuth/internal/global"
+	"QuickAuth/internal/model"
 	"QuickAuth/internal/service"
+	"QuickAuth/pkg/global"
 	"QuickAuth/pkg/log"
-	"QuickAuth/pkg/model"
 	"QuickAuth/pkg/orm"
 	"errors"
 	"gorm.io/gorm"

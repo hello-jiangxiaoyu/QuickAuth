@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/global"
+	"QuickAuth/pkg/global"
 	"QuickAuth/pkg/utils"
 	"errors"
 	"fmt"

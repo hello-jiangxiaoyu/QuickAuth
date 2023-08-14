@@ -2,7 +2,7 @@ package global
 
 import (
 	"QuickAuth/conf"
-	"QuickAuth/pkg/model"
+	"QuickAuth/internal/model"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )

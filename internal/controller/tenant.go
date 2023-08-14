@@ -3,7 +3,7 @@ package controller
 import (
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/pkg/model"
+	"QuickAuth/internal/model"
 	"QuickAuth/pkg/utils"
 	"github.com/gin-gonic/gin"
 )

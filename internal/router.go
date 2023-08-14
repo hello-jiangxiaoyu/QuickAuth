@@ -2,8 +2,8 @@ package internal
 
 import (
 	"QuickAuth/internal/controller"
-	"QuickAuth/internal/global"
-	"QuickAuth/internal/middleware"
+	"QuickAuth/pkg/global"
+	"QuickAuth/pkg/middleware"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
