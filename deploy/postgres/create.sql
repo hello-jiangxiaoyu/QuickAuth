@@ -9,7 +9,34 @@ CREATE TABLE IF NOT EXISTS apps (
     updated_at     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 
+CREATE TABLE IF NOT EXISTS app_secrets (
+    id              BIGSERIAL PRIMARY KEY,
+    app_id          CHAR(32) NOT NULL REFERENCES apps(id),
+    secret          CHAR(63) NOT NULL,    -- 客户端凭证密钥
+    scope           VARCHAR(127) ARRAY NOT NULL,     -- 客户端凭证权限范围
+    access_expire   INTEGER NOT NULL DEFAULT 604800,
+    refresh_expire  INTEGER NOT NULL DEFAULT 2592000,
+    describe        VARCHAR(127) NOT NULL,
+    created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS idx_app_secret_id ON app_secrets (secret);
 
+CREATE TABLE IF NOT EXISTS codes (
+    id           BIGSERIAL PRIMARY KEY,
+    user_id      BIGSERIAL NOT NULL,
+    app_id       CHAR(32) NOT NULL REFERENCES apps(id),
+    code         CHAR(32) NOT NULL,
+    scope        VARCHAR(255) NOT NULL,
+    state        CHAR(63) NOT NULL,
+    created_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS idx_codes_tenant_id ON codes(code);
+
+
+
+--------------------------------- 用户 ---------------------------------
 
 CREATE TABLE IF NOT EXISTS user_pools (
     id          BIGSERIAL PRIMARY KEY,
@@ -46,6 +73,8 @@ CREATE UNIQUE INDEX IF NOT EXISTS uk_users_phone ON users(phone);
 
 
 
+--------------------------------- 租户 ---------------------------------
+
 CREATE TABLE IF NOT EXISTS tenants (
     id              BIGSERIAL PRIMARY KEY,
     app_id          CHAR(32) NOT NULL REFERENCES apps(id),
@@ -74,38 +103,9 @@ CREATE TABLE IF NOT EXISTS tenants (
 CREATE UNIQUE INDEX IF NOT EXISTS uk_tenants_host ON tenants(host);
 
 
-
-
-CREATE TABLE IF NOT EXISTS app_secrets (
-    id              BIGSERIAL PRIMARY KEY,
-    app_id          CHAR(32) NOT NULL REFERENCES apps(id),
-    secret          CHAR(63) NOT NULL,    -- 客户端凭证密钥
-    scope           VARCHAR(127) ARRAY NOT NULL,     -- 客户端凭证权限范围
-    access_expire   INTEGER NOT NULL DEFAULT 604800,
-    refresh_expire  INTEGER NOT NULL DEFAULT 2592000,
-    describe        VARCHAR(127) NOT NULL,
-    created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
-);
-CREATE INDEX IF NOT EXISTS idx_app_secret_id ON app_secrets (secret);
-
-CREATE TABLE IF NOT EXISTS codes (
-    id           BIGSERIAL PRIMARY KEY,
-    user_id      BIGSERIAL NOT NULL,
-    app_id       CHAR(32) NOT NULL REFERENCES apps(id),
-    code         CHAR(32) NOT NULL,
-    scope        VARCHAR(255) NOT NULL,
-    state        CHAR(63) NOT NULL,
-    created_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
-);
-CREATE INDEX IF NOT EXISTS idx_codes_tenant_id ON codes(code);
-
-
 CREATE TABLE IF NOT EXISTS providers (
     id              BIGSERIAL PRIMARY KEY,
     tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
-    app_id          CHAR(32) NOT NULL REFERENCES apps(id),
     type            VARCHAR(32) NOT NULL,
     client_id       VARCHAR(255) NOT NULL,
     client_secret   VARCHAR(255) NOT NULL,
@@ -119,72 +119,71 @@ CREATE INDEX IF NOT EXISTS idx_provider_type ON providers(type);
 
 
 --------------------------------- 权限 ---------------------------------
--- 资源表
-CREATE TABLE resource (
+-- JSON资源描述
+CREATE TABLE json_trees (
     id              BIGSERIAL PRIMARY KEY,
-    name            VARCHAR(255),
+    tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
+    code            VARCHAR(255) NOT NULL,  -- 编程访问code
+    name            VARCHAR(255) NOT NULL,
+    value           JSONB NOT NULL default '{}',
+    describe        VARCHAR(255) NOT NULL,
+    created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_json_tree_tenant_code ON json_trees(code, tenant_id);
+
+-- JSON节点
+CREATE TABLE json_nodes (
+    id              BIGSERIAL PRIMARY KEY,
+    tree_id         BIGSERIAL NOT NULL REFERENCES json_trees(id),
+    code            VARCHAR(255) NOT NULL,  -- 编程访问code
+    name            VARCHAR(255) NOT NULL,
+    path            VARCHAR(255) NOT NULL,
+    value           JSONB NOT NULL default '{}',
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 
--- 属性表
-CREATE TABLE attribute (
+-- JSON操作
+CREATE TABLE json_operations (
     id              BIGSERIAL PRIMARY KEY,
-    name            VARCHAR(255),
+    tree_id         BIGSERIAL NOT NULL REFERENCES json_trees(id),
+    code            VARCHAR(255) NOT NULL,  -- 编程访问code
+    name            VARCHAR(255) NOT NULL,
+    describe        VARCHAR(255) NOT NULL,
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 
--- 用户属性关联表
-CREATE TABLE user_attribute (
-    user_id         CHAR(32),
-    attribute_id    BIGSERIAL,
+-- JSON角色
+CREATE TABLE json_roles (
+    id              BIGSERIAL PRIMARY KEY,
+    tree_id         BIGSERIAL NOT NULL REFERENCES json_trees(id),
+    code            VARCHAR(255) NOT NULL,  -- 编程访问code
+    name            VARCHAR(255) NOT NULL,
+    describe        VARCHAR(255) NOT NULL,
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    PRIMARY KEY (user_id, attribute_id),
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (attribute_id) REFERENCES attribute(id)
+    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 
--- 资源属性关联表
-CREATE TABLE resource_attribute (
-    resource_id     BIGSERIAL,
-    attribute_id    BIGSERIAL,
+-- JSON角色的权限
+CREATE TABLE json_role_operations (
+    id              BIGSERIAL PRIMARY KEY,
+    tree_id         BIGSERIAL NOT NULL REFERENCES json_trees(id),
+    role_id         BIGSERIAL NOT NULL REFERENCES json_roles(id),
+    operation_id    BIGSERIAL NOT NULL REFERENCES json_operations(id),
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    PRIMARY KEY (resource_id, attribute_id),
-    FOREIGN KEY (resource_id) REFERENCES resource(id),
-    FOREIGN KEY (attribute_id) REFERENCES attribute(id)
+    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 
--- 许可表
-CREATE TABLE permission (
-    id                  BIGSERIAL PRIMARY KEY,
-    resource_id         BIGSERIAL,
-    attribute_id        BIGSERIAL,
-    operation           VARCHAR(255),
-    created_at          TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at          TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    FOREIGN KEY (resource_id) REFERENCES resource(id),
-    FOREIGN KEY (attribute_id) REFERENCES attribute(id)
-);
-
-
-
--- JSON树状结构表
-CREATE TABLE resource_tree (
-    node_id         BIGSERIAL PRIMARY KEY,
-    parent_node_id  BIGSERIAL,
-    node_name       VARCHAR(255),
-    node_path       VARCHAR(255),
+-- JSON字段用户的角色
+CREATE TABLE json_role_operations (
+    id              BIGSERIAL PRIMARY KEY,
+    tree_id         BIGSERIAL NOT NULL REFERENCES json_trees(id),
+    node_id         BIGSERIAL NOT NULL REFERENCES json_nodes(id),
+    user_id         BIGSERIAL NOT NULL REFERENCES users(id),
+    role_id         BIGSERIAL NOT NULL REFERENCES json_roles(id),
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    FOREIGN KEY (parent_node_id) REFERENCES resource_tree (node_id)
+    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE TABLE resource_json (
-    id      BIGSERIAL PRIMARY KEY,
-    name    VARCHAR(255),
-    value   JSONB
-);
-
 
