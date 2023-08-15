@@ -43,7 +43,7 @@ func LoginAuth() gin.HandlerFunc {
 			global.Log.Warn(fmt.Sprintf("%s token valid err: %s", "default", err))
 		}
 
-		resp.ErrorInvalidateToken(c, "invalidated token")
+		resp.ErrorInvalidateToken(c)
 	}
 }
 

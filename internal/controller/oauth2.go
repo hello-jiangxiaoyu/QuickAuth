@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/pkg/errors"
 	"net/http"
 	"net/url"
 )
@@ -38,7 +37,7 @@ func NewOAuth2Api(svc *service.Service) Controller {
 func (o Controller) getAuthCode(c *gin.Context) {
 	var in request.Auth
 	if err := o.SetCtx(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid auth request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
@@ -59,14 +58,14 @@ func (o Controller) getAuthCode(c *gin.Context) {
 	if in.ResponseType == internal.Oauth2ResponseTypeCode {
 		code, state, err := o.svc.CreateAccessCode(in.ClientID, userId)
 		if err != nil {
-			resp.ErrorSqlModify(c, err, "failed to create access code.")
+			resp.ErrorUpdate(c, err, "failed to create access code.")
 			return
 		}
 		query := url.Values{}
 		query.Add("code", code)
 		session.Set("state", state)
 		if err = session.Save(); err != nil {
-			resp.ErrorSaveSession(c, errors.Wrap(err, "auth err"))
+			resp.ErrorSaveSession(c, err)
 			return
 		}
 		location := fmt.Sprintf("%s?%s", in.RedirectUri, query.Encode())
@@ -102,7 +101,7 @@ func (o Controller) getAuthCode(c *gin.Context) {
 func (o Controller) getToken(c *gin.Context) {
 	var in request.Token
 	if err := o.SetCtx(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid token request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 

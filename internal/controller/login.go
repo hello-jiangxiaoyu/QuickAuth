@@ -29,7 +29,7 @@ func (o Controller) login(c *gin.Context) {
 		return
 	}
 	if err := o.SetCtx(c).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid login request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
@@ -80,7 +80,7 @@ func (o Controller) logout(c *gin.Context) {
 func (o Controller) providerCallback(c *gin.Context) {
 	var in request.LoginProvider
 	if err := o.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid provider callback request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 	session := sessions.Default(c)
@@ -92,13 +92,13 @@ func (o Controller) providerCallback(c *gin.Context) {
 	utils.DeferErr(session.Save)
 	provider, err := o.svc.GetProviderByType(in.Tenant.ID, in.ProviderName)
 	if err != nil {
-		resp.ErrorRequestWithMsg(c, err, "no such provider")
+		resp.ErrorSelect(c, err, "no such provider")
 		return
 	}
 
 	idProvider := idp.GetIdProvider(provider.Type, provider.ClientID, provider.ClientSecret, "")
 	if idProvider == nil {
-		resp.ErrorRequest(c, nil, "no such provider")
+		resp.ErrorRequestWithMsg(c, nil, "no such provider")
 		return
 	}
 	idProvider.SetHttpClient(http.DefaultClient)
@@ -118,6 +118,11 @@ func (o Controller) providerCallback(c *gin.Context) {
 		return
 	}
 	session.Set("userId", userInfo.Id)
+	if err = session.Save(); err != nil {
+		resp.ErrorSaveSession(c, err)
+		return
+	}
+
 	resp.Success(c) // todo: redirect to next by state
 }
 
@@ -133,7 +138,7 @@ func (o Controller) providerCallback(c *gin.Context) {
 func (o Controller) register(c *gin.Context) {
 	var in request.Login
 	if err := o.SetCtx(c).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid login request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
@@ -150,7 +155,7 @@ func (o Controller) register(c *gin.Context) {
 		Password:   in.Password,
 	})
 	if err != nil {
-		resp.ErrorUnknown(c, err, "create user err")
+		resp.ErrorCreate(c, err, "create user err")
 		return
 	}
 

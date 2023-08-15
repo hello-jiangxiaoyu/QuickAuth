@@ -35,13 +35,13 @@ func (o Controller) listUserPool(c *gin.Context) {
 func (o Controller) getUserPool(c *gin.Context) {
 	var in request.UserPoolReq
 	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid user-pools request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	pool, err := o.svc.GetUserPool(in.PoolId)
 	if err != nil {
-		resp.ErrorUnknown(c, err, "no such user pool")
+		resp.ErrorSelect(c, err, "get user pool err")
 		return
 	}
 	resp.SuccessWithData(c, pool)
@@ -59,12 +59,12 @@ func (o Controller) getUserPool(c *gin.Context) {
 func (o Controller) createUserPool(c *gin.Context) {
 	var in request.UserPoolReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid user-pools request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 	pool, err := o.svc.CreateUserPool(in.ToModel())
 	if err != nil {
-		resp.ErrorUnknown(c, err, "create user pool err")
+		resp.ErrorCreate(c, err, "create user pool err")
 		return
 	}
 	resp.SuccessWithData(c, pool)
@@ -83,12 +83,12 @@ func (o Controller) createUserPool(c *gin.Context) {
 func (o Controller) modifyUserPool(c *gin.Context) {
 	var in request.UserPoolReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid user-pools request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	if err := o.svc.ModifyUserPool(in.PoolId, in.ToModel()); err != nil {
-		resp.ErrorUnknown(c, err, "modify user pool err")
+		resp.ErrorUpdate(c, err, "modify user pool err")
 		return
 	}
 	resp.Success(c)
@@ -106,12 +106,12 @@ func (o Controller) modifyUserPool(c *gin.Context) {
 func (o Controller) deleteUserPool(c *gin.Context) {
 	var in request.UserPoolReq
 	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid user-pools request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	if err := o.svc.DeleteUserPool(in.PoolId); err != nil {
-		resp.ErrorUnknown(c, err, "delete user pool err")
+		resp.ErrorDelete(c, err, "delete user pool err")
 		return
 	}
 	resp.Success(c)

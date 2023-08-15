@@ -6,12 +6,15 @@ import (
 )
 
 func errorResponse(ctx context.Context, code int, errCode int, err error, msg string, isArray []bool) {
+	if err != nil { // todo: 临时开发使用，将错误信息直接返回给前端，项目后需要删除
+		msg += err.Error()
+	}
 	response(ctx, code, errCode, err, msg, nil, 0, isArray)
 }
 
 // ErrorRequest 请求参数错误
-func ErrorRequest(ctx context.Context, err error, msg string, isArray ...bool) {
-	errorResponse(ctx, http.StatusBadRequest, CodeRequestPara, err, msg, isArray)
+func ErrorRequest(ctx context.Context, err error, isArray ...bool) {
+	errorResponse(ctx, http.StatusBadRequest, CodeRequestPara, err, "invalid request param", isArray)
 }
 
 // ErrorRequestWithMsg 请求参数错误
@@ -25,8 +28,8 @@ func ErrorForbidden(ctx context.Context, msg string, isArray ...bool) {
 }
 
 // ErrorInvalidateToken token 无效
-func ErrorInvalidateToken(ctx context.Context, msg string, isArray ...bool) {
-	errorResponse(ctx, http.StatusForbidden, CodeInvalidToken, nil, msg, isArray)
+func ErrorInvalidateToken(ctx context.Context, isArray ...bool) {
+	errorResponse(ctx, http.StatusForbidden, CodeInvalidToken, nil, "invalidated token", isArray)
 }
 
 // ErrorNoLogin 用户未登录

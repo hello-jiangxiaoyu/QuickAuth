@@ -20,13 +20,13 @@ import (
 func (o Controller) listTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid tenant request param", true)
+		resp.ErrorRequest(c, err, true)
 		return
 	}
 
 	tenants, err := o.svc.ListTenant(in.AppID)
 	if err != nil {
-		resp.ErrorSelect(c, err, "get tenant list err", true)
+		resp.ErrorSelect(c, err, "list tenant err", true)
 		return
 	}
 
@@ -46,7 +46,7 @@ func (o Controller) listTenant(c *gin.Context) {
 func (o Controller) getTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid tenant request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
@@ -72,13 +72,13 @@ func (o Controller) getTenant(c *gin.Context) {
 func (o Controller) createTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid tenant request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	tenant, err := o.svc.CreatTenant(in.ToModel())
 	if err != nil {
-		resp.ErrorSqlCreate(c, err, "create tenant err")
+		resp.ErrorCreate(c, err, "create tenant err")
 		return
 	}
 
@@ -99,12 +99,12 @@ func (o Controller) createTenant(c *gin.Context) {
 func (o Controller) modifyTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid tenant request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	if err := o.svc.ModifyTenant(in.TenantID, in.ToModel()); err != nil {
-		resp.ErrorSelect(c, err, "modify tenant err")
+		resp.ErrorUpdate(c, err, "modify tenant err")
 		return
 	}
 
@@ -124,12 +124,12 @@ func (o Controller) modifyTenant(c *gin.Context) {
 func (o Controller) deleteTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid tenant request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	if err := o.svc.DeleteTenant(in.AppID, in.TenantID); err != nil {
-		resp.ErrorSelect(c, err, "delete tenant err")
+		resp.ErrorDelete(c, err, "delete tenant err")
 		return
 	}
 

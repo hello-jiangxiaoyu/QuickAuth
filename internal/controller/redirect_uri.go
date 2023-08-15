@@ -18,7 +18,7 @@ import (
 func (o Controller) listRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := o.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid redirect-uri request param", true)
+		resp.ErrorRequest(c, err, true)
 		return
 	}
 
@@ -43,12 +43,12 @@ func (o Controller) listRedirectUri(c *gin.Context) {
 func (o Controller) createRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid redirect-uri request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	if err := o.svc.CreateRedirectUri(in.Tenant.ID, in.Uri); err != nil {
-		resp.ErrorUnknown(c, err, "create redirect uri err")
+		resp.ErrorUpdate(c, err, "create redirect uri err")
 		return
 	}
 	resp.Success(c)
@@ -68,11 +68,11 @@ func (o Controller) createRedirectUri(c *gin.Context) {
 func (o Controller) modifyRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid redirect-uri request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 	if err := o.svc.ModifyRedirectUri(in.Tenant.ID, in.UriId, in.Uri); err != nil {
-		resp.ErrorUnknown(c, err, "modify redirect uri err")
+		resp.ErrorUpdate(c, err, "modify redirect uri err")
 		return
 	}
 	resp.Success(c)
@@ -91,13 +91,13 @@ func (o Controller) modifyRedirectUri(c *gin.Context) {
 func (o Controller) deleteRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := o.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid redirect-uri request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	uri := c.Param("uri")
 	if err := o.svc.DeleteRedirectUri(in.Tenant.ID, uri); err != nil {
-		resp.ErrorUnknown(c, err, "delete redirect uri err")
+		resp.ErrorUpdate(c, err, "delete redirect uri err")
 		return
 	}
 	resp.Success(c)

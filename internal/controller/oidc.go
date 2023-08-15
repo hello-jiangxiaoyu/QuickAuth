@@ -32,7 +32,7 @@ type OpenidConfigurationDto struct {
 func (o Controller) getOIDC(c *gin.Context) {
 	var tenant model.Tenant
 	if err := o.SetCtx(c).SetTenant(&tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid oidc request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 	conf := OpenidConfigurationDto{
@@ -77,7 +77,7 @@ func (o Controller) getJwks(c *gin.Context) {
 // @Router		/api/quick/me/profile [get]
 func (o Controller) getProfile(c *gin.Context) {
 	if err := o.SetCtx(c).SetUserInfo().Error; err != nil {
-		resp.ErrorRequest(c, err, "set user info err")
+		resp.ErrorRequestWithMsg(c, err, "set user info err")
 		return
 	}
 
