@@ -4,23 +4,23 @@ import {Tenant} from "@/http/tenant";
 export default interface App {id?:string, name:string, host?:string, tag:string, icon:string, describe:string, tenant:Array<Tenant>}
 
 export async function fetchAppList():Promise<Root<App[]>> {
-  return await GET<App[]>('/api/quick/apps', 'Get application list');
+  return await GET<App[]>('/api/quick/apps');
 }
 
 export async function fetchApp(appId:string):Promise<Root<App>> {
-  return await GET<App>(`/api/quick/apps/${appId}`, 'Get application details');
+  return await GET<App>(`/api/quick/apps/${appId}`);
 }
 
 export async function createApp(data:App):Promise<Root<App>> {
-  return await POST<App>('/api/quick/apps', data, 'Create application');
+  return await POST<App>('/api/quick/apps', data);
 }
 
 export async function modifyApp(appId:string, data:App):Promise<Root<object>> {
-  return await PUT(`/api/quick/apps/${appId}`, data, 'Modify application');
+  return await PUT(`/api/quick/apps/${appId}`, data);
 }
 
 export async function deleteApp(appId:string):Promise<Root<object>> {
-  return await DELETE(`/api/quick/apps/${appId}`, 'Delete application');
+  return await DELETE(`/api/quick/apps/${appId}`);
 }
 
 

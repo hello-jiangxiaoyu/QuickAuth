@@ -6,8 +6,8 @@ import (
 )
 
 func errorResponse(ctx context.Context, code int, errCode int, err error, msg string, isArray []bool) {
-	if err != nil { // todo: 临时开发使用，将错误信息直接返回给前端，项目后需要删除
-		msg += err.Error()
+	if err != nil { // todo: 临时开发使用，将错误信息直接返回给前端，项目稳定后需要删除
+		msg += "\n" + err.Error()
 	}
 	response(ctx, code, errCode, err, msg, nil, 0, isArray)
 }

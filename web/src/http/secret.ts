@@ -14,21 +14,21 @@ export default interface Secret {
 }
 
 export async function fetchSecretList(appId:string):Promise<Root<Secret[]>> {
-  return await GET<Secret[]>(`/api/quick/apps/${appId}/secrets`, 'Get secret list');
+  return await GET<Secret[]>(`/api/quick/apps/${appId}/secrets`);
 }
 
 export async function fetchSecret(appId:string, secretId:number):Promise<Root<Secret>> {
-  return await GET<Secret>(`/api/quick/apps/${appId}/secrets/${secretId}`, 'Get secret');
+  return await GET<Secret>(`/api/quick/apps/${appId}/secrets/${secretId}`);
 }
 
 export async function createSecret(appId:string, data:Secret):Promise<Root<Secret>> {
-  return await POST<Secret>(`/api/quick/apps/${appId}/secrets`, data, 'Create secret');
+  return await POST<Secret>(`/api/quick/apps/${appId}/secrets`, data);
 }
 
 export async function modifySecret(appId:string, data:Secret):Promise<Root<object>> {
-  return await PUT(`/api/quick/apps/${appId}/secrets`, data, 'Create secret');
+  return await PUT(`/api/quick/apps/${appId}/secrets`, data);
 }
 
 export async function deleteSecret(appId:string, secretId:number):Promise<Root<object>> {
-  return await DELETE(`/api/quick/apps/${appId}/secrets/${secretId}`, 'Delete secret');
+  return await DELETE(`/api/quick/apps/${appId}/secrets/${secretId}`);
 }
