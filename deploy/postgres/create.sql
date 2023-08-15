@@ -136,13 +136,14 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_json_tree_tenant_code ON json_trees(code, 
 CREATE TABLE json_nodes (
     id              BIGSERIAL PRIMARY KEY,
     tree_id         BIGSERIAL NOT NULL REFERENCES json_trees(id),
-    code            VARCHAR(255) NOT NULL,  -- 编程访问code
     name            VARCHAR(255) NOT NULL,
     path            VARCHAR(255) NOT NULL,
+    parent          VARCHAR(255) NOT NULL,
     value           JSONB NOT NULL default '{}',
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+CREATE INDEX IF NOT EXISTS idx_json_nodes_path ON json_nodes(path);
 
 -- JSON操作
 CREATE TABLE json_operations (
@@ -154,6 +155,7 @@ CREATE TABLE json_operations (
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+CREATE INDEX IF NOT EXISTS idx_json_operation_code ON json_operations(code);
 
 -- JSON角色
 CREATE TABLE json_roles (
@@ -165,6 +167,7 @@ CREATE TABLE json_roles (
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+CREATE INDEX IF NOT EXISTS idx_json_role_code ON json_operations(code);
 
 -- JSON角色的权限
 CREATE TABLE json_role_operations (
@@ -175,9 +178,10 @@ CREATE TABLE json_role_operations (
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+CREATE INDEX IF NOT EXISTS idx_json_role_operation_code ON json_operations(code);
 
 -- JSON字段用户的角色
-CREATE TABLE json_role_operations (
+CREATE TABLE json_user_roles (
     id              BIGSERIAL PRIMARY KEY,
     tree_id         BIGSERIAL NOT NULL REFERENCES json_trees(id),
     node_id         BIGSERIAL NOT NULL REFERENCES json_nodes(id),
@@ -186,4 +190,5 @@ CREATE TABLE json_role_operations (
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+CREATE INDEX IF NOT EXISTS idx_json_user_role_code ON json_operations(code);
 
