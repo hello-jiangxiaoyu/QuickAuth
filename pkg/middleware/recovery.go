@@ -2,9 +2,10 @@ package middleware
 
 import (
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/global"
+	"QuickAuth/pkg/global"
 	"QuickAuth/pkg/utils"
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net"
 	"os"
@@ -28,7 +29,7 @@ func Recovery() gin.HandlerFunc {
 					}
 				}
 
-				req := c.Request.Method + " " + c.Request.RequestURI
+				req := fmt.Sprintf("requestID:%v method:%s path:%s", c.GetString("requestID"), c.Request.Method, c.Request.URL.Path)
 				if global.Config != nil {
 					global.Log.Error(utils.GetPanicStackInfo(req, err, 3, global.Config.Log.IsFullStack))
 				}

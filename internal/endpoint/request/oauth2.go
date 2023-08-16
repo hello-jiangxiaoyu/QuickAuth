@@ -1,7 +1,7 @@
 package request
 
 import (
-	"QuickAuth/pkg/model"
+	"QuickAuth/internal/model"
 )
 
 type (

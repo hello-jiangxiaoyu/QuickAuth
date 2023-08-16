@@ -3,7 +3,7 @@ import zhCN from '@arco-design/web-react/es/locale/zh-CN';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 import '@/mock';
 import '@/style/global.less';
-import {ConfigProvider, Message} from '@arco-design/web-react';
+import {ConfigProvider} from '@arco-design/web-react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import cookies from 'next-cookies';
@@ -13,7 +13,6 @@ import { GlobalContext } from '@/context';
 import {Provider} from 'react-redux';
 import Layout from './layout';
 import NProgress from 'nprogress';
-import {checkLogin} from '@/store/localStorage';
 import changeTheme from '@/utils/changeTheme';
 import {dispatchApp, dispatchAppList, dispatchTenant, dispatchTenantList, store} from '@/store/redux';
 import {getRouterPara} from "@/utils/stringTools";
@@ -47,17 +46,18 @@ function MyApp({pageProps, Component, renderConfig}: AppProps & { renderConfig: 
 
   const router = useRouter();
   const appId = getRouterPara(router.query.appId);
+  useEffect(() => { // 刷新页面时，检查登录状态
+    api.fetchUserInfo();
+    api.fetchMe().then().catch(() => {
+      setTimeout(()=>{Router.push('/login').then()}, 2000); // 跳转到登录页
+    })
+    api.fetchAppList().then(r => dispatchAppList(r.data)).catch();
+  }, []);
+
   useEffect(() => {changeTheme(theme)}, [lang, theme]);
   useEffect(() => { // 首次加载，以及appId发生变化
-    if (checkLogin()) {
-      api.fetchUserInfo();
-    } else if (window.location.pathname.replace(/\//g, '') !== 'login') {
-      window.location.pathname = '/login';
-    }
-    api.fetchAppList().then(r => dispatchAppList(r.data)).catch(e => Message.error(e.toString()));
     if (typeof appId === 'string' && appId !== '') {
-      updateAppAndTenant(appId).then().catch(e => {
-        Message.error(e.toString());
+      updateAppAndTenant(appId).then().catch(() => {
         setTimeout(()=>{Router.push('/applications/').then()}, 2000);
       });
     }

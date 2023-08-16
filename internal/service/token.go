@@ -2,7 +2,8 @@ package service
 
 import (
 	"QuickAuth/internal/endpoint/request"
-	"QuickAuth/pkg/model"
+	"QuickAuth/internal/endpoint/resp"
+	"QuickAuth/internal/model"
 	"QuickAuth/pkg/safe"
 	"QuickAuth/pkg/utils"
 	"crypto/rsa"
@@ -50,7 +51,7 @@ func (s *Service) CreateIdToken(app model.App, tenant model.Tenant, user model.U
 		Addr:      user.Addr,
 		Phone:     user.Phone,
 		RegisteredClaims: jwt.RegisteredClaims{
-			Issuer:    utils.GetUrlByHost(tenant.Host),
+			Issuer:    utils.GetUrlByHost(tenant.Host) + resp.ApiPrefix,
 			Subject:   user.ID,
 			Audience:  []string{app.ID},
 			ExpiresAt: jwt.NewNumericDate(expireTime),

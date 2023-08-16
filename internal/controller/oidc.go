@@ -2,9 +2,8 @@ package controller
 
 import (
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/pkg/model"
+	"QuickAuth/internal/model"
 	"fmt"
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -33,7 +32,7 @@ type OpenidConfigurationDto struct {
 func (o Controller) getOIDC(c *gin.Context) {
 	var tenant model.Tenant
 	if err := o.SetCtx(c).SetTenant(&tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid oidc request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 	conf := OpenidConfigurationDto{
@@ -77,12 +76,10 @@ func (o Controller) getJwks(c *gin.Context) {
 // @Success		200
 // @Router		/api/quick/me/profile [get]
 func (o Controller) getProfile(c *gin.Context) {
-	session := sessions.Default(c)
-	userId, ok := session.Get("userId").(int64)
-	if !ok || userId == 0 {
-		resp.ErrorNoLogin(c)
+	if err := o.SetCtx(c).SetUserInfo().Error; err != nil {
+		resp.ErrorRequestWithMsg(c, err, "set user info err")
 		return
 	}
 
-	resp.SuccessWithData(c, userId)
+	resp.SuccessWithData(c, o.UserInfo)
 }

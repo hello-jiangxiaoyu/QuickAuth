@@ -6,5 +6,5 @@ export interface loginForm {
 }
 
 export async function login(data:loginForm):Promise<Root<object>> {
-  return await POSTForm<object>('/api/quick/login', data, 'Login');
+  return await POSTForm<object>('/api/quick/login', data);
 }

@@ -6,7 +6,7 @@ import (
 )
 
 func ErrorPanic(ctx context.Context) {
-	errorResponse(ctx, http.StatusInternalServerError, ServerPanic, nil, "server panic", nil)
+	errorResponse(ctx, http.StatusInternalServerError, CodeServerPanic, nil, "server panic", nil)
 }
 
 func ErrorHost(ctx context.Context) {

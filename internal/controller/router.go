@@ -3,9 +3,9 @@ package controller
 import (
 	_ "QuickAuth/docs"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/global"
-	"QuickAuth/internal/middleware"
 	"QuickAuth/internal/service"
+	"QuickAuth/pkg/global"
+	"QuickAuth/pkg/middleware"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -19,11 +19,11 @@ func NewOauth2Router(repo *global.Repository, e *gin.Engine) {
 	o := NewOAuth2Api(svc)
 	r := e.Group("/api/quick")
 	{
-		r.GET("/.well-known/openid-configuration", o.getOIDC) // OIDC信息
-		r.GET("/.well-known/jwks.json", o.getJwks)            // jwk签名公钥
-		r.GET("/oauth2/auth", o.getAuthCode)                  // 登录授权
-		r.POST("/oauth2/token", o.getToken)                   // token获取
-		r.GET("/me/profile", o.getProfile)                    // 获取当前用户信息
+		r.GET("/.well-known/openid-configuration", o.getOIDC)      // OIDC信息
+		r.GET("/.well-known/jwks.json", o.getJwks)                 // jwk签名公钥
+		r.GET("/oauth2/auth", o.getAuthCode)                       // 登录授权
+		r.POST("/oauth2/token", o.getToken)                        // token获取
+		r.GET("/me/profile", middleware.LoginAuth(), o.getProfile) // 获取当前用户信息
 
 		r.POST("/login", o.login)                               // 账号密码登录
 		r.POST("/register", o.register)                         // 注册

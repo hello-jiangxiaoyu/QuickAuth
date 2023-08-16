@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"QuickAuth/internal/global"
+	"QuickAuth/pkg/global"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"time"

@@ -3,8 +3,8 @@ package controller
 import (
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
+	"QuickAuth/internal/model"
 	"QuickAuth/internal/service"
-	"QuickAuth/pkg/model"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/sync/singleflight"
 )
@@ -24,7 +24,7 @@ func (o Controller) listApp(c *gin.Context) {
 		return o.svc.ListApps()
 	})
 	if err != nil {
-		resp.ErrorSelect(c, err, "list apps err")
+		resp.ErrorSelect(c, err, "list apps err", true)
 		return
 	}
 	resp.SuccessArray(c, len(apps.([]model.App)), apps)
@@ -42,13 +42,13 @@ func (o Controller) listApp(c *gin.Context) {
 func (o Controller) getApp(c *gin.Context) {
 	var in request.AppReq
 	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid app request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	app, err := o.svc.GetAppDetail(in.AppId)
 	if err != nil {
-		resp.ErrorUnknown(c, err, "no such app")
+		resp.ErrorSelect(c, err, "get app err")
 		return
 	}
 	resp.SuccessWithData(c, app.Dto())
@@ -66,13 +66,13 @@ func (o Controller) getApp(c *gin.Context) {
 func (o Controller) createApp(c *gin.Context) {
 	var in request.AppReq
 	if err := o.SetCtx(c).BindJson(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid app request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	app, err := o.svc.CreateApp(in.ToModel(), in.Host, in.PoolId)
 	if err != nil {
-		resp.ErrorSqlCreate(c, err, "create app err")
+		resp.ErrorCreate(c, err, "create app err")
 		return
 	}
 	resp.SuccessWithData(c, app)
@@ -91,12 +91,12 @@ func (o Controller) createApp(c *gin.Context) {
 func (o Controller) modifyApp(c *gin.Context) {
 	var in request.AppReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid app request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	if err := o.svc.ModifyApp(in.AppId, in.ToModel()); err != nil {
-		resp.ErrorUnknown(c, err, "modify app err")
+		resp.ErrorUpdate(c, err, "modify app err")
 		return
 	}
 	resp.Success(c)
@@ -116,7 +116,7 @@ func (o Controller) deleteApp(c *gin.Context) {
 		if err == service.ErrorDeleteDefaultApp {
 			resp.ErrorUnknown(c, err, err.Error())
 		} else {
-			resp.ErrorUnknown(c, err, "delete app err")
+			resp.ErrorDelete(c, err, "delete app err")
 		}
 		return
 	}

@@ -14,10 +14,10 @@ export default function CreateAppDialog(props:{visible: boolean, setVisible: Rea
         Message.success('Success !');
         api.fetchAppList().then(r => {
           dispatchAppList(r.data);
-        }).catch(e => {Message.error(e.toString())})
+        }).catch();
         props.setVisible(false);
-      }).catch(e => Message.error(e.toString())).finally(() => setConfirmLoading(false));
-    }).catch((e) => Message.error(e.toString()));
+      }).catch().finally(() => setConfirmLoading(false));
+    }).catch(e => Message.error(e.toString()));
   }
 
   return (

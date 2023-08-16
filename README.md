@@ -18,7 +18,7 @@ docker run -p 5432:5432 -e POSTGRES_DB=quick_auth -e POSTGRES_PASSWORD=admin -e 
     3、model表名不使用复数名词
     4、主键索引名为 pk_字段名；唯一索引名为 uk_字段名；普通索引名则为 idx_字段名
     5、如果存储的字符串长度几乎相等，使用 CHARACTER 定长字符串类型
-    6、表必备三字段：id, create_time, update_time
+    6、表必备三字段：id, created_at, updated_at
     7、索引尽量不要用 TEXT 字段，合适的字符存储长度，不但节约数据库表空间、节约索引存储，更重要的是提升检索速度
     8、单表行数超过 500 万行或者单表容量超过 2GB，才推荐进行分库分表
     9、业务上具有唯一特性的字段，建议建成唯一索引

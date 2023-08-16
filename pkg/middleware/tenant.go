@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/global"
-	"QuickAuth/pkg/model"
+	"QuickAuth/internal/model"
+	"QuickAuth/pkg/global"
 	"errors"
 	"github.com/gin-gonic/gin"
 )

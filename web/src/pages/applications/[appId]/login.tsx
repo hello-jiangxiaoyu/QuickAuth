@@ -62,7 +62,7 @@ export default function LoginAuth() {
         api.modifyTenant(currentTenant.appId, currentTenant.id, res).then(() => {
           Message.success('Success !');
           api.fetchTenant(currentApp.id, currentTenant.id).then(r => {dispatchTenant(r.data)})
-        }).catch(e => Message.error(e.toString()));
+        }).catch();
       }).catch((e) => Message.error("validator " + e.toString()));
     }
 

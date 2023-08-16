@@ -2,45 +2,19 @@ package resp
 
 import (
 	"context"
-	"github.com/gin-gonic/gin"
-	"github.com/pkg/errors"
 	"net/http"
 )
 
-const (
-	CodeRequestPara = 1000
-	CodeForbidden   = 1001
-	CodeNoLogin     = 1002
-	CodeNoSuchHost  = 1003
-	CodeNoSuchRoute = 1003
-)
-
 func errorResponse(ctx context.Context, code int, errCode int, err error, msg string, isArray []bool) {
-	c, ok := ctx.(*gin.Context)
-	if !ok {
-		return
+	if err != nil { // todo: 临时开发使用，将错误信息直接返回给前端，项目稳定后需要删除
+		msg += "\n" + err.Error()
 	}
-
-	c.Header("X-Request-Id", c.GetString("requestID"))
-	if len(isArray) == 0 {
-		c.JSON(code, &Response{Code: errCode, Msg: msg, Data: struct{}{}})
-	} else {
-		c.JSON(code, &ArrayResponse{Code: errCode, Msg: msg, Total: 0, Data: []struct{}{}})
-	}
-
-	if err != nil {
-		_ = c.Error(errors.WithMessage(err, msg))
-	} else {
-		_ = c.Error(errors.New(msg))
-	}
-
-	c.Set("code", errCode)
-	c.Abort()
+	response(ctx, code, errCode, err, msg, nil, 0, isArray)
 }
 
 // ErrorRequest 请求参数错误
-func ErrorRequest(ctx context.Context, err error, msg string, isArray ...bool) {
-	errorResponse(ctx, http.StatusBadRequest, CodeRequestPara, err, msg, isArray)
+func ErrorRequest(ctx context.Context, err error, isArray ...bool) {
+	errorResponse(ctx, http.StatusBadRequest, CodeRequestPara, err, "invalid request param", isArray)
 }
 
 // ErrorRequestWithMsg 请求参数错误
@@ -53,7 +27,12 @@ func ErrorForbidden(ctx context.Context, msg string, isArray ...bool) {
 	errorResponse(ctx, http.StatusForbidden, CodeForbidden, nil, msg, isArray)
 }
 
+// ErrorInvalidateToken token 无效
+func ErrorInvalidateToken(ctx context.Context, isArray ...bool) {
+	errorResponse(ctx, http.StatusForbidden, CodeInvalidToken, nil, "invalidated token", isArray)
+}
+
 // ErrorNoLogin 用户未登录
-func ErrorNoLogin(ctx context.Context, isArray ...bool) {
-	errorResponse(ctx, http.StatusUnauthorized, CodeNoLogin, nil, "user not login", isArray)
+func ErrorNoLogin(ctx context.Context, err error, isArray ...bool) {
+	errorResponse(ctx, http.StatusUnauthorized, CodeNotLogin, err, "user not login", isArray)
 }

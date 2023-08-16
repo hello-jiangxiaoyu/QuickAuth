@@ -26,8 +26,8 @@ export default function ApplicationCard(props: { appId: string, name: string, ty
         api.deleteApp(props.appId).then(() => { // 删除app
           Message.success('Delete success !');
           api.fetchAppList().then(r => dispatchAppList(r.data))// 刷新页面app列表
-            .catch(e => Message.error(e.toString()));
-        }).catch(e => Message.error(e.toString()));
+            .catch();
+        }).catch();
       },
     });
   }

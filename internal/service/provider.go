@@ -1,7 +1,7 @@
 package service
 
 import (
-	"QuickAuth/pkg/model"
+	"QuickAuth/internal/model"
 )
 
 func (s *Service) GetProviderByType(tenantId int64, name string) (*model.Provider, error) {

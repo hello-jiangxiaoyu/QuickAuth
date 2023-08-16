@@ -20,10 +20,10 @@ export default function CreateSecretDialog(props:{
       setConfirmLoading(true);
       api.createSecret(appId, secret).then(() => {
         Message.success('Success !');
-        api.fetchSecretList(appId).then(r => props.setSecret(r.data)).catch(e => Message.error(e.toString()));
+        api.fetchSecretList(appId).then(r => props.setSecret(r.data)).catch();
         props.setVisible(false);
-      }).catch(e => Message.error(e.toString())).finally(() => setConfirmLoading(false));
-    }).catch((e) => Message.error(e.toString()));
+      }).catch().finally(() => setConfirmLoading(false));
+    }).catch(e => Message.error(e.toString()));
   }
 
   return (

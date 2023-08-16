@@ -20,13 +20,13 @@ import (
 func (o Controller) listUser(c *gin.Context) {
 	var in request.UserReq
 	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid user request param")
+		resp.ErrorRequest(c, err, true)
 		return
 	}
 
 	users, err := o.svc.ListUser(in.UserPoolID)
 	if err != nil {
-		resp.ErrorSelect(c, err, "invalid user request param")
+		resp.ErrorSelect(c, err, "list user err", true)
 		return
 	}
 	resp.SuccessArray(c, len(users), users)
@@ -45,13 +45,13 @@ func (o Controller) listUser(c *gin.Context) {
 func (o Controller) getUser(c *gin.Context) {
 	var in request.UserReq
 	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid user request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	user, err := o.svc.GetUserById(in.UserPoolID, in.UserID)
 	if err != nil {
-		resp.ErrorUnknown(c, err, "no such user")
+		resp.ErrorSelect(c, err, "no such user")
 		return
 	}
 	resp.SuccessWithData(c, user)
@@ -70,7 +70,7 @@ func (o Controller) getUser(c *gin.Context) {
 func (o Controller) createUser(c *gin.Context) {
 	var in request.UserReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid user request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
@@ -83,7 +83,7 @@ func (o Controller) createUser(c *gin.Context) {
 	in.OpenId = uuid.NewString()
 	user, err := o.svc.CreateUser(in.ToModel())
 	if err != nil {
-		resp.ErrorUnknown(c, err, "create user err")
+		resp.ErrorCreate(c, err, "create user err")
 		return
 	}
 
@@ -104,12 +104,12 @@ func (o Controller) createUser(c *gin.Context) {
 func (o Controller) modifyUser(c *gin.Context) {
 	var in request.UserReq
 	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid user request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	if err := o.svc.ModifyUser(in.UserID, in.ToModel()); err != nil {
-		resp.ErrorUnknown(c, err, "modify user err")
+		resp.ErrorUpdate(c, err, "modify user err")
 		return
 	}
 	resp.Success(c)
@@ -128,12 +128,12 @@ func (o Controller) modifyUser(c *gin.Context) {
 func (o Controller) deleteUser(c *gin.Context) {
 	var in request.UserReq
 	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, "invalid user request param")
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	if err := o.svc.DeleteUser(in.UserPoolID, in.UserID); err != nil {
-		resp.ErrorUnknown(c, err, "delete user err")
+		resp.ErrorDelete(c, err, "delete user err")
 		return
 	}
 	resp.Success(c)

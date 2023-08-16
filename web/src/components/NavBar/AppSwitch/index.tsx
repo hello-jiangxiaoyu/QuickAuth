@@ -25,7 +25,7 @@ export default function ApplicationSelector() {
   function onTenantChange(value: number) {
     api.fetchTenant(appId, value).then(r => {
       dispatchTenant(r.data);
-    }).catch(e => Message.error(e.toString()));
+    }).catch();
   }
 
   function CreateItem(props:{text:string, isApp:boolean}) {
