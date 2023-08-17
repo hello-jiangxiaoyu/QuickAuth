@@ -27,7 +27,7 @@ func (o Controller) listAppSecret(c *gin.Context) {
 		resp.ErrorSelect(c, err, "list app secret err", true)
 		return
 	}
-	resp.SuccessArray(c, len(secrets), secrets)
+	resp.SuccessArrayData(c, len(secrets), secrets)
 }
 
 // @Summary	create app secret

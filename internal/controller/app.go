@@ -27,7 +27,7 @@ func (o Controller) listApp(c *gin.Context) {
 		resp.ErrorSelect(c, err, "list apps err", true)
 		return
 	}
-	resp.SuccessArray(c, len(apps.([]model.App)), apps)
+	resp.SuccessArrayData(c, len(apps.([]model.App)), apps)
 }
 
 // @Summary	apps info

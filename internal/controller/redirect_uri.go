@@ -27,7 +27,7 @@ func (o Controller) listRedirectUri(c *gin.Context) {
 		resp.ErrorSelect(c, err, "list redirect uri err", true)
 		return
 	}
-	resp.SuccessArray(c, len(uris), uris)
+	resp.SuccessArrayData(c, len(uris), uris)
 }
 
 // @Summary	create app redirect uri

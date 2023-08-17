@@ -20,7 +20,7 @@ func (o Controller) listUserPool(c *gin.Context) {
 		resp.ErrorSelect(c, err, "list user pool err", true)
 		return
 	}
-	resp.SuccessArray(c, len(pools), pools)
+	resp.SuccessArrayData(c, len(pools), pools)
 }
 
 // @Summary	user pool info

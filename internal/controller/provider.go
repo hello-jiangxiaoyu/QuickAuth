@@ -27,7 +27,7 @@ func (o Controller) listProvider(c *gin.Context) {
 		return
 	}
 
-	resp.SuccessArray(c, len(providers), providers)
+	resp.SuccessArrayData(c, len(providers), providers)
 }
 
 // @Summary	get provider details

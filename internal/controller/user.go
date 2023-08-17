@@ -29,7 +29,7 @@ func (o Controller) listUser(c *gin.Context) {
 		resp.ErrorSelect(c, err, "list user err", true)
 		return
 	}
-	resp.SuccessArray(c, len(users), users)
+	resp.SuccessArrayData(c, len(users), users)
 }
 
 // @Summary	user info

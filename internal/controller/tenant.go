@@ -30,7 +30,7 @@ func (o Controller) listTenant(c *gin.Context) {
 		return
 	}
 
-	resp.SuccessArray(c, len(tenants), utils.DtoFilter(tenants, model.TenantsDto))
+	resp.SuccessArrayData(c, len(tenants), utils.DtoFilter(tenants, model.TenantsDto))
 }
 
 // @Summary	get tenant details
