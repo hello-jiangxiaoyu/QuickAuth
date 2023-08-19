@@ -1,7 +1,7 @@
 package request
 
 import (
-	"QuickAuth/internal/model"
+	"QuickAuth/internal/endpoint/model"
 )
 
 type (
@@ -56,7 +56,6 @@ func (p *ProviderReq) ToModel() *model.Provider {
 	return &model.Provider{
 		TenantID:     p.Tenant.ID,
 		Type:         p.Type,
-		AppID:        p.Tenant.AppID,
 		AgentID:      p.AgentID,
 		ClientID:     p.ClientID,
 		ClientSecret: p.ClientSecret,

@@ -1,8 +1,8 @@
 package oauth
 
 import (
+	"QuickAuth/internal/endpoint/model"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/model"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"

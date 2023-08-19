@@ -187,7 +187,7 @@ CREATE TABLE IF NOT EXISTS resource_user_roles (
     id              BIGSERIAL PRIMARY KEY,
     resource_id     BIGSERIAL NOT NULL REFERENCES resources(id),
     node_id         BIGSERIAL NOT NULL REFERENCES resource_nodes(id),
-    user_id         BIGSERIAL NOT NULL REFERENCES users(id),
+    user_id         CHAR(32)  NOT NULL REFERENCES users(id),
     role_id         BIGSERIAL NOT NULL REFERENCES resource_roles(id),
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
@@ -199,7 +199,7 @@ CREATE TABLE IF NOT EXISTS resource_json_user_roles (
     id              BIGSERIAL PRIMARY KEY,
     json_path       VARCHAR(255) NOT NULL,
     resource_id     BIGSERIAL NOT NULL REFERENCES resources(id),
-    user_id         BIGSERIAL NOT NULL REFERENCES users(id),
+    user_id         CHAR(32)  NOT NULL REFERENCES users(id),
     role_id         BIGSERIAL NOT NULL REFERENCES resource_roles(id),
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()

@@ -1,9 +1,9 @@
 package oauth
 
 import (
+	"QuickAuth/internal/endpoint/model"
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/model"
 	"QuickAuth/pkg/idp"
 	"QuickAuth/pkg/safe"
 	"QuickAuth/pkg/utils"

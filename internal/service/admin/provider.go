@@ -1,7 +1,7 @@
 package admin
 
 import (
-	"QuickAuth/internal/model"
+	"QuickAuth/internal/endpoint/model"
 )
 
 func (s *ServiceAdmin) GetProviderByType(tenantId int64, name string) (*model.Provider, error) {

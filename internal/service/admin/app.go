@@ -1,7 +1,7 @@
 package admin
 
 import (
-	"QuickAuth/internal/model"
+	"QuickAuth/internal/endpoint/model"
 	"QuickAuth/pkg/conf"
 	"QuickAuth/pkg/global"
 	"QuickAuth/pkg/safe"

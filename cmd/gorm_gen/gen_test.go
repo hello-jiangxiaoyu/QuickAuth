@@ -65,21 +65,31 @@ func TestGen(*testing.T) {
 
 	// ========== 权限表 ==========
 	resource := generator.GenerateModel("resources", append(opt,
-		gen.FieldRelate(field.HasOne, "App", app, &field.RelateConfig{}),
+		gen.FieldRelate(field.HasOne, "Tenant", tenant, &field.RelateConfig{}),
+	)...)
+	resourceNode := generator.GenerateModel("resource_nodes", append(opt,
 		gen.FieldRelate(field.HasOne, "Tenant", tenant, &field.RelateConfig{}),
 	)...)
 	resourceRole := generator.GenerateModel("resource_roles", append(opt,
-		gen.FieldRelate(field.HasOne, "App", app, &field.RelateConfig{}),
 		gen.FieldRelate(field.HasOne, "Tenant", tenant, &field.RelateConfig{}),
 	)...)
-	resourceAction := generator.GenerateModel("resource_actions", append(opt,
-		gen.FieldRelate(field.HasOne, "App", app, &field.RelateConfig{}),
+	resourceOperation := generator.GenerateModel("resource_operations", append(opt,
+		gen.FieldRelate(field.HasOne, "Tenant", tenant, &field.RelateConfig{}),
+	)...)
+	resourceRoleOperation := generator.GenerateModel("resource_role_operations", append(opt,
+		gen.FieldRelate(field.HasOne, "Tenant", tenant, &field.RelateConfig{}),
+	)...)
+	resourceUserRole := generator.GenerateModel("resource_user_roles", append(opt,
+		gen.FieldRelate(field.HasOne, "Tenant", tenant, &field.RelateConfig{}),
+	)...)
+	resourceJsonUserRole := generator.GenerateModel("resource_json_user_roles", append(opt,
 		gen.FieldRelate(field.HasOne, "Tenant", tenant, &field.RelateConfig{}),
 	)...)
 
 	// 生成model
 	generator.ApplyBasic(app, appSecret, code, provider, tenant, userPool, user,
-		resource, resourceRole, resourceAction)
+		resource, resourceNode, resourceRole, resourceOperation,
+		resourceRoleOperation, resourceUserRole, resourceJsonUserRole)
 	generator.Execute()
 
 	// 删除query目录

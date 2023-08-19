@@ -1,7 +1,7 @@
 package admin
 
 import (
-	"QuickAuth/internal/model"
+	"QuickAuth/internal/endpoint/model"
 	"github.com/lib/pq"
 	"github.com/pkg/errors"
 	"net/url"

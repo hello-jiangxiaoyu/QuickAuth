@@ -2,9 +2,9 @@ package admin
 
 import (
 	"QuickAuth/internal/controller/internal"
+	"QuickAuth/internal/endpoint/model"
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/model"
 	"QuickAuth/internal/service"
 	"QuickAuth/internal/service/admin"
 	"github.com/gin-gonic/gin"

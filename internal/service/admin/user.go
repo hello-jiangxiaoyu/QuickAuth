@@ -1,7 +1,7 @@
 package admin
 
 import (
-	"QuickAuth/internal/model"
+	"QuickAuth/internal/endpoint/model"
 	"QuickAuth/pkg/utils"
 	"github.com/pkg/errors"
 )

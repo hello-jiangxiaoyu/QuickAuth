@@ -1,7 +1,7 @@
 package request
 
 import (
-	"QuickAuth/internal/model"
+	"QuickAuth/internal/endpoint/model"
 	"github.com/lib/pq"
 )
 
