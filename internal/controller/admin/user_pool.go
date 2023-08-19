@@ -1,4 +1,4 @@
-package controller
+package admin
 
 import (
 	"QuickAuth/internal/endpoint/request"
@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ListUserPool	swagger
 // @Summary	user pools info
 // @Schemes
 // @Description	list user pool
@@ -14,8 +15,8 @@ import (
 // @Param		X-Pool-ID	header	string	false	"user pool id"
 // @Success		200
 // @Router		/api/quick/user-pools [get]
-func (o Controller) listUserPool(c *gin.Context) {
-	pools, err := o.svc.ListUserPool()
+func (a Route) ListUserPool(c *gin.Context) {
+	pools, err := a.svc.ListUserPool()
 	if err != nil {
 		resp.ErrorSelect(c, err, "list user pool err", true)
 		return
@@ -23,6 +24,7 @@ func (o Controller) listUserPool(c *gin.Context) {
 	resp.SuccessArrayData(c, len(pools), pools)
 }
 
+// GetUserPool	swagger
 // @Summary	user pool info
 // @Schemes
 // @Description	list user pool
@@ -32,14 +34,14 @@ func (o Controller) listUserPool(c *gin.Context) {
 // @Param		poolId		path	integer	true	"user pool id"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId} [get]
-func (o Controller) getUserPool(c *gin.Context) {
+func (a Route) GetUserPool(c *gin.Context) {
 	var in request.UserPoolReq
-	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
 
-	pool, err := o.svc.GetUserPool(in.PoolId)
+	pool, err := a.svc.GetUserPool(in.PoolId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "get user pool err")
 		return
@@ -47,6 +49,7 @@ func (o Controller) getUserPool(c *gin.Context) {
 	resp.SuccessWithData(c, pool)
 }
 
+// CreateUserPool	swagger
 // @Summary	create user pool
 // @Schemes
 // @Description	create user pool
@@ -56,13 +59,13 @@ func (o Controller) getUserPool(c *gin.Context) {
 // @Param		bd			body	request.UserPoolReq	true	"body"
 // @Success		200
 // @Router		/api/quick/user-pools [post]
-func (o Controller) createUserPool(c *gin.Context) {
+func (a Route) CreateUserPool(c *gin.Context) {
 	var in request.UserPoolReq
-	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	pool, err := o.svc.CreateUserPool(in.ToModel())
+	pool, err := a.svc.CreateUserPool(in.ToModel())
 	if err != nil {
 		resp.ErrorCreate(c, err, "create user pool err")
 		return
@@ -70,6 +73,7 @@ func (o Controller) createUserPool(c *gin.Context) {
 	resp.SuccessWithData(c, pool)
 }
 
+// ModifyUserPool	swagger
 // @Summary	modify user pool
 // @Schemes
 // @Description	modify user pool
@@ -80,20 +84,21 @@ func (o Controller) createUserPool(c *gin.Context) {
 // @Param		bd			body	request.UserPoolReq	true	"body"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId} [put]
-func (o Controller) modifyUserPool(c *gin.Context) {
+func (a Route) ModifyUserPool(c *gin.Context) {
 	var in request.UserPoolReq
-	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
 
-	if err := o.svc.ModifyUserPool(in.PoolId, in.ToModel()); err != nil {
+	if err := a.svc.ModifyUserPool(in.PoolId, in.ToModel()); err != nil {
 		resp.ErrorUpdate(c, err, "modify user pool err")
 		return
 	}
 	resp.Success(c)
 }
 
+// DeleteUserPool	swagger
 // @Summary	delete user pool
 // @Schemes
 // @Description	delete user pool
@@ -103,14 +108,14 @@ func (o Controller) modifyUserPool(c *gin.Context) {
 // @Param		poolId		path	integer	true	"user pool id"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId} [delete]
-func (o Controller) deleteUserPool(c *gin.Context) {
+func (a Route) DeleteUserPool(c *gin.Context) {
 	var in request.UserPoolReq
-	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
 
-	if err := o.svc.DeleteUserPool(in.PoolId); err != nil {
+	if err := a.svc.DeleteUserPool(in.PoolId); err != nil {
 		resp.ErrorDelete(c, err, "delete user pool err")
 		return
 	}

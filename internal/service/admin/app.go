@@ -1,17 +1,34 @@
-package service
+package admin
 
 import (
 	"QuickAuth/internal/model"
+	"QuickAuth/pkg/conf"
+	"QuickAuth/pkg/global"
 	"QuickAuth/pkg/safe"
 	"QuickAuth/pkg/utils"
 	"github.com/lib/pq"
 	"github.com/pkg/errors"
+	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
 
 var ErrorDeleteDefaultApp = errors.New("do not delete the default app")
 
-func (s *Service) ListApps() ([]model.App, error) {
+type ServiceAdmin struct {
+	log  *zap.Logger
+	db   *gorm.DB
+	conf *conf.SystemConfig
+}
+
+func NewAdminService(repo *global.Repository) *ServiceAdmin {
+	return &ServiceAdmin{
+		log:  repo.Logger,
+		db:   repo.DB,
+		conf: repo.Config,
+	}
+}
+
+func (s *ServiceAdmin) ListApps() ([]model.App, error) {
 	var apps []model.App
 	if err := s.db.Select("id", "name", "icon", "tag").Find(&apps).Error; err != nil {
 		return nil, err
@@ -20,7 +37,7 @@ func (s *Service) ListApps() ([]model.App, error) {
 	return apps, nil
 }
 
-func (s *Service) GetApp(id string) (*model.App, error) {
+func (s *ServiceAdmin) GetApp(id string) (*model.App, error) {
 	var app model.App
 	if err := s.db.Where("id = ?", id).First(&app).Error; err != nil {
 		return nil, err
@@ -28,7 +45,7 @@ func (s *Service) GetApp(id string) (*model.App, error) {
 	return &app, nil
 }
 
-func (s *Service) GetAppDetail(id string) (*model.App, error) {
+func (s *ServiceAdmin) GetAppDetail(id string) (*model.App, error) {
 	var app model.App
 	if err := s.db.Where("id = ?", id).Preload("Tenant").First(&app).Error; err != nil {
 		return nil, err
@@ -36,7 +53,7 @@ func (s *Service) GetAppDetail(id string) (*model.App, error) {
 	return &app, nil
 }
 
-func (s *Service) CreateApp(app *model.App, host string, poolId int64) (*model.App, error) {
+func (s *ServiceAdmin) CreateApp(app *model.App, host string, poolId int64) (*model.App, error) {
 	app.ID = utils.GetNoLineUUID()
 	err := s.db.Transaction(func(tx *gorm.DB) error {
 		if err := tx.Create(app).Error; err != nil {
@@ -87,14 +104,14 @@ func (s *Service) CreateApp(app *model.App, host string, poolId int64) (*model.A
 	return app, nil
 }
 
-func (s *Service) ModifyApp(appId string, app *model.App) error {
+func (s *ServiceAdmin) ModifyApp(appId string, app *model.App) error {
 	if err := s.db.Where("id = ?", appId).Updates(app).Error; err != nil {
 		return err
 	}
 	return nil
 }
 
-func (s *Service) DeleteApp(appId string) error {
+func (s *ServiceAdmin) DeleteApp(appId string) error {
 	if app, err := s.GetApp(appId); err != nil {
 		return err
 	} else if app.Name == "default" {
@@ -128,7 +145,7 @@ func (s *Service) DeleteApp(appId string) error {
 
 // =================== app secret ===================
 
-func (s *Service) ListAppSecrets(appId string) ([]model.AppSecret, error) {
+func (s *ServiceAdmin) ListAppSecrets(appId string) ([]model.AppSecret, error) {
 	var secrets []model.AppSecret
 	if err := s.db.Where("app_id = ?", appId).Find(&secrets).Error; err != nil {
 		return nil, err
@@ -137,7 +154,7 @@ func (s *Service) ListAppSecrets(appId string) ([]model.AppSecret, error) {
 	return secrets, nil
 }
 
-func (s *Service) CreateAppSecret(appId string, secret model.AppSecret) (*model.AppSecret, error) {
+func (s *ServiceAdmin) CreateAppSecret(appId string, secret model.AppSecret) (*model.AppSecret, error) {
 	if _, err := s.GetApp(appId); err != nil {
 		return nil, err
 	}
@@ -149,7 +166,7 @@ func (s *Service) CreateAppSecret(appId string, secret model.AppSecret) (*model.
 	return &secret, nil
 }
 
-func (s *Service) ModifyAppSecret(secretId int64, secret model.AppSecret) (*model.AppSecret, error) {
+func (s *ServiceAdmin) ModifyAppSecret(secretId int64, secret model.AppSecret) (*model.AppSecret, error) {
 	if err := s.db.Select("scope", "access_expire", "refresh_expire", "describe").
 		Where("id = ? AND app_id = ?", secretId, secret.AppID).Updates(&secret).Error; err != nil {
 		return nil, err
@@ -157,7 +174,7 @@ func (s *Service) ModifyAppSecret(secretId int64, secret model.AppSecret) (*mode
 	return &secret, nil
 }
 
-func (s *Service) DeleteAppSecret(appId string, secretId int64) error {
+func (s *ServiceAdmin) DeleteAppSecret(appId string, secretId int64) error {
 	if err := s.db.Where("id = ? AND app_id = ?", secretId, appId).
 		Delete(&model.AppSecret{}).Error; err != nil {
 		return err

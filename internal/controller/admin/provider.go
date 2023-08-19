@@ -1,4 +1,4 @@
-package controller
+package admin
 
 import (
 	"QuickAuth/internal/endpoint/request"
@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ListProvider	swagger
 // @Summary	provider info
 // @Schemes
 // @Description	list provider info
@@ -15,13 +16,13 @@ import (
 // @Param		vhost		header	string	false	"tenant host"
 // @Success		200
 // @Router		/api/quick/providers [get]
-func (o Controller) listProvider(c *gin.Context) {
+func (a Route) ListProvider(c *gin.Context) {
 	var in request.ProviderReq
-	if err := o.SetCtx(c).SetTenant(&in.Tenant).Error; err != nil {
+	if err := a.SetCtx(c).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	providers, err := o.svc.GetLoginProviderInfo(in.Tenant.ID)
+	providers, err := a.svc.GetLoginProviderInfo(in.Tenant.ID)
 	if err != nil {
 		resp.ErrorSelect(c, err, "list provider err")
 		return
@@ -30,6 +31,7 @@ func (o Controller) listProvider(c *gin.Context) {
 	resp.SuccessArrayData(c, len(providers), providers)
 }
 
+// GetProvider	swagger
 // @Summary	get provider details
 // @Schemes
 // @Description	get provider details
@@ -40,13 +42,13 @@ func (o Controller) listProvider(c *gin.Context) {
 // @Param		providerId	path	integer	true	"provider id"
 // @Success		200
 // @Router		/api/quick/providers/{providerId} [get]
-func (o Controller) getProvider(c *gin.Context) {
+func (a Route) GetProvider(c *gin.Context) {
 	var in request.ProviderReq
-	if err := o.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := a.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	provider, err := o.svc.GetProvider(in.Tenant.ID, in.ProviderId)
+	provider, err := a.svc.GetProvider(in.Tenant.ID, in.ProviderId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "get provider err")
 		return
@@ -55,6 +57,7 @@ func (o Controller) getProvider(c *gin.Context) {
 	resp.SuccessWithData(c, provider)
 }
 
+// CreateProvider	swagger
 // @Summary	create provider
 // @Schemes
 // @Description	create provider
@@ -65,14 +68,14 @@ func (o Controller) getProvider(c *gin.Context) {
 // @Param		bd			body	request.ProviderReq	true	"body"
 // @Success		200
 // @Router		/api/quick/providers [post]
-func (o Controller) createProvider(c *gin.Context) {
+func (a Route) CreateProvider(c *gin.Context) {
 	var in request.ProviderReq
-	if err := o.SetCtx(c).BindJson(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := a.SetCtx(c).BindJson(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
 
-	provider, err := o.svc.CreateProvider(in.ToModel())
+	provider, err := a.svc.CreateProvider(in.ToModel())
 	if err != nil {
 		resp.ErrorCreate(c, err, "create provider err")
 		return
@@ -81,6 +84,7 @@ func (o Controller) createProvider(c *gin.Context) {
 	resp.SuccessWithData(c, provider)
 }
 
+// ModifyProvider	swagger
 // @Summary	modify provider
 // @Schemes
 // @Description	modify provider
@@ -90,14 +94,14 @@ func (o Controller) createProvider(c *gin.Context) {
 // @Param		bd			body	request.ProviderReq	true	"body"
 // @Success		200
 // @Router		/api/quick/providers/{providerId} [put]
-func (o Controller) modifyProvider(c *gin.Context) {
+func (a Route) ModifyProvider(c *gin.Context) {
 	var in request.ProviderReq
-	if err := o.SetCtx(c).BindUriAndJson(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := a.SetCtx(c).BindUriAndJson(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
 
-	if err := o.svc.ModifyProvider(in.ProviderId, in.ToModel()); err != nil {
+	if err := a.svc.ModifyProvider(in.ProviderId, in.ToModel()); err != nil {
 		resp.ErrorUpdate(c, err, "modify provider err")
 		return
 	}
@@ -105,6 +109,7 @@ func (o Controller) modifyProvider(c *gin.Context) {
 	resp.Success(c)
 }
 
+// DeleteProvider	swagger
 // @Summary	delete provider
 // @Schemes
 // @Description	delete provider
@@ -113,13 +118,13 @@ func (o Controller) modifyProvider(c *gin.Context) {
 // @Param		vhost		header	string	false	"tenant host"
 // @Success		200
 // @Router		/api/quick/providers/{providerId} [delete]
-func (o Controller) deleteProvider(c *gin.Context) {
+func (a Route) DeleteProvider(c *gin.Context) {
 	var in request.ProviderReq
-	if err := o.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := a.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	if err := o.svc.DeleteProvider(in.Tenant.ID, in.ProviderId); err != nil {
+	if err := a.svc.DeleteProvider(in.Tenant.ID, in.ProviderId); err != nil {
 		resp.ErrorDelete(c, err, "delete provider err")
 		return
 	}

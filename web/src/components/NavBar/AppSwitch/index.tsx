@@ -70,7 +70,7 @@ export default function ApplicationSelector() {
             style={{width:'fit-content', minWidth:120, maxWidth:250, backgroundColor:'var(--color-fill-2)'}}
             dropdownRender={(menu) => (<div>{menu}<Divider style={{ margin: 0 }} /><CreateItem text='创建租户' isApp={false}/></div>)}
           >
-            {tenantList.map((option) => (
+            {tenantList && tenantList.map((option) => (
               <Select.Option key={option.id} value={option.id} style={{height:50, textAlign:'left', display:'block'}}>
                 {option.name}
               </Select.Option>

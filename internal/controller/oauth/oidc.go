@@ -1,4 +1,4 @@
-package controller
+package oauth
 
 import (
 	"QuickAuth/internal/endpoint/resp"
@@ -23,13 +23,14 @@ type OpenidConfigurationDto struct {
 	RequestUriParameterSupported      bool     `json:"request_uri_parameter_supported"`
 }
 
+// GetOIDC	swagger
 // @Summary	get OIDC
 // @Schemes
 // @Description	get open id configuration
 // @Tags		oidc
 // @Success		200		{object}	OpenidConfigurationDto
 // @Router		/api/quick/.well-known/openid-configuration [get]
-func (o Controller) getOIDC(c *gin.Context) {
+func (o Controller) GetOIDC(c *gin.Context) {
 	var tenant model.Tenant
 	if err := o.SetCtx(c).SetTenant(&tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -52,13 +53,14 @@ func (o Controller) getOIDC(c *gin.Context) {
 	c.JSON(http.StatusOK, conf)
 }
 
+// ListJwks	swagger
 // @Summary	get jwks
 // @Schemes
 // @Description	get jwks
 // @Tags		oidc
 // @Success		200
 // @Router		/api/quick/.well-known/jwks.json [get]
-func (o Controller) getJwks(c *gin.Context) {
+func (o Controller) ListJwks(c *gin.Context) {
 	tenantName := "default"
 	jwks, err := o.svc.LoadRsaPublicKeys(tenantName)
 	if err != nil {
@@ -66,16 +68,17 @@ func (o Controller) getJwks(c *gin.Context) {
 		return
 	}
 
-	resp.SuccessWithData(c, jwks)
+	c.JSON(http.StatusOK, jwks)
 }
 
+// GetProfile	swagger
 // @Summary	get jwks
 // @Schemes
 // @Description	get jwks
 // @Tags		oidc
 // @Success		200
 // @Router		/api/quick/me/profile [get]
-func (o Controller) getProfile(c *gin.Context) {
+func (o Controller) GetProfile(c *gin.Context) {
 	if err := o.SetCtx(c).SetUserInfo().Error; err != nil {
 		resp.ErrorRequestWithMsg(c, err, "set user info err")
 		return

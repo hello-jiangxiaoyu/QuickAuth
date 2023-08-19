@@ -1,4 +1,4 @@
-package controller
+package admin
 
 import (
 	"QuickAuth/internal/endpoint/request"
@@ -8,6 +8,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// ListUser	swagger
 // @Summary	user info
 // @Schemes
 // @Description	list users
@@ -17,14 +18,14 @@ import (
 // @Param		poolId		path	integer	true	"user pool id"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users [get]
-func (o Controller) listUser(c *gin.Context) {
+func (a Route) ListUser(c *gin.Context) {
 	var in request.UserReq
-	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
 		resp.ErrorRequest(c, err, true)
 		return
 	}
 
-	users, err := o.svc.ListUser(in.UserPoolID)
+	users, err := a.svc.ListUser(in.UserPoolID)
 	if err != nil {
 		resp.ErrorSelect(c, err, "list user err", true)
 		return
@@ -32,6 +33,7 @@ func (o Controller) listUser(c *gin.Context) {
 	resp.SuccessArrayData(c, len(users), users)
 }
 
+// GetUser	swagger
 // @Summary	user info
 // @Schemes
 // @Description	list user
@@ -42,14 +44,14 @@ func (o Controller) listUser(c *gin.Context) {
 // @Param		userId		path	string	true	"user id"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users/{userId} [get]
-func (o Controller) getUser(c *gin.Context) {
+func (a Route) GetUser(c *gin.Context) {
 	var in request.UserReq
-	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
 
-	user, err := o.svc.GetUserById(in.UserPoolID, in.UserID)
+	user, err := a.svc.GetUserById(in.UserPoolID, in.UserID)
 	if err != nil {
 		resp.ErrorSelect(c, err, "no such user")
 		return
@@ -57,6 +59,7 @@ func (o Controller) getUser(c *gin.Context) {
 	resp.SuccessWithData(c, user)
 }
 
+// CreateUser	swagger
 // @Summary	create user
 // @Schemes
 // @Description	create user
@@ -67,9 +70,9 @@ func (o Controller) getUser(c *gin.Context) {
 // @Param		bd			body	request.UserReq	true	"body"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users [post]
-func (o Controller) createUser(c *gin.Context) {
+func (a Route) CreateUser(c *gin.Context) {
 	var in request.UserReq
-	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -81,7 +84,7 @@ func (o Controller) createUser(c *gin.Context) {
 		return
 	}
 	in.OpenId = uuid.NewString()
-	user, err := o.svc.CreateUser(in.ToModel())
+	user, err := a.svc.CreateUser(in.ToModel())
 	if err != nil {
 		resp.ErrorCreate(c, err, "create user err")
 		return
@@ -90,6 +93,7 @@ func (o Controller) createUser(c *gin.Context) {
 	resp.SuccessWithData(c, user.Dto())
 }
 
+// ModifyUser	swagger
 // @Summary	modify user
 // @Schemes
 // @Description	modify user
@@ -101,20 +105,21 @@ func (o Controller) createUser(c *gin.Context) {
 // @Param		bd			body	request.UserReq	true	"body"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users/{userId} [put]
-func (o Controller) modifyUser(c *gin.Context) {
+func (a Route) ModifyUser(c *gin.Context) {
 	var in request.UserReq
-	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
 
-	if err := o.svc.ModifyUser(in.UserID, in.ToModel()); err != nil {
+	if err := a.svc.ModifyUser(in.UserID, in.ToModel()); err != nil {
 		resp.ErrorUpdate(c, err, "modify user err")
 		return
 	}
 	resp.Success(c)
 }
 
+// DeleteUser	swagger
 // @Summary	delete user
 // @Schemes
 // @Description	delete user
@@ -125,14 +130,14 @@ func (o Controller) modifyUser(c *gin.Context) {
 // @Param		userId		path	string	true	"user id"
 // @Success		200
 // @Router		/api/quick/user-pools/{poolId}/users/{userId} [delete]
-func (o Controller) deleteUser(c *gin.Context) {
+func (a Route) DeleteUser(c *gin.Context) {
 	var in request.UserReq
-	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
 
-	if err := o.svc.DeleteUser(in.UserPoolID, in.UserID); err != nil {
+	if err := a.svc.DeleteUser(in.UserPoolID, in.UserID); err != nil {
 		resp.ErrorDelete(c, err, "delete user err")
 		return
 	}

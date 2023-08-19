@@ -1,4 +1,4 @@
-package service
+package admin
 
 import (
 	"QuickAuth/internal/model"
@@ -7,7 +7,7 @@ import (
 	"net/url"
 )
 
-func (s *Service) GetTenant(_ string, tenantId int64) (*model.Tenant, error) {
+func (s *ServiceAdmin) GetTenant(_ string, tenantId int64) (*model.Tenant, error) {
 	var tenant model.Tenant
 	if err := s.db.Where("id = ?", tenantId).Preload("App").Preload("UserPool").First(&tenant).Error; err != nil {
 		return nil, err
@@ -15,7 +15,7 @@ func (s *Service) GetTenant(_ string, tenantId int64) (*model.Tenant, error) {
 	return &tenant, nil
 }
 
-func (s *Service) ListTenant(appId string) ([]model.Tenant, error) {
+func (s *ServiceAdmin) ListTenant(appId string) ([]model.Tenant, error) {
 	var tenant []model.Tenant
 	if err := s.db.Select("id", "app_id", "user_pool_id", "type", "host", "name", "company", "created_at").
 		Where("app_id = ?", appId).Find(&tenant).Error; err != nil {
@@ -24,7 +24,7 @@ func (s *Service) ListTenant(appId string) ([]model.Tenant, error) {
 	return tenant, nil
 }
 
-func (s *Service) CreatTenant(t *model.Tenant) (*model.Tenant, error) {
+func (s *ServiceAdmin) CreatTenant(t *model.Tenant) (*model.Tenant, error) {
 	if _, err := s.GetApp(t.AppID); err != nil {
 		return nil, errors.Wrap(err, "no such app")
 	}
@@ -41,7 +41,7 @@ func (s *Service) CreatTenant(t *model.Tenant) (*model.Tenant, error) {
 	return t, nil
 }
 
-func (s *Service) ModifyTenant(tenantId int64, t *model.Tenant) error {
+func (s *ServiceAdmin) ModifyTenant(tenantId int64, t *model.Tenant) error {
 	if err := s.db.Select("type", "name", "host", "company", "grant_type", "describe",
 		"is_code", "is_refresh", "is_password", "is_credential", "is_device_flow",
 		"code_expire", "id_expire", "access_expire", "refresh_expire").
@@ -51,7 +51,7 @@ func (s *Service) ModifyTenant(tenantId int64, t *model.Tenant) error {
 	return nil
 }
 
-func (s *Service) DeleteTenant(appId string, tenantId int64) error {
+func (s *ServiceAdmin) DeleteTenant(appId string, tenantId int64) error {
 	if err := s.db.Where("id = ? AND app_id = ?", tenantId, appId).Delete(&model.Tenant{}).Error; err != nil {
 		return err
 	}
@@ -60,7 +60,7 @@ func (s *Service) DeleteTenant(appId string, tenantId int64) error {
 
 // =================== redirect uri ===================
 
-func (s *Service) IsRedirectUriValid(appId string, tenantId int64, uri string) (bool, error) {
+func (s *ServiceAdmin) IsRedirectUriValid(appId string, tenantId int64, uri string) (bool, error) {
 	var app model.Tenant
 	if err := s.db.Select("uri").Where("id = ? AND app_id = ?", tenantId, appId).First(&app).Error; err != nil {
 		return false, err
@@ -74,7 +74,7 @@ func (s *Service) IsRedirectUriValid(appId string, tenantId int64, uri string) (
 	return false, nil
 }
 
-func (s *Service) ListRedirectUri(tenantId int64) ([]string, error) {
+func (s *ServiceAdmin) ListRedirectUri(tenantId int64) ([]string, error) {
 	var apps []string
 	if err := s.db.Model(model.Tenant{}).Select("redirect_uris").
 		Where("id = ?", tenantId).Find(&apps).Error; err != nil {
@@ -84,7 +84,7 @@ func (s *Service) ListRedirectUri(tenantId int64) ([]string, error) {
 	return apps, nil
 }
 
-func (s *Service) CreateRedirectUri(tenantId int64, uri string) error {
+func (s *ServiceAdmin) CreateRedirectUri(tenantId int64, uri string) error {
 	sql := `update tenants set redirect_uris = array_prepend(?, redirect_uris) where id = ?;`
 	if err := s.db.Exec(sql, uri, tenantId).Error; err != nil {
 		return err
@@ -93,7 +93,7 @@ func (s *Service) CreateRedirectUri(tenantId int64, uri string) error {
 	return nil
 }
 
-func (s *Service) ModifyRedirectUri(tenantId int64, uriId uint, uri string) error {
+func (s *ServiceAdmin) ModifyRedirectUri(tenantId int64, uriId uint, uri string) error {
 	sql := `update tenants set redirect_uris[?] = ? where id = ?;`
 	if err := s.db.Exec(sql, uriId, uri, tenantId).Error; err != nil {
 		return err
@@ -102,7 +102,7 @@ func (s *Service) ModifyRedirectUri(tenantId int64, uriId uint, uri string) erro
 	return nil
 }
 
-func (s *Service) DeleteRedirectUri(tenantId int64, uri string) error {
+func (s *ServiceAdmin) DeleteRedirectUri(tenantId int64, uri string) error {
 	uri, err := url.QueryUnescape(uri)
 	if err != nil {
 		return errors.Wrap(err, "invalid uri")

@@ -1,10 +1,11 @@
-package controller
+package oauth
 
 import (
 	"QuickAuth/internal/controller/internal"
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/internal/service"
+	"QuickAuth/internal/service/oauth"
 	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -17,10 +18,11 @@ type Controller struct {
 	svc *service.Service
 }
 
-func NewOAuth2Api(svc *service.Service) Controller {
+func NewOAuth2Route(svc *service.Service) Controller {
 	return Controller{svc: svc}
 }
 
+// GetAuthCode	swagger
 // @Summary	oauth2 authorize
 // @Schemes
 // @Description	oauth2 authorize
@@ -34,7 +36,7 @@ func NewOAuth2Api(svc *service.Service) Controller {
 // @Success		302
 // @Success		200
 // @Router		/api/quick/oauth2/auth [get]
-func (o Controller) getAuthCode(c *gin.Context) {
+func (o Controller) GetAuthCode(c *gin.Context) {
 	var in request.Auth
 	if err := o.SetCtx(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -85,6 +87,7 @@ func (o Controller) getAuthCode(c *gin.Context) {
 	resp.ErrorRequestWithMsg(c, nil, "Invalid response_type.")
 }
 
+// GetToken	swagger
 // @Summary	oauth2 token
 // @Schemes
 // @Description	oauth2 token
@@ -98,7 +101,7 @@ func (o Controller) getAuthCode(c *gin.Context) {
 // @Param		nonce			query		string	false	"nonce"
 // @Success		200
 // @Router		/api/quick/oauth2/token [post]
-func (o Controller) getToken(c *gin.Context) {
+func (o Controller) GetToken(c *gin.Context) {
 	var in request.Token
 	if err := o.SetCtx(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -120,7 +123,7 @@ func (o Controller) getToken(c *gin.Context) {
 	token, err := handler(&in)
 	if err != nil {
 		switch err {
-		case service.ErrorCodeExpired:
+		case oauth.ErrorCodeExpired:
 			resp.ErrorForbidden(c, err.Error())
 		default:
 			resp.ErrorUnknown(c, err, "failed to get token.")

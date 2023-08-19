@@ -1,4 +1,4 @@
-package service
+package oauth
 
 import (
 	"QuickAuth/internal/endpoint/request"
@@ -12,7 +12,7 @@ import (
 )
 
 // CreateAccessToken 创建Access Token
-func (s *Service) CreateAccessToken(app model.App, tenant model.Tenant, userId string, nonce string, scope []string) (string, error) {
+func (s *ServiceOauth) CreateAccessToken(app model.App, tenant model.Tenant, userId string, nonce string, scope []string) (string, error) {
 	nowTime := time.Now()
 	expireTime := nowTime.Add(time.Duration(tenant.AccessExpire) * time.Second)
 	claims := request.AccessClaims{
@@ -33,7 +33,7 @@ func (s *Service) CreateAccessToken(app model.App, tenant model.Tenant, userId s
 }
 
 // CreateIdToken 创建ID Token
-func (s *Service) CreateIdToken(app model.App, tenant model.Tenant, user model.User, nonce string) (string, error) {
+func (s *ServiceOauth) CreateIdToken(app model.App, tenant model.Tenant, user model.User, nonce string) (string, error) {
 	nowTime := time.Now()
 	expireTime := nowTime.Add(time.Duration(tenant.IDExpire) * time.Hour)
 	birthdate := ""
@@ -64,7 +64,7 @@ func (s *Service) CreateIdToken(app model.App, tenant model.Tenant, user model.U
 	return s.getTokenString(claims, app.Name)
 }
 
-func (s *Service) getTokenString(claims jwt.Claims, appName string) (string, error) {
+func (s *ServiceOauth) getTokenString(claims jwt.Claims, appName string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
 	keys, err := LoadRsaPrivateKeys(appName)
 	if err != nil {

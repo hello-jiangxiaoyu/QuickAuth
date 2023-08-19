@@ -3,7 +3,7 @@ import zhCN from '@arco-design/web-react/es/locale/zh-CN';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 import '@/mock';
 import '@/style/global.less';
-import {ConfigProvider} from '@arco-design/web-react';
+import {ConfigProvider, Message} from '@arco-design/web-react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import cookies from 'next-cookies';
@@ -16,21 +16,21 @@ import NProgress from 'nprogress';
 import changeTheme from '@/utils/changeTheme';
 import {dispatchApp, dispatchAppList, dispatchTenant, dispatchTenantList, store} from '@/store/redux';
 import {getRouterPara} from "@/utils/stringTools";
-import {TenantDetail} from "@/http/tenant";
+import {Tenant, TenantDetail} from "@/http/tenant";
 import api from "@/http/api";
 
 async function updateAppAndTenant(appId:string):Promise<string> {
   const respApp = await api.fetchApp(appId);
   dispatchApp(respApp.data);
 
-  dispatchTenantList(respApp.data.tenant);
-
-  if (respApp.data.tenant.length === 0) {
+  if (respApp.data.tenant === null || respApp.data.tenant.length === 0) {
+    dispatchTenantList([] as Array<Tenant>);
     dispatchTenant({} as TenantDetail);
     return
   }
 
   const respTenant = await api.fetchTenant(appId, respApp.data.tenant[0].id);
+  dispatchTenantList(respApp.data.tenant);
   dispatchTenant(respTenant.data);
 }
 

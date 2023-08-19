@@ -1,10 +1,13 @@
-package service
+package oauth
 
 import (
 	"QuickAuth/internal/model"
+	"QuickAuth/pkg/conf"
+	"QuickAuth/pkg/global"
 	"QuickAuth/pkg/safe"
 	"errors"
 	"go.uber.org/zap"
+	"gorm.io/gorm"
 	"time"
 )
 
@@ -12,7 +15,21 @@ var (
 	ErrorCodeExpired = errors.New("code expired")
 )
 
-func (s *Service) GetAccessCode(appId string, codeName string) (*model.Code, error) {
+type ServiceOauth struct {
+	log  *zap.Logger
+	db   *gorm.DB
+	conf *conf.SystemConfig
+}
+
+func NewOauthService(repo *global.Repository) *ServiceOauth {
+	return &ServiceOauth{
+		log:  repo.Logger,
+		db:   repo.DB,
+		conf: repo.Config,
+	}
+}
+
+func (s *ServiceOauth) GetAccessCode(appId string, codeName string) (*model.Code, error) {
 	var code model.Code
 	if err := s.db.Where("app_id = ? AND code = ?", appId, codeName).
 		First(&code).Error; err != nil {
@@ -30,7 +47,7 @@ func (s *Service) GetAccessCode(appId string, codeName string) (*model.Code, err
 	return &code, nil
 }
 
-func (s *Service) CreateAccessCode(appId string, userId int64) (string, string, error) {
+func (s *ServiceOauth) CreateAccessCode(appId string, userId int64) (string, string, error) {
 	code := safe.RandHex(31)
 	state := safe.RandHex(31)
 	accessCode := model.Code{

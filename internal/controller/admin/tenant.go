@@ -1,4 +1,4 @@
-package controller
+package admin
 
 import (
 	"QuickAuth/internal/endpoint/request"
@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ListTenant	swagger
 // @Summary	get tenant list
 // @Schemes
 // @Description	get tenant list
@@ -17,14 +18,14 @@ import (
 // @Param		appId		path	string	true	"app id"
 // @Success		200
 // @Router		/api/quick/apps/{appId}/tenants [get]
-func (o Controller) listTenant(c *gin.Context) {
+func (a Route) ListTenant(c *gin.Context) {
 	var in request.TenantReq
-	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
 		resp.ErrorRequest(c, err, true)
 		return
 	}
 
-	tenants, err := o.svc.ListTenant(in.AppID)
+	tenants, err := a.svc.ListTenant(in.AppID)
 	if err != nil {
 		resp.ErrorSelect(c, err, "list tenant err", true)
 		return
@@ -33,6 +34,7 @@ func (o Controller) listTenant(c *gin.Context) {
 	resp.SuccessArrayData(c, len(tenants), utils.DtoFilter(tenants, model.TenantsDto))
 }
 
+// GetTenant	swagger
 // @Summary	get tenant details
 // @Schemes
 // @Description	get tenant details
@@ -43,14 +45,14 @@ func (o Controller) listTenant(c *gin.Context) {
 // @Param		tenantId	path	integer	true	"tenant id"
 // @Success		200
 // @Router		/api/quick/apps/{appId}/tenants/{tenantId} [get]
-func (o Controller) getTenant(c *gin.Context) {
+func (a Route) GetTenant(c *gin.Context) {
 	var in request.TenantReq
-	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
 
-	tenant, err := o.svc.GetTenant(in.AppID, in.TenantID)
+	tenant, err := a.svc.GetTenant(in.AppID, in.TenantID)
 	if err != nil {
 		resp.ErrorSelect(c, err, "get tenant err")
 		return
@@ -59,6 +61,7 @@ func (o Controller) getTenant(c *gin.Context) {
 	resp.SuccessWithData(c, tenant)
 }
 
+// CreateTenant	swagger
 // @Summary	create tenant
 // @Schemes
 // @Description	create tenant
@@ -69,14 +72,14 @@ func (o Controller) getTenant(c *gin.Context) {
 // @Param		bd			body	request.TenantReq	true	"body"
 // @Success		200
 // @Router		/api/quick/apps/{appId}/tenants [post]
-func (o Controller) createTenant(c *gin.Context) {
+func (a Route) CreateTenant(c *gin.Context) {
 	var in request.TenantReq
-	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
 
-	tenant, err := o.svc.CreatTenant(in.ToModel())
+	tenant, err := a.svc.CreatTenant(in.ToModel())
 	if err != nil {
 		resp.ErrorCreate(c, err, "create tenant err")
 		return
@@ -85,6 +88,7 @@ func (o Controller) createTenant(c *gin.Context) {
 	resp.SuccessWithData(c, tenant)
 }
 
+// ModifyTenant	swagger
 // @Summary	modify tenant
 // @Schemes
 // @Description	modify tenant
@@ -96,14 +100,14 @@ func (o Controller) createTenant(c *gin.Context) {
 // @Param		bd			body	request.TenantReq	true	"body"
 // @Success		200
 // @Router		/api/quick/apps/{appId}/tenants/{tenantId} [put]
-func (o Controller) modifyTenant(c *gin.Context) {
+func (a Route) ModifyTenant(c *gin.Context) {
 	var in request.TenantReq
-	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
 
-	if err := o.svc.ModifyTenant(in.TenantID, in.ToModel()); err != nil {
+	if err := a.svc.ModifyTenant(in.TenantID, in.ToModel()); err != nil {
 		resp.ErrorUpdate(c, err, "modify tenant err")
 		return
 	}
@@ -111,6 +115,7 @@ func (o Controller) modifyTenant(c *gin.Context) {
 	resp.Success(c)
 }
 
+// DeleteTenant	swagger
 // @Summary	delete tenant
 // @Schemes
 // @Description	delete tenant
@@ -121,14 +126,14 @@ func (o Controller) modifyTenant(c *gin.Context) {
 // @Param		tenantId	path	integer	true	"tenant id"
 // @Success		200
 // @Router		/api/quick/apps/{appId}/tenants/{tenantId} [delete]
-func (o Controller) deleteTenant(c *gin.Context) {
+func (a Route) DeleteTenant(c *gin.Context) {
 	var in request.TenantReq
-	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
 
-	if err := o.svc.DeleteTenant(in.AppID, in.TenantID); err != nil {
+	if err := a.svc.DeleteTenant(in.AppID, in.TenantID); err != nil {
 		resp.ErrorDelete(c, err, "delete tenant err")
 		return
 	}

@@ -1,4 +1,4 @@
-package service
+package internal
 
 import (
 	"errors"
@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm/schema"
 )
 
-func (s *Service) deleteRecords(tables []schema.Tabler, tx *gorm.DB, relyColumName string, relyValue string) error {
+func DeleteRecords(tables []schema.Tabler, tx *gorm.DB, relyColumName string, relyValue string) error {
 	if relyColumName == "" || relyValue == "" {
 		return errors.New("missing delete rely")
 	}

@@ -1,22 +1,21 @@
 package service
 
 import (
-	"QuickAuth/pkg/conf"
+	"QuickAuth/internal/service/admin"
+	"QuickAuth/internal/service/oauth"
 	"QuickAuth/pkg/global"
-	"go.uber.org/zap"
-	"gorm.io/gorm"
 )
 
 type Service struct {
-	log  *zap.Logger
-	db   *gorm.DB
-	conf *conf.SystemConfig
+	oauth.ServiceOauth
+	admin.ServiceAdmin
 }
 
 func NewService(repo *global.Repository) *Service {
+	a := admin.NewAdminService(repo)
+	o := oauth.NewOauthService(repo)
 	return &Service{
-		log:  repo.Logger,
-		db:   repo.DB,
-		conf: repo.Config,
+		ServiceAdmin: *a,
+		ServiceOauth: *o,
 	}
 }

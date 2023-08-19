@@ -1,4 +1,4 @@
-package controller
+package oauth
 
 import (
 	"QuickAuth/internal/endpoint/request"
@@ -13,6 +13,7 @@ import (
 	"net/http"
 )
 
+// Login	swagger
 // @Summary	login a user
 // @Schemes
 // @Description	login using username and password
@@ -22,7 +23,7 @@ import (
 // @Param		next		query		string	false	"next"
 // @Success		200
 // @Router		/api/quick/login [post]
-func (o Controller) login(c *gin.Context) {
+func (o Controller) Login(c *gin.Context) {
 	var in request.Login
 	if cookie, err := c.Cookie(resp.IDToken); err == nil && cookie != "" {
 		resp.DoNothing(c, "user is already logged in, nothing to do")
@@ -58,17 +59,19 @@ func (o Controller) login(c *gin.Context) {
 	resp.Success(c)
 }
 
+// Logout	swagger
 // @Summary	logout current user
 // @Schemes
 // @Description	logout current user
 // @Tags		login
 // @Success		200
 // @Router		/api/quick/logout [get]
-func (o Controller) logout(c *gin.Context) {
+func (o Controller) Logout(c *gin.Context) {
 	c.SetCookie(resp.IDToken, "", -1, "/", "", false, true)
 	resp.Success(c)
 }
 
+// ProviderCallback	swagger
 // @Summary	provider callback
 // @Schemes
 // @Description	login third provider callback
@@ -77,7 +80,7 @@ func (o Controller) logout(c *gin.Context) {
 // @Param		code		query	string	true	"code"
 // @Success		200
 // @Router		/api/quick/login/providers/{provider} [get]
-func (o Controller) providerCallback(c *gin.Context) {
+func (o Controller) ProviderCallback(c *gin.Context) {
 	var in request.LoginProvider
 	if err := o.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -126,6 +129,7 @@ func (o Controller) providerCallback(c *gin.Context) {
 	resp.Success(c) // todo: redirect to next by state
 }
 
+// Register	swagger
 // @Summary	login a user
 // @Schemes
 // @Description	login using username and password
@@ -135,7 +139,7 @@ func (o Controller) providerCallback(c *gin.Context) {
 // @Param		next		query		string	false	"next"
 // @Success		200
 // @Router		/api/quick/register [post]
-func (o Controller) register(c *gin.Context) {
+func (o Controller) Register(c *gin.Context) {
 	var in request.Login
 	if err := o.SetCtx(c).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)

@@ -1,4 +1,4 @@
-package controller
+package oauth
 
 import (
 	"QuickAuth/internal/endpoint/dto"

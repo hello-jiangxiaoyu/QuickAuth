@@ -77,6 +77,9 @@ export function dispatchApp(data: App) {
 
 // 设置当前app下的租户列表
 export function dispatchTenantList(data:Array<Tenant>) {
+  if (data === undefined || data === null) {
+    data = [] as Array<Tenant>;
+  }
   store.dispatch({
     type: DispatchTenantList,
     payload: {tenantList: data},

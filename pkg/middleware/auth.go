@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/service"
+	"QuickAuth/internal/service/oauth"
 	"QuickAuth/pkg/global"
 	"crypto/rsa"
 	"fmt"
@@ -23,7 +23,7 @@ func LoginAuth() gin.HandlerFunc {
 			resp.ErrorUnknown(c, err, "get gin tenant err")
 			return
 		}
-		keys, err := service.LoadRsaPrivateKeys(tenant.App.Name)
+		keys, err := oauth.LoadRsaPrivateKeys(tenant.App.Name)
 		if err != nil {
 			resp.ErrorUnknown(c, err, "load rsa private key err")
 			return

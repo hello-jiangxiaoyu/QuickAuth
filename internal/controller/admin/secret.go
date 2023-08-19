@@ -1,4 +1,4 @@
-package controller
+package admin
 
 import (
 	"QuickAuth/internal/endpoint/request"
@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ListAppSecret	swagger
 // @Summary	app secret info
 // @Schemes
 // @Description	list app secret
@@ -15,14 +16,14 @@ import (
 // @Param		appId		path	string	true	"app id"
 // @Success		200
 // @Router		/api/quick/apps/{appId}/secrets [get]
-func (o Controller) listAppSecret(c *gin.Context) {
+func (a Route) ListAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
-	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
 		resp.ErrorRequest(c, err, true)
 		return
 	}
 
-	secrets, err := o.svc.ListAppSecrets(in.AppId)
+	secrets, err := a.svc.ListAppSecrets(in.AppId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "list app secret err", true)
 		return
@@ -30,6 +31,7 @@ func (o Controller) listAppSecret(c *gin.Context) {
 	resp.SuccessArrayData(c, len(secrets), secrets)
 }
 
+// CreateAppSecret	swagger
 // @Summary	create app secret
 // @Schemes
 // @Description	create app secret
@@ -40,14 +42,14 @@ func (o Controller) listAppSecret(c *gin.Context) {
 // @Param		bd			body	request.AppSecretReq	true	"body"
 // @Success		200
 // @Router		/api/quick/apps/{appId}/secrets [post]
-func (o Controller) createAppSecret(c *gin.Context) {
+func (a Route) CreateAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
-	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
 
-	secret, err := o.svc.CreateAppSecret(in.AppId, in.ToModel())
+	secret, err := a.svc.CreateAppSecret(in.AppId, in.ToModel())
 	if err != nil {
 		resp.ErrorCreate(c, err, "create app secret err")
 		return
@@ -55,6 +57,7 @@ func (o Controller) createAppSecret(c *gin.Context) {
 	resp.SuccessWithData(c, secret)
 }
 
+// ModifyAppSecret	swagger
 // @Summary	create app secret
 // @Schemes
 // @Description	create app secret
@@ -66,14 +69,14 @@ func (o Controller) createAppSecret(c *gin.Context) {
 // @Param		bd			body	request.AppSecretReq	true	"body"
 // @Success		200
 // @Router		/api/quick/apps/{appId}/secrets/{secretId} [put]
-func (o Controller) modifyAppSecret(c *gin.Context) {
+func (a Route) ModifyAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
-	if err := o.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
 
-	secret, err := o.svc.ModifyAppSecret(in.SecretId, in.ToModel())
+	secret, err := a.svc.ModifyAppSecret(in.SecretId, in.ToModel())
 	if err != nil {
 		resp.ErrorUpdate(c, err, "modify app secret err")
 		return
@@ -81,6 +84,7 @@ func (o Controller) modifyAppSecret(c *gin.Context) {
 	resp.SuccessWithData(c, secret)
 }
 
+// DeleteAppSecret	swagger
 // @Summary	delete app secret
 // @Schemes
 // @Description	delete app secret
@@ -91,14 +95,14 @@ func (o Controller) modifyAppSecret(c *gin.Context) {
 // @Param		secretId	path	integer	true	"secret id"
 // @Success		200
 // @Router		/api/quick/apps/{appId}/secrets/{secretId} [delete]
-func (o Controller) deleteAppSecret(c *gin.Context) {
+func (a Route) DeleteAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
-	if err := o.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
 
-	if err := o.svc.DeleteAppSecret(in.AppId, in.SecretId); err != nil {
+	if err := a.svc.DeleteAppSecret(in.AppId, in.SecretId); err != nil {
 		resp.ErrorDelete(c, err, "delete app secret err")
 		return
 	}
