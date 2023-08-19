@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddAdminRoute(svc *service.Service, e *gin.Engine) *Route {
+func AddAdminRoute(svc *service.Service, e *gin.Engine) {
 	admin := NewAdminRoute(svc)
 	app := e.Group("/api/quick")
 	{
@@ -40,6 +40,7 @@ func AddAdminRoute(svc *service.Service, e *gin.Engine) *Route {
 		tenant.PUT("/providers/:providerId", admin.ModifyProvider)
 		tenant.DELETE("/providers/:providerId", admin.DeleteProvider)
 	}
+	e.GET("/api/quick/providers", admin.ListProvider) // 获取当前租户所有第三方登录所需信息
 
 	user := e.Group("/api/quick", middleware.LoginAuth())
 	{
@@ -55,5 +56,4 @@ func AddAdminRoute(svc *service.Service, e *gin.Engine) *Route {
 		user.PUT("/user-pools/:poolId/users/:userId", admin.ModifyUser)
 		user.DELETE("/user-pools/:poolId/users/:userId", admin.DeleteUser)
 	}
-	return admin
 }

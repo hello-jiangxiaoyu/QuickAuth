@@ -1,12 +1,11 @@
-package controller
+package iam
 
 import (
-	"QuickAuth/internal/controller/iam"
 	"github.com/gin-gonic/gin"
 )
 
 func AddResourceRoleRouter(e *gin.Engine) {
-	roleCtl := iam.NewResourceRoleController()
+	roleCtl := NewResourceRoleController()
 	role := e.Group("")
 	{
 		role.GET("/api/quick/resources/:resourceId/roles", roleCtl.ListResourceRoles)
@@ -18,7 +17,7 @@ func AddResourceRoleRouter(e *gin.Engine) {
 }
 
 func AddResourceRoleOperationRouter(e *gin.Engine) {
-	operationCtl := iam.NewResourceRoleOperationController()
+	operationCtl := NewResourceRoleOperationController()
 	operation := e.Group("")
 	{
 		operation.GET("/api/quick/resources/:resourceId/roles/:roleId/operations", operationCtl.ListResourceRoleOperations)
@@ -30,7 +29,7 @@ func AddResourceRoleOperationRouter(e *gin.Engine) {
 }
 
 func AddResourceUserRoleRouter(e *gin.Engine) {
-	roleCtl := iam.NewResourceUserRoleController()
+	roleCtl := NewResourceUserRoleController()
 	role := e.Group("")
 	{
 		role.GET("/api/quick/resources/:resourceId/users/:userId/roles", roleCtl.ListResourceUserRoles)
@@ -42,7 +41,7 @@ func AddResourceUserRoleRouter(e *gin.Engine) {
 }
 
 func AddResourceJsonUserRoleRouter(e *gin.Engine) {
-	roleCtl := iam.NewResourceJsonUserRoleController()
+	roleCtl := NewResourceJsonUserRoleController()
 	role := e.Group("")
 	{
 		role.GET("/api/quick/resources/:resourceId/json/users/:userId/roles", roleCtl.ListResourceJsonUserRoles)
@@ -54,7 +53,7 @@ func AddResourceJsonUserRoleRouter(e *gin.Engine) {
 }
 
 func AddResourceOperationNodeRouter(e *gin.Engine) {
-	nodeCtl := iam.NewResourceOperationNodeController()
+	nodeCtl := NewResourceOperationNodeController()
 	node := e.Group("")
 	{
 		node.GET("/api/quick/resources/:resourceId/operations/:operationId/nodes", nodeCtl.ListResourceOperationNodes)
@@ -66,7 +65,7 @@ func AddResourceOperationNodeRouter(e *gin.Engine) {
 }
 
 func AddResourceRouter(e *gin.Engine) {
-	resourceCtl := iam.NewResourceController()
+	resourceCtl := NewResourceController()
 	resource := e.Group("")
 	{
 		resource.GET("/api/quick/resources", resourceCtl.ListResources)
@@ -78,7 +77,7 @@ func AddResourceRouter(e *gin.Engine) {
 }
 
 func AddResourceNodeRouter(e *gin.Engine) {
-	nodeCtl := iam.NewResourceNodeController()
+	nodeCtl := NewResourceNodeController()
 	node := e.Group("")
 	{
 		node.GET("/api/quick/resources/:resourceId/nodes", nodeCtl.ListResourceNodes)
@@ -90,7 +89,7 @@ func AddResourceNodeRouter(e *gin.Engine) {
 }
 
 func AddResourceOperationRouter(e *gin.Engine) {
-	operationCtl := iam.NewResourceOperationController()
+	operationCtl := NewResourceOperationController()
 	operation := e.Group("")
 	{
 		operation.GET("/api/quick/resources/:resourceId/operations", operationCtl.ListResourceOperations)

@@ -15,6 +15,6 @@ func GetServer() *gin.Engine {
 	r.Use(middleware.Recovery(), cors.Default())
 	r.Use(middleware.RequestLog(), middleware.GenerateRequestID())
 	r.Use(middleware.TenantHost())
-	controller.NewOauth2Router(&global.Repository{Logger: global.Log, DB: global.DB, Config: global.Config}, r)
+	controller.NewRouter(&global.Repository{Logger: global.Log, DB: global.DB, Config: global.Config}, r)
 	return r
 }
