@@ -16,10 +16,6 @@ func getEnv(env, defaultValue string) string {
 	return value
 }
 
-func GetSystemConfigFileName() string {
-	return getEnv("SYSTEM_CONFIG", DefaultSystemConfigName)
-}
-
 func GetDeployType() string {
 	return getEnv("DEPLOY_TYPE", DefaultDeployType)
 }

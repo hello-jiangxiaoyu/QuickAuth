@@ -8,11 +8,16 @@ import (
 	"QuickAuth/pkg/log"
 	"QuickAuth/pkg/orm"
 	"errors"
+	"fmt"
 	"gorm.io/gorm"
 )
 
-func InitConfig() error {
-	c, err := conf.NewSystemConfig()
+func InitConfig(path string) error {
+	if global.Config != nil { // 初始化过一次
+		fmt.Println("global.Config is already initialized")
+		return nil
+	}
+	c, err := conf.NewSystemConfig(path)
 	if err != nil {
 		return err
 	}

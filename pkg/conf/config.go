@@ -1,6 +1,7 @@
 package conf
 
 import (
+	"fmt"
 	"gopkg.in/yaml.v3"
 	"os"
 )
@@ -34,8 +35,11 @@ type (
 	}
 )
 
-func NewSystemConfig() (*SystemConfig, error) {
-	yamlFile, err := os.ReadFile(GetSystemConfigFileName())
+func NewSystemConfig(path string) (*SystemConfig, error) {
+	if path == "" {
+		path = DefaultSystemConfigName
+	}
+	yamlFile, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
@@ -45,5 +49,6 @@ func NewSystemConfig() (*SystemConfig, error) {
 		return nil, err
 	}
 
+	fmt.Println("new system configuration ok: ", path)
 	return &res, nil
 }
