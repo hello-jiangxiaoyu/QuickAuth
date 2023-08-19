@@ -1,29 +1,18 @@
 package iam
 
 import (
-	"QuickAuth/internal/controller/internal"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/service/iam"
-
 	"github.com/gin-gonic/gin"
 )
 
-type ResourceOperation struct {
-	internal.Api
-}
-
-func NewResourceOperationController() *ResourceOperation {
-	return &ResourceOperation{}
-}
-
 // ListResourceOperations godoc
 // @Summary		list resource operations
-// @Tags		resource-operation
+// @Tags		resource-node
 // @Param		resourceId	path	string	true	"resource id"
 // @Success		200		{object}	interface{}
 // @Router		/api/quick/resources/{resourceId}/operations 	[get]
-func (a ResourceOperation) ListResourceOperations(c *gin.Context) {
-	data, err := iam.ListResourceOperations()
+func (a Resource) ListResourceOperations(c *gin.Context) {
+	data, err := a.svc.ListResourceOperations()
 	if err != nil {
 		resp.ErrorSelect(c, err, "ListResourceOperations err", true)
 		return
@@ -34,13 +23,13 @@ func (a ResourceOperation) ListResourceOperations(c *gin.Context) {
 
 // GetResourceOperation godoc
 // @Summary		get resource operation
-// @Tags		resource-operation
+// @Tags		resource-node
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		operationId	path	string	true	"operation id"
 // @Success		200		{object}	interface{}
 // @Router		/api/quick/resources/{resourceId}/operations/{operationId} 	[get]
-func (a ResourceOperation) GetResourceOperation(c *gin.Context) {
-	data, err := iam.GetResourceOperation()
+func (a Resource) GetResourceOperation(c *gin.Context) {
+	data, err := a.svc.GetResourceOperation()
 	if err != nil {
 		resp.ErrorSelect(c, err, "GetResourceOperation err")
 		return
@@ -51,12 +40,12 @@ func (a ResourceOperation) GetResourceOperation(c *gin.Context) {
 
 // CreateResourceOperation godoc
 // @Summary		create resource operation
-// @Tags		resource-operation
+// @Tags		resource-node
 // @Param		resourceId	path	string	true	"resource id"
 // @Success		200		{object}	interface{}
 // @Router		/api/quick/resources/{resourceId}/operations 	[post]
-func (a ResourceOperation) CreateResourceOperation(c *gin.Context) {
-	data, err := iam.CreateResourceOperation()
+func (a Resource) CreateResourceOperation(c *gin.Context) {
+	data, err := a.svc.CreateResourceOperation()
 	if err != nil {
 		resp.ErrorCreate(c, err, "CreateResourceOperation err")
 		return
@@ -67,13 +56,13 @@ func (a ResourceOperation) CreateResourceOperation(c *gin.Context) {
 
 // UpdateResourceOperation godoc
 // @Summary		update resource operation
-// @Tags		resource-operation
+// @Tags		resource-node
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		operationId	path	string	true	"operation id"
 // @Success		200
 // @Router		/api/quick/resources/{resourceId}/operations/{operationId} 	[put]
-func (a ResourceOperation) UpdateResourceOperation(c *gin.Context) {
-	if err := iam.UpdateResourceOperation(); err != nil {
+func (a Resource) UpdateResourceOperation(c *gin.Context) {
+	if err := a.svc.UpdateResourceOperation(); err != nil {
 		resp.ErrorUpdate(c, err, "UpdateResourceOperation err")
 		return
 	}
@@ -83,13 +72,13 @@ func (a ResourceOperation) UpdateResourceOperation(c *gin.Context) {
 
 // DeleteResourceOperation godoc
 // @Summary		delete resource operation
-// @Tags		resource-operation
+// @Tags		resource-node
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		operationId	path	string	true	"operation id"
 // @Success		200
 // @Router		/api/quick/resources/{resourceId}/operations/{operationId} 	[delete]
-func (a ResourceOperation) DeleteResourceOperation(c *gin.Context) {
-	if err := iam.DeleteResourceOperation(); err != nil {
+func (a Resource) DeleteResourceOperation(c *gin.Context) {
+	if err := a.svc.DeleteResourceOperation(); err != nil {
 		resp.ErrorDelete(c, err, "DeleteResourceOperation err")
 		return
 	}

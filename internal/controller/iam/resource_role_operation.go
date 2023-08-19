@@ -1,20 +1,9 @@
 package iam
 
 import (
-	"QuickAuth/internal/controller/internal"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/service/iam"
-
 	"github.com/gin-gonic/gin"
 )
-
-type ResourceRoleOperation struct {
-	internal.Api
-}
-
-func NewResourceRoleOperationController() *ResourceRoleOperation {
-	return &ResourceRoleOperation{}
-}
 
 // ListResourceRoleOperations godoc
 // @Summary		list resource role operations
@@ -23,8 +12,8 @@ func NewResourceRoleOperationController() *ResourceRoleOperation {
 // @Param		roleId		path	string	true	"role id"
 // @Success		200		{object}	interface{}
 // @Router		/api/quick/resources/{resourceId}/roles/{roleId}/operations 	[get]
-func (a ResourceRoleOperation) ListResourceRoleOperations(c *gin.Context) {
-	data, err := iam.ListResourceRoleOperations()
+func (a Resource) ListResourceRoleOperations(c *gin.Context) {
+	data, err := a.svc.ListResourceRoleOperations()
 	if err != nil {
 		resp.ErrorSelect(c, err, "ListResourceRoleOperations err", true)
 		return
@@ -41,8 +30,8 @@ func (a ResourceRoleOperation) ListResourceRoleOperations(c *gin.Context) {
 // @Param		operationId	path	string	true	"operation id"
 // @Success		200		{object}	interface{}
 // @Router		/api/quick/resources/{resourceId}/roles/{roleId}/operations/{operationId} 	[get]
-func (a ResourceRoleOperation) GetResourceRoleOperation(c *gin.Context) {
-	data, err := iam.GetResourceRoleOperation()
+func (a Resource) GetResourceRoleOperation(c *gin.Context) {
+	data, err := a.svc.GetResourceRoleOperation()
 	if err != nil {
 		resp.ErrorSelect(c, err, "GetResourceRoleOperation err")
 		return
@@ -58,8 +47,8 @@ func (a ResourceRoleOperation) GetResourceRoleOperation(c *gin.Context) {
 // @Param		roleId		path	string	true	"role id"
 // @Success		200		{object}	interface{}
 // @Router		/api/quick/resources/{resourceId}/roles/{roleId}/operations 	[post]
-func (a ResourceRoleOperation) CreateResourceRoleOperation(c *gin.Context) {
-	data, err := iam.CreateResourceRoleOperation()
+func (a Resource) CreateResourceRoleOperation(c *gin.Context) {
+	data, err := a.svc.CreateResourceRoleOperation()
 	if err != nil {
 		resp.ErrorCreate(c, err, "CreateResourceRoleOperation err")
 		return
@@ -76,8 +65,8 @@ func (a ResourceRoleOperation) CreateResourceRoleOperation(c *gin.Context) {
 // @Param		operationId	path	string	true	"operation id"
 // @Success		200
 // @Router		/api/quick/resources/{resourceId}/roles/{roleId}/operations/{operationId} 	[put]
-func (a ResourceRoleOperation) UpdateResourceRoleOperation(c *gin.Context) {
-	if err := iam.UpdateResourceRoleOperation(); err != nil {
+func (a Resource) UpdateResourceRoleOperation(c *gin.Context) {
+	if err := a.svc.UpdateResourceRoleOperation(); err != nil {
 		resp.ErrorUpdate(c, err, "UpdateResourceRoleOperation err")
 		return
 	}
@@ -93,8 +82,8 @@ func (a ResourceRoleOperation) UpdateResourceRoleOperation(c *gin.Context) {
 // @Param		operationId	path	string	true	"operation id"
 // @Success		200
 // @Router		/api/quick/resources/{resourceId}/roles/{roleId}/operations/{operationId} 	[delete]
-func (a ResourceRoleOperation) DeleteResourceRoleOperation(c *gin.Context) {
-	if err := iam.DeleteResourceRoleOperation(); err != nil {
+func (a Resource) DeleteResourceRoleOperation(c *gin.Context) {
+	if err := a.svc.DeleteResourceRoleOperation(); err != nil {
 		resp.ErrorDelete(c, err, "DeleteResourceRoleOperation err")
 		return
 	}

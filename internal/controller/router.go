@@ -3,6 +3,7 @@ package controller
 import (
 	_ "QuickAuth/docs"
 	"QuickAuth/internal/controller/admin"
+	"QuickAuth/internal/controller/iam"
 	"QuickAuth/internal/controller/oauth"
 	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/internal/service"
@@ -21,6 +22,7 @@ func NewRouter(repo *global.Repository, e *gin.Engine) {
 
 	admin.AddAdminRoute(svc, e)
 	oauth.AddOauth2Route(svc, e)
+	iam.AddResourceRouter(svc, e)
 	AddWebRoutes(e)
 
 	e.GET("/api/quick/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

@@ -1005,119 +1005,6 @@ paths:
       summary: update resource
       tags:
       - resource
-  /api/quick/resources/{resourceId}/json/users/{userId}/roles:
-    get:
-      parameters:
-      - description: resource id
-        in: path
-        name: resourceId
-        required: true
-        type: string
-      - description: user id
-        in: path
-        name: userId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: object
-      summary: list resource json user roles
-      tags:
-      - resource-json-user-role
-    post:
-      parameters:
-      - description: resource id
-        in: path
-        name: resourceId
-        required: true
-        type: string
-      - description: user id
-        in: path
-        name: userId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: object
-      summary: create resource json user role
-      tags:
-      - resource-json-user-role
-  /api/quick/resources/{resourceId}/json/users/{userId}/roles/{roleId}:
-    delete:
-      parameters:
-      - description: resource id
-        in: path
-        name: resourceId
-        required: true
-        type: string
-      - description: user id
-        in: path
-        name: userId
-        required: true
-        type: string
-      - description: role id
-        in: path
-        name: roleId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-      summary: delete resource json user role
-      tags:
-      - resource-json-user-role
-    get:
-      parameters:
-      - description: resource id
-        in: path
-        name: resourceId
-        required: true
-        type: string
-      - description: user id
-        in: path
-        name: userId
-        required: true
-        type: string
-      - description: role id
-        in: path
-        name: roleId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: object
-      summary: get resource json user role
-      tags:
-      - resource-json-user-role
-    put:
-      parameters:
-      - description: resource id
-        in: path
-        name: resourceId
-        required: true
-        type: string
-      - description: user id
-        in: path
-        name: userId
-        required: true
-        type: string
-      - description: role id
-        in: path
-        name: roleId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-      summary: update resource json user role
-      tags:
-      - resource-json-user-role
   /api/quick/resources/{resourceId}/nodes:
     get:
       parameters:
@@ -1221,7 +1108,7 @@ paths:
             type: object
       summary: list resource operations
       tags:
-      - resource-operation
+      - resource-node
     post:
       parameters:
       - description: resource id
@@ -1236,7 +1123,7 @@ paths:
             type: object
       summary: create resource operation
       tags:
-      - resource-operation
+      - resource-node
   /api/quick/resources/{resourceId}/operations/{operationId}:
     delete:
       parameters:
@@ -1255,7 +1142,7 @@ paths:
           description: OK
       summary: delete resource operation
       tags:
-      - resource-operation
+      - resource-node
     get:
       parameters:
       - description: resource id
@@ -1275,7 +1162,7 @@ paths:
             type: object
       summary: get resource operation
       tags:
-      - resource-operation
+      - resource-node
     put:
       parameters:
       - description: resource id
@@ -1293,7 +1180,7 @@ paths:
           description: OK
       summary: update resource operation
       tags:
-      - resource-operation
+      - resource-node
   /api/quick/resources/{resourceId}/operations/{operationId}/nodes:
     get:
       parameters:
@@ -1314,99 +1201,7 @@ paths:
             type: object
       summary: list resource operation nodes
       tags:
-      - resource-operation-node
-    post:
-      parameters:
-      - description: resource id
-        in: path
-        name: resourceId
-        required: true
-        type: string
-      - description: operation id
-        in: path
-        name: operationId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: object
-      summary: create resource operation node
-      tags:
-      - resource-operation-node
-  /api/quick/resources/{resourceId}/operations/{operationId}/nodes/{nodeId}:
-    delete:
-      parameters:
-      - description: resource id
-        in: path
-        name: resourceId
-        required: true
-        type: string
-      - description: operation id
-        in: path
-        name: operationId
-        required: true
-        type: string
-      - description: node id
-        in: path
-        name: nodeId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-      summary: delete resource operation node
-      tags:
-      - resource-operation-node
-    get:
-      parameters:
-      - description: resource id
-        in: path
-        name: resourceId
-        required: true
-        type: string
-      - description: operation id
-        in: path
-        name: operationId
-        required: true
-        type: string
-      - description: node id
-        in: path
-        name: nodeId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: object
-      summary: get resource operation node
-      tags:
-      - resource-operation-node
-    put:
-      parameters:
-      - description: resource id
-        in: path
-        name: resourceId
-        required: true
-        type: string
-      - description: operation id
-        in: path
-        name: operationId
-        required: true
-        type: string
-      - description: node id
-        in: path
-        name: nodeId
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-      summary: update resource operation node
-      tags:
-      - resource-operation-node
+      - resource-user
   /api/quick/resources/{resourceId}/roles:
     get:
       parameters:
@@ -1422,7 +1217,7 @@ paths:
             type: object
       summary: list resource roles
       tags:
-      - resource-role
+      - resource-node
     post:
       parameters:
       - description: resource id
@@ -1437,7 +1232,7 @@ paths:
             type: object
       summary: create resource role
       tags:
-      - resource-role
+      - resource-node
   /api/quick/resources/{resourceId}/roles/{roleId}:
     delete:
       parameters:
@@ -1456,7 +1251,7 @@ paths:
           description: OK
       summary: delete resource role
       tags:
-      - resource-role
+      - resource-node
     get:
       parameters:
       - description: resource id
@@ -1476,7 +1271,7 @@ paths:
             type: object
       summary: get resource role
       tags:
-      - resource-role
+      - resource-node
     put:
       parameters:
       - description: resource id
@@ -1494,7 +1289,7 @@ paths:
           description: OK
       summary: update resource role
       tags:
-      - resource-role
+      - resource-node
   /api/quick/resources/{resourceId}/roles/{roleId}/operations:
     get:
       parameters:
@@ -1626,9 +1421,9 @@ paths:
           description: OK
           schema:
             type: object
-      summary: list resource user roles
+      summary: list resource json user roles
       tags:
-      - resource-user-role
+      - resource-user
     post:
       parameters:
       - description: resource id
@@ -1646,9 +1441,9 @@ paths:
           description: OK
           schema:
             type: object
-      summary: create resource user role
+      summary: create resource json user role
       tags:
-      - resource-user-role
+      - resource-user
   /api/quick/resources/{resourceId}/users/{userId}/roles/{roleId}:
     delete:
       parameters:
@@ -1670,9 +1465,9 @@ paths:
       responses:
         "200":
           description: OK
-      summary: delete resource user role
+      summary: delete resource json user role
       tags:
-      - resource-user-role
+      - resource-user
     get:
       parameters:
       - description: resource id
@@ -1695,9 +1490,9 @@ paths:
           description: OK
           schema:
             type: object
-      summary: get resource user role
+      summary: get resource json user role
       tags:
-      - resource-user-role
+      - resource-user
     put:
       parameters:
       - description: resource id
@@ -1718,9 +1513,9 @@ paths:
       responses:
         "200":
           description: OK
-      summary: update resource user role
+      summary: update resource json user role
       tags:
-      - resource-user-role
+      - resource-user
   /api/quick/user-pools:
     get:
       description: list user pool

@@ -1,33 +1,33 @@
 package iam
 
-func ListResourceRoles() (interface{}, error) {
+func (s *ServiceIam) ListResourceRoles() (interface{}, error) {
 	var data interface{}
 	// todo: add your service code hear!
 
 	return data, nil
 }
 
-func GetResourceRole() (interface{}, error) {
+func (s *ServiceIam) GetResourceRole() (interface{}, error) {
 	var data interface{}
 	// todo: add your service code hear!
 
 	return data, nil
 }
 
-func CreateResourceRole() (interface{}, error) {
+func (s *ServiceIam) CreateResourceRole() (interface{}, error) {
 	var data interface{}
 	// todo: add your service code hear!
 
 	return data, nil
 }
 
-func UpdateResourceRole() error {
+func (s *ServiceIam) UpdateResourceRole() error {
 	// todo: add your service code hear!
 
 	return nil
 }
 
-func DeleteResourceRole() error {
+func (s *ServiceIam) DeleteResourceRole() error {
 	// todo: add your service code hear!
 
 	return nil

@@ -1,101 +1,66 @@
 package iam
 
 import (
+	"QuickAuth/internal/service"
 	"github.com/gin-gonic/gin"
 )
 
-func AddResourceRoleRouter(e *gin.Engine) {
-	roleCtl := NewResourceRoleController()
-	role := e.Group("")
-	{
-		role.GET("/api/quick/resources/:resourceId/roles", roleCtl.ListResourceRoles)
-		role.GET("/api/quick/resources/:resourceId/roles/:roleId", roleCtl.GetResourceRole)
-		role.POST("/api/quick/resources/:resourceId/roles", roleCtl.CreateResourceRole)
-		role.PUT("/api/quick/resources/:resourceId/roles/:roleId", roleCtl.UpdateResourceRole)
-		role.DELETE("/api/quick/resources/:resourceId/roles/:roleId", roleCtl.DeleteResourceRole)
-	}
-}
+func AddResourceRouter(svc *service.Service, e *gin.Engine) {
+	resourceCtl := NewResourceController(svc)
 
-func AddResourceRoleOperationRouter(e *gin.Engine) {
-	operationCtl := NewResourceRoleOperationController()
-	operation := e.Group("")
+	// 资源管理
+	resource := e.Group("/api/quick")
 	{
-		operation.GET("/api/quick/resources/:resourceId/roles/:roleId/operations", operationCtl.ListResourceRoleOperations)
-		operation.GET("/api/quick/resources/:resourceId/roles/:roleId/operations/:operationId", operationCtl.GetResourceRoleOperation)
-		operation.POST("/api/quick/resources/:resourceId/roles/:roleId/operations", operationCtl.CreateResourceRoleOperation)
-		operation.PUT("/api/quick/resources/:resourceId/roles/:roleId/operations/:operationId", operationCtl.UpdateResourceRoleOperation)
-		operation.DELETE("/api/quick/resources/:resourceId/roles/:roleId/operations/:operationId", operationCtl.DeleteResourceRoleOperation)
+		resource.GET("/resources", resourceCtl.ListResources)
+		resource.GET("/resources/:resourceId", resourceCtl.GetResource)
+		resource.POST("/resources", resourceCtl.CreateResource)
+		resource.PUT("/resources/:resourceId", resourceCtl.UpdateResource)
+		resource.DELETE("/resources/:resourceId", resourceCtl.DeleteResource)
 	}
-}
 
-func AddResourceUserRoleRouter(e *gin.Engine) {
-	roleCtl := NewResourceUserRoleController()
-	role := e.Group("")
+	// 资源属性管理
+	resourceAttribute := e.Group("/api/quick/resources/:resourceId")
 	{
-		role.GET("/api/quick/resources/:resourceId/users/:userId/roles", roleCtl.ListResourceUserRoles)
-		role.GET("/api/quick/resources/:resourceId/users/:userId/roles/:roleId", roleCtl.GetResourceUserRole)
-		role.POST("/api/quick/resources/:resourceId/users/:userId/roles", roleCtl.CreateResourceUserRole)
-		role.PUT("/api/quick/resources/:resourceId/users/:userId/roles/:roleId", roleCtl.UpdateResourceUserRole)
-		role.DELETE("/api/quick/resources/:resourceId/users/:userId/roles/:roleId", roleCtl.DeleteResourceUserRole)
+		// 资源下的节点
+		resourceAttribute.GET("/nodes", resourceCtl.ListResourceNodes)
+		resourceAttribute.GET("/nodes/:nodeId", resourceCtl.GetResourceNode)
+		resourceAttribute.POST("/nodes", resourceCtl.CreateResourceNode)
+		resourceAttribute.PUT("/nodes/:nodeId", resourceCtl.UpdateResourceNode)
+		resourceAttribute.DELETE("/nodes/:nodeId", resourceCtl.DeleteResourceNode)
+
+		// 资源下的角色
+		resourceAttribute.GET("/roles", resourceCtl.ListResourceRoles)
+		resourceAttribute.GET("/roles/:roleId", resourceCtl.GetResourceRole)
+		resourceAttribute.POST("/roles", resourceCtl.CreateResourceRole)
+		resourceAttribute.PUT("/roles/:roleId", resourceCtl.UpdateResourceRole)
+		resourceAttribute.DELETE("/roles/:roleId", resourceCtl.DeleteResourceRole)
+
+		// 资源下的操作
+		resourceAttribute.GET("/operations", resourceCtl.ListResourceOperations)
+		resourceAttribute.GET("/operations/:operationId", resourceCtl.GetResourceOperation)
+		resourceAttribute.POST("/operations", resourceCtl.CreateResourceOperation)
+		resourceAttribute.PUT("/operations/:operationId", resourceCtl.UpdateResourceOperation)
+		resourceAttribute.DELETE("/operations/:operationId", resourceCtl.DeleteResourceOperation)
 	}
-}
 
-func AddResourceJsonUserRoleRouter(e *gin.Engine) {
-	roleCtl := NewResourceJsonUserRoleController()
-	role := e.Group("")
+	// 授权管理
+	auth := e.Group("/api/quick/resources/:resourceId")
 	{
-		role.GET("/api/quick/resources/:resourceId/json/users/:userId/roles", roleCtl.ListResourceJsonUserRoles)
-		role.GET("/api/quick/resources/:resourceId/json/users/:userId/roles/:roleId", roleCtl.GetResourceJsonUserRole)
-		role.POST("/api/quick/resources/:resourceId/json/users/:userId/roles", roleCtl.CreateResourceJsonUserRole)
-		role.PUT("/api/quick/resources/:resourceId/json/users/:userId/roles/:roleId", roleCtl.UpdateResourceJsonUserRole)
-		role.DELETE("/api/quick/resources/:resourceId/json/users/:userId/roles/:roleId", roleCtl.DeleteResourceJsonUserRole)
-	}
-}
+		// 角色的权限管理
+		auth.GET("/roles/:roleId/operations", resourceCtl.ListResourceRoleOperations)
+		auth.GET("/roles/:roleId/operations/:operationId", resourceCtl.GetResourceRoleOperation)
+		auth.POST("/roles/:roleId/operations", resourceCtl.CreateResourceRoleOperation)
+		auth.PUT("/roles/:roleId/operations/:operationId", resourceCtl.UpdateResourceRoleOperation)
+		auth.DELETE("/roles/:roleId/operations/:operationId", resourceCtl.DeleteResourceRoleOperation)
 
-func AddResourceOperationNodeRouter(e *gin.Engine) {
-	nodeCtl := NewResourceOperationNodeController()
-	node := e.Group("")
-	{
-		node.GET("/api/quick/resources/:resourceId/operations/:operationId/nodes", nodeCtl.ListResourceOperationNodes)
-		node.GET("/api/quick/resources/:resourceId/operations/:operationId/nodes/:nodeId", nodeCtl.GetResourceOperationNode)
-		node.POST("/api/quick/resources/:resourceId/operations/:operationId/nodes", nodeCtl.CreateResourceOperationNode)
-		node.PUT("/api/quick/resources/:resourceId/operations/:operationId/nodes/:nodeId", nodeCtl.UpdateResourceOperationNode)
-		node.DELETE("/api/quick/resources/:resourceId/operations/:operationId/nodes/:nodeId", nodeCtl.DeleteResourceOperationNode)
-	}
-}
+		// 用户的角色管理
+		auth.GET("/users/:userId/roles", resourceCtl.ListResourceJsonUserRoles)
+		auth.GET("/users/:userId/roles/:roleId", resourceCtl.GetResourceJsonUserRole)
+		auth.POST("/users/:userId/roles", resourceCtl.CreateResourceJsonUserRole)
+		auth.PUT("/users/:userId/roles/:roleId", resourceCtl.UpdateResourceJsonUserRole)
+		auth.DELETE("/users/:userId/roles/:roleId", resourceCtl.DeleteResourceJsonUserRole)
 
-func AddResourceRouter(e *gin.Engine) {
-	resourceCtl := NewResourceController()
-	resource := e.Group("")
-	{
-		resource.GET("/api/quick/resources", resourceCtl.ListResources)
-		resource.GET("/api/quick/resources/:resourceId", resourceCtl.GetResource)
-		resource.POST("/api/quick/resources", resourceCtl.CreateResource)
-		resource.PUT("/api/quick/resources/:resourceId", resourceCtl.UpdateResource)
-		resource.DELETE("/api/quick/resources/:resourceId", resourceCtl.DeleteResource)
-	}
-}
-
-func AddResourceNodeRouter(e *gin.Engine) {
-	nodeCtl := NewResourceNodeController()
-	node := e.Group("")
-	{
-		node.GET("/api/quick/resources/:resourceId/nodes", nodeCtl.ListResourceNodes)
-		node.GET("/api/quick/resources/:resourceId/nodes/:nodeId", nodeCtl.GetResourceNode)
-		node.POST("/api/quick/resources/:resourceId/nodes", nodeCtl.CreateResourceNode)
-		node.PUT("/api/quick/resources/:resourceId/nodes/:nodeId", nodeCtl.UpdateResourceNode)
-		node.DELETE("/api/quick/resources/:resourceId/nodes/:nodeId", nodeCtl.DeleteResourceNode)
-	}
-}
-
-func AddResourceOperationRouter(e *gin.Engine) {
-	operationCtl := NewResourceOperationController()
-	operation := e.Group("")
-	{
-		operation.GET("/api/quick/resources/:resourceId/operations", operationCtl.ListResourceOperations)
-		operation.GET("/api/quick/resources/:resourceId/operations/:operationId", operationCtl.GetResourceOperation)
-		operation.POST("/api/quick/resources/:resourceId/operations", operationCtl.CreateResourceOperation)
-		operation.PUT("/api/quick/resources/:resourceId/operations/:operationId", operationCtl.UpdateResourceOperation)
-		operation.DELETE("/api/quick/resources/:resourceId/operations/:operationId", operationCtl.DeleteResourceOperation)
+		// 获取拥有某个权限的所有节点
+		auth.GET("/operations/:operationId/nodes", resourceCtl.ListResourceOperationNodes)
 	}
 }

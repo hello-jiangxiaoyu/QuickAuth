@@ -1,20 +1,9 @@
 package iam
 
 import (
-	"QuickAuth/internal/controller/internal"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/service/iam"
-
 	"github.com/gin-gonic/gin"
 )
-
-type ResourceNode struct {
-	internal.Api
-}
-
-func NewResourceNodeController() *ResourceNode {
-	return &ResourceNode{}
-}
 
 // ListResourceNodes godoc
 // @Summary		list resource nodes
@@ -22,8 +11,8 @@ func NewResourceNodeController() *ResourceNode {
 // @Param		resourceId	path	string	true	"resource id"
 // @Success		200		{object}	interface{}
 // @Router		/api/quick/resources/{resourceId}/nodes 	[get]
-func (a ResourceNode) ListResourceNodes(c *gin.Context) {
-	data, err := iam.ListResourceNodes()
+func (a Resource) ListResourceNodes(c *gin.Context) {
+	data, err := a.svc.ListResourceNodes()
 	if err != nil {
 		resp.ErrorSelect(c, err, "ListResourceNodes err", true)
 		return
@@ -39,8 +28,8 @@ func (a ResourceNode) ListResourceNodes(c *gin.Context) {
 // @Param		nodeId		path	string	true	"node id"
 // @Success		200		{object}	interface{}
 // @Router		/api/quick/resources/{resourceId}/nodes/{nodeId} 	[get]
-func (a ResourceNode) GetResourceNode(c *gin.Context) {
-	data, err := iam.GetResourceNode()
+func (a Resource) GetResourceNode(c *gin.Context) {
+	data, err := a.svc.GetResourceNode()
 	if err != nil {
 		resp.ErrorSelect(c, err, "GetResourceNode err")
 		return
@@ -55,8 +44,8 @@ func (a ResourceNode) GetResourceNode(c *gin.Context) {
 // @Param		resourceId	path	string	true	"resource id"
 // @Success		200		{object}	interface{}
 // @Router		/api/quick/resources/{resourceId}/nodes 	[post]
-func (a ResourceNode) CreateResourceNode(c *gin.Context) {
-	data, err := iam.CreateResourceNode()
+func (a Resource) CreateResourceNode(c *gin.Context) {
+	data, err := a.svc.CreateResourceNode()
 	if err != nil {
 		resp.ErrorCreate(c, err, "CreateResourceNode err")
 		return
@@ -72,8 +61,8 @@ func (a ResourceNode) CreateResourceNode(c *gin.Context) {
 // @Param		nodeId		path	string	true	"node id"
 // @Success		200
 // @Router		/api/quick/resources/{resourceId}/nodes/{nodeId} 	[put]
-func (a ResourceNode) UpdateResourceNode(c *gin.Context) {
-	if err := iam.UpdateResourceNode(); err != nil {
+func (a Resource) UpdateResourceNode(c *gin.Context) {
+	if err := a.svc.UpdateResourceNode(); err != nil {
 		resp.ErrorUpdate(c, err, "UpdateResourceNode err")
 		return
 	}
@@ -88,8 +77,8 @@ func (a ResourceNode) UpdateResourceNode(c *gin.Context) {
 // @Param		nodeId		path	string	true	"node id"
 // @Success		200
 // @Router		/api/quick/resources/{resourceId}/nodes/{nodeId} 	[delete]
-func (a ResourceNode) DeleteResourceNode(c *gin.Context) {
-	if err := iam.DeleteResourceNode(); err != nil {
+func (a Resource) DeleteResourceNode(c *gin.Context) {
+	if err := a.svc.DeleteResourceNode(); err != nil {
 		resp.ErrorDelete(c, err, "DeleteResourceNode err")
 		return
 	}

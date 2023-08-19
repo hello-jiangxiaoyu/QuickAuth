@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -158,7 +157,10 @@ func (idp *DingTalkIdProvider) GetUserInfo(token *oauth2.Token) (*UserInfo, erro
 		AvatarUrl:   dtUserInfo.AvatarUrl,
 	}
 
-	corpAccessToken := idp.getInnerAppAccessToken()
+	corpAccessToken, err := idp.getInnerAppAccessToken()
+	if err != nil {
+		return nil, err
+	}
 	userId, err := idp.getUserId(userInfo.UnionId, corpAccessToken)
 	if err != nil {
 		return nil, err
@@ -200,13 +202,13 @@ func (idp *DingTalkIdProvider) postWithBody(body interface{}, url string) ([]byt
 	return data, nil
 }
 
-func (idp *DingTalkIdProvider) getInnerAppAccessToken() string {
+func (idp *DingTalkIdProvider) getInnerAppAccessToken() (string, error) {
 	body := make(map[string]string)
 	body["appKey"] = idp.Config.ClientID
 	body["appSecret"] = idp.Config.ClientSecret
 	respBytes, err := idp.postWithBody(body, "https://api.dingtalk.com/v1.0/oauth2/accessToken")
 	if err != nil {
-		log.Println(err.Error())
+		return "", err
 	}
 
 	var data struct {
@@ -215,9 +217,9 @@ func (idp *DingTalkIdProvider) getInnerAppAccessToken() string {
 	}
 	err = json.Unmarshal(respBytes, &data)
 	if err != nil {
-		log.Println(err.Error())
+		return "", err
 	}
-	return data.AccessToken
+	return data.AccessToken, nil
 }
 
 func (idp *DingTalkIdProvider) getUserId(unionId string, accessToken string) (string, error) {
