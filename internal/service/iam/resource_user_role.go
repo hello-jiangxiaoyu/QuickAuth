@@ -1,21 +1,13 @@
 package iam
 
-import "QuickAuth/internal/endpoint/model"
+import (
+	"QuickAuth/internal/endpoint/model"
+)
 
 func (s *ServiceIam) ListResourceUserRoles(tenantId int64, resId int64, userId string) ([]model.ResourceUserRole, error) {
 	var data []model.ResourceUserRole
 	if err := s.db.Where("tenant_id = ? AND resource_id = ? AND user_id = ?", tenantId, resId, userId).
 		Find(&data).Error; err != nil {
-		return nil, err
-	}
-
-	return data, nil
-}
-
-func (s *ServiceIam) GetResourceUserRole(tenantId int64, resId string, userId int64, nodeId int64) (*model.ResourceUserRole, error) {
-	var data *model.ResourceUserRole
-	if err := s.db.Where("tenant_id = ? AND resource_id = ? AND user_id = ? AND json_path = ?",
-		tenantId, resId, userId, nodeId).Find(&data).Error; err != nil {
 		return nil, err
 	}
 

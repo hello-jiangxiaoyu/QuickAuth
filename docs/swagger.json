@@ -1285,12 +1285,44 @@
                 }
             }
         },
-        "/api/quick/resources/{resourceId}/json/operations/{operationId}/nodes": {
+        "/api/quick/resources/{resourceId}/json/operations/{operationId}/json": {
             "get": {
                 "tags": [
                     "resource-user"
                 ],
-                "summary": "list resource operation nodes",
+                "summary": "获取拥有某个操作权限的整个json结构",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "operation id",
+                        "name": "operationId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/json/operations/{operationId}/parents/:parentId": {
+            "get": {
+                "tags": [
+                    "resource-user"
+                ],
+                "summary": "获取拥有某个操作权限的node列表",
                 "parameters": [
                     {
                         "type": "string",
@@ -1572,6 +1604,42 @@
                         "type": "string",
                         "description": "node id",
                         "name": "nodeId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/nodes/{nodeId}/operations/{operationId}": {
+            "get": {
+                "tags": [
+                    "resource-role-operation"
+                ],
+                "summary": "判断用户当前对资源的操作是否被允许",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "node id",
+                        "name": "nodeId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "operation id",
+                        "name": "operationId",
                         "in": "path",
                         "required": true
                     }

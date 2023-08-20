@@ -22,7 +22,7 @@ func NewRouter(repo *global.Repository, e *gin.Engine) {
 
 	admin.AddAdminRoute(svc, e)
 	oauth.AddOauth2Route(svc, e)
-	iam.AddResourceRouter(svc, e)
+	iam.AddIamRouter(svc, e)
 	AddWebRoutes(e)
 
 	e.GET("/api/quick/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

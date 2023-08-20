@@ -1,6 +1,8 @@
 package iam
 
-import "QuickAuth/internal/endpoint/model"
+import (
+	"QuickAuth/internal/endpoint/model"
+)
 
 func (s *ServiceIam) ListResourceRoleOperations(tenantId int64, resId, roleId int64) ([]model.ResourceRoleOperation, error) {
 	var data []model.ResourceRoleOperation

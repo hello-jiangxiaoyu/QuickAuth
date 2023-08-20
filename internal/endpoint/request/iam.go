@@ -8,7 +8,8 @@ type Iam struct {
 	OperationId   int64                       `uri:"operationId"`
 	UserId        string                      `uri:"userId"`
 	NodeId        int64                       `uri:"nodeId"`
-	Path          string                      `uri:"path"`
+	ParentId      int64                       `uri:"nodeId"`
+	Path          string                      `query:"path" form:"path"`
 	Tenant        model.Tenant                `json:"-"`
 	Resource      model.Resource              `json:"-"`
 	Node          model.ResourceNode          `json:"-"`

@@ -1005,7 +1005,7 @@ paths:
       summary: update resource
       tags:
       - resource
-  /api/quick/resources/{resourceId}/json/operations/{operationId}/nodes:
+  /api/quick/resources/{resourceId}/json/operations/{operationId}/json:
     get:
       parameters:
       - description: resource id
@@ -1023,7 +1023,28 @@ paths:
           description: OK
           schema:
             type: object
-      summary: list resource operation nodes
+      summary: 获取拥有某个操作权限的整个json结构
+      tags:
+      - resource-user
+  /api/quick/resources/{resourceId}/json/operations/{operationId}/parents/:parentId:
+    get:
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: operation id
+        in: path
+        name: operationId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: 获取拥有某个操作权限的node列表
       tags:
       - resource-user
   /api/quick/resources/{resourceId}/json/users/{userId}/roles:
@@ -1202,6 +1223,30 @@ paths:
       summary: update resource node
       tags:
       - resource-node
+  /api/quick/resources/{resourceId}/nodes/{nodeId}/operations/{operationId}:
+    get:
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: node id
+        in: path
+        name: nodeId
+        required: true
+        type: string
+      - description: operation id
+        in: path
+        name: operationId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 判断用户当前对资源的操作是否被允许
+      tags:
+      - resource-role-operation
   /api/quick/resources/{resourceId}/operations:
     get:
       parameters:

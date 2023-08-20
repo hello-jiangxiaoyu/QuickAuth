@@ -33,7 +33,7 @@ var (
 		},
 	}
 	createTableCmd = &cobra.Command{
-		Use:   "init-db",
+		Use:   "create-tables",
 		Short: "Create db by sql.",
 		Run: func(cmd *cobra.Command, args []string) {
 			createDbTables() // 通过sql创建数据库表

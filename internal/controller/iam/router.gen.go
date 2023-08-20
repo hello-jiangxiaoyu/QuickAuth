@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddResourceRouter(svc *service.Service, e *gin.Engine) {
+func AddIamRouter(svc *service.Service, e *gin.Engine) {
 	resourceCtl := NewResourceController(svc)
 
 	// 资源管理
@@ -57,12 +57,18 @@ func AddResourceRouter(svc *service.Service, e *gin.Engine) {
 		auth.PUT("/users/:userId/roles/:roleId", resourceCtl.UpdateResourceUserRole)
 		auth.DELETE("/users/:userId/roles/:roleId", resourceCtl.DeleteResourceUserRole)
 
-		auth.GET("/json/users/:userId/roles", resourceCtl.ListResourceJsonUserRoles)
-		auth.POST("/json/users/:userId/roles", resourceCtl.CreateResourceJsonUserRole)
-		auth.PUT("/json/users/:userId/roles/:roleId", resourceCtl.UpdateResourceJsonUserRole)
-		auth.DELETE("/json/users/:userId/roles/:roleId", resourceCtl.DeleteResourceJsonUserRole)
+		auth.GET("/json/users/:userId/roles", resourceCtl.ListResourceJSONUserRoles)
+		auth.POST("/json/users/:userId/roles", resourceCtl.CreateResourceJSONUserRole)
+		auth.PUT("/json/users/:userId/roles/:roleId", resourceCtl.UpdateResourceJSONUserRole)
+		auth.DELETE("/json/users/:userId/roles/:roleId", resourceCtl.DeleteResourceJSONUserRole)
+	}
 
-		// 获取拥有某个权限的所有节点
-		auth.GET("/operations/:operationId/nodes", resourceCtl.ListResourceOperationNodes)
+	// 鉴权
+	iamAuth := e.Group("/api/quick/resources/:resourceId")
+	{
+		iamAuth.GET("/nodes/:nodeId/operations/:operationId", resourceCtl.IsOperationAllow) // 针对某个资源的操作，判断是否允许
+		iamAuth.GET("/nodes/:nodeId/operations/:operationId", resourceCtl.IsOperationAllow) // 针对某个json资源的操作，判断是否允许
+		iamAuth.GET("/operations/:operationId/parents/:parentId", resourceCtl.ListResourceOperationNodes)
+		iamAuth.GET("/operations/:operationId/json", resourceCtl.ListJSONResourceOperationNodes)
 	}
 }
