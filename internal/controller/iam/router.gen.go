@@ -48,17 +48,19 @@ func AddResourceRouter(svc *service.Service, e *gin.Engine) {
 	{
 		// 角色的权限管理
 		auth.GET("/roles/:roleId/operations", resourceCtl.ListResourceRoleOperations)
-		auth.GET("/roles/:roleId/operations/:operationId", resourceCtl.GetResourceRoleOperation)
 		auth.POST("/roles/:roleId/operations", resourceCtl.CreateResourceRoleOperation)
-		auth.PUT("/roles/:roleId/operations/:operationId", resourceCtl.UpdateResourceRoleOperation)
 		auth.DELETE("/roles/:roleId/operations/:operationId", resourceCtl.DeleteResourceRoleOperation)
 
-		// 用户的角色管理
-		auth.GET("/users/:userId/roles", resourceCtl.ListResourceJsonUserRoles)
-		auth.GET("/users/:userId/roles/:roleId", resourceCtl.GetResourceJsonUserRole)
-		auth.POST("/users/:userId/roles", resourceCtl.CreateResourceJsonUserRole)
-		auth.PUT("/users/:userId/roles/:roleId", resourceCtl.UpdateResourceJsonUserRole)
-		auth.DELETE("/users/:userId/roles/:roleId", resourceCtl.DeleteResourceJsonUserRole)
+		// json资源用户的角色管理
+		auth.GET("/users/:userId/roles", resourceCtl.ListResourceUserRoles)
+		auth.POST("/users/:userId/roles", resourceCtl.CreateResourceUserRole)
+		auth.PUT("/users/:userId/roles/:roleId", resourceCtl.UpdateResourceUserRole)
+		auth.DELETE("/users/:userId/roles/:roleId", resourceCtl.DeleteResourceUserRole)
+
+		auth.GET("/json/users/:userId/roles", resourceCtl.ListResourceJsonUserRoles)
+		auth.POST("/json/users/:userId/roles", resourceCtl.CreateResourceJsonUserRole)
+		auth.PUT("/json/users/:userId/roles/:roleId", resourceCtl.UpdateResourceJsonUserRole)
+		auth.DELETE("/json/users/:userId/roles/:roleId", resourceCtl.DeleteResourceJsonUserRole)
 
 		// 获取拥有某个权限的所有节点
 		auth.GET("/operations/:operationId/nodes", resourceCtl.ListResourceOperationNodes)

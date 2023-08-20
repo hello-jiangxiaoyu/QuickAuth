@@ -1,9 +1,20 @@
 package request
 
-type Response struct {
-	ResourceId  string `uri:"resourceId"`
-	RoleId      string `uri:"roleId"`
-	UserId      string `uri:"userId"`
-	NodeId      string `uri:"nodeId"`
-	OperationId string `uri:"operationId"`
+import "QuickAuth/internal/endpoint/model"
+
+type Iam struct {
+	ResourceId    int64                       `uri:"resourceId"`
+	RoleId        int64                       `uri:"roleId"`
+	OperationId   int64                       `uri:"operationId"`
+	UserId        string                      `uri:"userId"`
+	NodeId        int64                       `uri:"nodeId"`
+	Path          string                      `uri:"path"`
+	Tenant        model.Tenant                `json:"-"`
+	Resource      model.Resource              `json:"-"`
+	Node          model.ResourceNode          `json:"-"`
+	Role          model.ResourceRole          `json:"-"`
+	Operation     model.ResourceOperation     `json:"-"`
+	RoleOperation model.ResourceRoleOperation `json:"-"`
+	UserRole      model.ResourceUserRole      `json:"-"`
+	JsonUserRole  model.ResourceJSONUserRole  `json:"-"`
 }

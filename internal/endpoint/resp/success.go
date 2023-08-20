@@ -59,6 +59,9 @@ func SuccessWithData(ctx context.Context, data any) {
 	success(ctx, data, 0, false)
 }
 func SuccessArrayData(ctx context.Context, total int, data any) {
+	if total == 0 {
+		data = []struct{}{}
+	}
 	success(ctx, data, total, true)
 }
 

@@ -33,14 +33,14 @@ var (
 		},
 	}
 	createTableCmd = &cobra.Command{
-		Use:   "init db",
+		Use:   "init-db",
 		Short: "Create db by sql.",
 		Run: func(cmd *cobra.Command, args []string) {
 			createDbTables() // 通过sql创建数据库表
 		},
 	}
 	initDefaultCmd = &cobra.Command{
-		Use:   "init default",
+		Use:   "init-default",
 		Short: "init default data.",
 		Run: func(cmd *cobra.Command, args []string) {
 			initDefault() // 初始化数据，添加默认app和tenants等信息

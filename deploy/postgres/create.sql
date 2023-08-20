@@ -136,6 +136,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_resource_tree_tenant_code ON resources(cod
 -- resource节点
 CREATE TABLE IF NOT EXISTS resource_nodes (
     id              BIGSERIAL PRIMARY KEY,
+    tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
     resource_id     BIGSERIAL NOT NULL REFERENCES resources(id),
     name            VARCHAR(255) NOT NULL,
     path            VARCHAR(255) NOT NULL,
@@ -150,6 +151,7 @@ CREATE INDEX IF NOT EXISTS idx_resource_nodes_path ON resource_nodes(path);
 -- resource操作
 CREATE TABLE IF NOT EXISTS resource_operations (
     id              BIGSERIAL PRIMARY KEY,
+    tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
     resource_id     BIGSERIAL NOT NULL REFERENCES resources(id),
     code            VARCHAR(255) NOT NULL,  -- 编程访问code
     name            VARCHAR(255) NOT NULL,
@@ -162,6 +164,7 @@ CREATE INDEX IF NOT EXISTS idx_resource_operation_code ON resource_operations(co
 -- resource角色
 CREATE TABLE IF NOT EXISTS resource_roles (
     id              BIGSERIAL PRIMARY KEY,
+    tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
     resource_id     BIGSERIAL NOT NULL REFERENCES resources(id),
     code            VARCHAR(255) NOT NULL,  -- 编程访问code
     name            VARCHAR(255) NOT NULL,
@@ -174,6 +177,7 @@ CREATE INDEX IF NOT EXISTS idx_resource_role_code ON resource_roles(code);
 -- resource角色的权限
 CREATE TABLE IF NOT EXISTS resource_role_operations (
     id              BIGSERIAL PRIMARY KEY,
+    tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
     resource_id     BIGSERIAL NOT NULL REFERENCES resources(id),
     role_id         BIGSERIAL NOT NULL REFERENCES resource_roles(id),
     operation_id    BIGSERIAL NOT NULL REFERENCES resource_operations(id),
@@ -185,6 +189,7 @@ CREATE INDEX IF NOT EXISTS idx_resource_role_operation_code ON resource_operatio
 -- resource字段用户的角色
 CREATE TABLE IF NOT EXISTS resource_user_roles (
     id              BIGSERIAL PRIMARY KEY,
+    tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
     resource_id     BIGSERIAL NOT NULL REFERENCES resources(id),
     node_id         BIGSERIAL NOT NULL REFERENCES resource_nodes(id),
     user_id         CHAR(32)  NOT NULL REFERENCES users(id),
@@ -197,6 +202,7 @@ CREATE INDEX IF NOT EXISTS idx_resource_user_role_code ON resource_operations(co
 -- json字段用户的角色
 CREATE TABLE IF NOT EXISTS resource_json_user_roles (
     id              BIGSERIAL PRIMARY KEY,
+    tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
     json_path       VARCHAR(255) NOT NULL,
     resource_id     BIGSERIAL NOT NULL REFERENCES resources(id),
     user_id         CHAR(32)  NOT NULL REFERENCES users(id),

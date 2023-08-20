@@ -1,6 +1,8 @@
 package iam
 
 import (
+	"QuickAuth/internal/endpoint/model"
+	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/pkg/conf"
 	"QuickAuth/pkg/global"
 	"go.uber.org/zap"
@@ -21,35 +23,44 @@ func NewIamService(repo *global.Repository) *ServiceIam {
 	}
 }
 
-func (s *ServiceIam) ListResources() (interface{}, error) {
-	var data interface{}
-	// todo: add your service code hear!
+func (s *ServiceIam) ListResources(tenantId int64) ([]model.Resource, error) {
+	var data []model.Resource
+	if err := s.db.Where("tenant_id = ?", tenantId).Find(&data).Error; err != nil {
+		return nil, err
+	}
 
 	return data, nil
 }
 
-func (s *ServiceIam) GetResource() (interface{}, error) {
-	var data interface{}
-	// todo: add your service code hear!
+func (s *ServiceIam) GetResource(tenantId int64, in *request.Iam) (*model.Resource, error) {
+	var data *model.Resource
+	if err := s.db.Where("tenant_id = ?", tenantId, in.ResourceId).First(&data).Error; err != nil {
+		return nil, err
+	}
 
 	return data, nil
 }
 
-func (s *ServiceIam) CreateResource() (interface{}, error) {
-	var data interface{}
-	// todo: add your service code hear!
+func (s *ServiceIam) CreateResource(res *model.Resource) (*model.Resource, error) {
+	if err := s.db.Create(&res).Error; err != nil {
+		return nil, err
+	}
 
-	return data, nil
+	return res, nil
 }
 
-func (s *ServiceIam) UpdateResource() error {
-	// todo: add your service code hear!
+func (s *ServiceIam) UpdateResource(tenantId int64, resId int64, res *model.Resource) error {
+	if err := s.db.Where("tenant_id = ? AND id = ?", tenantId, resId).Updates(res).Error; err != nil {
+		return err
+	}
 
 	return nil
 }
 
-func (s *ServiceIam) DeleteResource() error {
-	// todo: add your service code hear!
+func (s *ServiceIam) DeleteResource(tenantId int64, resId int64) error {
+	if err := s.db.Where("tenant_id = ? AND id = ?", tenantId, resId).Delete(model.Resource{}).Error; err != nil {
+		return err
+	}
 
 	return nil
 }

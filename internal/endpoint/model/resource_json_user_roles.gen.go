@@ -13,6 +13,7 @@ const TableNameResourceJSONUserRole = "resource_json_user_roles"
 // ResourceJSONUserRole mapped from table <resource_json_user_roles>
 type ResourceJSONUserRole struct {
 	ID         int64     `gorm:"column:id;type:bigint;primaryKey;autoIncrement:true" json:"id"`
+	TenantID   int64     `gorm:"column:tenant_id;type:bigint;not null" json:"tenantId"`
 	JSONPath   string    `gorm:"column:json_path;type:character varying(255);not null" json:"jsonPath"`
 	ResourceID int64     `gorm:"column:resource_id;type:bigint;not null" json:"resourceId"`
 	UserID     string    `gorm:"column:user_id;type:character(32);not null" json:"userId"`
