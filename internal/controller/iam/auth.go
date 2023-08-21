@@ -36,7 +36,7 @@ func (a Resource) IsOperationAllow(c *gin.Context) {
 // @Param		path		query	string	true	"json path"
 // @Param		operationId	path	string	true	"operation id"
 // @Success		200
-// @Router		/api/quick/resources/{resourceId}/operations/{operationId} 	[get]
+// @Router		/api/quick/resources/{resourceId}/json/operations/{operationId} 	[get]
 func (a Resource) IsJSONOperationAllow(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).SetUserInfo().BindUri(&in).Error; err != nil {
@@ -45,7 +45,7 @@ func (a Resource) IsJSONOperationAllow(c *gin.Context) {
 	}
 	allow, err := a.svc.IsJSONOperationAllow(in.Tenant.ID, in.ResourceId, in.Path, in.OperationId, a.UserInfo["sub"])
 	if err != nil {
-		resp.ErrorSelect(c, err, "IsOperationAllow err")
+		resp.ErrorSelect(c, err, "IsJSONOperationAllow err")
 		return
 	}
 

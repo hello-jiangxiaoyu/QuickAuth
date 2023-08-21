@@ -1285,6 +1285,42 @@
                 }
             }
         },
+        "/api/quick/resources/{resourceId}/json/operations/{operationId}": {
+            "get": {
+                "tags": [
+                    "resource-role-operation"
+                ],
+                "summary": "判断用户当前对JSON资源的操作是否被允许",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "json path",
+                        "name": "path",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "operation id",
+                        "name": "operationId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/api/quick/resources/{resourceId}/json/operations/{operationId}/json": {
             "get": {
                 "tags": [

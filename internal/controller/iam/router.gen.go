@@ -67,7 +67,7 @@ func AddIamRouter(svc *service.Service, e *gin.Engine) {
 	iamAuth := e.Group("/api/quick/resources/:resourceId")
 	{
 		iamAuth.GET("/nodes/:nodeId/operations/:operationId", resourceCtl.IsOperationAllow) // 针对某个资源的操作，判断是否允许
-		iamAuth.GET("/nodes/:nodeId/operations/:operationId", resourceCtl.IsOperationAllow) // 针对某个json资源的操作，判断是否允许
+		iamAuth.GET("/json/operations/:operationId", resourceCtl.IsJSONOperationAllow)      // 针对某个json资源的操作，判断是否允许
 		iamAuth.GET("/operations/:operationId/parents/:parentId", resourceCtl.ListResourceOperationNodes)
 		iamAuth.GET("/operations/:operationId/json", resourceCtl.ListJSONResourceOperationNodes)
 	}
