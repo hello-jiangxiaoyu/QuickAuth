@@ -16,7 +16,7 @@ func (s *ServiceAdmin) GetProviderByType(tenantId int64, name string) (*model.Pr
 
 func (s *ServiceAdmin) GetLoginProviderInfo(tenantId int64) ([]model.Provider, error) {
 	var provider []model.Provider
-	if err := s.db.Model(model.Provider{}).Select("id", "type", "app_id", "client_id", "created_at").
+	if err := s.db.Model(model.Provider{}).Select("id", "type", "app_id", "tenant_id", "client_id", "created_at").
 		Where("tenant_id = ?", tenantId).Find(&provider).Error; err != nil {
 		return nil, err
 	}

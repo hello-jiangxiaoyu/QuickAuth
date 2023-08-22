@@ -7,7 +7,6 @@ import (
 	"QuickAuth/internal/service"
 	"QuickAuth/internal/service/oauth"
 	"fmt"
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"net/url"
@@ -34,19 +33,11 @@ func NewOAuth2Route(svc *service.Service) Controller {
 // @Param		state			query	string	false	"state"
 // @Param		nonce			query	string	false	"nonce"
 // @Success		302
-// @Success		200
 // @Router		/api/quick/oauth2/auth [get]
 func (o Controller) GetAuthCode(c *gin.Context) {
 	var in request.Auth
-	if err := o.SetCtx(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := o.SetCtx(c).BindQuery(&in).SetUserInfo().SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
-		return
-	}
-
-	session := sessions.Default(c)
-	userId, ok := session.Get("userId").(int64)
-	if !ok || userId == 0 {
-		resp.ErrorForbidden(c, "invalid user_id")
 		return
 	}
 	if ok, err := o.svc.IsRedirectUriValid(in.ClientID, in.Tenant.ID, in.RedirectUri); err != nil {
@@ -57,21 +48,21 @@ func (o Controller) GetAuthCode(c *gin.Context) {
 		return
 	}
 
+	userId, err := o.UserInfo.GetSubject()
+	if err != nil {
+		resp.ErrorRequest(c, err)
+		return
+	}
+
 	if in.ResponseType == internal.Oauth2ResponseTypeCode {
-		code, state, err := o.svc.CreateAccessCode(in.ClientID, userId)
+		code, err := o.svc.CreateAccessCode(in.ClientID, userId)
 		if err != nil {
 			resp.ErrorUpdate(c, err, "failed to create access code.")
 			return
 		}
 		query := url.Values{}
 		query.Add("code", code)
-		session.Set("state", state)
-		if err = session.Save(); err != nil {
-			resp.ErrorSaveSession(c, err)
-			return
-		}
-		location := fmt.Sprintf("%s?%s", in.RedirectUri, query.Encode())
-		c.Redirect(http.StatusFound, location)
+		c.Redirect(http.StatusFound, fmt.Sprintf("%s?%s", in.RedirectUri, query.Encode()))
 		return
 	}
 
@@ -79,12 +70,11 @@ func (o Controller) GetAuthCode(c *gin.Context) {
 		token := ""
 		query := url.Values{}
 		query.Add("access_token", token)
-		location := fmt.Sprintf("%s?%s", in.RedirectUri, query.Encode())
-		c.Redirect(http.StatusFound, location)
+		c.Redirect(http.StatusFound, fmt.Sprintf("%s?%s", in.RedirectUri, query.Encode()))
 		return
 	}
 
-	resp.ErrorRequestWithMsg(c, nil, "Invalid response_type.")
+	resp.ErrorRequestWithMsg(c, "Invalid response_type.")
 }
 
 // GetToken	swagger
@@ -110,13 +100,13 @@ func (o Controller) GetToken(c *gin.Context) {
 
 	app, err := o.svc.GetApp(in.ClientID)
 	if err != nil {
-		resp.ErrorRequestWithMsg(c, err, "no such app")
+		resp.ErrorRequestWithErr(c, err, "no such app")
 		return
 	}
 	in.App = *app
 	handler, err := o.getTokenHandler(in.GrantType)
 	if err != nil {
-		resp.ErrorRequestWithMsg(c, err, err.Error())
+		resp.ErrorRequestWithErr(c, err, err.Error())
 		return
 	}
 

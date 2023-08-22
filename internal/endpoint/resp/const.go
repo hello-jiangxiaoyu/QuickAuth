@@ -3,11 +3,12 @@ package resp
 import "net/http"
 
 const (
-	IDToken   = "id_token"
-	Tenant    = "tenant"
-	VHost     = "vhost"
-	UserInfo  = "claim"
-	ApiPrefix = "/api/quick"
+	CookieIDToken = "id_token"
+	CookieState   = "state"
+	Tenant        = "tenant"
+	VHost         = "vhost"
+	UserInfo      = "claim"
+	ApiPrefix     = "/api/quick"
 
 	MsgSuccess = ""
 )

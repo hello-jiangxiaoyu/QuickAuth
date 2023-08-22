@@ -47,7 +47,7 @@ func (s *ServiceOauth) GetAccessCode(appId string, codeName string) (*model.Code
 	return &code, nil
 }
 
-func (s *ServiceOauth) CreateAccessCode(appId string, userId int64) (string, string, error) {
+func (s *ServiceOauth) CreateAccessCode(appId string, userId string) (string, error) {
 	code := safe.RandHex(31)
 	state := safe.RandHex(31)
 	accessCode := model.Code{
@@ -57,8 +57,8 @@ func (s *ServiceOauth) CreateAccessCode(appId string, userId int64) (string, str
 		State:  state,
 	}
 	if err := s.db.Create(accessCode).Error; err != nil {
-		return "", "", err
+		return "", err
 	}
 
-	return code, state, nil
+	return code, nil
 }

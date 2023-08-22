@@ -80,7 +80,7 @@ func (o Controller) ListJwks(c *gin.Context) {
 // @Router		/api/quick/me/profile [get]
 func (o Controller) GetProfile(c *gin.Context) {
 	if err := o.SetCtx(c).SetUserInfo().Error; err != nil {
-		resp.ErrorRequestWithMsg(c, err, "set user info err")
+		resp.ErrorRequestWithErr(c, err, "set user info err")
 		return
 	}
 

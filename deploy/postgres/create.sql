@@ -24,7 +24,7 @@ CREATE INDEX IF NOT EXISTS idx_app_secret_id ON app_secrets (secret);
 
 CREATE TABLE IF NOT EXISTS codes (
     id           BIGSERIAL PRIMARY KEY,
-    user_id      BIGSERIAL NOT NULL,
+    user_id      CHAR(32) NOT NULL,
     app_id       CHAR(32) NOT NULL REFERENCES apps(id),
     code         CHAR(32) NOT NULL,
     scope        VARCHAR(255) NOT NULL,
@@ -104,14 +104,19 @@ CREATE UNIQUE INDEX IF NOT EXISTS uk_tenants_host ON tenants(host);
 
 
 CREATE TABLE IF NOT EXISTS providers (
-    id              BIGSERIAL PRIMARY KEY,
-    tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
-    type            VARCHAR(32) NOT NULL,
-    client_id       VARCHAR(255) NOT NULL,
-    client_secret   VARCHAR(255) NOT NULL,
-    agent_id        VARCHAR(255) NOT NULL,
-    created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+    id                  BIGSERIAL PRIMARY KEY,
+    tenant_id           BIGSERIAL NOT NULL REFERENCES tenants(id),
+    type                VARCHAR(32) NOT NULL,
+    client_id           VARCHAR(255) NOT NULL,
+    client_secret       VARCHAR(255) NOT NULL,
+    agent_id            VARCHAR(255) NOT NULL,
+    auth_endpoint       VARCHAR(255) NOT NULL,
+    token_endpoint      VARCHAR(255) NOT NULL,
+    user_info_endpoint  VARCHAR(255) NOT NULL,
+    scope               VARCHAR(255) NOT NULL,
+    response_type       VARCHAR(255) NOT NULL,
+    created_at          TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at          TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS idx_provider_type ON providers(type);
 

@@ -17,9 +17,14 @@ func ErrorRequest(ctx context.Context, err error, isArray ...bool) {
 	errorResponse(ctx, http.StatusBadRequest, CodeRequestPara, err, "invalid request param", isArray)
 }
 
-// ErrorRequestWithMsg 请求参数错误
-func ErrorRequestWithMsg(ctx context.Context, err error, msg string, isArray ...bool) {
+// ErrorRequestWithErr 请求参数错误
+func ErrorRequestWithErr(ctx context.Context, err error, msg string, isArray ...bool) {
 	errorResponse(ctx, http.StatusBadRequest, CodeRequestPara, err, msg, isArray)
+}
+
+// ErrorRequestWithMsg 请求参数错误
+func ErrorRequestWithMsg(ctx context.Context, msg string, isArray ...bool) {
+	errorResponse(ctx, http.StatusBadRequest, CodeRequestPara, nil, msg, isArray)
 }
 
 // ErrorForbidden 无权访问

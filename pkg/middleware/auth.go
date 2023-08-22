@@ -12,7 +12,7 @@ import (
 
 func LoginAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		cookie, err := c.Cookie(resp.IDToken)
+		cookie, err := c.Cookie(resp.CookieIDToken)
 		if err != nil {
 			resp.ErrorNoLogin(c, err)
 			return
@@ -54,4 +54,10 @@ func setUserInfo(c *gin.Context, claims jwt.Claims) {
 	}
 
 	c.Set(resp.UserInfo, claim)
+}
+
+func M2mAuth() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		
+	}
 }
