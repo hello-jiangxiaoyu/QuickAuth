@@ -43,7 +43,7 @@ func AddAdminRoute(svc *service.Service, e *gin.Engine) {
 		app.PUT("/providers/:providerId", admin.ModifyProvider)
 		app.DELETE("/providers/:providerId", admin.DeleteProvider)
 	}
-	e.GET("/api/quick/providers", admin.ListProvider) // 获取当前租户所有第三方登录所需信息
+	e.GET("/api/quick/providers", admin.ListLoginProviderInfo) // 获取当前租户所有第三方登录所需信息
 
 	// 用户管理
 	user := e.Group("/api/quick", middleware.LoginAuth())

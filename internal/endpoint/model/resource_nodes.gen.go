@@ -22,7 +22,6 @@ type ResourceNode struct {
 	Value      string    `gorm:"column:value;type:jsonb;not null;default:'{}'::jsonb" json:"value"`
 	CreatedAt  time.Time `gorm:"column:created_at;type:timestamp with time zone;not null;default:now()" json:"createdAt"`
 	UpdatedAt  time.Time `gorm:"column:updated_at;type:timestamp with time zone;not null;default:now()" json:"updatedAt"`
-	Tenant     Tenant    `json:"tenant"`
 }
 
 // TableName ResourceNode's table name

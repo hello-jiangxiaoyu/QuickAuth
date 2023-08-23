@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ListProvider	swagger
+// ListLoginProviderInfo	swagger
 // @Description	list provider info
 // @Tags		provider
 // @Param		X-User-ID	header	string	false	"user id"
@@ -14,7 +14,7 @@ import (
 // @Param		vhost		header	string	false	"tenant host"
 // @Success		200
 // @Router		/api/quick/providers [get]
-func (a Route) ListProvider(c *gin.Context) {
+func (a Route) ListLoginProviderInfo(c *gin.Context) {
 	var in request.ProviderReq
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -44,7 +44,7 @@ func (a Route) GetProvider(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	provider, err := a.svc.GetProvider(in.Tenant.ID, in.ProviderId)
+	provider, err := a.svc.GetProviderById(in.Tenant.ID, in.ProviderId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "get provider err")
 		return

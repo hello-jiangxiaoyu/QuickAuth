@@ -59,7 +59,7 @@ func (o Controller) Login(c *gin.Context) {
 // @Success		200
 // @Router		/api/quick/logout [get]
 func (o Controller) Logout(c *gin.Context) {
-	c.SetCookie(resp.CookieIDToken, "", -1, "/", "", false, true)
+	c.SetCookie(resp.CookieIDToken, "", -1, "/api/quick", "", false, true)
 	resp.Success(c)
 }
 

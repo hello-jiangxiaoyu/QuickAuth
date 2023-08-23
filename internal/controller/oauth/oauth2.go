@@ -107,13 +107,11 @@ func (o Controller) GetToken(c *gin.Context) {
 	}
 
 	token, err := handler(&in)
-	if err != nil {
-		switch err {
-		case oauth.ErrorCodeExpired:
-			resp.ErrorForbidden(c, err.Error())
-		default:
-			resp.ErrorUnknown(c, err, "failed to get token.")
-		}
+	if err == oauth.ErrorCodeExpired {
+		resp.ErrorForbidden(c, err.Error())
+		return
+	} else if err != nil {
+		resp.ErrorUnknown(c, err, "failed to get token.")
 		return
 	}
 

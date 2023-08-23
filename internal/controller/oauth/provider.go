@@ -4,18 +4,32 @@ import (
 	"QuickAuth/internal/endpoint/request"
 	"QuickAuth/internal/endpoint/resp"
 	"QuickAuth/pkg/idp"
+	"QuickAuth/pkg/safe"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
+
+// ProviderLogin	swagger
+// @Description	login third provider
+// @Tags		login
+// @Param		provider	path	string	true	"provider name"
+// @Param		next		query	string	false	"next"
+// @Success		200
+// @Router		/api/quick/login/providers/{providerId} [get]
+func (o Controller) ProviderLogin(c *gin.Context) {
+	state := safe.RandHex(31)
+	c.SetCookie(resp.CookieState, state, 60*5, "/api/quick/login", "", false, true)
+}
 
 // ProviderCallback	swagger
 // @Description	login third provider callback
 // @Tags		login
 // @Param		provider	path	string	true	"provider name"
 // @Param		code		query	string	true	"code"
+// @Param		next		query	string	false	"next"
 // @Success		200
-// @Router		/api/quick/login/providers/{provider} [get]
+// @Router		/api/quick/login/providers/{providerId}/callback [get]
 func (o Controller) ProviderCallback(c *gin.Context) {
 	var in request.LoginProvider
 	if err := o.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
@@ -30,8 +44,8 @@ func (o Controller) ProviderCallback(c *gin.Context) {
 		return
 	}
 
-	c.SetCookie(resp.CookieState, "", -1, "/api/quick/login", "", false, true)
-	provider, err := o.svc.GetProviderByType(in.Tenant.ID, in.ProviderName)
+	c.SetCookie(resp.CookieState, "", -1, "/api/quick/login", "", false, true) // 删除state
+	provider, err := o.svc.GetProviderById(in.Tenant.ID, in.ProviderId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "no such provider")
 		return
@@ -40,13 +54,13 @@ func (o Controller) ProviderCallback(c *gin.Context) {
 	// 向第三方id系统获取用户信息
 	idProvider := idp.GetIdProvider(provider, "")
 	if idProvider == nil {
-		resp.ErrorRequestWithMsg(c, "no such provider")
+		resp.ErrorRequestWithMsg(c, "provider type "+provider.Type+" does not exist")
 		return
 	}
 	idProvider.SetHttpClient(http.DefaultClient)
 	token, err := idProvider.GetToken(in.Code)
 	if err != nil {
-		resp.ErrorUnknown(c, err, fmt.Sprintf("get %s token err", in.ProviderName))
+		resp.ErrorUnknown(c, err, fmt.Sprintf("get %d token err", in.ProviderId))
 		return
 	}
 	if !token.Valid() {
@@ -55,7 +69,7 @@ func (o Controller) ProviderCallback(c *gin.Context) {
 	}
 	userInfo, err := idProvider.GetUserInfo(token)
 	if err != nil {
-		resp.ErrorUnknown(c, err, fmt.Sprintf("get %s user info err", in.ProviderName))
+		resp.ErrorUnknown(c, err, fmt.Sprintf("get %s user info err", in.ProviderId))
 		return
 	}
 

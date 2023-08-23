@@ -25,8 +25,6 @@ type Provider struct {
 	ResponseType     string    `gorm:"column:response_type;type:character varying(255);not null" json:"responseType"`
 	CreatedAt        time.Time `gorm:"column:created_at;type:timestamp with time zone;not null;default:now()" json:"createdAt"`
 	UpdatedAt        time.Time `gorm:"column:updated_at;type:timestamp with time zone;not null;default:now()" json:"updatedAt"`
-	App              App       `json:"app"`
-	Tenant           Tenant    `json:"tenant"`
 }
 
 // TableName Provider's table name

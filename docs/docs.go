@@ -619,7 +619,35 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/login/providers/{provider}": {
+        "/api/quick/login/providers/{providerId}": {
+            "get": {
+                "description": "login third provider",
+                "tags": [
+                    "login"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "provider name",
+                        "name": "provider",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "next",
+                        "name": "next",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/login/providers/{providerId}/callback": {
             "get": {
                 "description": "login third provider callback",
                 "tags": [
@@ -639,6 +667,12 @@ const docTemplate = `{
                         "name": "code",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "next",
+                        "name": "next",
+                        "in": "query"
                     }
                 ],
                 "responses": {

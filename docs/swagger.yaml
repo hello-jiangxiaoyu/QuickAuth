@@ -554,7 +554,25 @@ paths:
           description: OK
       tags:
       - login
-  /api/quick/login/providers/{provider}:
+  /api/quick/login/providers/{providerId}:
+    get:
+      description: login third provider
+      parameters:
+      - description: provider name
+        in: path
+        name: provider
+        required: true
+        type: string
+      - description: next
+        in: query
+        name: next
+        type: string
+      responses:
+        "200":
+          description: OK
+      tags:
+      - login
+  /api/quick/login/providers/{providerId}/callback:
     get:
       description: login third provider callback
       parameters:
@@ -567,6 +585,10 @@ paths:
         in: query
         name: code
         required: true
+        type: string
+      - description: next
+        in: query
+        name: next
         type: string
       responses:
         "200":

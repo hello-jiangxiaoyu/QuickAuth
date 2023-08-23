@@ -26,7 +26,7 @@ var (
 		},
 	}
 	autoMigrateCmd = &cobra.Command{
-		Use:   "migrate db",
+		Use:   "migrate-db",
 		Short: "Auto migrate database by gorm.",
 		Run: func(cmd *cobra.Command, args []string) {
 			autoMigrateDB() // 使用gorm同步数据库表结构

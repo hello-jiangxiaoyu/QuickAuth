@@ -13,9 +13,9 @@ type (
 
 	// LoginProvider 第三方登录
 	LoginProvider struct {
-		ProviderName string       `uri:"provider"`
-		Code         string       `query:"code"`
-		Tenant       model.Tenant `query:"tenant"`
+		ProviderId int64        `uri:"providerId"`
+		Code       string       `query:"code"`
+		Tenant     model.Tenant `query:"tenant"`
 	}
 
 	Auth struct {
