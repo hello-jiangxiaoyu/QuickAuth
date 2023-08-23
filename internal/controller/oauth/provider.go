@@ -10,8 +10,6 @@ import (
 )
 
 // ProviderCallback	swagger
-// @Summary	provider callback
-// @Schemes
 // @Description	login third provider callback
 // @Tags		login
 // @Param		provider	path	string	true	"provider name"

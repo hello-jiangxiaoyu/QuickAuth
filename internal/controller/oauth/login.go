@@ -10,8 +10,6 @@ import (
 )
 
 // Login	swagger
-// @Summary	login a user
-// @Schemes
 // @Description	login using username and password
 // @Tags		login
 // @Param		username	formData	string	true	"username"
@@ -56,8 +54,6 @@ func (o Controller) Login(c *gin.Context) {
 }
 
 // Logout	swagger
-// @Summary	logout current user
-// @Schemes
 // @Description	logout current user
 // @Tags		login
 // @Success		200
@@ -68,8 +64,6 @@ func (o Controller) Logout(c *gin.Context) {
 }
 
 // Register	swagger
-// @Summary	login a user
-// @Schemes
 // @Description	login using username and password
 // @Tags		login
 // @Param		username	formData	string	true	"username"

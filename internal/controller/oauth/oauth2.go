@@ -22,8 +22,6 @@ func NewOAuth2Route(svc *service.Service) Controller {
 }
 
 // GetAuthCode	swagger
-// @Summary	oauth2 authorize
-// @Schemes
 // @Description	oauth2 authorize
 // @Tags		oidc
 // @Param		client_id		query	string	true	"client_id"
@@ -78,8 +76,6 @@ func (o Controller) GetAuthCode(c *gin.Context) {
 }
 
 // GetToken	swagger
-// @Summary	oauth2 token
-// @Schemes
 // @Description	oauth2 token
 // @Tags		oidc
 // @Param		client_id		query		string	true	"client_id"

@@ -26,7 +26,6 @@ const docTemplate = `{
                 "tags": [
                     "oidc"
                 ],
-                "summary": "get jwks",
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -40,7 +39,6 @@ const docTemplate = `{
                 "tags": [
                     "oidc"
                 ],
-                "summary": "get OIDC",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -57,7 +55,6 @@ const docTemplate = `{
                 "tags": [
                     "app"
                 ],
-                "summary": "apps info",
                 "parameters": [
                     {
                         "type": "string",
@@ -83,7 +80,6 @@ const docTemplate = `{
                 "tags": [
                     "app"
                 ],
-                "summary": "create app",
                 "parameters": [
                     {
                         "type": "string",
@@ -116,11 +112,10 @@ const docTemplate = `{
         },
         "/api/quick/apps/{appId}": {
             "get": {
-                "description": "list apps",
+                "description": "get app",
                 "tags": [
                     "app"
                 ],
-                "summary": "apps info",
                 "parameters": [
                     {
                         "type": "string",
@@ -153,7 +148,6 @@ const docTemplate = `{
                 "tags": [
                     "app"
                 ],
-                "summary": "modify app",
                 "parameters": [
                     {
                         "type": "string",
@@ -195,7 +189,6 @@ const docTemplate = `{
                 "tags": [
                     "app"
                 ],
-                "summary": "delete app",
                 "parameters": [
                     {
                         "type": "string",
@@ -230,7 +223,6 @@ const docTemplate = `{
                 "tags": [
                     "app"
                 ],
-                "summary": "app secret info",
                 "parameters": [
                     {
                         "type": "string",
@@ -263,7 +255,6 @@ const docTemplate = `{
                 "tags": [
                     "app"
                 ],
-                "summary": "create app secret",
                 "parameters": [
                     {
                         "type": "string",
@@ -307,7 +298,6 @@ const docTemplate = `{
                 "tags": [
                     "app"
                 ],
-                "summary": "create app secret",
                 "parameters": [
                     {
                         "type": "string",
@@ -356,7 +346,6 @@ const docTemplate = `{
                 "tags": [
                     "app"
                 ],
-                "summary": "delete app secret",
                 "parameters": [
                     {
                         "type": "string",
@@ -398,7 +387,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "get tenant list",
                 "parameters": [
                     {
                         "type": "string",
@@ -431,7 +419,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "create tenant",
                 "parameters": [
                     {
                         "type": "string",
@@ -475,7 +462,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "get tenant details",
                 "parameters": [
                     {
                         "type": "string",
@@ -515,7 +501,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "modify tenant",
                 "parameters": [
                     {
                         "type": "string",
@@ -564,7 +549,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "delete tenant",
                 "parameters": [
                     {
                         "type": "string",
@@ -606,7 +590,6 @@ const docTemplate = `{
                 "tags": [
                     "login"
                 ],
-                "summary": "login a user",
                 "parameters": [
                     {
                         "type": "string",
@@ -642,7 +625,6 @@ const docTemplate = `{
                 "tags": [
                     "login"
                 ],
-                "summary": "provider callback",
                 "parameters": [
                     {
                         "type": "string",
@@ -672,7 +654,6 @@ const docTemplate = `{
                 "tags": [
                     "login"
                 ],
-                "summary": "logout current user",
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -686,7 +667,6 @@ const docTemplate = `{
                 "tags": [
                     "oidc"
                 ],
-                "summary": "get jwks",
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -700,7 +680,6 @@ const docTemplate = `{
                 "tags": [
                     "oidc"
                 ],
-                "summary": "oauth2 authorize",
                 "parameters": [
                     {
                         "type": "string",
@@ -744,9 +723,6 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
                     "302": {
                         "description": "Found"
                     }
@@ -759,7 +735,6 @@ const docTemplate = `{
                 "tags": [
                     "oidc"
                 ],
-                "summary": "oauth2 token",
                 "parameters": [
                     {
                         "type": "string",
@@ -819,7 +794,6 @@ const docTemplate = `{
                 "tags": [
                     "provider"
                 ],
-                "summary": "provider info",
                 "parameters": [
                     {
                         "type": "string",
@@ -851,7 +825,6 @@ const docTemplate = `{
                 "tags": [
                     "provider"
                 ],
-                "summary": "create provider",
                 "parameters": [
                     {
                         "type": "string",
@@ -894,7 +867,6 @@ const docTemplate = `{
                 "tags": [
                     "provider"
                 ],
-                "summary": "get provider details",
                 "parameters": [
                     {
                         "type": "string",
@@ -933,7 +905,6 @@ const docTemplate = `{
                 "tags": [
                     "provider"
                 ],
-                "summary": "modify provider",
                 "parameters": [
                     {
                         "type": "integer",
@@ -969,7 +940,6 @@ const docTemplate = `{
                 "tags": [
                     "provider"
                 ],
-                "summary": "delete provider",
                 "parameters": [
                     {
                         "type": "integer",
@@ -998,7 +968,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "get redirect uri list",
                 "parameters": [
                     {
                         "type": "string",
@@ -1036,7 +1005,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "create app redirect uri",
                 "parameters": [
                     {
                         "type": "string",
@@ -1079,7 +1047,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "modify app redirect uri",
                 "parameters": [
                     {
                         "type": "string",
@@ -1129,7 +1096,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "delete app",
                 "parameters": [
                     {
                         "type": "string",
@@ -1170,7 +1136,6 @@ const docTemplate = `{
                 "tags": [
                     "login"
                 ],
-                "summary": "login a user",
                 "parameters": [
                     {
                         "type": "string",
@@ -1202,10 +1167,10 @@ const docTemplate = `{
         },
         "/api/quick/resources": {
             "get": {
+                "description": "list resources",
                 "tags": [
                     "resource"
                 ],
-                "summary": "list resources",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1216,10 +1181,10 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "description": "create resource",
                 "tags": [
                     "resource"
                 ],
-                "summary": "create resource",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1232,10 +1197,10 @@ const docTemplate = `{
         },
         "/api/quick/resources/{resourceId}": {
             "get": {
+                "description": "get resource",
                 "tags": [
                     "resource"
                 ],
-                "summary": "get resource",
                 "parameters": [
                     {
                         "type": "string",
@@ -1255,10 +1220,10 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "description": "update resource",
                 "tags": [
                     "resource"
                 ],
-                "summary": "update resource",
                 "parameters": [
                     {
                         "type": "string",
@@ -1275,10 +1240,10 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "description": "delete resource",
                 "tags": [
                     "resource"
                 ],
-                "summary": "delete resource",
                 "parameters": [
                     {
                         "type": "string",
@@ -1297,10 +1262,10 @@ const docTemplate = `{
         },
         "/api/quick/resources/{resourceId}/json/operations/{operationId}": {
             "get": {
+                "description": "判断用户当前对JSON资源的操作是否被允许",
                 "tags": [
                     "resource-role-operation"
                 ],
-                "summary": "判断用户当前对JSON资源的操作是否被允许",
                 "parameters": [
                     {
                         "type": "string",
@@ -1333,10 +1298,10 @@ const docTemplate = `{
         },
         "/api/quick/resources/{resourceId}/json/operations/{operationId}/json": {
             "get": {
+                "description": "获取拥有某个操作权限的整个json结构",
                 "tags": [
                     "resource-user"
                 ],
-                "summary": "获取拥有某个操作权限的整个json结构",
                 "parameters": [
                     {
                         "type": "string",
@@ -1365,10 +1330,10 @@ const docTemplate = `{
         },
         "/api/quick/resources/{resourceId}/json/operations/{operationId}/parents/:parentId": {
             "get": {
+                "description": "获取拥有某个操作权限的node列表",
                 "tags": [
                     "resource-user"
                 ],
-                "summary": "获取拥有某个操作权限的node列表",
                 "parameters": [
                     {
                         "type": "string",
@@ -1397,10 +1362,10 @@ const docTemplate = `{
         },
         "/api/quick/resources/{resourceId}/json/users/{userId}/roles": {
             "get": {
+                "description": "list resource json user roles",
                 "tags": [
                     "resource-user"
                 ],
-                "summary": "list resource json user roles",
                 "parameters": [
                     {
                         "type": "string",
@@ -1427,10 +1392,10 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "description": "create resource json user role",
                 "tags": [
                     "resource-user"
                 ],
-                "summary": "create resource json user role",
                 "parameters": [
                     {
                         "type": "string",
@@ -1459,10 +1424,10 @@ const docTemplate = `{
         },
         "/api/quick/resources/{resourceId}/json/users/{userId}/roles/{roleId}": {
             "put": {
+                "description": "update resource json user role",
                 "tags": [
                     "resource-user"
                 ],
-                "summary": "update resource json user role",
                 "parameters": [
                     {
                         "type": "string",
@@ -1493,10 +1458,10 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "description": "delete resource json user role",
                 "tags": [
                     "resource-user"
                 ],
-                "summary": "delete resource json user role",
                 "parameters": [
                     {
                         "type": "string",
@@ -1529,10 +1494,10 @@ const docTemplate = `{
         },
         "/api/quick/resources/{resourceId}/nodes": {
             "get": {
+                "description": "list resource nodes",
                 "tags": [
                     "resource-node"
                 ],
-                "summary": "list resource nodes",
                 "parameters": [
                     {
                         "type": "string",
@@ -1552,10 +1517,10 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "description": "create resource node",
                 "tags": [
                     "resource-node"
                 ],
-                "summary": "create resource node",
                 "parameters": [
                     {
                         "type": "string",
@@ -1577,10 +1542,10 @@ const docTemplate = `{
         },
         "/api/quick/resources/{resourceId}/nodes/{nodeId}": {
             "get": {
+                "description": "get resource node",
                 "tags": [
                     "resource-node"
                 ],
-                "summary": "get resource node",
                 "parameters": [
                     {
                         "type": "string",
@@ -1607,10 +1572,10 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "description": "update resource node",
                 "tags": [
                     "resource-node"
                 ],
-                "summary": "update resource node",
                 "parameters": [
                     {
                         "type": "string",
@@ -1634,10 +1599,10 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "description": "delete resource node",
                 "tags": [
                     "resource-node"
                 ],
-                "summary": "delete resource node",
                 "parameters": [
                     {
                         "type": "string",
@@ -1663,10 +1628,10 @@ const docTemplate = `{
         },
         "/api/quick/resources/{resourceId}/nodes/{nodeId}/operations/{operationId}": {
             "get": {
+                "description": "判断用户当前对资源的操作是否被允许",
                 "tags": [
                     "resource-role-operation"
                 ],
-                "summary": "判断用户当前对资源的操作是否被允许",
                 "parameters": [
                     {
                         "type": "string",
@@ -1699,10 +1664,10 @@ const docTemplate = `{
         },
         "/api/quick/resources/{resourceId}/operations": {
             "get": {
+                "description": "list resource operations",
                 "tags": [
                     "resource-node"
                 ],
-                "summary": "list resource operations",
                 "parameters": [
                     {
                         "type": "string",
@@ -1722,10 +1687,10 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "description": "create resource operation",
                 "tags": [
                     "resource-node"
                 ],
-                "summary": "create resource operation",
                 "parameters": [
                     {
                         "type": "string",
@@ -1747,10 +1712,10 @@ const docTemplate = `{
         },
         "/api/quick/resources/{resourceId}/operations/{operationId}": {
             "get": {
+                "description": "get resource operation",
                 "tags": [
                     "resource-node"
                 ],
-                "summary": "get resource operation",
                 "parameters": [
                     {
                         "type": "string",
@@ -1777,10 +1742,10 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "description": "update resource operation",
                 "tags": [
                     "resource-node"
                 ],
-                "summary": "update resource operation",
                 "parameters": [
                     {
                         "type": "string",
@@ -1804,10 +1769,10 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "description": "delete resource operation",
                 "tags": [
                     "resource-node"
                 ],
-                "summary": "delete resource operation",
                 "parameters": [
                     {
                         "type": "string",
@@ -1833,10 +1798,10 @@ const docTemplate = `{
         },
         "/api/quick/resources/{resourceId}/roles": {
             "get": {
+                "description": "list resource roles",
                 "tags": [
                     "resource-node"
                 ],
-                "summary": "list resource roles",
                 "parameters": [
                     {
                         "type": "string",
@@ -1856,10 +1821,10 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "description": "create resource role",
                 "tags": [
                     "resource-node"
                 ],
-                "summary": "create resource role",
                 "parameters": [
                     {
                         "type": "string",
@@ -1881,10 +1846,10 @@ const docTemplate = `{
         },
         "/api/quick/resources/{resourceId}/roles/{roleId}": {
             "get": {
+                "description": "get resource role",
                 "tags": [
                     "resource-node"
                 ],
-                "summary": "get resource role",
                 "parameters": [
                     {
                         "type": "string",
@@ -1911,10 +1876,10 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "description": "update resource role",
                 "tags": [
                     "resource-node"
                 ],
-                "summary": "update resource role",
                 "parameters": [
                     {
                         "type": "string",
@@ -1938,10 +1903,10 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "description": "delete resource role",
                 "tags": [
                     "resource-node"
                 ],
-                "summary": "delete resource role",
                 "parameters": [
                     {
                         "type": "string",
@@ -1967,10 +1932,10 @@ const docTemplate = `{
         },
         "/api/quick/resources/{resourceId}/roles/{roleId}/operations": {
             "get": {
+                "description": "list resource role operations",
                 "tags": [
                     "resource-role-operation"
                 ],
-                "summary": "list resource role operations",
                 "parameters": [
                     {
                         "type": "string",
@@ -1997,10 +1962,10 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "description": "create resource role operation",
                 "tags": [
                     "resource-role-operation"
                 ],
-                "summary": "create resource role operation",
                 "parameters": [
                     {
                         "type": "string",
@@ -2029,10 +1994,10 @@ const docTemplate = `{
         },
         "/api/quick/resources/{resourceId}/roles/{roleId}/operations/{operationId}": {
             "delete": {
+                "description": "delete resource role operation",
                 "tags": [
                     "resource-role-operation"
                 ],
-                "summary": "delete resource role operation",
                 "parameters": [
                     {
                         "type": "string",
@@ -2065,10 +2030,10 @@ const docTemplate = `{
         },
         "/api/quick/resources/{resourceId}/users/{userId}/roles": {
             "get": {
+                "description": "list resource json user roles",
                 "tags": [
                     "resource-user"
                 ],
-                "summary": "list resource json user roles",
                 "parameters": [
                     {
                         "type": "string",
@@ -2095,10 +2060,10 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "description": "create resource json user role",
                 "tags": [
                     "resource-user"
                 ],
-                "summary": "create resource json user role",
                 "parameters": [
                     {
                         "type": "string",
@@ -2127,10 +2092,10 @@ const docTemplate = `{
         },
         "/api/quick/resources/{resourceId}/users/{userId}/roles/{roleId}": {
             "put": {
+                "description": "update resource json user role",
                 "tags": [
                     "resource-user"
                 ],
-                "summary": "update resource json user role",
                 "parameters": [
                     {
                         "type": "string",
@@ -2161,10 +2126,10 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "description": "delete resource json user role",
                 "tags": [
                     "resource-user"
                 ],
-                "summary": "delete resource json user role",
                 "parameters": [
                     {
                         "type": "string",
@@ -2201,7 +2166,6 @@ const docTemplate = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "user pools info",
                 "parameters": [
                     {
                         "type": "string",
@@ -2227,7 +2191,6 @@ const docTemplate = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "create user pool",
                 "parameters": [
                     {
                         "type": "string",
@@ -2260,11 +2223,10 @@ const docTemplate = `{
         },
         "/api/quick/user-pools/{poolId}": {
             "get": {
-                "description": "list user pool",
+                "description": "get user pool info",
                 "tags": [
                     "user"
                 ],
-                "summary": "user pool info",
                 "parameters": [
                     {
                         "type": "string",
@@ -2297,7 +2259,6 @@ const docTemplate = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "modify user pool",
                 "parameters": [
                     {
                         "type": "string",
@@ -2339,7 +2300,6 @@ const docTemplate = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "delete user pool",
                 "parameters": [
                     {
                         "type": "string",
@@ -2374,7 +2334,6 @@ const docTemplate = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "user info",
                 "parameters": [
                     {
                         "type": "string",
@@ -2407,7 +2366,6 @@ const docTemplate = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "create user",
                 "parameters": [
                     {
                         "type": "string",
@@ -2447,11 +2405,10 @@ const docTemplate = `{
         },
         "/api/quick/user-pools/{poolId}/users/{userId}": {
             "get": {
-                "description": "list user",
+                "description": "get user info",
                 "tags": [
                     "user"
                 ],
-                "summary": "user info",
                 "parameters": [
                     {
                         "type": "string",
@@ -2491,7 +2448,6 @@ const docTemplate = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "modify user",
                 "parameters": [
                     {
                         "type": "string",
@@ -2540,7 +2496,6 @@ const docTemplate = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "delete user",
                 "parameters": [
                     {
                         "type": "string",

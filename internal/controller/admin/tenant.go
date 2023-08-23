@@ -9,8 +9,6 @@ import (
 )
 
 // ListTenant	swagger
-// @Summary	get tenant list
-// @Schemes
 // @Description	get tenant list
 // @Tags		tenant
 // @Param		X-User-ID	header	string	false	"user id"
@@ -35,8 +33,6 @@ func (a Route) ListTenant(c *gin.Context) {
 }
 
 // GetTenant	swagger
-// @Summary	get tenant details
-// @Schemes
 // @Description	get tenant details
 // @Tags		tenant
 // @Param		X-User-ID	header	string	false	"user id"
@@ -62,8 +58,6 @@ func (a Route) GetTenant(c *gin.Context) {
 }
 
 // CreateTenant	swagger
-// @Summary	create tenant
-// @Schemes
 // @Description	create tenant
 // @Tags		tenant
 // @Param		X-User-ID	header	string				false	"user id"
@@ -89,8 +83,6 @@ func (a Route) CreateTenant(c *gin.Context) {
 }
 
 // ModifyTenant	swagger
-// @Summary	modify tenant
-// @Schemes
 // @Description	modify tenant
 // @Tags		tenant
 // @Param		X-User-ID	header	string				false	"user id"
@@ -116,8 +108,6 @@ func (a Route) ModifyTenant(c *gin.Context) {
 }
 
 // DeleteTenant	swagger
-// @Summary	delete tenant
-// @Schemes
 // @Description	delete tenant
 // @Tags		tenant
 // @Param		X-User-ID	header	string	false	"user id"

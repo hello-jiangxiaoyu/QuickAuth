@@ -7,7 +7,7 @@ import (
 )
 
 // ListResourceUserRoles godoc
-// @Summary		list resource json user roles
+// @Description	list resource json user roles
 // @Tags		resource-user
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		userId		path	string	true	"user id"
@@ -29,7 +29,7 @@ func (a Resource) ListResourceUserRoles(c *gin.Context) {
 }
 
 // CreateResourceUserRole godoc
-// @Summary		create resource json user role
+// @Description	create resource json user role
 // @Tags		resource-user
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		userId		path	string	true	"user id"
@@ -54,7 +54,7 @@ func (a Resource) CreateResourceUserRole(c *gin.Context) {
 }
 
 // UpdateResourceUserRole godoc
-// @Summary		update resource json user role
+// @Description	update resource json user role
 // @Tags		resource-user
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		userId		path	string	true	"user id"
@@ -79,7 +79,7 @@ func (a Resource) UpdateResourceUserRole(c *gin.Context) {
 }
 
 // DeleteResourceUserRole godoc
-// @Summary		delete resource json user role
+// @Description	delete resource json user role
 // @Tags		resource-user
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		userId		path	string	true	"user id"

@@ -7,7 +7,7 @@ import (
 )
 
 // ListResourceOperations godoc
-// @Summary		list resource operations
+// @Description	list resource operations
 // @Tags		resource-node
 // @Param		resourceId	path	string	true	"resource id"
 // @Success		200		{object}	interface{}
@@ -28,7 +28,7 @@ func (a Resource) ListResourceOperations(c *gin.Context) {
 }
 
 // GetResourceOperation godoc
-// @Summary		get resource operation
+// @Description	get resource operation
 // @Tags		resource-node
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		operationId	path	string	true	"operation id"
@@ -50,7 +50,7 @@ func (a Resource) GetResourceOperation(c *gin.Context) {
 }
 
 // CreateResourceOperation godoc
-// @Summary		create resource operation
+// @Description	create resource operation
 // @Tags		resource-node
 // @Param		resourceId	path	string	true	"resource id"
 // @Success		200		{object}	interface{}
@@ -73,7 +73,7 @@ func (a Resource) CreateResourceOperation(c *gin.Context) {
 }
 
 // UpdateResourceOperation godoc
-// @Summary		update resource operation
+// @Description	update resource operation
 // @Tags		resource-node
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		operationId	path	string	true	"operation id"
@@ -97,7 +97,7 @@ func (a Resource) UpdateResourceOperation(c *gin.Context) {
 }
 
 // DeleteResourceOperation godoc
-// @Summary		delete resource operation
+// @Description	delete resource operation
 // @Tags		resource-node
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		operationId	path	string	true	"operation id"

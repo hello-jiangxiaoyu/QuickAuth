@@ -23,8 +23,6 @@ func NewAdminRoute(svc *service.Service) *Route {
 }
 
 // ListApp	swagger
-// @Summary	apps info
-// @Schemes
 // @Description	list apps
 // @Tags		app
 // @Param		X-User-ID	header	string	false	"user id"
@@ -43,9 +41,7 @@ func (a Route) ListApp(c *gin.Context) {
 }
 
 // GetApp	swagger
-// @Summary	apps info
-// @Schemes
-// @Description	list apps
+// @Description	get app
 // @Tags		app
 // @Param		X-User-ID	header	string	false	"user id"
 // @Param		X-Pool-ID	header	string	false	"user pool id"
@@ -68,8 +64,6 @@ func (a Route) GetApp(c *gin.Context) {
 }
 
 // CreateApp	swagger
-// @Summary	create app
-// @Schemes
 // @Description	create app
 // @Tags		app
 // @Param		X-User-ID	header	string			false	"user id"
@@ -93,8 +87,6 @@ func (a Route) CreateApp(c *gin.Context) {
 }
 
 // ModifyApp	swagger
-// @Summary	modify app
-// @Schemes
 // @Description	modify app
 // @Tags		app
 // @Param		X-User-ID	header	string	false	"user id"
@@ -118,8 +110,6 @@ func (a Route) ModifyApp(c *gin.Context) {
 }
 
 // DeleteApp	swagger
-// @Summary	delete app
-// @Schemes
 // @Description	delete app
 // @Tags		app
 // @Param		X-User-ID	header	string	false	"user id"

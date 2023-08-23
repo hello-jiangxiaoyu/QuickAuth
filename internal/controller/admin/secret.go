@@ -7,8 +7,6 @@ import (
 )
 
 // ListAppSecret	swagger
-// @Summary	app secret info
-// @Schemes
 // @Description	list app secret
 // @Tags		app
 // @Param		X-User-ID	header	string	false	"user id"
@@ -32,8 +30,6 @@ func (a Route) ListAppSecret(c *gin.Context) {
 }
 
 // CreateAppSecret	swagger
-// @Summary	create app secret
-// @Schemes
 // @Description	create app secret
 // @Tags		app
 // @Param		X-User-ID	header	string					false	"user id"
@@ -58,8 +54,6 @@ func (a Route) CreateAppSecret(c *gin.Context) {
 }
 
 // ModifyAppSecret	swagger
-// @Summary	create app secret
-// @Schemes
 // @Description	create app secret
 // @Tags		app
 // @Param		X-User-ID	header	string					false	"user id"
@@ -85,8 +79,6 @@ func (a Route) ModifyAppSecret(c *gin.Context) {
 }
 
 // DeleteAppSecret	swagger
-// @Summary	delete app secret
-// @Schemes
 // @Description	delete app secret
 // @Tags		app
 // @Param		X-User-ID	header	string	false	"user id"

@@ -7,8 +7,6 @@ import (
 )
 
 // ListUserPool	swagger
-// @Summary	user pools info
-// @Schemes
 // @Description	list user pool
 // @Tags		user
 // @Param		X-User-ID	header	string	false	"user id"
@@ -25,9 +23,7 @@ func (a Route) ListUserPool(c *gin.Context) {
 }
 
 // GetUserPool	swagger
-// @Summary	user pool info
-// @Schemes
-// @Description	list user pool
+// @Description	get user pool info
 // @Tags		user
 // @Param		X-User-ID	header	string	false	"user id"
 // @Param		X-Pool-ID	header	string	false	"user pool id"
@@ -50,8 +46,6 @@ func (a Route) GetUserPool(c *gin.Context) {
 }
 
 // CreateUserPool	swagger
-// @Summary	create user pool
-// @Schemes
 // @Description	create user pool
 // @Tags		user
 // @Param		X-User-ID	header	string				false	"user id"
@@ -74,8 +68,6 @@ func (a Route) CreateUserPool(c *gin.Context) {
 }
 
 // ModifyUserPool	swagger
-// @Summary	modify user pool
-// @Schemes
 // @Description	modify user pool
 // @Tags		user
 // @Param		X-User-ID	header	string				false	"user id"
@@ -99,8 +91,6 @@ func (a Route) ModifyUserPool(c *gin.Context) {
 }
 
 // DeleteUserPool	swagger
-// @Summary	delete user pool
-// @Schemes
 // @Description	delete user pool
 // @Tags		user
 // @Param		X-User-ID	header	string	false	"user id"

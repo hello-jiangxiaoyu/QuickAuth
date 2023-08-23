@@ -7,8 +7,6 @@ import (
 )
 
 // ListRedirectUri	swagger
-// @Summary	get redirect uri list
-// @Schemes
 // @Description	get redirect uri list
 // @Tags		tenant
 // @Param		X-User-ID	header	string	false	"user id"
@@ -32,8 +30,6 @@ func (a Route) ListRedirectUri(c *gin.Context) {
 }
 
 // CreateRedirectUri	swagger
-// @Summary	create app redirect uri
-// @Schemes
 // @Description	create app redirect uri
 // @Tags		tenant
 // @Param		X-User-ID	header	string					false	"user id"
@@ -57,8 +53,6 @@ func (a Route) CreateRedirectUri(c *gin.Context) {
 }
 
 // ModifyRedirectUri	swagger
-// @Summary	modify app redirect uri
-// @Schemes
 // @Description	modify app
 // @Tags		tenant
 // @Param		X-User-ID	header	string					false	"user id"
@@ -82,8 +76,6 @@ func (a Route) ModifyRedirectUri(c *gin.Context) {
 }
 
 // DeleteRedirectUri	swagger
-// @Summary	delete app
-// @Schemes
 // @Description	delete app
 // @Tags		tenant
 // @Param		X-User-ID	header	string	false	"user id"

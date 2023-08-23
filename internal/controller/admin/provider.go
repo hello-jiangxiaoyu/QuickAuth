@@ -7,8 +7,6 @@ import (
 )
 
 // ListProvider	swagger
-// @Summary	provider info
-// @Schemes
 // @Description	list provider info
 // @Tags		provider
 // @Param		X-User-ID	header	string	false	"user id"
@@ -32,8 +30,6 @@ func (a Route) ListProvider(c *gin.Context) {
 }
 
 // GetProvider	swagger
-// @Summary	get provider details
-// @Schemes
 // @Description	get provider details
 // @Tags		provider
 // @Param		X-User-ID	header	string	false	"user id"
@@ -58,8 +54,6 @@ func (a Route) GetProvider(c *gin.Context) {
 }
 
 // CreateProvider	swagger
-// @Summary	create provider
-// @Schemes
 // @Description	create provider
 // @Tags		provider
 // @Param		X-User-ID	header	string				false	"user id"
@@ -85,8 +79,6 @@ func (a Route) CreateProvider(c *gin.Context) {
 }
 
 // ModifyProvider	swagger
-// @Summary	modify provider
-// @Schemes
 // @Description	modify provider
 // @Tags		provider
 // @Param		providerId	path	integer				true	"provider id"
@@ -110,8 +102,6 @@ func (a Route) ModifyProvider(c *gin.Context) {
 }
 
 // DeleteProvider	swagger
-// @Summary	delete provider
-// @Schemes
 // @Description	delete provider
 // @Tags		provider
 // @Param		providerId	path	integer	true	"provider id"

@@ -18,7 +18,7 @@ func NewResourceController(svc *service.Service) *Resource {
 }
 
 // ListResources godoc
-// @Summary		list resources
+// @Description	list resources
 // @Tags		resource
 // @Success		200		{object}	interface{}
 // @Router		/api/quick/resources 	[get]
@@ -38,7 +38,7 @@ func (a Resource) ListResources(c *gin.Context) {
 }
 
 // GetResource godoc
-// @Summary		get resource
+// @Description	get resource
 // @Tags		resource
 // @Param		resourceId	path	string	true	"resource id"
 // @Success		200		{object}	interface{}
@@ -59,7 +59,7 @@ func (a Resource) GetResource(c *gin.Context) {
 }
 
 // CreateResource godoc
-// @Summary		create resource
+// @Description	create resource
 // @Tags		resource
 // @Success		200		{object}	interface{}
 // @Router		/api/quick/resources 	[post]
@@ -81,7 +81,7 @@ func (a Resource) CreateResource(c *gin.Context) {
 }
 
 // UpdateResource godoc
-// @Summary		update resource
+// @Description	update resource
 // @Tags		resource
 // @Param		resourceId	path	string	true	"resource id"
 // @Success		200
@@ -102,7 +102,7 @@ func (a Resource) UpdateResource(c *gin.Context) {
 }
 
 // DeleteResource godoc
-// @Summary		delete resource
+// @Description	delete resource
 // @Tags		resource
 // @Param		resourceId	path	string	true	"resource id"
 // @Success		200

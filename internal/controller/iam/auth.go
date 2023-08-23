@@ -7,7 +7,7 @@ import (
 )
 
 // IsOperationAllow godoc
-// @Summary		判断用户当前对资源的操作是否被允许
+// @Description	判断用户当前对资源的操作是否被允许
 // @Tags		resource-role-operation
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		nodeId		path	string	true	"node id"
@@ -30,7 +30,7 @@ func (a Resource) IsOperationAllow(c *gin.Context) {
 }
 
 // IsJSONOperationAllow godoc
-// @Summary		判断用户当前对JSON资源的操作是否被允许
+// @Description	判断用户当前对JSON资源的操作是否被允许
 // @Tags		resource-role-operation
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		path		query	string	true	"json path"
@@ -53,7 +53,7 @@ func (a Resource) IsJSONOperationAllow(c *gin.Context) {
 }
 
 // ListResourceOperationNodes godoc
-// @Summary		获取拥有某个操作权限的node列表
+// @Description	获取拥有某个操作权限的node列表
 // @Tags		resource-user
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		operationId	path	string	true	"operation id"
@@ -75,7 +75,7 @@ func (a Resource) ListResourceOperationNodes(c *gin.Context) {
 }
 
 // ListJSONResourceOperationNodes godoc
-// @Summary		获取拥有某个操作权限的整个json结构
+// @Description	获取拥有某个操作权限的整个json结构
 // @Tags		resource-user
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		operationId	path	string	true	"operation id"

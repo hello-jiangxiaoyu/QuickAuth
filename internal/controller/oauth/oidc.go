@@ -24,8 +24,6 @@ type OpenidConfigurationDto struct {
 }
 
 // GetOIDC	swagger
-// @Summary	get OIDC
-// @Schemes
 // @Description	get open id configuration
 // @Tags		oidc
 // @Success		200		{object}	OpenidConfigurationDto
@@ -54,8 +52,6 @@ func (o Controller) GetOIDC(c *gin.Context) {
 }
 
 // ListJwks	swagger
-// @Summary	get jwks
-// @Schemes
 // @Description	get jwks
 // @Tags		oidc
 // @Success		200
@@ -72,8 +68,6 @@ func (o Controller) ListJwks(c *gin.Context) {
 }
 
 // GetProfile	swagger
-// @Summary	get jwks
-// @Schemes
 // @Description	get jwks
 // @Tags		oidc
 // @Success		200

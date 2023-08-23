@@ -9,8 +9,6 @@ import (
 )
 
 // ListUser	swagger
-// @Summary	user info
-// @Schemes
 // @Description	list users
 // @Tags		user
 // @Param		X-User-ID	header	string	false	"user id"
@@ -34,9 +32,7 @@ func (a Route) ListUser(c *gin.Context) {
 }
 
 // GetUser	swagger
-// @Summary	user info
-// @Schemes
-// @Description	list user
+// @Description	get user info
 // @Tags		user
 // @Param		X-User-ID	header	string	false	"user id"
 // @Param		X-Pool-ID	header	string	false	"user pool id"
@@ -60,8 +56,6 @@ func (a Route) GetUser(c *gin.Context) {
 }
 
 // CreateUser	swagger
-// @Summary	create user
-// @Schemes
 // @Description	create user
 // @Tags		user
 // @Param		X-User-ID	header	string			false	"user id"
@@ -94,8 +88,6 @@ func (a Route) CreateUser(c *gin.Context) {
 }
 
 // ModifyUser	swagger
-// @Summary	modify user
-// @Schemes
 // @Description	modify user
 // @Tags		user
 // @Param		X-User-ID	header	string			false	"user id"
@@ -120,8 +112,6 @@ func (a Route) ModifyUser(c *gin.Context) {
 }
 
 // DeleteUser	swagger
-// @Summary	delete user
-// @Schemes
 // @Description	delete user
 // @Tags		user
 // @Param		X-User-ID	header	string	false	"user id"

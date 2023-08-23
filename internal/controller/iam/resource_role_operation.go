@@ -7,7 +7,7 @@ import (
 )
 
 // ListResourceRoleOperations godoc
-// @Summary		list resource role operations
+// @Description	list resource role operations
 // @Tags		resource-role-operation
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		roleId		path	string	true	"role id"
@@ -29,7 +29,7 @@ func (a Resource) ListResourceRoleOperations(c *gin.Context) {
 }
 
 // CreateResourceRoleOperation godoc
-// @Summary		create resource role operation
+// @Description	create resource role operation
 // @Tags		resource-role-operation
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		roleId		path	string	true	"role id"
@@ -54,7 +54,7 @@ func (a Resource) CreateResourceRoleOperation(c *gin.Context) {
 }
 
 // DeleteResourceRoleOperation godoc
-// @Summary		delete resource role operation
+// @Description	delete resource role operation
 // @Tags		resource-role-operation
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		roleId		path	string	true	"role id"
