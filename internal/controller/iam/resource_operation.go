@@ -8,7 +8,7 @@ import (
 
 // ListResourceOperations godoc
 // @Description	list resource operations
-// @Tags		resource-node
+// @Tags		resource-operation
 // @Param		resourceId	path	string	true	"resource id"
 // @Success		200		{object}	interface{}
 // @Router		/api/quick/resources/{resourceId}/operations 	[get]
@@ -29,7 +29,7 @@ func (a Resource) ListResourceOperations(c *gin.Context) {
 
 // GetResourceOperation godoc
 // @Description	get resource operation
-// @Tags		resource-node
+// @Tags		resource-operation
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		operationId	path	string	true	"operation id"
 // @Success		200		{object}	interface{}
@@ -51,7 +51,7 @@ func (a Resource) GetResourceOperation(c *gin.Context) {
 
 // CreateResourceOperation godoc
 // @Description	create resource operation
-// @Tags		resource-node
+// @Tags		resource-operation
 // @Param		resourceId	path	string	true	"resource id"
 // @Success		200		{object}	interface{}
 // @Router		/api/quick/resources/{resourceId}/operations 	[post]
@@ -74,7 +74,7 @@ func (a Resource) CreateResourceOperation(c *gin.Context) {
 
 // UpdateResourceOperation godoc
 // @Description	update resource operation
-// @Tags		resource-node
+// @Tags		resource-operation
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		operationId	path	string	true	"operation id"
 // @Success		200
@@ -98,7 +98,7 @@ func (a Resource) UpdateResourceOperation(c *gin.Context) {
 
 // DeleteResourceOperation godoc
 // @Description	delete resource operation
-// @Tags		resource-node
+// @Tags		resource-operation
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		operationId	path	string	true	"operation id"
 // @Success		200

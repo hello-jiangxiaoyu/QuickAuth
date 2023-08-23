@@ -8,7 +8,7 @@ import (
 
 // ListResourceRoles godoc
 // @Description	list resource roles
-// @Tags		resource-node
+// @Tags		resource-role
 // @Param		resourceId	path	string	true	"resource id"
 // @Success		200		{object}	interface{}
 // @Router		/api/quick/resources/{resourceId}/roles 	[get]
@@ -29,7 +29,7 @@ func (a Resource) ListResourceRoles(c *gin.Context) {
 
 // GetResourceRole godoc
 // @Description	get resource role
-// @Tags		resource-node
+// @Tags		resource-role
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		roleId		path	string	true	"role id"
 // @Success		200		{object}	interface{}
@@ -51,7 +51,7 @@ func (a Resource) GetResourceRole(c *gin.Context) {
 
 // CreateResourceRole godoc
 // @Description	create resource role
-// @Tags		resource-node
+// @Tags		resource-role
 // @Param		resourceId	path	string	true	"resource id"
 // @Success		200		{object}	interface{}
 // @Router		/api/quick/resources/{resourceId}/roles 	[post]
@@ -74,7 +74,7 @@ func (a Resource) CreateResourceRole(c *gin.Context) {
 
 // UpdateResourceRole godoc
 // @Description	update resource role
-// @Tags		resource-node
+// @Tags		resource-role
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		roleId		path	string	true	"role id"
 // @Success		200
@@ -98,7 +98,7 @@ func (a Resource) UpdateResourceRole(c *gin.Context) {
 
 // DeleteResourceRole godoc
 // @Description	delete resource role
-// @Tags		resource-node
+// @Tags		resource-role
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		roleId		path	string	true	"role id"
 // @Success		200

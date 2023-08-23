@@ -1264,7 +1264,7 @@ const docTemplate = `{
             "get": {
                 "description": "判断用户当前对JSON资源的操作是否被允许",
                 "tags": [
-                    "resource-role-operation"
+                    "auth"
                 ],
                 "parameters": [
                     {
@@ -1300,7 +1300,7 @@ const docTemplate = `{
             "get": {
                 "description": "获取拥有某个操作权限的整个json结构",
                 "tags": [
-                    "resource-user"
+                    "auth"
                 ],
                 "parameters": [
                     {
@@ -1332,7 +1332,7 @@ const docTemplate = `{
             "get": {
                 "description": "获取拥有某个操作权限的node列表",
                 "tags": [
-                    "resource-user"
+                    "auth"
                 ],
                 "parameters": [
                     {
@@ -1496,7 +1496,7 @@ const docTemplate = `{
             "get": {
                 "description": "list resource nodes",
                 "tags": [
-                    "resource-node"
+                    "resource"
                 ],
                 "parameters": [
                     {
@@ -1519,7 +1519,7 @@ const docTemplate = `{
             "post": {
                 "description": "create resource node",
                 "tags": [
-                    "resource-node"
+                    "resource"
                 ],
                 "parameters": [
                     {
@@ -1544,7 +1544,7 @@ const docTemplate = `{
             "get": {
                 "description": "get resource node",
                 "tags": [
-                    "resource-node"
+                    "resource"
                 ],
                 "parameters": [
                     {
@@ -1574,7 +1574,7 @@ const docTemplate = `{
             "put": {
                 "description": "update resource node",
                 "tags": [
-                    "resource-node"
+                    "resource"
                 ],
                 "parameters": [
                     {
@@ -1601,7 +1601,7 @@ const docTemplate = `{
             "delete": {
                 "description": "delete resource node",
                 "tags": [
-                    "resource-node"
+                    "resource"
                 ],
                 "parameters": [
                     {
@@ -1630,7 +1630,7 @@ const docTemplate = `{
             "get": {
                 "description": "判断用户当前对资源的操作是否被允许",
                 "tags": [
-                    "resource-role-operation"
+                    "auth"
                 ],
                 "parameters": [
                     {
@@ -1666,7 +1666,7 @@ const docTemplate = `{
             "get": {
                 "description": "list resource operations",
                 "tags": [
-                    "resource-node"
+                    "resource-operation"
                 ],
                 "parameters": [
                     {
@@ -1689,7 +1689,7 @@ const docTemplate = `{
             "post": {
                 "description": "create resource operation",
                 "tags": [
-                    "resource-node"
+                    "resource-operation"
                 ],
                 "parameters": [
                     {
@@ -1714,7 +1714,7 @@ const docTemplate = `{
             "get": {
                 "description": "get resource operation",
                 "tags": [
-                    "resource-node"
+                    "resource-operation"
                 ],
                 "parameters": [
                     {
@@ -1744,7 +1744,7 @@ const docTemplate = `{
             "put": {
                 "description": "update resource operation",
                 "tags": [
-                    "resource-node"
+                    "resource-operation"
                 ],
                 "parameters": [
                     {
@@ -1771,7 +1771,7 @@ const docTemplate = `{
             "delete": {
                 "description": "delete resource operation",
                 "tags": [
-                    "resource-node"
+                    "resource-operation"
                 ],
                 "parameters": [
                     {
@@ -1800,7 +1800,7 @@ const docTemplate = `{
             "get": {
                 "description": "list resource roles",
                 "tags": [
-                    "resource-node"
+                    "resource-role"
                 ],
                 "parameters": [
                     {
@@ -1823,7 +1823,7 @@ const docTemplate = `{
             "post": {
                 "description": "create resource role",
                 "tags": [
-                    "resource-node"
+                    "resource-role"
                 ],
                 "parameters": [
                     {
@@ -1848,7 +1848,7 @@ const docTemplate = `{
             "get": {
                 "description": "get resource role",
                 "tags": [
-                    "resource-node"
+                    "resource-role"
                 ],
                 "parameters": [
                     {
@@ -1878,7 +1878,7 @@ const docTemplate = `{
             "put": {
                 "description": "update resource role",
                 "tags": [
-                    "resource-node"
+                    "resource-role"
                 ],
                 "parameters": [
                     {
@@ -1905,7 +1905,7 @@ const docTemplate = `{
             "delete": {
                 "description": "delete resource role",
                 "tags": [
-                    "resource-node"
+                    "resource-role"
                 ],
                 "parameters": [
                     {
@@ -1934,7 +1934,7 @@ const docTemplate = `{
             "get": {
                 "description": "list resource role operations",
                 "tags": [
-                    "resource-role-operation"
+                    "resource-role"
                 ],
                 "parameters": [
                     {
@@ -1964,7 +1964,7 @@ const docTemplate = `{
             "post": {
                 "description": "create resource role operation",
                 "tags": [
-                    "resource-role-operation"
+                    "resource-role"
                 ],
                 "parameters": [
                     {
@@ -1996,7 +1996,7 @@ const docTemplate = `{
             "delete": {
                 "description": "delete resource role operation",
                 "tags": [
-                    "resource-role-operation"
+                    "resource-role"
                 ],
                 "parameters": [
                     {

@@ -8,7 +8,7 @@ import (
 
 // ListResourceNodes godoc
 // @Description	list resource nodes
-// @Tags		resource-node
+// @Tags		resource
 // @Param		resourceId	path	string	true	"resource id"
 // @Success		200		{object}	interface{}
 // @Router		/api/quick/resources/{resourceId}/nodes 	[get]
@@ -29,7 +29,7 @@ func (a Resource) ListResourceNodes(c *gin.Context) {
 
 // GetResourceNode godoc
 // @Description	get resource node
-// @Tags		resource-node
+// @Tags		resource
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		nodeId		path	string	true	"node id"
 // @Success		200		{object}	interface{}
@@ -51,7 +51,7 @@ func (a Resource) GetResourceNode(c *gin.Context) {
 
 // CreateResourceNode godoc
 // @Description	create resource node
-// @Tags		resource-node
+// @Tags		resource
 // @Param		resourceId	path	string	true	"resource id"
 // @Success		200		{object}	interface{}
 // @Router		/api/quick/resources/{resourceId}/nodes 	[post]
@@ -75,7 +75,7 @@ func (a Resource) CreateResourceNode(c *gin.Context) {
 
 // UpdateResourceNode godoc
 // @Description	update resource node
-// @Tags		resource-node
+// @Tags		resource
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		nodeId		path	string	true	"node id"
 // @Success		200
@@ -99,7 +99,7 @@ func (a Resource) UpdateResourceNode(c *gin.Context) {
 
 // DeleteResourceNode godoc
 // @Description	delete resource node
-// @Tags		resource-node
+// @Tags		resource
 // @Param		resourceId	path	string	true	"resource id"
 // @Param		nodeId		path	string	true	"node id"
 // @Success		200

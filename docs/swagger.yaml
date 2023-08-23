@@ -994,7 +994,7 @@ paths:
         "200":
           description: OK
       tags:
-      - resource-role-operation
+      - auth
   /api/quick/resources/{resourceId}/json/operations/{operationId}/json:
     get:
       description: 获取拥有某个操作权限的整个json结构
@@ -1015,7 +1015,7 @@ paths:
           schema:
             type: object
       tags:
-      - resource-user
+      - auth
   /api/quick/resources/{resourceId}/json/operations/{operationId}/parents/:parentId:
     get:
       description: 获取拥有某个操作权限的node列表
@@ -1036,7 +1036,7 @@ paths:
           schema:
             type: object
       tags:
-      - resource-user
+      - auth
   /api/quick/resources/{resourceId}/json/users/{userId}/roles:
     get:
       description: list resource json user roles
@@ -1140,7 +1140,7 @@ paths:
           schema:
             type: object
       tags:
-      - resource-node
+      - resource
     post:
       description: create resource node
       parameters:
@@ -1155,7 +1155,7 @@ paths:
           schema:
             type: object
       tags:
-      - resource-node
+      - resource
   /api/quick/resources/{resourceId}/nodes/{nodeId}:
     delete:
       description: delete resource node
@@ -1174,7 +1174,7 @@ paths:
         "200":
           description: OK
       tags:
-      - resource-node
+      - resource
     get:
       description: get resource node
       parameters:
@@ -1194,7 +1194,7 @@ paths:
           schema:
             type: object
       tags:
-      - resource-node
+      - resource
     put:
       description: update resource node
       parameters:
@@ -1212,7 +1212,7 @@ paths:
         "200":
           description: OK
       tags:
-      - resource-node
+      - resource
   /api/quick/resources/{resourceId}/nodes/{nodeId}/operations/{operationId}:
     get:
       description: 判断用户当前对资源的操作是否被允许
@@ -1236,7 +1236,7 @@ paths:
         "200":
           description: OK
       tags:
-      - resource-role-operation
+      - auth
   /api/quick/resources/{resourceId}/operations:
     get:
       description: list resource operations
@@ -1252,7 +1252,7 @@ paths:
           schema:
             type: object
       tags:
-      - resource-node
+      - resource-operation
     post:
       description: create resource operation
       parameters:
@@ -1267,7 +1267,7 @@ paths:
           schema:
             type: object
       tags:
-      - resource-node
+      - resource-operation
   /api/quick/resources/{resourceId}/operations/{operationId}:
     delete:
       description: delete resource operation
@@ -1286,7 +1286,7 @@ paths:
         "200":
           description: OK
       tags:
-      - resource-node
+      - resource-operation
     get:
       description: get resource operation
       parameters:
@@ -1306,7 +1306,7 @@ paths:
           schema:
             type: object
       tags:
-      - resource-node
+      - resource-operation
     put:
       description: update resource operation
       parameters:
@@ -1324,7 +1324,7 @@ paths:
         "200":
           description: OK
       tags:
-      - resource-node
+      - resource-operation
   /api/quick/resources/{resourceId}/roles:
     get:
       description: list resource roles
@@ -1340,7 +1340,7 @@ paths:
           schema:
             type: object
       tags:
-      - resource-node
+      - resource-role
     post:
       description: create resource role
       parameters:
@@ -1355,7 +1355,7 @@ paths:
           schema:
             type: object
       tags:
-      - resource-node
+      - resource-role
   /api/quick/resources/{resourceId}/roles/{roleId}:
     delete:
       description: delete resource role
@@ -1374,7 +1374,7 @@ paths:
         "200":
           description: OK
       tags:
-      - resource-node
+      - resource-role
     get:
       description: get resource role
       parameters:
@@ -1394,7 +1394,7 @@ paths:
           schema:
             type: object
       tags:
-      - resource-node
+      - resource-role
     put:
       description: update resource role
       parameters:
@@ -1412,7 +1412,7 @@ paths:
         "200":
           description: OK
       tags:
-      - resource-node
+      - resource-role
   /api/quick/resources/{resourceId}/roles/{roleId}/operations:
     get:
       description: list resource role operations
@@ -1433,7 +1433,7 @@ paths:
           schema:
             type: object
       tags:
-      - resource-role-operation
+      - resource-role
     post:
       description: create resource role operation
       parameters:
@@ -1453,7 +1453,7 @@ paths:
           schema:
             type: object
       tags:
-      - resource-role-operation
+      - resource-role
   /api/quick/resources/{resourceId}/roles/{roleId}/operations/{operationId}:
     delete:
       description: delete resource role operation
@@ -1477,7 +1477,7 @@ paths:
         "200":
           description: OK
       tags:
-      - resource-role-operation
+      - resource-role
   /api/quick/resources/{resourceId}/users/{userId}/roles:
     get:
       description: list resource json user roles
