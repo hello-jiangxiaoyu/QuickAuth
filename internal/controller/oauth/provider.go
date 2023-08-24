@@ -36,11 +36,8 @@ func (o Controller) ProviderCallback(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	if state, err := c.Cookie(resp.CookieState); err != nil { // 校验state，防止CSRF攻击
-		resp.ErrorUnknown(c, err, "get state cookie err")
-		return
-	} else if state == "" { // todo: state check
-		resp.ErrorRequestWithMsg(c, "invalid state")
+	if err := o.svc.CheckState(c); err != nil {
+		resp.ErrorRequestWithErr(c, err, "invalid state")
 		return
 	}
 
@@ -57,27 +54,32 @@ func (o Controller) ProviderCallback(c *gin.Context) {
 		resp.ErrorRequestWithMsg(c, "provider type "+provider.Type+" does not exist")
 		return
 	}
-	idProvider.SetHttpClient(http.DefaultClient)
 	token, err := idProvider.GetToken(in.Code)
 	if err != nil {
 		resp.ErrorUnknown(c, err, fmt.Sprintf("get %d token err", in.ProviderId))
 		return
 	}
 	if !token.Valid() {
-		resp.ErrorForbidden(c, "token is not valid")
+		resp.ErrorForbidden(c, provider.Type+" token is invalid")
 		return
 	}
 	userInfo, err := idProvider.GetUserInfo(token)
 	if err != nil {
-		resp.ErrorUnknown(c, err, fmt.Sprintf("get %s user info err", in.ProviderId))
+		resp.ErrorUnknown(c, err, fmt.Sprintf("get %d user info err", in.ProviderId))
 		return
 	}
 
+	// 登录成功，生成id_token
 	tokenStr, err := o.svc.CreateProviderToken(in.Tenant.App, in.Tenant, userInfo, "")
 	if err != nil {
 		resp.ErrorUnknown(c, err, "create provider id token err")
 		return
 	}
 	c.SetCookie(resp.CookieIDToken, tokenStr, int(in.Tenant.IDExpire), "/api/quick", "", false, true)
+	if next := c.Query("next"); next != "" {
+		c.Redirect(http.StatusFound, next)
+		return
+	}
+
 	resp.Success(c) // todo: redirect to next by state
 }

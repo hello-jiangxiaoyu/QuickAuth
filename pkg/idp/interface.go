@@ -3,7 +3,6 @@ package idp
 import (
 	"QuickAuth/internal/endpoint/model"
 	"golang.org/x/oauth2"
-	"net/http"
 )
 
 type UserInfo struct {
@@ -18,7 +17,6 @@ type UserInfo struct {
 }
 
 type IdProvider interface {
-	SetHttpClient(client *http.Client)
 	GetToken(code string) (*oauth2.Token, error)
 	GetUserInfo(token *oauth2.Token) (*UserInfo, error)
 }

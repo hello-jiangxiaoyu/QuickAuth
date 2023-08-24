@@ -15,6 +15,7 @@ type (
 	LoginProvider struct {
 		ProviderId int64        `uri:"providerId"`
 		Code       string       `query:"code"`
+		Next       string       `query:"next"`
 		Tenant     model.Tenant `query:"tenant"`
 	}
 

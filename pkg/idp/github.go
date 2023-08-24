@@ -2,57 +2,32 @@ package idp
 
 import (
 	"QuickAuth/pkg/utils"
-	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
 	"strconv"
-	"strings"
 	"time"
 
 	"golang.org/x/oauth2"
 )
 
 type GithubIdProvider struct {
-	Client *http.Client
 	Config *oauth2.Config
 }
 
 func NewGithubIdProvider(clientId string, clientSecret string, redirectUrl string) *GithubIdProvider {
-	idp := &GithubIdProvider{}
-
-	config := idp.getConfig()
-	config.ClientID = clientId
-	config.ClientSecret = clientSecret
-	config.RedirectURL = redirectUrl
-	idp.Config = config
+	idp := &GithubIdProvider{
+		Config: &oauth2.Config{
+			Scopes: []string{"user:email", "read:user"},
+			Endpoint: oauth2.Endpoint{
+				AuthURL:  "https://github.com/login/oauth/authorize",
+				TokenURL: "https://github.com/login/oauth/access_token",
+			},
+			ClientID:     clientId,
+			ClientSecret: clientSecret,
+			RedirectURL:  redirectUrl,
+		},
+	}
 
 	return idp
-}
-
-func (idp *GithubIdProvider) SetHttpClient(client *http.Client) {
-	idp.Client = client
-}
-
-func (idp *GithubIdProvider) getConfig() *oauth2.Config {
-	endpoint := oauth2.Endpoint{
-		AuthURL:  "https://github.com/login/oauth/authorize",
-		TokenURL: "https://github.com/login/oauth/access_token",
-	}
-
-	config := &oauth2.Config{
-		Scopes:   []string{"user:email", "read:user"},
-		Endpoint: endpoint,
-	}
-
-	return config
-}
-
-type GithubToken struct {
-	AccessToken string `json:"access_token"`
-	TokenType   string `json:"token_type"`
-	Scope       string `json:"scope"`
-	Error       string `json:"error"`
 }
 
 func (idp *GithubIdProvider) GetToken(code string) (*oauth2.Token, error) {
@@ -61,12 +36,14 @@ func (idp *GithubIdProvider) GetToken(code string) (*oauth2.Token, error) {
 		ClientId     string `json:"client_id"`
 		ClientSecret string `json:"client_secret"`
 	}{code, idp.Config.ClientID, idp.Config.ClientSecret}
-	data, err := idp.postWithBody(params, idp.Config.Endpoint.TokenURL)
-	if err != nil {
-		return nil, err
+	var pToken struct {
+		AccessToken string `json:"access_token"`
+		TokenType   string `json:"token_type"`
+		Scope       string `json:"scope"`
+		Error       string `json:"error"`
 	}
-	pToken := &GithubToken{}
-	if err = json.Unmarshal(data, pToken); err != nil {
+
+	if err := utils.Post(idp.Config.Endpoint.TokenURL, params, &pToken); err != nil {
 		return nil, err
 	}
 	if pToken.Error != "" {
@@ -129,26 +106,8 @@ type GitHubUserInfo struct {
 }
 
 func (idp *GithubIdProvider) GetUserInfo(token *oauth2.Token) (*UserInfo, error) {
-	req, err := http.NewRequest("GET", "https://api.github.com/user", nil)
-	if err != nil {
-		panic(err)
-	}
-	req.Header.Add("Authorization", "token "+token.AccessToken)
-	resp, err := idp.Client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-
-	defer resp.Body.Close()
-
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-
 	var githubUserInfo GitHubUserInfo
-	err = json.Unmarshal(body, &githubUserInfo)
-	if err != nil {
+	if err := utils.Get("https://api.github.com/user", &githubUserInfo, map[string]string{"Authorization": "token " + token.AccessToken}); err != nil {
 		return nil, err
 	}
 
@@ -160,25 +119,4 @@ func (idp *GithubIdProvider) GetUserInfo(token *oauth2.Token) (*UserInfo, error)
 		AvatarUrl:   githubUserInfo.AvatarUrl,
 	}
 	return &userInfo, nil
-}
-
-func (idp *GithubIdProvider) postWithBody(body interface{}, url string) ([]byte, error) {
-	bs, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	r := strings.NewReader(string(bs))
-	req, _ := http.NewRequest("POST", url, r)
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Content-Type", "application/json")
-	resp, err := idp.Client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	data, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-	defer utils.DeferErr(resp.Body.Close)
-	return data, nil
 }
