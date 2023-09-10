@@ -7,9 +7,6 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"log"
-	"os"
-	"time"
 )
 
 const (
@@ -42,24 +39,5 @@ func getGormDB(d gorm.Dialector) (*gorm.DB, error) {
 		return nil, err
 	}
 
-	sqlDB, err := db.DB()
-	if err != nil {
-		return nil, err
-	}
-
-	sqlDB.SetConnMaxLifetime(time.Minute * 5)
-	// todo: user zap log gorm sql
-	_default := logger.New(&Writer{Writer: log.New(os.Stdout, "\r\n", log.LstdFlags)}, logger.Config{
-		SlowThreshold: 200 * time.Millisecond,
-		LogLevel:      logger.Warn,
-		Colorful:      true,
-	})
-
-	return gorm.Open(postgres.New(postgres.Config{
-		Conn: sqlDB,
-	}), &gorm.Config{
-		PrepareStmt:            true,
-		SkipDefaultTransaction: false,
-		Logger:                 _default.LogMode(logger.Info),
-	})
+	return db, nil
 }
