@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"QuickAuth/internal/model"
+	"QuickAuth/internal/endpoint/model"
 	"QuickAuth/pkg/global"
 	"fmt"
 	"os"
@@ -19,11 +19,12 @@ func autoMigrateDB() {
 	}
 
 	if err := global.DB.Debug().AutoMigrate(migrateList...); err != nil {
+		fmt.Println("[Error] migrate err: ", err)
 		os.Exit(ExitMigrate)
 		return
 	}
 
-	fmt.Println("Gorm auto migrate ok")
+	fmt.Println("[OK] Gorm auto migrate ok")
 }
 
 func createDbTables() {
@@ -32,7 +33,7 @@ func createDbTables() {
 	}
 	sqlBytes, err := os.ReadFile("./deploy/postgres/create.sql")
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("[Error] read file err: ", err)
 		os.Exit(ExitReadFile)
 	}
 
@@ -40,9 +41,12 @@ func createDbTables() {
 	for _, sql := range statements {
 		if strings.TrimSpace(sql) != "" {
 			if err = global.DB.Exec(sql).Error; err != nil {
-				fmt.Println(err)
+				fmt.Println("[Error] exec sql err: ", err)
 				os.Exit(ExitExecSql)
+				return
 			}
 		}
 	}
+
+	fmt.Println("[OK] create database table by sql ok")
 }

@@ -3,12 +3,8 @@ package idp
 import (
 	"QuickAuth/pkg/utils"
 	"bytes"
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"github.com/skip2/go-qrcode"
-	"io"
-	"net/http"
 	"net/url"
 	"strings"
 	"time"
@@ -17,38 +13,23 @@ import (
 )
 
 type WeChatIdProvider struct {
-	Client *http.Client
 	Config *oauth2.Config
 }
 
 func NewWeChatIdProvider(clientId string, clientSecret string, redirectUrl string) *WeChatIdProvider {
-	idp := &WeChatIdProvider{}
-
-	config := idp.getConfig(clientId, clientSecret, redirectUrl)
-	idp.Config = config
+	idp := &WeChatIdProvider{
+		Config: &oauth2.Config{
+			Scopes: []string{"snsapi_login"},
+			Endpoint: oauth2.Endpoint{
+				TokenURL: "https://graph.qq.com/oauth2.0/token",
+			},
+			ClientID:     clientId,
+			ClientSecret: clientSecret,
+			RedirectURL:  redirectUrl,
+		},
+	}
 
 	return idp
-}
-
-func (idp *WeChatIdProvider) SetHttpClient(client *http.Client) {
-	idp.Client = client
-}
-
-// getConfig return a point of Config, which describes a typical 3-legged OAuth2 flow
-func (idp *WeChatIdProvider) getConfig(clientId string, clientSecret string, redirectUrl string) *oauth2.Config {
-	endpoint := oauth2.Endpoint{
-		TokenURL: "https://graph.qq.com/oauth2.0/token",
-	}
-
-	config := &oauth2.Config{
-		Scopes:       []string{"snsapi_login"},
-		Endpoint:     endpoint,
-		ClientID:     clientId,
-		ClientSecret: clientSecret,
-		RedirectURL:  redirectUrl,
-	}
-
-	return config
 }
 
 type WechatAccessToken struct {
@@ -61,28 +42,22 @@ type WechatAccessToken struct {
 }
 
 // GetToken use code get access_token (*operation of getting code ought to be done in front)
-// get more detail via: https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Wechat_Login.html
 func (idp *WeChatIdProvider) GetToken(code string) (*oauth2.Token, error) {
 	params := url.Values{}
 	params.Add("grant_type", "authorization_code")
 	params.Add("appid", idp.Config.ClientID)
 	params.Add("secret", idp.Config.ClientSecret)
 	params.Add("code", code)
-
-	accessTokenUrl := fmt.Sprintf("https://api.weixin.qq.com/sns/oauth2/access_token?%s", params.Encode())
-	tokenResponse, err := idp.Client.Get(accessTokenUrl)
+	tokenResponse, err := utils.DefaultClient.Get(fmt.Sprintf("https://api.weixin.qq.com/sns/oauth2/access_token?%s", params.Encode()))
 	if err != nil {
 		return nil, err
 	}
 
 	defer utils.DeferErr(tokenResponse.Body.Close)
 	buf := new(bytes.Buffer)
-	_, err = buf.ReadFrom(tokenResponse.Body)
-	if err != nil {
+	if _, err = buf.ReadFrom(tokenResponse.Body); err != nil {
 		return nil, err
 	}
-
-	// {"errcode":40163,"errmsg":"code been used, rid: 6206378a-793424c0-2e4091cc"}
 	if strings.Contains(buf.String(), "errcode") {
 		return nil, fmt.Errorf(buf.String())
 	}
@@ -98,26 +73,12 @@ func (idp *WeChatIdProvider) GetToken(code string) (*oauth2.Token, error) {
 		RefreshToken: wechatAccessToken.RefreshToken,
 		Expiry:       time.Time{},
 	}
-
 	raw := make(map[string]string)
 	raw["Openid"] = wechatAccessToken.Openid
 	token.WithExtra(raw)
 
 	return &token, nil
 }
-
-//{
-//	"openid": "of_Hl5zVpyj0vwzIlAyIlnXe1234",
-//	"nickname": "飞翔的企鹅",
-//	"sex": 1,
-//	"language": "zh_CN",
-//	"city": "Shanghai",
-//	"province": "Shanghai",
-//	"country": "CN",
-//	"headimgurl": "https:\/\/thirdwx.qlogo.cn\/mmopen\/vi_32\/Q0j4TwGTfTK6xc7vGca4KtibJib5dslRianc9VHt9k2N7fewYOl8fak7grRM7nS5V6HcvkkIkGThWUXPjDbXkQFYA\/132",
-//	"privilege": [],
-//	"unionid": "oxW9O1VAL8x-zfWP2hrqW9c81234"
-//}
 
 type WechatUserInfo struct {
 	Openid     string   `json:"openid"`   // The ID of an ordinary user, which is unique to the current developer account
@@ -133,22 +94,18 @@ type WechatUserInfo struct {
 }
 
 // GetUserInfo use WechatAccessToken gotten before return WechatUserInfo
-// get more detail via: https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Authorized_Interface_Calling_UnionID.html
 func (idp *WeChatIdProvider) GetUserInfo(token *oauth2.Token) (*UserInfo, error) {
 	var wechatUserInfo WechatUserInfo
 	accessToken := token.AccessToken
 	openid := token.Extra("Openid")
-
-	userInfoUrl := fmt.Sprintf("https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s", accessToken, openid)
-	resp, err := idp.Client.Get(userInfoUrl)
+	resp, err := utils.DefaultClient.Get(fmt.Sprintf("https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s", accessToken, openid))
 	if err != nil {
 		return nil, err
 	}
 
 	defer utils.DeferErr(resp.Body.Close)
 	buf := new(bytes.Buffer)
-	_, err = buf.ReadFrom(resp.Body)
-	if err != nil {
+	if _, err = buf.ReadFrom(resp.Body); err != nil {
 		return nil, err
 	}
 	if err = json.Unmarshal(buf.Bytes(), &wechatUserInfo); err != nil {
@@ -159,7 +116,6 @@ func (idp *WeChatIdProvider) GetUserInfo(token *oauth2.Token) (*UserInfo, error)
 	if id == "" {
 		id = wechatUserInfo.Openid
 	}
-
 	userInfo := UserInfo{
 		Id:          id,
 		Username:    wechatUserInfo.Nickname,
@@ -167,55 +123,4 @@ func (idp *WeChatIdProvider) GetUserInfo(token *oauth2.Token) (*UserInfo, error)
 		AvatarUrl:   wechatUserInfo.Headimgurl,
 	}
 	return &userInfo, nil
-}
-
-func GetWechatOfficialAccountAccessToken(clientId string, clientSecret string) (string, error) {
-	accessTokenUrl := fmt.Sprintf("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s", clientId, clientSecret)
-	request, err := http.NewRequest("GET", accessTokenUrl, nil)
-	client := new(http.Client)
-	resp, err := client.Do(request)
-	respBytes, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return "", err
-	}
-	var data struct {
-		ExpireIn    int    `json:"expires_in"`
-		AccessToken string `json:"access_token"`
-	}
-	err = json.Unmarshal(respBytes, &data)
-	if err != nil {
-		return "", err
-	}
-	return data.AccessToken, nil
-}
-
-func GetWechatOfficialAccountQRCode(clientId string, clientSecret string) (string, error) {
-	accessToken, err := GetWechatOfficialAccountAccessToken(clientId, clientSecret)
-	client := new(http.Client)
-	params := "{\"action_name\": \"QR_LIMIT_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": \"test\"}}}"
-	bodyData := bytes.NewReader([]byte(params))
-	qrCodeUrl := fmt.Sprintf("https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=%s", accessToken)
-	requeset, err := http.NewRequest("POST", qrCodeUrl, bodyData)
-	resp, err := client.Do(requeset)
-	if err != nil {
-		return "", err
-	}
-	respBytes, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return "", err
-	}
-	var data struct {
-		Ticket        string `json:"ticket"`
-		ExpireSeconds int    `json:"expire_seconds"`
-		URL           string `json:"url"`
-	}
-	err = json.Unmarshal(respBytes, &data)
-	if err != nil {
-		return "", err
-	}
-
-	var png []byte
-	png, err = qrcode.Encode(data.URL, qrcode.Medium, 256)
-	base64Image := base64.StdEncoding.EncodeToString(png)
-	return base64Image, nil
 }

@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/service"
+	"QuickAuth/internal/service/oauth"
 	"QuickAuth/pkg/global"
 	"crypto/rsa"
 	"fmt"
@@ -12,7 +12,7 @@ import (
 
 func LoginAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		cookie, err := c.Cookie(resp.IDToken)
+		cookie, err := c.Cookie(resp.CookieIDToken)
 		if err != nil {
 			resp.ErrorNoLogin(c, err)
 			return
@@ -23,7 +23,7 @@ func LoginAuth() gin.HandlerFunc {
 			resp.ErrorUnknown(c, err, "get gin tenant err")
 			return
 		}
-		keys, err := service.LoadRsaPrivateKeys(tenant.App.Name)
+		keys, err := oauth.LoadRsaPrivateKeys(tenant.App.Name)
 		if err != nil {
 			resp.ErrorUnknown(c, err, "load rsa private key err")
 			return
@@ -54,4 +54,10 @@ func setUserInfo(c *gin.Context, claims jwt.Claims) {
 	}
 
 	c.Set(resp.UserInfo, claim)
+}
+
+func M2mAuth() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		
+	}
 }

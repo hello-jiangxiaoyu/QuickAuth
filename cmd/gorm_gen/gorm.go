@@ -2,7 +2,7 @@ package main
 
 import (
 	"QuickAuth/pkg/conf"
-	"QuickAuth/pkg/orm"
+	"QuickAuth/pkg/tools/orm"
 	"fmt"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	genDir   = "../../pkg"
+	genDir   = "../../internal/endpoint"
 	modelDir = genDir + "/model"
 	queryDir = genDir + "/query"
 )

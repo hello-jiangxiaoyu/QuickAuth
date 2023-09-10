@@ -3,43 +3,27 @@
 package idp
 
 import (
-	"encoding/json"
+	"QuickAuth/pkg/utils"
 	"fmt"
-	"io"
-	"net/http"
 	"time"
 
 	"golang.org/x/oauth2"
 )
 
-// WeComInternalIdProvider
-// This idp is using wecom internal application api as idp
 type WeComInternalIdProvider struct {
-	Client *http.Client
 	Config *oauth2.Config
 }
 
 func NewWeComInternalIdProvider(clientId string, clientSecret string, redirectUrl string) *WeComInternalIdProvider {
-	idp := &WeComInternalIdProvider{}
-
-	config := idp.getConfig(clientId, clientSecret, redirectUrl)
-	idp.Config = config
-
-	return idp
-}
-
-func (idp *WeComInternalIdProvider) SetHttpClient(client *http.Client) {
-	idp.Client = client
-}
-
-func (idp *WeComInternalIdProvider) getConfig(clientId string, clientSecret string, redirectUrl string) *oauth2.Config {
-	config := &oauth2.Config{
-		ClientID:     clientId,
-		ClientSecret: clientSecret,
-		RedirectURL:  redirectUrl,
+	idp := &WeComInternalIdProvider{
+		Config: &oauth2.Config{
+			ClientID:     clientId,
+			ClientSecret: clientSecret,
+			RedirectURL:  redirectUrl,
+		},
 	}
 
-	return config
+	return idp
 }
 
 type WecomInterToken struct {
@@ -56,20 +40,12 @@ func (idp *WeComInternalIdProvider) GetToken(code string) (*oauth2.Token, error)
 		CorpId     string `json:"corpid"`
 		Corpsecret string `json:"corpsecret"`
 	}{idp.Config.ClientID, idp.Config.ClientSecret}
-	resp, err := idp.Client.Get(fmt.Sprintf("https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=%s&corpsecret=%s", pTokenParams.CorpId, pTokenParams.Corpsecret))
-	if err != nil {
+	var pToken WecomInterToken
+	if err := utils.Get(fmt.Sprintf("https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=%s&corpsecret=%s", pTokenParams.CorpId, pTokenParams.Corpsecret),
+		&pToken); err != nil {
 		return nil, err
 	}
 
-	data, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-	pToken := &WecomInterToken{}
-	err = json.Unmarshal(data, pToken)
-	if err != nil {
-		return nil, err
-	}
 	if pToken.Errcode != 0 {
 		return nil, fmt.Errorf("pToken.Errcode = %d, pToken.Errmsg = %s", pToken.Errcode, pToken.Errmsg)
 	}
@@ -78,11 +54,9 @@ func (idp *WeComInternalIdProvider) GetToken(code string) (*oauth2.Token, error)
 		AccessToken: pToken.AccessToken,
 		Expiry:      time.Unix(time.Now().Unix()+int64(pToken.ExpiresIn), 0),
 	}
-
 	raw := make(map[string]interface{})
 	raw["code"] = code
 	token = token.WithExtra(raw)
-
 	return token, nil
 }
 
@@ -104,21 +78,9 @@ type WecomInternalUserInfo struct {
 }
 
 func (idp *WeComInternalIdProvider) GetUserInfo(token *oauth2.Token) (*UserInfo, error) {
-	// Get userid first
-	accessToken := token.AccessToken
-	code := token.Extra("code").(string)
-	resp, err := idp.Client.Get(fmt.Sprintf("https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token=%s&code=%s", accessToken, code))
-	if err != nil {
-		return nil, err
-	}
-
-	data, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-	userResp := &WecomInternalUserResp{}
-	err = json.Unmarshal(data, userResp)
-	if err != nil {
+	url := fmt.Sprintf("https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token=%s&code=%s", token.AccessToken, token.Extra("code").(string))
+	var userResp WecomInternalUserResp
+	if err := utils.Get(url, &userResp); err != nil {
 		return nil, err
 	}
 	if userResp.Errcode != 0 {
@@ -127,19 +89,11 @@ func (idp *WeComInternalIdProvider) GetUserInfo(token *oauth2.Token) (*UserInfo,
 	if userResp.OpenId != "" {
 		return nil, fmt.Errorf("not an internal user")
 	}
-	// Use userid and accesstoken to get user information
-	resp, err = idp.Client.Get(fmt.Sprintf("https://qyapi.weixin.qq.com/cgi-bin/user/get?access_token=%s&userid=%s", accessToken, userResp.UserId))
-	if err != nil {
-		return nil, err
-	}
 
-	data, err = io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-	infoResp := &WecomInternalUserInfo{}
-	err = json.Unmarshal(data, infoResp)
-	if err != nil {
+	// Use userid and accesstoken to get user information
+	var infoResp WecomInternalUserInfo
+	url = fmt.Sprintf("https://qyapi.weixin.qq.com/cgi-bin/user/get?access_token=%s&userid=%s", token.AccessToken, userResp.UserId)
+	if err := utils.Get(url, &infoResp); err != nil {
 		return nil, err
 	}
 	if infoResp.Errcode != 0 {
@@ -152,7 +106,6 @@ func (idp *WeComInternalIdProvider) GetUserInfo(token *oauth2.Token) (*UserInfo,
 		Email:       infoResp.Email,
 		AvatarUrl:   infoResp.Avatar,
 	}
-
 	if userInfo.Id == "" {
 		userInfo.Id = userInfo.Username
 	}

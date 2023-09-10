@@ -1,7 +1,7 @@
 package request
 
 import (
-	"QuickAuth/internal/model"
+	"QuickAuth/internal/endpoint/model"
 )
 
 type (
@@ -13,9 +13,10 @@ type (
 
 	// LoginProvider 第三方登录
 	LoginProvider struct {
-		ProviderName string       `uri:"provider"`
-		Code         string       `query:"code"`
-		Tenant       model.Tenant `query:"tenant"`
+		ProviderId int64        `uri:"providerId"`
+		Code       string       `query:"code"`
+		Next       string       `query:"next"`
+		Tenant     model.Tenant `query:"tenant"`
 	}
 
 	Auth struct {
@@ -56,7 +57,6 @@ func (p *ProviderReq) ToModel() *model.Provider {
 	return &model.Provider{
 		TenantID:     p.Tenant.ID,
 		Type:         p.Type,
-		AppID:        p.Tenant.AppID,
 		AgentID:      p.AgentID,
 		ClientID:     p.ClientID,
 		ClientSecret: p.ClientSecret,

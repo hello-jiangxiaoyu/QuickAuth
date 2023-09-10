@@ -34,7 +34,7 @@ function Tenants() {
 
   function updateTenantList() {
     api.fetchTenantList(appId).then(r => {
-      r.data.forEach((obj, index) => {
+      r.data?.forEach((obj, index) => {
         obj.key = index + 1;
       });
       dispatchTenantList(r.data);

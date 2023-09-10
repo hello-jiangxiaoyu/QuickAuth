@@ -1,8 +1,8 @@
 package internal
 
 import (
+	"QuickAuth/internal/endpoint/model"
 	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/model"
 	"errors"
 	"github.com/golang-jwt/jwt/v5"
 )

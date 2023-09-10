@@ -26,7 +26,6 @@ const docTemplate = `{
                 "tags": [
                     "oidc"
                 ],
-                "summary": "get jwks",
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -40,12 +39,11 @@ const docTemplate = `{
                 "tags": [
                     "oidc"
                 ],
-                "summary": "get OIDC",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/controller.OpenidConfigurationDto"
+                            "$ref": "#/definitions/oauth.OpenidConfigurationDto"
                         }
                     }
                 }
@@ -57,7 +55,6 @@ const docTemplate = `{
                 "tags": [
                     "app"
                 ],
-                "summary": "apps info",
                 "parameters": [
                     {
                         "type": "string",
@@ -83,7 +80,6 @@ const docTemplate = `{
                 "tags": [
                     "app"
                 ],
-                "summary": "create app",
                 "parameters": [
                     {
                         "type": "string",
@@ -116,11 +112,10 @@ const docTemplate = `{
         },
         "/api/quick/apps/{appId}": {
             "get": {
-                "description": "list apps",
+                "description": "get app",
                 "tags": [
                     "app"
                 ],
-                "summary": "apps info",
                 "parameters": [
                     {
                         "type": "string",
@@ -153,7 +148,6 @@ const docTemplate = `{
                 "tags": [
                     "app"
                 ],
-                "summary": "modify app",
                 "parameters": [
                     {
                         "type": "string",
@@ -195,7 +189,6 @@ const docTemplate = `{
                 "tags": [
                     "app"
                 ],
-                "summary": "delete app",
                 "parameters": [
                     {
                         "type": "string",
@@ -230,7 +223,6 @@ const docTemplate = `{
                 "tags": [
                     "app"
                 ],
-                "summary": "app secret info",
                 "parameters": [
                     {
                         "type": "string",
@@ -263,7 +255,6 @@ const docTemplate = `{
                 "tags": [
                     "app"
                 ],
-                "summary": "create app secret",
                 "parameters": [
                     {
                         "type": "string",
@@ -307,7 +298,6 @@ const docTemplate = `{
                 "tags": [
                     "app"
                 ],
-                "summary": "create app secret",
                 "parameters": [
                     {
                         "type": "string",
@@ -356,7 +346,6 @@ const docTemplate = `{
                 "tags": [
                     "app"
                 ],
-                "summary": "delete app secret",
                 "parameters": [
                     {
                         "type": "string",
@@ -398,7 +387,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "get tenant list",
                 "parameters": [
                     {
                         "type": "string",
@@ -431,7 +419,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "create tenant",
                 "parameters": [
                     {
                         "type": "string",
@@ -475,7 +462,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "get tenant details",
                 "parameters": [
                     {
                         "type": "string",
@@ -515,7 +501,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "modify tenant",
                 "parameters": [
                     {
                         "type": "string",
@@ -564,7 +549,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "delete tenant",
                 "parameters": [
                     {
                         "type": "string",
@@ -606,7 +590,6 @@ const docTemplate = `{
                 "tags": [
                     "login"
                 ],
-                "summary": "login a user",
                 "parameters": [
                     {
                         "type": "string",
@@ -636,13 +619,40 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/quick/login/providers/{provider}": {
+        "/api/quick/login/providers/{providerId}": {
+            "get": {
+                "description": "login third provider",
+                "tags": [
+                    "login"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "provider name",
+                        "name": "provider",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "next",
+                        "name": "next",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/login/providers/{providerId}/callback": {
             "get": {
                 "description": "login third provider callback",
                 "tags": [
                     "login"
                 ],
-                "summary": "provider callback",
                 "parameters": [
                     {
                         "type": "string",
@@ -657,6 +667,12 @@ const docTemplate = `{
                         "name": "code",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "next",
+                        "name": "next",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -672,7 +688,6 @@ const docTemplate = `{
                 "tags": [
                     "login"
                 ],
-                "summary": "logout current user",
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -686,7 +701,6 @@ const docTemplate = `{
                 "tags": [
                     "oidc"
                 ],
-                "summary": "get jwks",
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -700,7 +714,6 @@ const docTemplate = `{
                 "tags": [
                     "oidc"
                 ],
-                "summary": "oauth2 authorize",
                 "parameters": [
                     {
                         "type": "string",
@@ -744,9 +757,6 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
                     "302": {
                         "description": "Found"
                     }
@@ -759,7 +769,6 @@ const docTemplate = `{
                 "tags": [
                     "oidc"
                 ],
-                "summary": "oauth2 token",
                 "parameters": [
                     {
                         "type": "string",
@@ -819,7 +828,6 @@ const docTemplate = `{
                 "tags": [
                     "provider"
                 ],
-                "summary": "provider info",
                 "parameters": [
                     {
                         "type": "string",
@@ -851,7 +859,6 @@ const docTemplate = `{
                 "tags": [
                     "provider"
                 ],
-                "summary": "create provider",
                 "parameters": [
                     {
                         "type": "string",
@@ -894,7 +901,6 @@ const docTemplate = `{
                 "tags": [
                     "provider"
                 ],
-                "summary": "get provider details",
                 "parameters": [
                     {
                         "type": "string",
@@ -933,7 +939,6 @@ const docTemplate = `{
                 "tags": [
                     "provider"
                 ],
-                "summary": "modify provider",
                 "parameters": [
                     {
                         "type": "integer",
@@ -969,7 +974,6 @@ const docTemplate = `{
                 "tags": [
                     "provider"
                 ],
-                "summary": "delete provider",
                 "parameters": [
                     {
                         "type": "integer",
@@ -998,7 +1002,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "get redirect uri list",
                 "parameters": [
                     {
                         "type": "string",
@@ -1036,7 +1039,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "create app redirect uri",
                 "parameters": [
                     {
                         "type": "string",
@@ -1079,7 +1081,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "modify app redirect uri",
                 "parameters": [
                     {
                         "type": "string",
@@ -1129,7 +1130,6 @@ const docTemplate = `{
                 "tags": [
                     "tenant"
                 ],
-                "summary": "delete app",
                 "parameters": [
                     {
                         "type": "string",
@@ -1170,7 +1170,6 @@ const docTemplate = `{
                 "tags": [
                     "login"
                 ],
-                "summary": "login a user",
                 "parameters": [
                     {
                         "type": "string",
@@ -1200,13 +1199,1007 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/quick/resources": {
+            "get": {
+                "description": "list resources",
+                "tags": [
+                    "resource"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "create resource",
+                "tags": [
+                    "resource"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}": {
+            "get": {
+                "description": "get resource",
+                "tags": [
+                    "resource"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update resource",
+                "tags": [
+                    "resource"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete resource",
+                "tags": [
+                    "resource"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/json/operations/{operationId}": {
+            "get": {
+                "description": "判断用户当前对JSON资源的操作是否被允许",
+                "tags": [
+                    "auth"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "json path",
+                        "name": "path",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "operation id",
+                        "name": "operationId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/json/operations/{operationId}/json": {
+            "get": {
+                "description": "获取拥有某个操作权限的整个json结构",
+                "tags": [
+                    "auth"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "operation id",
+                        "name": "operationId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/json/operations/{operationId}/parents/:parentId": {
+            "get": {
+                "description": "获取拥有某个操作权限的node列表",
+                "tags": [
+                    "auth"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "operation id",
+                        "name": "operationId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/json/users/{userId}/roles": {
+            "get": {
+                "description": "list resource json user roles",
+                "tags": [
+                    "resource-user"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "create resource json user role",
+                "tags": [
+                    "resource-user"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/json/users/{userId}/roles/{roleId}": {
+            "put": {
+                "description": "update resource json user role",
+                "tags": [
+                    "resource-user"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete resource json user role",
+                "tags": [
+                    "resource-user"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/nodes": {
+            "get": {
+                "description": "list resource nodes",
+                "tags": [
+                    "resource"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "create resource node",
+                "tags": [
+                    "resource"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/nodes/{nodeId}": {
+            "get": {
+                "description": "get resource node",
+                "tags": [
+                    "resource"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "node id",
+                        "name": "nodeId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update resource node",
+                "tags": [
+                    "resource"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "node id",
+                        "name": "nodeId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete resource node",
+                "tags": [
+                    "resource"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "node id",
+                        "name": "nodeId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/nodes/{nodeId}/operations/{operationId}": {
+            "get": {
+                "description": "判断用户当前对资源的操作是否被允许",
+                "tags": [
+                    "auth"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "node id",
+                        "name": "nodeId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "operation id",
+                        "name": "operationId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/operations": {
+            "get": {
+                "description": "list resource operations",
+                "tags": [
+                    "resource-operation"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "create resource operation",
+                "tags": [
+                    "resource-operation"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/operations/{operationId}": {
+            "get": {
+                "description": "get resource operation",
+                "tags": [
+                    "resource-operation"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "operation id",
+                        "name": "operationId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update resource operation",
+                "tags": [
+                    "resource-operation"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "operation id",
+                        "name": "operationId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete resource operation",
+                "tags": [
+                    "resource-operation"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "operation id",
+                        "name": "operationId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/roles": {
+            "get": {
+                "description": "list resource roles",
+                "tags": [
+                    "resource-role"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "create resource role",
+                "tags": [
+                    "resource-role"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/roles/{roleId}": {
+            "get": {
+                "description": "get resource role",
+                "tags": [
+                    "resource-role"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update resource role",
+                "tags": [
+                    "resource-role"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete resource role",
+                "tags": [
+                    "resource-role"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/roles/{roleId}/operations": {
+            "get": {
+                "description": "list resource role operations",
+                "tags": [
+                    "resource-role"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "create resource role operation",
+                "tags": [
+                    "resource-role"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/roles/{roleId}/operations/{operationId}": {
+            "delete": {
+                "description": "delete resource role operation",
+                "tags": [
+                    "resource-role"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "operation id",
+                        "name": "operationId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/users/{userId}/roles": {
+            "get": {
+                "description": "list resource json user roles",
+                "tags": [
+                    "resource-user"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "create resource json user role",
+                "tags": [
+                    "resource-user"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/quick/resources/{resourceId}/users/{userId}/roles/{roleId}": {
+            "put": {
+                "description": "update resource json user role",
+                "tags": [
+                    "resource-user"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete resource json user role",
+                "tags": [
+                    "resource-user"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/api/quick/user-pools": {
             "get": {
                 "description": "list user pool",
                 "tags": [
                     "user"
                 ],
-                "summary": "user pools info",
                 "parameters": [
                     {
                         "type": "string",
@@ -1232,7 +2225,6 @@ const docTemplate = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "create user pool",
                 "parameters": [
                     {
                         "type": "string",
@@ -1265,11 +2257,10 @@ const docTemplate = `{
         },
         "/api/quick/user-pools/{poolId}": {
             "get": {
-                "description": "list user pool",
+                "description": "get user pool info",
                 "tags": [
                     "user"
                 ],
-                "summary": "user pool info",
                 "parameters": [
                     {
                         "type": "string",
@@ -1302,7 +2293,6 @@ const docTemplate = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "modify user pool",
                 "parameters": [
                     {
                         "type": "string",
@@ -1344,7 +2334,6 @@ const docTemplate = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "delete user pool",
                 "parameters": [
                     {
                         "type": "string",
@@ -1379,7 +2368,6 @@ const docTemplate = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "user info",
                 "parameters": [
                     {
                         "type": "string",
@@ -1412,7 +2400,6 @@ const docTemplate = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "create user",
                 "parameters": [
                     {
                         "type": "string",
@@ -1452,11 +2439,10 @@ const docTemplate = `{
         },
         "/api/quick/user-pools/{poolId}/users/{userId}": {
             "get": {
-                "description": "list user",
+                "description": "get user info",
                 "tags": [
                     "user"
                 ],
-                "summary": "user info",
                 "parameters": [
                     {
                         "type": "string",
@@ -1496,7 +2482,6 @@ const docTemplate = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "modify user",
                 "parameters": [
                     {
                         "type": "string",
@@ -1545,7 +2530,6 @@ const docTemplate = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "delete user",
                 "parameters": [
                     {
                         "type": "string",
@@ -1583,7 +2567,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "controller.OpenidConfigurationDto": {
+        "oauth.OpenidConfigurationDto": {
             "type": "object",
             "properties": {
                 "authorization_endpoint": {

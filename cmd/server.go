@@ -18,12 +18,6 @@ func startServer() {
 		return
 	}
 
-	if err := internal.InitDefaultTenant(); err != nil {
-		fmt.Println("init tenant err: ", err)
-		os.Exit(ExitServer)
-		return
-	}
-
 	svc := internal.GetServer()
 	if err := svc.Run(global.Config.Svc.Listen); err != nil {
 		fmt.Println("server run err: ", err)
@@ -31,5 +25,18 @@ func startServer() {
 		return
 	}
 
-	fmt.Println("server turned off")
+	fmt.Println("[Error] server turned off")
+}
+
+func initDefault() {
+	if err := initGlobal(); err != nil {
+		return
+	}
+
+	if err := internal.InitDefaultTenant(); err != nil {
+		fmt.Println("init tenant err: ", err)
+		os.Exit(ExitServer)
+		return
+	}
+	fmt.Println("[OK] init default successfully")
 }

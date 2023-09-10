@@ -24,7 +24,7 @@ CREATE INDEX IF NOT EXISTS idx_app_secret_id ON app_secrets (secret);
 
 CREATE TABLE IF NOT EXISTS codes (
     id           BIGSERIAL PRIMARY KEY,
-    user_id      BIGSERIAL NOT NULL,
+    user_id      CHAR(32) NOT NULL,
     app_id       CHAR(32) NOT NULL REFERENCES apps(id),
     code         CHAR(32) NOT NULL,
     scope        VARCHAR(255) NOT NULL,
@@ -104,14 +104,19 @@ CREATE UNIQUE INDEX IF NOT EXISTS uk_tenants_host ON tenants(host);
 
 
 CREATE TABLE IF NOT EXISTS providers (
-    id              BIGSERIAL PRIMARY KEY,
-    tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
-    type            VARCHAR(32) NOT NULL,
-    client_id       VARCHAR(255) NOT NULL,
-    client_secret   VARCHAR(255) NOT NULL,
-    agent_id        VARCHAR(255) NOT NULL,
-    created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+    id                  BIGSERIAL PRIMARY KEY,
+    tenant_id           BIGSERIAL NOT NULL REFERENCES tenants(id),
+    type                VARCHAR(32) NOT NULL,
+    client_id           VARCHAR(255) NOT NULL,
+    client_secret       VARCHAR(255) NOT NULL,
+    agent_id            VARCHAR(255) NOT NULL,
+    auth_endpoint       VARCHAR(255) NOT NULL,
+    token_endpoint      VARCHAR(255) NOT NULL,
+    user_info_endpoint  VARCHAR(255) NOT NULL,
+    scope               VARCHAR(255) NOT NULL,
+    response_type       VARCHAR(255) NOT NULL,
+    created_at          TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at          TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS idx_provider_type ON providers(type);
 
@@ -119,76 +124,96 @@ CREATE INDEX IF NOT EXISTS idx_provider_type ON providers(type);
 
 
 --------------------------------- 权限 ---------------------------------
--- JSON资源描述
-CREATE TABLE json_trees (
+-- resource资源描述
+CREATE TABLE IF NOT EXISTS resources (
     id              BIGSERIAL PRIMARY KEY,
     tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
     code            VARCHAR(255) NOT NULL,  -- 编程访问code
+    type            VARCHAR(15) NOT NULL,   -- 数据类型，value，node
     name            VARCHAR(255) NOT NULL,
     value           JSONB NOT NULL default '{}',
     describe        VARCHAR(255) NOT NULL,
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX IF NOT EXISTS idx_json_tree_tenant_code ON json_trees(code, tenant_id);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_resource_tree_tenant_code ON resources(code, tenant_id);
 
--- JSON节点
-CREATE TABLE json_nodes (
+-- resource节点
+CREATE TABLE IF NOT EXISTS resource_nodes (
     id              BIGSERIAL PRIMARY KEY,
-    tree_id         BIGSERIAL NOT NULL REFERENCES json_trees(id),
+    tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
+    resource_id     BIGSERIAL NOT NULL REFERENCES resources(id),
     name            VARCHAR(255) NOT NULL,
     path            VARCHAR(255) NOT NULL,
-    parent          VARCHAR(255) NOT NULL,
+    parent          BIGSERIAL NOT NULL,
+    parent_path     BIGSERIAL NOT NULL,
     value           JSONB NOT NULL default '{}',
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE INDEX IF NOT EXISTS idx_json_nodes_path ON json_nodes(path);
+CREATE INDEX IF NOT EXISTS idx_resource_nodes_path ON resource_nodes(path);
 
--- JSON操作
-CREATE TABLE json_operations (
+-- resource操作
+CREATE TABLE IF NOT EXISTS resource_operations (
     id              BIGSERIAL PRIMARY KEY,
-    tree_id         BIGSERIAL NOT NULL REFERENCES json_trees(id),
+    tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
+    resource_id     BIGSERIAL NOT NULL REFERENCES resources(id),
     code            VARCHAR(255) NOT NULL,  -- 编程访问code
     name            VARCHAR(255) NOT NULL,
     describe        VARCHAR(255) NOT NULL,
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE INDEX IF NOT EXISTS idx_json_operation_code ON json_operations(code);
+CREATE INDEX IF NOT EXISTS idx_resource_operation_code ON resource_operations(code);
 
--- JSON角色
-CREATE TABLE json_roles (
+-- resource角色
+CREATE TABLE IF NOT EXISTS resource_roles (
     id              BIGSERIAL PRIMARY KEY,
-    tree_id         BIGSERIAL NOT NULL REFERENCES json_trees(id),
+    tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
+    resource_id     BIGSERIAL NOT NULL REFERENCES resources(id),
     code            VARCHAR(255) NOT NULL,  -- 编程访问code
     name            VARCHAR(255) NOT NULL,
     describe        VARCHAR(255) NOT NULL,
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE INDEX IF NOT EXISTS idx_json_role_code ON json_operations(code);
+CREATE INDEX IF NOT EXISTS idx_resource_role_code ON resource_roles(code);
 
--- JSON角色的权限
-CREATE TABLE json_role_operations (
+-- resource角色的权限
+CREATE TABLE IF NOT EXISTS resource_role_operations (
     id              BIGSERIAL PRIMARY KEY,
-    tree_id         BIGSERIAL NOT NULL REFERENCES json_trees(id),
-    role_id         BIGSERIAL NOT NULL REFERENCES json_roles(id),
-    operation_id    BIGSERIAL NOT NULL REFERENCES json_operations(id),
+    tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
+    resource_id     BIGSERIAL NOT NULL REFERENCES resources(id),
+    role_id         BIGSERIAL NOT NULL REFERENCES resource_roles(id),
+    operation_id    BIGSERIAL NOT NULL REFERENCES resource_operations(id),
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE INDEX IF NOT EXISTS idx_json_role_operation_code ON json_operations(code);
+CREATE INDEX IF NOT EXISTS idx_resource_role_operation_code ON resource_operations(code);
 
--- JSON字段用户的角色
-CREATE TABLE json_user_roles (
+-- resource字段用户的角色
+CREATE TABLE IF NOT EXISTS resource_user_roles (
     id              BIGSERIAL PRIMARY KEY,
-    tree_id         BIGSERIAL NOT NULL REFERENCES json_trees(id),
-    node_id         BIGSERIAL NOT NULL REFERENCES json_nodes(id),
-    user_id         BIGSERIAL NOT NULL REFERENCES users(id),
-    role_id         BIGSERIAL NOT NULL REFERENCES json_roles(id),
+    tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
+    resource_id     BIGSERIAL NOT NULL REFERENCES resources(id),
+    node_id         BIGSERIAL NOT NULL REFERENCES resource_nodes(id),
+    user_id         CHAR(32)  NOT NULL REFERENCES users(id),
+    role_id         BIGSERIAL NOT NULL REFERENCES resource_roles(id),
     created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
-CREATE INDEX IF NOT EXISTS idx_json_user_role_code ON json_operations(code);
+CREATE INDEX IF NOT EXISTS idx_resource_user_role_code ON resource_operations(code);
+
+-- json字段用户的角色
+CREATE TABLE IF NOT EXISTS resource_json_user_roles (
+    id              BIGSERIAL PRIMARY KEY,
+    tenant_id       BIGSERIAL NOT NULL REFERENCES tenants(id),
+    json_path       VARCHAR(255) NOT NULL,
+    resource_id     BIGSERIAL NOT NULL REFERENCES resources(id),
+    user_id         CHAR(32)  NOT NULL REFERENCES users(id),
+    role_id         BIGSERIAL NOT NULL REFERENCES resource_roles(id),
+    created_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    updated_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS idx_json_user_role_code ON resource_json_user_roles(json_path);
 

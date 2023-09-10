@@ -1,5 +1,5 @@
 definitions:
-  controller.OpenidConfigurationDto:
+  oauth.OpenidConfigurationDto:
     properties:
       authorization_endpoint:
         type: string
@@ -168,7 +168,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: get jwks
       tags:
       - oidc
   /api/quick/.well-known/openid-configuration:
@@ -178,8 +177,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/controller.OpenidConfigurationDto'
-      summary: get OIDC
+            $ref: '#/definitions/oauth.OpenidConfigurationDto'
       tags:
       - oidc
   /api/quick/apps:
@@ -197,7 +195,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: apps info
       tags:
       - app
     post:
@@ -220,7 +217,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: create app
       tags:
       - app
   /api/quick/apps/{appId}:
@@ -243,11 +239,10 @@ paths:
       responses:
         "200":
           description: OK
-      summary: delete app
       tags:
       - app
     get:
-      description: list apps
+      description: get app
       parameters:
       - description: user id
         in: header
@@ -265,7 +260,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: apps info
       tags:
       - app
     put:
@@ -293,7 +287,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: modify app
       tags:
       - app
   /api/quick/apps/{appId}/secrets:
@@ -316,7 +309,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: app secret info
       tags:
       - app
     post:
@@ -344,7 +336,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: create app secret
       tags:
       - app
   /api/quick/apps/{appId}/secrets/{secretId}:
@@ -372,7 +363,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: delete app secret
       tags:
       - app
     put:
@@ -405,7 +395,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: create app secret
       tags:
       - app
   /api/quick/apps/{appId}/tenants:
@@ -428,7 +417,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: get tenant list
       tags:
       - tenant
     post:
@@ -456,7 +444,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: create tenant
       tags:
       - tenant
   /api/quick/apps/{appId}/tenants/{tenantId}:
@@ -484,7 +471,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: delete tenant
       tags:
       - tenant
     get:
@@ -511,7 +497,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: get tenant details
       tags:
       - tenant
     put:
@@ -544,7 +529,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: modify tenant
       tags:
       - tenant
   /api/quick/login:
@@ -568,10 +552,27 @@ paths:
       responses:
         "200":
           description: OK
-      summary: login a user
       tags:
       - login
-  /api/quick/login/providers/{provider}:
+  /api/quick/login/providers/{providerId}:
+    get:
+      description: login third provider
+      parameters:
+      - description: provider name
+        in: path
+        name: provider
+        required: true
+        type: string
+      - description: next
+        in: query
+        name: next
+        type: string
+      responses:
+        "200":
+          description: OK
+      tags:
+      - login
+  /api/quick/login/providers/{providerId}/callback:
     get:
       description: login third provider callback
       parameters:
@@ -585,10 +586,13 @@ paths:
         name: code
         required: true
         type: string
+      - description: next
+        in: query
+        name: next
+        type: string
       responses:
         "200":
           description: OK
-      summary: provider callback
       tags:
       - login
   /api/quick/logout:
@@ -597,7 +601,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: logout current user
       tags:
       - login
   /api/quick/me/profile:
@@ -606,7 +609,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: get jwks
       tags:
       - oidc
   /api/quick/oauth2/auth:
@@ -642,11 +644,8 @@ paths:
         name: nonce
         type: string
       responses:
-        "200":
-          description: OK
         "302":
           description: Found
-      summary: oauth2 authorize
       tags:
       - oidc
   /api/quick/oauth2/token:
@@ -686,7 +685,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: oauth2 token
       tags:
       - oidc
   /api/quick/providers:
@@ -708,7 +706,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: provider info
       tags:
       - provider
     post:
@@ -735,7 +732,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: create provider
       tags:
       - provider
   /api/quick/providers/{providerId}:
@@ -754,7 +750,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: delete provider
       tags:
       - provider
     get:
@@ -780,7 +775,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: get provider details
       tags:
       - provider
     put:
@@ -804,7 +798,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: modify provider
       tags:
       - provider
   /api/quick/redirect-uri:
@@ -830,7 +823,6 @@ paths:
             items:
               type: string
             type: array
-      summary: get redirect uri list
       tags:
       - tenant
     post:
@@ -857,7 +849,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: create app redirect uri
       tags:
       - tenant
   /api/quick/redirect-uri/{uri}:
@@ -884,7 +875,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: delete app
       tags:
       - tenant
   /api/quick/redirect-uri/{uriId}:
@@ -917,7 +907,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: modify app redirect uri
       tags:
       - tenant
   /api/quick/register:
@@ -941,9 +930,664 @@ paths:
       responses:
         "200":
           description: OK
-      summary: login a user
       tags:
       - login
+  /api/quick/resources:
+    get:
+      description: list resources
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource
+    post:
+      description: create resource
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource
+  /api/quick/resources/{resourceId}:
+    delete:
+      description: delete resource
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      tags:
+      - resource
+    get:
+      description: get resource
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource
+    put:
+      description: update resource
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      tags:
+      - resource
+  /api/quick/resources/{resourceId}/json/operations/{operationId}:
+    get:
+      description: 判断用户当前对JSON资源的操作是否被允许
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: json path
+        in: query
+        name: path
+        required: true
+        type: string
+      - description: operation id
+        in: path
+        name: operationId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      tags:
+      - auth
+  /api/quick/resources/{resourceId}/json/operations/{operationId}/json:
+    get:
+      description: 获取拥有某个操作权限的整个json结构
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: operation id
+        in: path
+        name: operationId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - auth
+  /api/quick/resources/{resourceId}/json/operations/{operationId}/parents/:parentId:
+    get:
+      description: 获取拥有某个操作权限的node列表
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: operation id
+        in: path
+        name: operationId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - auth
+  /api/quick/resources/{resourceId}/json/users/{userId}/roles:
+    get:
+      description: list resource json user roles
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource-user
+    post:
+      description: create resource json user role
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource-user
+  /api/quick/resources/{resourceId}/json/users/{userId}/roles/{roleId}:
+    delete:
+      description: delete resource json user role
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      tags:
+      - resource-user
+    put:
+      description: update resource json user role
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      tags:
+      - resource-user
+  /api/quick/resources/{resourceId}/nodes:
+    get:
+      description: list resource nodes
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource
+    post:
+      description: create resource node
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource
+  /api/quick/resources/{resourceId}/nodes/{nodeId}:
+    delete:
+      description: delete resource node
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: node id
+        in: path
+        name: nodeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      tags:
+      - resource
+    get:
+      description: get resource node
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: node id
+        in: path
+        name: nodeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource
+    put:
+      description: update resource node
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: node id
+        in: path
+        name: nodeId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      tags:
+      - resource
+  /api/quick/resources/{resourceId}/nodes/{nodeId}/operations/{operationId}:
+    get:
+      description: 判断用户当前对资源的操作是否被允许
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: node id
+        in: path
+        name: nodeId
+        required: true
+        type: string
+      - description: operation id
+        in: path
+        name: operationId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      tags:
+      - auth
+  /api/quick/resources/{resourceId}/operations:
+    get:
+      description: list resource operations
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource-operation
+    post:
+      description: create resource operation
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource-operation
+  /api/quick/resources/{resourceId}/operations/{operationId}:
+    delete:
+      description: delete resource operation
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: operation id
+        in: path
+        name: operationId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      tags:
+      - resource-operation
+    get:
+      description: get resource operation
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: operation id
+        in: path
+        name: operationId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource-operation
+    put:
+      description: update resource operation
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: operation id
+        in: path
+        name: operationId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      tags:
+      - resource-operation
+  /api/quick/resources/{resourceId}/roles:
+    get:
+      description: list resource roles
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource-role
+    post:
+      description: create resource role
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource-role
+  /api/quick/resources/{resourceId}/roles/{roleId}:
+    delete:
+      description: delete resource role
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      tags:
+      - resource-role
+    get:
+      description: get resource role
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource-role
+    put:
+      description: update resource role
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      tags:
+      - resource-role
+  /api/quick/resources/{resourceId}/roles/{roleId}/operations:
+    get:
+      description: list resource role operations
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource-role
+    post:
+      description: create resource role operation
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource-role
+  /api/quick/resources/{resourceId}/roles/{roleId}/operations/{operationId}:
+    delete:
+      description: delete resource role operation
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      - description: operation id
+        in: path
+        name: operationId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      tags:
+      - resource-role
+  /api/quick/resources/{resourceId}/users/{userId}/roles:
+    get:
+      description: list resource json user roles
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource-user
+    post:
+      description: create resource json user role
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      tags:
+      - resource-user
+  /api/quick/resources/{resourceId}/users/{userId}/roles/{roleId}:
+    delete:
+      description: delete resource json user role
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      tags:
+      - resource-user
+    put:
+      description: update resource json user role
+      parameters:
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      tags:
+      - resource-user
   /api/quick/user-pools:
     get:
       description: list user pool
@@ -959,7 +1603,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: user pools info
       tags:
       - user
     post:
@@ -982,7 +1625,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: create user pool
       tags:
       - user
   /api/quick/user-pools/{poolId}:
@@ -1005,11 +1647,10 @@ paths:
       responses:
         "200":
           description: OK
-      summary: delete user pool
       tags:
       - user
     get:
-      description: list user pool
+      description: get user pool info
       parameters:
       - description: user id
         in: header
@@ -1027,7 +1668,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: user pool info
       tags:
       - user
     put:
@@ -1055,7 +1695,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: modify user pool
       tags:
       - user
   /api/quick/user-pools/{poolId}/users:
@@ -1078,7 +1717,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: user info
       tags:
       - user
     post:
@@ -1106,7 +1744,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: create user
       tags:
       - user
   /api/quick/user-pools/{poolId}/users/{userId}:
@@ -1134,11 +1771,10 @@ paths:
       responses:
         "200":
           description: OK
-      summary: delete user
       tags:
       - user
     get:
-      description: list user
+      description: get user info
       parameters:
       - description: user id
         in: header
@@ -1161,7 +1797,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: user info
       tags:
       - user
     put:
@@ -1194,7 +1829,6 @@ paths:
       responses:
         "200":
           description: OK
-      summary: modify user
       tags:
       - user
 securityDefinitions:
