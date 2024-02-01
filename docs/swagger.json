@@ -41,10 +41,10 @@
         },
         "/api/quick/apps": {
             "get": {
-                "description": "list apps",
                 "tags": [
                     "app"
                 ],
+                "summary": "list apps",
                 "parameters": [
                     {
                         "type": "string",
@@ -66,10 +66,10 @@
                 }
             },
             "post": {
-                "description": "create app",
                 "tags": [
                     "app"
                 ],
+                "summary": "create app",
                 "parameters": [
                     {
                         "type": "string",
@@ -102,10 +102,10 @@
         },
         "/api/quick/apps/{appId}": {
             "get": {
-                "description": "get app",
                 "tags": [
                     "app"
                 ],
+                "summary": "get app",
                 "parameters": [
                     {
                         "type": "string",
@@ -134,10 +134,10 @@
                 }
             },
             "put": {
-                "description": "modify app",
                 "tags": [
                     "app"
                 ],
+                "summary": "modify app",
                 "parameters": [
                     {
                         "type": "string",
@@ -175,10 +175,10 @@
                 }
             },
             "delete": {
-                "description": "delete app",
                 "tags": [
                     "app"
                 ],
+                "summary": "delete app",
                 "parameters": [
                     {
                         "type": "string",
@@ -209,10 +209,10 @@
         },
         "/api/quick/apps/{appId}/secrets": {
             "get": {
-                "description": "list app secret",
                 "tags": [
                     "app"
                 ],
+                "summary": "list app secret",
                 "parameters": [
                     {
                         "type": "string",
@@ -241,10 +241,10 @@
                 }
             },
             "post": {
-                "description": "create app secret",
                 "tags": [
                     "app"
                 ],
+                "summary": "create app secret",
                 "parameters": [
                     {
                         "type": "string",
@@ -284,10 +284,10 @@
         },
         "/api/quick/apps/{appId}/secrets/{secretId}": {
             "put": {
-                "description": "create app secret",
                 "tags": [
                     "app"
                 ],
+                "summary": "create app secret",
                 "parameters": [
                     {
                         "type": "string",
@@ -332,10 +332,10 @@
                 }
             },
             "delete": {
-                "description": "delete app secret",
                 "tags": [
                     "app"
                 ],
+                "summary": "delete app secret",
                 "parameters": [
                     {
                         "type": "string",
@@ -373,10 +373,10 @@
         },
         "/api/quick/apps/{appId}/tenants": {
             "get": {
-                "description": "get tenant list",
                 "tags": [
                     "tenant"
                 ],
+                "summary": "get tenant list",
                 "parameters": [
                     {
                         "type": "string",
@@ -405,10 +405,10 @@
                 }
             },
             "post": {
-                "description": "create tenant",
                 "tags": [
                     "tenant"
                 ],
+                "summary": "create tenant",
                 "parameters": [
                     {
                         "type": "string",
@@ -448,10 +448,10 @@
         },
         "/api/quick/apps/{appId}/tenants/{tenantId}": {
             "get": {
-                "description": "get tenant details",
                 "tags": [
                     "tenant"
                 ],
+                "summary": "get tenant details",
                 "parameters": [
                     {
                         "type": "string",
@@ -487,10 +487,10 @@
                 }
             },
             "put": {
-                "description": "modify tenant",
                 "tags": [
                     "tenant"
                 ],
+                "summary": "modify tenant",
                 "parameters": [
                     {
                         "type": "string",
@@ -535,10 +535,10 @@
                 }
             },
             "delete": {
-                "description": "delete tenant",
                 "tags": [
                     "tenant"
                 ],
+                "summary": "delete tenant",
                 "parameters": [
                     {
                         "type": "string",
@@ -814,10 +814,10 @@
         },
         "/api/quick/providers": {
             "get": {
-                "description": "list provider info",
                 "tags": [
                     "provider"
                 ],
+                "summary": "list provider info",
                 "parameters": [
                     {
                         "type": "string",
@@ -845,10 +845,10 @@
                 }
             },
             "post": {
-                "description": "create provider",
                 "tags": [
                     "provider"
                 ],
+                "summary": "create provider",
                 "parameters": [
                     {
                         "type": "string",
@@ -887,10 +887,10 @@
         },
         "/api/quick/providers/{providerId}": {
             "get": {
-                "description": "get provider details",
                 "tags": [
                     "provider"
                 ],
+                "summary": "get provider details",
                 "parameters": [
                     {
                         "type": "string",
@@ -925,10 +925,10 @@
                 }
             },
             "put": {
-                "description": "modify provider",
                 "tags": [
                     "provider"
                 ],
+                "summary": "modify provider",
                 "parameters": [
                     {
                         "type": "integer",
@@ -960,10 +960,10 @@
                 }
             },
             "delete": {
-                "description": "delete provider",
                 "tags": [
                     "provider"
                 ],
+                "summary": "delete provider",
                 "parameters": [
                     {
                         "type": "integer",
@@ -988,10 +988,10 @@
         },
         "/api/quick/redirect-uri": {
             "get": {
-                "description": "get redirect uri list",
                 "tags": [
                     "tenant"
                 ],
+                "summary": "get redirect uri list",
                 "parameters": [
                     {
                         "type": "string",
@@ -1025,10 +1025,10 @@
                 }
             },
             "post": {
-                "description": "create app redirect uri",
                 "tags": [
                     "tenant"
                 ],
+                "summary": "create app redirect uri",
                 "parameters": [
                     {
                         "type": "string",
@@ -1067,10 +1067,10 @@
         },
         "/api/quick/redirect-uri/{uriId}": {
             "put": {
-                "description": "modify app",
                 "tags": [
                     "tenant"
                 ],
+                "summary": "modify app",
                 "parameters": [
                     {
                         "type": "string",
@@ -1116,10 +1116,10 @@
         },
         "/api/quick/redirect-uri/{uri}": {
             "delete": {
-                "description": "delete app",
                 "tags": [
                     "tenant"
                 ],
+                "summary": "delete app",
                 "parameters": [
                     {
                         "type": "string",
@@ -1189,12 +1189,1316 @@
                 }
             }
         },
+        "/api/quick/resourceGroups": {
+            "get": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "获取资源组列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "创建资源组",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "group",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RequestResourceGroup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resourceGroups/{groupId}": {
+            "get": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "获取资源组详细信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "更新资源组",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body",
+                        "name": "group",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RequestResourceGroup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "删除资源组",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resourceGroups/{groupId}/actions": {
+            "get": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "获取资源组动作列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "创建资源组动作",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body",
+                        "name": "role",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RequestResourceGroup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resourceGroups/{groupId}/actions/{actionId}": {
+            "get": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "获取资源组动作",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "action id",
+                        "name": "actionId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "更新资源组动作",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "action id",
+                        "name": "actionId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body",
+                        "name": "role",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RequestResourceGroup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "删除资源组动作",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "action id",
+                        "name": "actionId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resourceGroups/{groupId}/resources": {
+            "get": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "获取资源组的资源列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "创建资源的资源",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RequestResourceGroup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resourceGroups/{groupId}/resources/{resourceId}": {
+            "get": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "获取资源组的资源",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "更新资源组的资源",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RequestResourceGroup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "删除资源组的资源",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "resource id",
+                        "name": "resourceId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resourceGroups/{groupId}/roles": {
+            "get": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "获取资源组角色列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "创建资源角色",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RequestResourceGroup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resourceGroups/{groupId}/roles/{roleId}": {
+            "get": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "获取资源组角色",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "更新资源组角色",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RequestResourceGroup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "删除资源组角色",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resourceGroups/{groupId}/roles/{roleId}/actions": {
+            "get": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "获取资源组角色的动作列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "更新资源组角色的动作",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RequestResourceGroup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "创建资源角色的动作",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RequestResourceGroup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "删除资源组角色的动作",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resourceGroups/{groupId}/roles/{roleId}/actions/{actionsId}": {
+            "get": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "获取资源组角色的动作",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "action id",
+                        "name": "actionId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resourceGroups/{groupId}/roles/{roleId}/users": {
+            "post": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "将用户拉入组内",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "role id",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body",
+                        "name": "group",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RequestResourceGroup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resourceGroups/{groupId}/users": {
+            "get": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "组内用户列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resourceGroups/{groupId}/users/{userId}": {
+            "put": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "修改用户在组内的角色",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "client user id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body",
+                        "name": "group",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RequestResourceGroup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "踢出用户",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "client user id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resourceGroups/{groupId}/users/{userId}/actions": {
+            "get": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "用户在组内所拥有的权限列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "client user id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resourceGroups/{groupId}/users/{userId}/actions/{actionId}": {
+            "get": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "用户在组内是否拥有某个权限",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "client user id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "action id",
+                        "name": "actionId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/quick/resourceGroups/{groupId}/users/{userId}/roles": {
+            "get": {
+                "tags": [
+                    "resource-group"
+                ],
+                "summary": "用户在组内的角色",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "group id",
+                        "name": "groupId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "client user id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/api/quick/resources": {
             "get": {
-                "description": "list resources",
                 "tags": [
                     "resource"
                 ],
+                "summary": "list resources",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1205,10 +2509,10 @@
                 }
             },
             "post": {
-                "description": "create resource",
                 "tags": [
                     "resource"
                 ],
+                "summary": "create resource",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1221,10 +2525,10 @@
         },
         "/api/quick/resources/{resourceId}": {
             "get": {
-                "description": "get resource",
                 "tags": [
                     "resource"
                 ],
+                "summary": "get resource",
                 "parameters": [
                     {
                         "type": "string",
@@ -1244,10 +2548,10 @@
                 }
             },
             "put": {
-                "description": "update resource",
                 "tags": [
                     "resource"
                 ],
+                "summary": "update resource",
                 "parameters": [
                     {
                         "type": "string",
@@ -1264,10 +2568,10 @@
                 }
             },
             "delete": {
-                "description": "delete resource",
                 "tags": [
                     "resource"
                 ],
+                "summary": "delete resource",
                 "parameters": [
                     {
                         "type": "string",
@@ -1286,10 +2590,10 @@
         },
         "/api/quick/resources/{resourceId}/json/operations/{operationId}": {
             "get": {
-                "description": "判断用户当前对JSON资源的操作是否被允许",
                 "tags": [
                     "auth"
                 ],
+                "summary": "判断用户当前对JSON资源的操作是否被允许",
                 "parameters": [
                     {
                         "type": "string",
@@ -1322,10 +2626,10 @@
         },
         "/api/quick/resources/{resourceId}/json/operations/{operationId}/json": {
             "get": {
-                "description": "获取拥有某个操作权限的整个json结构",
                 "tags": [
                     "auth"
                 ],
+                "summary": "获取拥有某个操作权限的整个json结构",
                 "parameters": [
                     {
                         "type": "string",
@@ -1354,10 +2658,10 @@
         },
         "/api/quick/resources/{resourceId}/json/operations/{operationId}/parents/:parentId": {
             "get": {
-                "description": "获取拥有某个操作权限的node列表",
                 "tags": [
                     "auth"
                 ],
+                "summary": "获取拥有某个操作权限的node列表",
                 "parameters": [
                     {
                         "type": "string",
@@ -1386,10 +2690,10 @@
         },
         "/api/quick/resources/{resourceId}/json/users/{userId}/roles": {
             "get": {
-                "description": "list resource json user roles",
                 "tags": [
                     "resource-user"
                 ],
+                "summary": "list resource json user roles",
                 "parameters": [
                     {
                         "type": "string",
@@ -1416,10 +2720,10 @@
                 }
             },
             "post": {
-                "description": "create resource json user role",
                 "tags": [
                     "resource-user"
                 ],
+                "summary": "create resource json user role",
                 "parameters": [
                     {
                         "type": "string",
@@ -1448,10 +2752,10 @@
         },
         "/api/quick/resources/{resourceId}/json/users/{userId}/roles/{roleId}": {
             "put": {
-                "description": "update resource json user role",
                 "tags": [
                     "resource-user"
                 ],
+                "summary": "update resource json user role",
                 "parameters": [
                     {
                         "type": "string",
@@ -1482,10 +2786,10 @@
                 }
             },
             "delete": {
-                "description": "delete resource json user role",
                 "tags": [
                     "resource-user"
                 ],
+                "summary": "delete resource json user role",
                 "parameters": [
                     {
                         "type": "string",
@@ -1518,10 +2822,10 @@
         },
         "/api/quick/resources/{resourceId}/nodes": {
             "get": {
-                "description": "list resource nodes",
                 "tags": [
                     "resource"
                 ],
+                "summary": "list resource nodes",
                 "parameters": [
                     {
                         "type": "string",
@@ -1541,10 +2845,10 @@
                 }
             },
             "post": {
-                "description": "create resource node",
                 "tags": [
                     "resource"
                 ],
+                "summary": "create resource node",
                 "parameters": [
                     {
                         "type": "string",
@@ -1566,10 +2870,10 @@
         },
         "/api/quick/resources/{resourceId}/nodes/{nodeId}": {
             "get": {
-                "description": "get resource node",
                 "tags": [
                     "resource"
                 ],
+                "summary": "get resource node",
                 "parameters": [
                     {
                         "type": "string",
@@ -1596,10 +2900,10 @@
                 }
             },
             "put": {
-                "description": "update resource node",
                 "tags": [
                     "resource"
                 ],
+                "summary": "update resource node",
                 "parameters": [
                     {
                         "type": "string",
@@ -1623,10 +2927,10 @@
                 }
             },
             "delete": {
-                "description": "delete resource node",
                 "tags": [
                     "resource"
                 ],
+                "summary": "delete resource node",
                 "parameters": [
                     {
                         "type": "string",
@@ -1652,10 +2956,10 @@
         },
         "/api/quick/resources/{resourceId}/nodes/{nodeId}/operations/{operationId}": {
             "get": {
-                "description": "判断用户当前对资源的操作是否被允许",
                 "tags": [
                     "auth"
                 ],
+                "summary": "判断用户当前对资源的操作是否被允许",
                 "parameters": [
                     {
                         "type": "string",
@@ -1688,10 +2992,10 @@
         },
         "/api/quick/resources/{resourceId}/operations": {
             "get": {
-                "description": "list resource operations",
                 "tags": [
                     "resource-operation"
                 ],
+                "summary": "list resource operations",
                 "parameters": [
                     {
                         "type": "string",
@@ -1711,10 +3015,10 @@
                 }
             },
             "post": {
-                "description": "create resource operation",
                 "tags": [
                     "resource-operation"
                 ],
+                "summary": "create resource operation",
                 "parameters": [
                     {
                         "type": "string",
@@ -1736,10 +3040,10 @@
         },
         "/api/quick/resources/{resourceId}/operations/{operationId}": {
             "get": {
-                "description": "get resource operation",
                 "tags": [
                     "resource-operation"
                 ],
+                "summary": "get resource operation",
                 "parameters": [
                     {
                         "type": "string",
@@ -1766,10 +3070,10 @@
                 }
             },
             "put": {
-                "description": "update resource operation",
                 "tags": [
                     "resource-operation"
                 ],
+                "summary": "update resource operation",
                 "parameters": [
                     {
                         "type": "string",
@@ -1793,10 +3097,10 @@
                 }
             },
             "delete": {
-                "description": "delete resource operation",
                 "tags": [
                     "resource-operation"
                 ],
+                "summary": "delete resource operation",
                 "parameters": [
                     {
                         "type": "string",
@@ -1822,10 +3126,10 @@
         },
         "/api/quick/resources/{resourceId}/roles": {
             "get": {
-                "description": "list resource roles",
                 "tags": [
                     "resource-role"
                 ],
+                "summary": "list resource roles",
                 "parameters": [
                     {
                         "type": "string",
@@ -1845,10 +3149,10 @@
                 }
             },
             "post": {
-                "description": "create resource role",
                 "tags": [
                     "resource-role"
                 ],
+                "summary": "create resource role",
                 "parameters": [
                     {
                         "type": "string",
@@ -1870,10 +3174,10 @@
         },
         "/api/quick/resources/{resourceId}/roles/{roleId}": {
             "get": {
-                "description": "get resource role",
                 "tags": [
                     "resource-role"
                 ],
+                "summary": "get resource role",
                 "parameters": [
                     {
                         "type": "string",
@@ -1900,10 +3204,10 @@
                 }
             },
             "put": {
-                "description": "update resource role",
                 "tags": [
                     "resource-role"
                 ],
+                "summary": "update resource role",
                 "parameters": [
                     {
                         "type": "string",
@@ -1927,10 +3231,10 @@
                 }
             },
             "delete": {
-                "description": "delete resource role",
                 "tags": [
                     "resource-role"
                 ],
+                "summary": "delete resource role",
                 "parameters": [
                     {
                         "type": "string",
@@ -1956,10 +3260,10 @@
         },
         "/api/quick/resources/{resourceId}/roles/{roleId}/operations": {
             "get": {
-                "description": "list resource role operations",
                 "tags": [
                     "resource-role"
                 ],
+                "summary": "list resource role operations",
                 "parameters": [
                     {
                         "type": "string",
@@ -1986,10 +3290,10 @@
                 }
             },
             "post": {
-                "description": "create resource role operation",
                 "tags": [
                     "resource-role"
                 ],
+                "summary": "create resource role operation",
                 "parameters": [
                     {
                         "type": "string",
@@ -2018,10 +3322,10 @@
         },
         "/api/quick/resources/{resourceId}/roles/{roleId}/operations/{operationId}": {
             "delete": {
-                "description": "delete resource role operation",
                 "tags": [
                     "resource-role"
                 ],
+                "summary": "delete resource role operation",
                 "parameters": [
                     {
                         "type": "string",
@@ -2054,10 +3358,10 @@
         },
         "/api/quick/resources/{resourceId}/users/{userId}/roles": {
             "get": {
-                "description": "list resource json user roles",
                 "tags": [
                     "resource-user"
                 ],
+                "summary": "list resource json user roles",
                 "parameters": [
                     {
                         "type": "string",
@@ -2084,10 +3388,10 @@
                 }
             },
             "post": {
-                "description": "create resource json user role",
                 "tags": [
                     "resource-user"
                 ],
+                "summary": "create resource json user role",
                 "parameters": [
                     {
                         "type": "string",
@@ -2116,10 +3420,10 @@
         },
         "/api/quick/resources/{resourceId}/users/{userId}/roles/{roleId}": {
             "put": {
-                "description": "update resource json user role",
                 "tags": [
                     "resource-user"
                 ],
+                "summary": "update resource json user role",
                 "parameters": [
                     {
                         "type": "string",
@@ -2150,10 +3454,10 @@
                 }
             },
             "delete": {
-                "description": "delete resource json user role",
                 "tags": [
                     "resource-user"
                 ],
+                "summary": "delete resource json user role",
                 "parameters": [
                     {
                         "type": "string",
@@ -2186,10 +3490,10 @@
         },
         "/api/quick/user-pools": {
             "get": {
-                "description": "list user pool",
                 "tags": [
                     "user"
                 ],
+                "summary": "list user pool",
                 "parameters": [
                     {
                         "type": "string",
@@ -2211,10 +3515,10 @@
                 }
             },
             "post": {
-                "description": "create user pool",
                 "tags": [
                     "user"
                 ],
+                "summary": "create user pool",
                 "parameters": [
                     {
                         "type": "string",
@@ -2247,10 +3551,10 @@
         },
         "/api/quick/user-pools/{poolId}": {
             "get": {
-                "description": "get user pool info",
                 "tags": [
                     "user"
                 ],
+                "summary": "get user pool info",
                 "parameters": [
                     {
                         "type": "string",
@@ -2279,10 +3583,10 @@
                 }
             },
             "put": {
-                "description": "modify user pool",
                 "tags": [
                     "user"
                 ],
+                "summary": "modify user pool",
                 "parameters": [
                     {
                         "type": "string",
@@ -2320,10 +3624,10 @@
                 }
             },
             "delete": {
-                "description": "delete user pool",
                 "tags": [
                     "user"
                 ],
+                "summary": "delete user pool",
                 "parameters": [
                     {
                         "type": "string",
@@ -2354,10 +3658,10 @@
         },
         "/api/quick/user-pools/{poolId}/users": {
             "get": {
-                "description": "list users",
                 "tags": [
                     "user"
                 ],
+                "summary": "list users",
                 "parameters": [
                     {
                         "type": "string",
@@ -2386,10 +3690,10 @@
                 }
             },
             "post": {
-                "description": "create user",
                 "tags": [
                     "user"
                 ],
+                "summary": "create user",
                 "parameters": [
                     {
                         "type": "string",
@@ -2429,10 +3733,10 @@
         },
         "/api/quick/user-pools/{poolId}/users/{userId}": {
             "get": {
-                "description": "get user info",
                 "tags": [
                     "user"
                 ],
+                "summary": "get user info",
                 "parameters": [
                     {
                         "type": "string",
@@ -2468,10 +3772,10 @@
                 }
             },
             "put": {
-                "description": "modify user",
                 "tags": [
                     "user"
                 ],
+                "summary": "modify user",
                 "parameters": [
                     {
                         "type": "string",
@@ -2516,10 +3820,10 @@
                 }
             },
             "delete": {
-                "description": "delete user",
                 "tags": [
                     "user"
                 ],
+                "summary": "delete user",
                 "parameters": [
                     {
                         "type": "string",
@@ -2557,6 +3861,35 @@
         }
     },
     "definitions": {
+        "model.RequestResourceGroup": {
+            "type": "object",
+            "properties": {
+                "actionIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "roleId": {
+                    "type": "integer"
+                },
+                "uid": {
+                    "type": "integer"
+                },
+                "userIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            }
+        },
         "oauth.OpenidConfigurationDto": {
             "type": "object",
             "properties": {

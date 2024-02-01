@@ -18,13 +18,13 @@ func NewAdminRoute(svc *service.Service) *Route {
 	return &Route{svc: svc}
 }
 
-// ListApp	swagger
-// @Description	list apps
-// @Tags		app
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Success		200
-// @Router		/api/quick/apps [get]
+// ListApp
+// @Summary	list apps
+// @Tags	app
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Success	200
+// @Router	/api/quick/apps [get]
 func (a Route) ListApp(c *gin.Context) {
 	apps, err := a.svc.ListApps()
 	if err != nil {
@@ -34,14 +34,14 @@ func (a Route) ListApp(c *gin.Context) {
 	resp.SuccessArrayData(c, len(apps), apps)
 }
 
-// GetApp	swagger
-// @Description	get app
-// @Tags		app
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Param		appId		path	string	true	"app id"
-// @Success		200
-// @Router		/api/quick/apps/{appId} [get]
+// GetApp
+// @Summary	get app
+// @Tags	app
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	appId		path	string	true	"app id"
+// @Success	200
+// @Router	/api/quick/apps/{appId} [get]
 func (a Route) GetApp(c *gin.Context) {
 	var in request.AppReq
 	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
@@ -57,14 +57,14 @@ func (a Route) GetApp(c *gin.Context) {
 	resp.SuccessWithData(c, app.Dto())
 }
 
-// CreateApp	swagger
-// @Description	create app
-// @Tags		app
-// @Param		X-User-ID	header	string			false	"user id"
-// @Param		X-Pool-ID	header	string			false	"user pool id"
-// @Param		bd			body	request.AppReq	true	"body"
-// @Success		200
-// @Router		/api/quick/apps [post]
+// CreateApp
+// @Summary	create app
+// @Tags	app
+// @Param	X-User-ID	header	string			false	"user id"
+// @Param	X-Pool-ID	header	string			false	"user pool id"
+// @Param	bd			body	request.AppReq	true	"body"
+// @Success	200
+// @Router	/api/quick/apps [post]
 func (a Route) CreateApp(c *gin.Context) {
 	var in request.AppReq
 	if err := a.SetCtx(c).BindJson(&in).Error; err != nil {
@@ -80,15 +80,15 @@ func (a Route) CreateApp(c *gin.Context) {
 	resp.SuccessWithData(c, app)
 }
 
-// ModifyApp	swagger
-// @Description	modify app
-// @Tags		app
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Param		appId		path	string			true	"app id"
-// @Param		bd			body	request.AppReq	true	"body"
-// @Success		200
-// @Router		/api/quick/apps/{appId} [put]
+// ModifyApp
+// @Summary	modify app
+// @Tags	app
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	appId		path	string			true	"app id"
+// @Param	bd			body	request.AppReq	true	"body"
+// @Success	200
+// @Router	/api/quick/apps/{appId} [put]
 func (a Route) ModifyApp(c *gin.Context) {
 	var in request.AppReq
 	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
@@ -103,14 +103,14 @@ func (a Route) ModifyApp(c *gin.Context) {
 	resp.Success(c)
 }
 
-// DeleteApp	swagger
-// @Description	delete app
-// @Tags		app
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Param		appId		path	string	true	"app id"
-// @Success		200
-// @Router		/api/quick/apps/{appId} [delete]
+// DeleteApp
+// @Summary	delete app
+// @Tags	app
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	appId		path	string	true	"app id"
+// @Success	200
+// @Router	/api/quick/apps/{appId} [delete]
 func (a Route) DeleteApp(c *gin.Context) {
 	if err := a.svc.DeleteApp(c.Param("appId")); err != nil {
 		if err == admin.ErrorDeleteDefaultApp {

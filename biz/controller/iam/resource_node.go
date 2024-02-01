@@ -6,12 +6,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ListResourceNodes godoc
-// @Description	list resource nodes
-// @Tags		resource
-// @Param		resourceId	path	string	true	"resource id"
-// @Success		200		{object}	interface{}
-// @Router		/api/quick/resources/{resourceId}/nodes 	[get]
+// ListResourceNodes
+// @Summary	list resource nodes
+// @Tags	resource
+// @Param	resourceId	path	string	true	"resource id"
+// @Success	200		{object}	interface{}
+// @Router	/api/quick/resources/{resourceId}/nodes 	[get]
 func (a Resource) ListResourceNodes(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
@@ -27,13 +27,13 @@ func (a Resource) ListResourceNodes(c *gin.Context) {
 	resp.SuccessArrayData(c, len(data), data)
 }
 
-// GetResourceNode godoc
-// @Description	get resource node
-// @Tags		resource
-// @Param		resourceId	path	string	true	"resource id"
-// @Param		nodeId		path	string	true	"node id"
-// @Success		200		{object}	interface{}
-// @Router		/api/quick/resources/{resourceId}/nodes/{nodeId} 	[get]
+// GetResourceNode
+// @Summary	get resource node
+// @Tags	resource
+// @Param	resourceId	path	string	true	"resource id"
+// @Param	nodeId		path	string	true	"node id"
+// @Success	200		{object}	interface{}
+// @Router	/api/quick/resources/{resourceId}/nodes/{nodeId} 	[get]
 func (a Resource) GetResourceNode(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
@@ -49,12 +49,12 @@ func (a Resource) GetResourceNode(c *gin.Context) {
 	resp.SuccessWithData(c, data)
 }
 
-// CreateResourceNode godoc
-// @Description	create resource node
-// @Tags		resource
-// @Param		resourceId	path	string	true	"resource id"
-// @Success		200		{object}	interface{}
-// @Router		/api/quick/resources/{resourceId}/nodes 	[post]
+// CreateResourceNode
+// @Summary	create resource node
+// @Tags	resource
+// @Param	resourceId	path	string	true	"resource id"
+// @Success	200		{object}	interface{}
+// @Router	/api/quick/resources/{resourceId}/nodes 	[post]
 func (a Resource) CreateResourceNode(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).BindJson(&in.Node).Error; err != nil {
@@ -73,13 +73,13 @@ func (a Resource) CreateResourceNode(c *gin.Context) {
 	resp.SuccessWithData(c, data)
 }
 
-// UpdateResourceNode godoc
-// @Description	update resource node
-// @Tags		resource
-// @Param		resourceId	path	string	true	"resource id"
-// @Param		nodeId		path	string	true	"node id"
-// @Success		200
-// @Router		/api/quick/resources/{resourceId}/nodes/{nodeId} 	[put]
+// UpdateResourceNode
+// @Summary	update resource node
+// @Tags	resource
+// @Param	resourceId	path	string	true	"resource id"
+// @Param	nodeId		path	string	true	"node id"
+// @Success	200
+// @Router	/api/quick/resources/{resourceId}/nodes/{nodeId} 	[put]
 func (a Resource) UpdateResourceNode(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).BindJson(&in.Node).Error; err != nil {
@@ -97,13 +97,13 @@ func (a Resource) UpdateResourceNode(c *gin.Context) {
 	resp.Success(c)
 }
 
-// DeleteResourceNode godoc
-// @Description	delete resource node
-// @Tags		resource
-// @Param		resourceId	path	string	true	"resource id"
-// @Param		nodeId		path	string	true	"node id"
-// @Success		200
-// @Router		/api/quick/resources/{resourceId}/nodes/{nodeId} 	[delete]
+// DeleteResourceNode
+// @Summary	delete resource node
+// @Tags	resource
+// @Param	resourceId	path	string	true	"resource id"
+// @Param	nodeId		path	string	true	"node id"
+// @Success	200
+// @Router	/api/quick/resources/{resourceId}/nodes/{nodeId} 	[delete]
 func (a Resource) DeleteResourceNode(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {

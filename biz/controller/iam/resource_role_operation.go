@@ -6,13 +6,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ListResourceRoleOperations godoc
-// @Description	list resource role operations
-// @Tags		resource-role
-// @Param		resourceId	path	string	true	"resource id"
-// @Param		roleId		path	string	true	"role id"
-// @Success		200		{object}	interface{}
-// @Router		/api/quick/resources/{resourceId}/roles/{roleId}/operations 	[get]
+// ListResourceRoleOperations
+// @Summary	list resource role operations
+// @Tags	resource-role
+// @Param	resourceId	path	string	true	"resource id"
+// @Param	roleId		path	string	true	"role id"
+// @Success	200		{object}	interface{}
+// @Router	/api/quick/resources/{resourceId}/roles/{roleId}/operations 	[get]
 func (a Resource) ListResourceRoleOperations(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
@@ -28,13 +28,13 @@ func (a Resource) ListResourceRoleOperations(c *gin.Context) {
 	resp.SuccessArrayData(c, len(data), data)
 }
 
-// CreateResourceRoleOperation godoc
-// @Description	create resource role operation
-// @Tags		resource-role
-// @Param		resourceId	path	string	true	"resource id"
-// @Param		roleId		path	string	true	"role id"
-// @Success		200		{object}	interface{}
-// @Router		/api/quick/resources/{resourceId}/roles/{roleId}/operations 	[post]
+// CreateResourceRoleOperation
+// @Summary	create resource role operation
+// @Tags	resource-role
+// @Param	resourceId	path	string	true	"resource id"
+// @Param	roleId		path	string	true	"role id"
+// @Success	200		{object}	interface{}
+// @Router	/api/quick/resources/{resourceId}/roles/{roleId}/operations 	[post]
 func (a Resource) CreateResourceRoleOperation(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).BindJson(&in.RoleOperation).Error; err != nil {
@@ -53,14 +53,14 @@ func (a Resource) CreateResourceRoleOperation(c *gin.Context) {
 	resp.SuccessWithData(c, data)
 }
 
-// DeleteResourceRoleOperation godoc
-// @Description	delete resource role operation
-// @Tags		resource-role
-// @Param		resourceId	path	string	true	"resource id"
-// @Param		roleId		path	string	true	"role id"
-// @Param		operationId	path	string	true	"operation id"
-// @Success		200
-// @Router		/api/quick/resources/{resourceId}/roles/{roleId}/operations/{operationId} 	[delete]
+// DeleteResourceRoleOperation
+// @Summary	delete resource role operation
+// @Tags	resource-role
+// @Param	resourceId	path	string	true	"resource id"
+// @Param	roleId		path	string	true	"role id"
+// @Param	operationId	path	string	true	"operation id"
+// @Success	200
+// @Router	/api/quick/resources/{resourceId}/roles/{roleId}/operations/{operationId} 	[delete]
 func (a Resource) DeleteResourceRoleOperation(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {

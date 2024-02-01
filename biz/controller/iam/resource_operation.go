@@ -6,12 +6,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ListResourceOperations godoc
-// @Description	list resource operations
-// @Tags		resource-operation
-// @Param		resourceId	path	string	true	"resource id"
-// @Success		200		{object}	interface{}
-// @Router		/api/quick/resources/{resourceId}/operations 	[get]
+// ListResourceOperations
+// @Summary	list resource operations
+// @Tags	resource-operation
+// @Param	resourceId	path	string	true	"resource id"
+// @Success	200		{object}	interface{}
+// @Router	/api/quick/resources/{resourceId}/operations 	[get]
 func (a Resource) ListResourceOperations(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
@@ -27,13 +27,13 @@ func (a Resource) ListResourceOperations(c *gin.Context) {
 	resp.SuccessArrayData(c, len(data), data)
 }
 
-// GetResourceOperation godoc
-// @Description	get resource operation
-// @Tags		resource-operation
-// @Param		resourceId	path	string	true	"resource id"
-// @Param		operationId	path	string	true	"operation id"
-// @Success		200		{object}	interface{}
-// @Router		/api/quick/resources/{resourceId}/operations/{operationId} 	[get]
+// GetResourceOperation
+// @Summary	get resource operation
+// @Tags	resource-operation
+// @Param	resourceId	path	string	true	"resource id"
+// @Param	operationId	path	string	true	"operation id"
+// @Success	200		{object}	interface{}
+// @Router	/api/quick/resources/{resourceId}/operations/{operationId} 	[get]
 func (a Resource) GetResourceOperation(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
@@ -49,12 +49,12 @@ func (a Resource) GetResourceOperation(c *gin.Context) {
 	resp.SuccessWithData(c, data)
 }
 
-// CreateResourceOperation godoc
-// @Description	create resource operation
-// @Tags		resource-operation
-// @Param		resourceId	path	string	true	"resource id"
-// @Success		200		{object}	interface{}
-// @Router		/api/quick/resources/{resourceId}/operations 	[post]
+// CreateResourceOperation
+// @Summary	create resource operation
+// @Tags	resource-operation
+// @Param	resourceId	path	string	true	"resource id"
+// @Success	200		{object}	interface{}
+// @Router	/api/quick/resources/{resourceId}/operations 	[post]
 func (a Resource) CreateResourceOperation(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).BindJson(&in.Operation).Error; err != nil {
@@ -72,13 +72,13 @@ func (a Resource) CreateResourceOperation(c *gin.Context) {
 	resp.SuccessWithData(c, data)
 }
 
-// UpdateResourceOperation godoc
-// @Description	update resource operation
-// @Tags		resource-operation
-// @Param		resourceId	path	string	true	"resource id"
-// @Param		operationId	path	string	true	"operation id"
-// @Success		200
-// @Router		/api/quick/resources/{resourceId}/operations/{operationId} 	[put]
+// UpdateResourceOperation
+// @Summary	update resource operation
+// @Tags	resource-operation
+// @Param	resourceId	path	string	true	"resource id"
+// @Param	operationId	path	string	true	"operation id"
+// @Success	200
+// @Router	/api/quick/resources/{resourceId}/operations/{operationId} 	[put]
 func (a Resource) UpdateResourceOperation(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).BindJson(&in.Operation).Error; err != nil {
@@ -96,13 +96,13 @@ func (a Resource) UpdateResourceOperation(c *gin.Context) {
 	resp.Success(c)
 }
 
-// DeleteResourceOperation godoc
-// @Description	delete resource operation
-// @Tags		resource-operation
-// @Param		resourceId	path	string	true	"resource id"
-// @Param		operationId	path	string	true	"operation id"
-// @Success		200
-// @Router		/api/quick/resources/{resourceId}/operations/{operationId} 	[delete]
+// DeleteResourceOperation
+// @Summary	delete resource operation
+// @Tags	resource-operation
+// @Param	resourceId	path	string	true	"resource id"
+// @Param	operationId	path	string	true	"operation id"
+// @Success	200
+// @Router	/api/quick/resources/{resourceId}/operations/{operationId} 	[delete]
 func (a Resource) DeleteResourceOperation(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {

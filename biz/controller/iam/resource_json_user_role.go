@@ -6,13 +6,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ListResourceJSONUserRoles godoc
-// @Description	list resource json user roles
-// @Tags		resource-user
-// @Param		resourceId	path	string	true	"resource id"
-// @Param		userId		path	string	true	"user id"
-// @Success		200		{object}	interface{}
-// @Router		/api/quick/resources/{resourceId}/json/users/{userId}/roles 	[get]
+// ListResourceJSONUserRoles
+// @Summary	list resource json user roles
+// @Tags	resource-user
+// @Param	resourceId	path	string	true	"resource id"
+// @Param	userId		path	string	true	"user id"
+// @Success	200		{object}	interface{}
+// @Router	/api/quick/resources/{resourceId}/json/users/{userId}/roles 	[get]
 func (a Resource) ListResourceJSONUserRoles(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
@@ -28,13 +28,13 @@ func (a Resource) ListResourceJSONUserRoles(c *gin.Context) {
 	resp.SuccessArrayData(c, len(data), data)
 }
 
-// CreateResourceJSONUserRole godoc
-// @Description	create resource json user role
-// @Tags		resource-user
-// @Param		resourceId	path	string	true	"resource id"
-// @Param		userId		path	string	true	"user id"
-// @Success		200		{object}	interface{}
-// @Router		/api/quick/resources/{resourceId}/json/users/{userId}/roles 	[post]
+// CreateResourceJSONUserRole
+// @Summary	create resource json user role
+// @Tags	resource-user
+// @Param	resourceId	path	string	true	"resource id"
+// @Param	userId		path	string	true	"user id"
+// @Success	200		{object}	interface{}
+// @Router	/api/quick/resources/{resourceId}/json/users/{userId}/roles 	[post]
 func (a Resource) CreateResourceJSONUserRole(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).BindJson(&in.JsonUserRole).Error; err != nil {
@@ -53,14 +53,14 @@ func (a Resource) CreateResourceJSONUserRole(c *gin.Context) {
 	resp.SuccessWithData(c, data)
 }
 
-// UpdateResourceJSONUserRole godoc
-// @Description	update resource json user role
-// @Tags		resource-user
-// @Param		resourceId	path	string	true	"resource id"
-// @Param		userId		path	string	true	"user id"
-// @Param		roleId		path	string	true	"role id"
-// @Success		200
-// @Router		/api/quick/resources/{resourceId}/json/users/{userId}/roles/{roleId} 	[put]
+// UpdateResourceJSONUserRole
+// @Summary	update resource json user role
+// @Tags	resource-user
+// @Param	resourceId	path	string	true	"resource id"
+// @Param	userId		path	string	true	"user id"
+// @Param	roleId		path	string	true	"role id"
+// @Success	200
+// @Router	/api/quick/resources/{resourceId}/json/users/{userId}/roles/{roleId} 	[put]
 func (a Resource) UpdateResourceJSONUserRole(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
@@ -78,14 +78,14 @@ func (a Resource) UpdateResourceJSONUserRole(c *gin.Context) {
 	resp.Success(c)
 }
 
-// DeleteResourceJSONUserRole godoc
-// @Description	delete resource json user role
-// @Tags		resource-user
-// @Param		resourceId	path	string	true	"resource id"
-// @Param		userId		path	string	true	"user id"
-// @Param		roleId		path	string	true	"role id"
-// @Success		200
-// @Router		/api/quick/resources/{resourceId}/json/users/{userId}/roles/{roleId} 	[delete]
+// DeleteResourceJSONUserRole
+// @Summary	delete resource json user role
+// @Tags	resource-user
+// @Param	resourceId	path	string	true	"resource id"
+// @Param	userId		path	string	true	"user id"
+// @Param	roleId		path	string	true	"role id"
+// @Success	200
+// @Router	/api/quick/resources/{resourceId}/json/users/{userId}/roles/{roleId} 	[delete]
 func (a Resource) DeleteResourceJSONUserRole(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {

@@ -6,14 +6,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// IsOperationAllow godoc
-// @Description	判断用户当前对资源的操作是否被允许
-// @Tags		auth
-// @Param		resourceId	path	string	true	"resource id"
-// @Param		nodeId		path	string	true	"node id"
-// @Param		operationId	path	string	true	"operation id"
-// @Success		200
-// @Router		/api/quick/resources/{resourceId}/nodes/{nodeId}/operations/{operationId} 	[get]
+// IsOperationAllow
+// @Summary	判断用户当前对资源的操作是否被允许
+// @Tags	auth
+// @Param	resourceId	path	string	true	"resource id"
+// @Param	nodeId		path	string	true	"node id"
+// @Param	operationId	path	string	true	"operation id"
+// @Success	200
+// @Router	/api/quick/resources/{resourceId}/nodes/{nodeId}/operations/{operationId} 	[get]
 func (a Resource) IsOperationAllow(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).SetUserInfo().BindUri(&in).Error; err != nil {
@@ -29,14 +29,14 @@ func (a Resource) IsOperationAllow(c *gin.Context) {
 	resp.SuccessWithData(c, gin.H{"allow": allow})
 }
 
-// IsJSONOperationAllow godoc
-// @Description	判断用户当前对JSON资源的操作是否被允许
-// @Tags		auth
-// @Param		resourceId	path	string	true	"resource id"
-// @Param		path		query	string	true	"json path"
-// @Param		operationId	path	string	true	"operation id"
-// @Success		200
-// @Router		/api/quick/resources/{resourceId}/json/operations/{operationId} 	[get]
+// IsJSONOperationAllow
+// @Summary	判断用户当前对JSON资源的操作是否被允许
+// @Tags	auth
+// @Param	resourceId	path	string	true	"resource id"
+// @Param	path		query	string	true	"json path"
+// @Param	operationId	path	string	true	"operation id"
+// @Success	200
+// @Router	/api/quick/resources/{resourceId}/json/operations/{operationId} 	[get]
 func (a Resource) IsJSONOperationAllow(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).SetUserInfo().BindUri(&in).Error; err != nil {
@@ -52,13 +52,13 @@ func (a Resource) IsJSONOperationAllow(c *gin.Context) {
 	resp.SuccessWithData(c, gin.H{"allow": allow})
 }
 
-// ListResourceOperationNodes godoc
-// @Description	获取拥有某个操作权限的node列表
-// @Tags		auth
-// @Param		resourceId	path	string	true	"resource id"
-// @Param		operationId	path	string	true	"operation id"
-// @Success		200		{object}	interface{}
-// @Router		/api/quick/resources/{resourceId}/json/operations/{operationId}/parents/:parentId 	[get]
+// ListResourceOperationNodes
+// @Summary	获取拥有某个操作权限的node列表
+// @Tags	auth
+// @Param	resourceId	path	string	true	"resource id"
+// @Param	operationId	path	string	true	"operation id"
+// @Success	200		{object}	interface{}
+// @Router	/api/quick/resources/{resourceId}/json/operations/{operationId}/parents/:parentId 	[get]
 func (a Resource) ListResourceOperationNodes(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
@@ -74,13 +74,13 @@ func (a Resource) ListResourceOperationNodes(c *gin.Context) {
 	resp.SuccessArrayData(c, len(data), data)
 }
 
-// ListJSONResourceOperationNodes godoc
-// @Description	获取拥有某个操作权限的整个json结构
-// @Tags		auth
-// @Param		resourceId	path	string	true	"resource id"
-// @Param		operationId	path	string	true	"operation id"
-// @Success		200		{object}	interface{}
-// @Router		/api/quick/resources/{resourceId}/json/operations/{operationId}/json 	[get]
+// ListJSONResourceOperationNodes
+// @Summary	获取拥有某个操作权限的整个json结构
+// @Tags	auth
+// @Param	resourceId	path	string	true	"resource id"
+// @Param	operationId	path	string	true	"operation id"
+// @Success	200		{object}	interface{}
+// @Router	/api/quick/resources/{resourceId}/json/operations/{operationId}/json 	[get]
 func (a Resource) ListJSONResourceOperationNodes(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {

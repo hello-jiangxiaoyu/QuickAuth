@@ -6,14 +6,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ListRedirectUri	swagger
-// @Description	get redirect uri list
-// @Tags		tenant
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Param		vhost		header	string	false	"tenant host"
-// @Success		200		{object}	[]string
-// @Router		/api/quick/redirect-uri [get]
+// ListRedirectUri
+// @Summary	get redirect uri list
+// @Tags	tenant
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		header	string	false	"tenant host"
+// @Success	200		{object}	[]string
+// @Router	/api/quick/redirect-uri [get]
 func (a Route) ListRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := a.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
@@ -29,15 +29,15 @@ func (a Route) ListRedirectUri(c *gin.Context) {
 	resp.SuccessArrayData(c, len(uris), uris)
 }
 
-// CreateRedirectUri	swagger
-// @Description	create app redirect uri
-// @Tags		tenant
-// @Param		X-User-ID	header	string					false	"user id"
-// @Param		X-Pool-ID	header	string					false	"user pool id"
-// @Param		vhost		header	string					false	"tenant host"
-// @Param		bd			body	request.RedirectUriReq	true	"body"
-// @Success		200
-// @Router		/api/quick/redirect-uri [post]
+// CreateRedirectUri
+// @Summary	create app redirect uri
+// @Tags	tenant
+// @Param	X-User-ID	header	string					false	"user id"
+// @Param	X-Pool-ID	header	string					false	"user pool id"
+// @Param	vhost		header	string					false	"tenant host"
+// @Param	bd			body	request.RedirectUriReq	true	"body"
+// @Success	200
+// @Router	/api/quick/redirect-uri [post]
 func (a Route) CreateRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := a.SetCtx(c).BindUriAndJson(&in).SetTenant(&in.Tenant).Error; err != nil {
@@ -52,16 +52,16 @@ func (a Route) CreateRedirectUri(c *gin.Context) {
 	resp.Success(c)
 }
 
-// ModifyRedirectUri	swagger
-// @Description	modify app
-// @Tags		tenant
-// @Param		X-User-ID	header	string					false	"user id"
-// @Param		X-Pool-ID	header	string					false	"user pool id"
-// @Param		vhost		header	string					false	"tenant host"
-// @Param		uriId		path	string					true	"uri id"
-// @Param		bd			body	request.RedirectUriReq	true	"body"
-// @Success		200
-// @Router		/api/quick/redirect-uri/{uriId} [put]
+// ModifyRedirectUri
+// @Summary	modify app
+// @Tags	tenant
+// @Param	X-User-ID	header	string					false	"user id"
+// @Param	X-Pool-ID	header	string					false	"user pool id"
+// @Param	vhost		header	string					false	"tenant host"
+// @Param	uriId		path	string					true	"uri id"
+// @Param	bd			body	request.RedirectUriReq	true	"body"
+// @Success	200
+// @Router	/api/quick/redirect-uri/{uriId} [put]
 func (a Route) ModifyRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := a.SetCtx(c).BindUriAndJson(&in).SetTenant(&in.Tenant).Error; err != nil {
@@ -75,15 +75,15 @@ func (a Route) ModifyRedirectUri(c *gin.Context) {
 	resp.Success(c)
 }
 
-// DeleteRedirectUri	swagger
-// @Description	delete app
-// @Tags		tenant
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Param		vhost		header	string	false	"tenant host"
-// @Param		uri			path	string	true	"uri name"
-// @Success		200
-// @Router		/api/quick/redirect-uri/{uri} [delete]
+// DeleteRedirectUri
+// @Summary	delete app
+// @Tags	tenant
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		header	string	false	"tenant host"
+// @Param	uri			path	string	true	"uri name"
+// @Success	200
+// @Router	/api/quick/redirect-uri/{uri} [delete]
 func (a Route) DeleteRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := a.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {

@@ -6,13 +6,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ListUserPool	swagger
-// @Description	list user pool
-// @Tags		user
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Success		200
-// @Router		/api/quick/user-pools [get]
+// ListUserPool
+// @Summary	list user pool
+// @Tags	user
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Success	200
+// @Router	/api/quick/user-pools [get]
 func (a Route) ListUserPool(c *gin.Context) {
 	pools, err := a.svc.ListUserPool()
 	if err != nil {
@@ -22,14 +22,14 @@ func (a Route) ListUserPool(c *gin.Context) {
 	resp.SuccessArrayData(c, len(pools), pools)
 }
 
-// GetUserPool	swagger
-// @Description	get user pool info
-// @Tags		user
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Param		poolId		path	integer	true	"user pool id"
-// @Success		200
-// @Router		/api/quick/user-pools/{poolId} [get]
+// GetUserPool
+// @Summary	get user pool info
+// @Tags	user
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	poolId		path	integer	true	"user pool id"
+// @Success	200
+// @Router	/api/quick/user-pools/{poolId} [get]
 func (a Route) GetUserPool(c *gin.Context) {
 	var in request.UserPoolReq
 	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
@@ -45,14 +45,14 @@ func (a Route) GetUserPool(c *gin.Context) {
 	resp.SuccessWithData(c, pool)
 }
 
-// CreateUserPool	swagger
-// @Description	create user pool
-// @Tags		user
-// @Param		X-User-ID	header	string				false	"user id"
-// @Param		X-Pool-ID	header	string				false	"user pool id"
-// @Param		bd			body	request.UserPoolReq	true	"body"
-// @Success		200
-// @Router		/api/quick/user-pools [post]
+// CreateUserPool
+// @Summary	create user pool
+// @Tags	user
+// @Param	X-User-ID	header	string				false	"user id"
+// @Param	X-Pool-ID	header	string				false	"user pool id"
+// @Param	bd			body	request.UserPoolReq	true	"body"
+// @Success	200
+// @Router	/api/quick/user-pools [post]
 func (a Route) CreateUserPool(c *gin.Context) {
 	var in request.UserPoolReq
 	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
@@ -67,15 +67,15 @@ func (a Route) CreateUserPool(c *gin.Context) {
 	resp.SuccessWithData(c, pool)
 }
 
-// ModifyUserPool	swagger
-// @Description	modify user pool
-// @Tags		user
-// @Param		X-User-ID	header	string				false	"user id"
-// @Param		X-Pool-ID	header	string				false	"user pool id"
-// @Param		poolId		path	integer				true	"user pool id"
-// @Param		bd			body	request.UserPoolReq	true	"body"
-// @Success		200
-// @Router		/api/quick/user-pools/{poolId} [put]
+// ModifyUserPool
+// @Summary	modify user pool
+// @Tags	user
+// @Param	X-User-ID	header	string				false	"user id"
+// @Param	X-Pool-ID	header	string				false	"user pool id"
+// @Param	poolId		path	integer				true	"user pool id"
+// @Param	bd			body	request.UserPoolReq	true	"body"
+// @Success	200
+// @Router	/api/quick/user-pools/{poolId} [put]
 func (a Route) ModifyUserPool(c *gin.Context) {
 	var in request.UserPoolReq
 	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
@@ -90,14 +90,14 @@ func (a Route) ModifyUserPool(c *gin.Context) {
 	resp.Success(c)
 }
 
-// DeleteUserPool	swagger
-// @Description	delete user pool
-// @Tags		user
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Param		poolId		path	integer	true	"user pool id"
-// @Success		200
-// @Router		/api/quick/user-pools/{poolId} [delete]
+// DeleteUserPool
+// @Summary	delete user pool
+// @Tags	user
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	poolId		path	integer	true	"user pool id"
+// @Success	200
+// @Router	/api/quick/user-pools/{poolId} [delete]
 func (a Route) DeleteUserPool(c *gin.Context) {
 	var in request.UserPoolReq
 	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {

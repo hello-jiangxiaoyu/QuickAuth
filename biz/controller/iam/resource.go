@@ -17,11 +17,11 @@ func NewResourceController(svc *service.Service) *Resource {
 	return &Resource{svc: svc}
 }
 
-// ListResources godoc
-// @Description	list resources
-// @Tags		resource
-// @Success		200		{object}	interface{}
-// @Router		/api/quick/resources 	[get]
+// ListResources
+// @Summary	list resources
+// @Tags	resource
+// @Success	200		{object}	interface{}
+// @Router	/api/quick/resources 	[get]
 func (a Resource) ListResources(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).Error; err != nil {
@@ -37,12 +37,12 @@ func (a Resource) ListResources(c *gin.Context) {
 	resp.SuccessArrayData(c, len(data), data)
 }
 
-// GetResource godoc
-// @Description	get resource
-// @Tags		resource
-// @Param		resourceId	path	string	true	"resource id"
-// @Success		200		{object}	interface{}
-// @Router		/api/quick/resources/{resourceId} 	[get]
+// GetResource
+// @Summary	get resource
+// @Tags	resource
+// @Param	resourceId	path	string	true	"resource id"
+// @Success	200		{object}	interface{}
+// @Router	/api/quick/resources/{resourceId} 	[get]
 func (a Resource) GetResource(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
@@ -58,11 +58,11 @@ func (a Resource) GetResource(c *gin.Context) {
 	resp.SuccessWithData(c, data)
 }
 
-// CreateResource godoc
-// @Description	create resource
-// @Tags		resource
-// @Success		200		{object}	interface{}
-// @Router		/api/quick/resources 	[post]
+// CreateResource
+// @Summary	create resource
+// @Tags	resource
+// @Success	200		{object}	interface{}
+// @Router	/api/quick/resources 	[post]
 func (a Resource) CreateResource(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindJson(&in.Resource).Error; err != nil {
@@ -80,12 +80,12 @@ func (a Resource) CreateResource(c *gin.Context) {
 	resp.SuccessWithData(c, data)
 }
 
-// UpdateResource godoc
-// @Description	update resource
-// @Tags		resource
-// @Param		resourceId	path	string	true	"resource id"
-// @Success		200
-// @Router		/api/quick/resources/{resourceId} 	[put]
+// UpdateResource
+// @Summary	update resource
+// @Tags	resource
+// @Param	resourceId	path	string	true	"resource id"
+// @Success	200
+// @Router	/api/quick/resources/{resourceId} 	[put]
 func (a Resource) UpdateResource(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindJson(&in.Resource).Error; err != nil {
@@ -101,12 +101,12 @@ func (a Resource) UpdateResource(c *gin.Context) {
 	resp.Success(c)
 }
 
-// DeleteResource godoc
-// @Description	delete resource
-// @Tags		resource
-// @Param		resourceId	path	string	true	"resource id"
-// @Success		200
-// @Router		/api/quick/resources/{resourceId} 	[delete]
+// DeleteResource
+// @Summary	delete resource
+// @Tags	resource
+// @Param	resourceId	path	string	true	"resource id"
+// @Success	200
+// @Router	/api/quick/resources/{resourceId} 	[delete]
 func (a Resource) DeleteResource(c *gin.Context) {
 	var in request.Iam
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {

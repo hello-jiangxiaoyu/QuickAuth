@@ -1,4 +1,23 @@
 definitions:
+  model.RequestResourceGroup:
+    properties:
+      actionIds:
+        items:
+          type: integer
+        type: array
+      description:
+        type: string
+      name:
+        type: string
+      roleId:
+        type: integer
+      uid:
+        type: integer
+      userIds:
+        items:
+          type: integer
+        type: array
+    type: object
   oauth.OpenidConfigurationDto:
     properties:
       authorization_endpoint:
@@ -182,7 +201,6 @@ paths:
       - oidc
   /api/quick/apps:
     get:
-      description: list apps
       parameters:
       - description: user id
         in: header
@@ -195,10 +213,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: list apps
       tags:
       - app
     post:
-      description: create app
       parameters:
       - description: user id
         in: header
@@ -217,11 +235,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: create app
       tags:
       - app
   /api/quick/apps/{appId}:
     delete:
-      description: delete app
       parameters:
       - description: user id
         in: header
@@ -239,10 +257,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: delete app
       tags:
       - app
     get:
-      description: get app
       parameters:
       - description: user id
         in: header
@@ -260,10 +278,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: get app
       tags:
       - app
     put:
-      description: modify app
       parameters:
       - description: user id
         in: header
@@ -287,11 +305,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: modify app
       tags:
       - app
   /api/quick/apps/{appId}/secrets:
     get:
-      description: list app secret
       parameters:
       - description: user id
         in: header
@@ -309,10 +327,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: list app secret
       tags:
       - app
     post:
-      description: create app secret
       parameters:
       - description: user id
         in: header
@@ -336,11 +354,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: create app secret
       tags:
       - app
   /api/quick/apps/{appId}/secrets/{secretId}:
     delete:
-      description: delete app secret
       parameters:
       - description: user id
         in: header
@@ -363,10 +381,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: delete app secret
       tags:
       - app
     put:
-      description: create app secret
       parameters:
       - description: user id
         in: header
@@ -395,11 +413,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: create app secret
       tags:
       - app
   /api/quick/apps/{appId}/tenants:
     get:
-      description: get tenant list
       parameters:
       - description: user id
         in: header
@@ -417,10 +435,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: get tenant list
       tags:
       - tenant
     post:
-      description: create tenant
       parameters:
       - description: user id
         in: header
@@ -444,11 +462,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: create tenant
       tags:
       - tenant
   /api/quick/apps/{appId}/tenants/{tenantId}:
     delete:
-      description: delete tenant
       parameters:
       - description: user id
         in: header
@@ -471,10 +489,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: delete tenant
       tags:
       - tenant
     get:
-      description: get tenant details
       parameters:
       - description: user id
         in: header
@@ -497,10 +515,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: get tenant details
       tags:
       - tenant
     put:
-      description: modify tenant
       parameters:
       - description: user id
         in: header
@@ -529,6 +547,7 @@ paths:
       responses:
         "200":
           description: OK
+      summary: modify tenant
       tags:
       - tenant
   /api/quick/login:
@@ -689,7 +708,6 @@ paths:
       - oidc
   /api/quick/providers:
     get:
-      description: list provider info
       parameters:
       - description: user id
         in: header
@@ -706,10 +724,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: list provider info
       tags:
       - provider
     post:
-      description: create provider
       parameters:
       - description: user id
         in: header
@@ -732,11 +750,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: create provider
       tags:
       - provider
   /api/quick/providers/{providerId}:
     delete:
-      description: delete provider
       parameters:
       - description: provider id
         in: path
@@ -750,10 +768,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: delete provider
       tags:
       - provider
     get:
-      description: get provider details
       parameters:
       - description: user id
         in: header
@@ -775,10 +793,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: get provider details
       tags:
       - provider
     put:
-      description: modify provider
       parameters:
       - description: provider id
         in: path
@@ -798,11 +816,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: modify provider
       tags:
       - provider
   /api/quick/redirect-uri:
     get:
-      description: get redirect uri list
       parameters:
       - description: user id
         in: header
@@ -823,10 +841,10 @@ paths:
             items:
               type: string
             type: array
+      summary: get redirect uri list
       tags:
       - tenant
     post:
-      description: create app redirect uri
       parameters:
       - description: user id
         in: header
@@ -849,11 +867,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: create app redirect uri
       tags:
       - tenant
   /api/quick/redirect-uri/{uri}:
     delete:
-      description: delete app
       parameters:
       - description: user id
         in: header
@@ -875,11 +893,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: delete app
       tags:
       - tenant
   /api/quick/redirect-uri/{uriId}:
     put:
-      description: modify app
       parameters:
       - description: user id
         in: header
@@ -907,6 +925,7 @@ paths:
       responses:
         "200":
           description: OK
+      summary: modify app
       tags:
       - tenant
   /api/quick/register:
@@ -932,28 +951,887 @@ paths:
           description: OK
       tags:
       - login
+  /api/quick/resourceGroups:
+    get:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 获取资源组列表
+      tags:
+      - resource-group
+    post:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: body
+        in: body
+        name: group
+        required: true
+        schema:
+          $ref: '#/definitions/model.RequestResourceGroup'
+      responses:
+        "200":
+          description: OK
+      summary: 创建资源组
+      tags:
+      - resource-group
+  /api/quick/resourceGroups/{groupId}:
+    delete:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 删除资源组
+      tags:
+      - resource-group
+    get:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 获取资源组详细信息
+      tags:
+      - resource-group
+    put:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: group
+        required: true
+        schema:
+          $ref: '#/definitions/model.RequestResourceGroup'
+      responses:
+        "200":
+          description: OK
+      summary: 更新资源组
+      tags:
+      - resource-group
+  /api/quick/resourceGroups/{groupId}/actions:
+    get:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 获取资源组动作列表
+      tags:
+      - resource-group
+    post:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: role
+        required: true
+        schema:
+          $ref: '#/definitions/model.RequestResourceGroup'
+      responses:
+        "200":
+          description: OK
+      summary: 创建资源组动作
+      tags:
+      - resource-group
+  /api/quick/resourceGroups/{groupId}/actions/{actionId}:
+    delete:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: action id
+        in: path
+        name: actionId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 删除资源组动作
+      tags:
+      - resource-group
+    get:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: action id
+        in: path
+        name: actionId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 获取资源组动作
+      tags:
+      - resource-group
+    put:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: action id
+        in: path
+        name: actionId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: role
+        required: true
+        schema:
+          $ref: '#/definitions/model.RequestResourceGroup'
+      responses:
+        "200":
+          description: OK
+      summary: 更新资源组动作
+      tags:
+      - resource-group
+  /api/quick/resourceGroups/{groupId}/resources:
+    get:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 获取资源组的资源列表
+      tags:
+      - resource-group
+    post:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.RequestResourceGroup'
+      responses:
+        "200":
+          description: OK
+      summary: 创建资源的资源
+      tags:
+      - resource-group
+  /api/quick/resourceGroups/{groupId}/resources/{resourceId}:
+    delete:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 删除资源组的资源
+      tags:
+      - resource-group
+    get:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 获取资源组的资源
+      tags:
+      - resource-group
+    put:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: resource id
+        in: path
+        name: resourceId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.RequestResourceGroup'
+      responses:
+        "200":
+          description: OK
+      summary: 更新资源组的资源
+      tags:
+      - resource-group
+  /api/quick/resourceGroups/{groupId}/roles:
+    get:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 获取资源组角色列表
+      tags:
+      - resource-group
+    post:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.RequestResourceGroup'
+      responses:
+        "200":
+          description: OK
+      summary: 创建资源角色
+      tags:
+      - resource-group
+  /api/quick/resourceGroups/{groupId}/roles/{roleId}:
+    delete:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 删除资源组角色
+      tags:
+      - resource-group
+    get:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 获取资源组角色
+      tags:
+      - resource-group
+    put:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.RequestResourceGroup'
+      responses:
+        "200":
+          description: OK
+      summary: 更新资源组角色
+      tags:
+      - resource-group
+  /api/quick/resourceGroups/{groupId}/roles/{roleId}/actions:
+    delete:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 删除资源组角色的动作
+      tags:
+      - resource-group
+    get:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 获取资源组角色的动作列表
+      tags:
+      - resource-group
+    post:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.RequestResourceGroup'
+      responses:
+        "200":
+          description: OK
+      summary: 创建资源角色的动作
+      tags:
+      - resource-group
+    put:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.RequestResourceGroup'
+      responses:
+        "200":
+          description: OK
+      summary: 更新资源组角色的动作
+      tags:
+      - resource-group
+  /api/quick/resourceGroups/{groupId}/roles/{roleId}/actions/{actionsId}:
+    get:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      - description: action id
+        in: path
+        name: actionId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 获取资源组角色的动作
+      tags:
+      - resource-group
+  /api/quick/resourceGroups/{groupId}/roles/{roleId}/users:
+    post:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: role id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: group
+        required: true
+        schema:
+          $ref: '#/definitions/model.RequestResourceGroup'
+      responses:
+        "200":
+          description: OK
+      summary: 将用户拉入组内
+      tags:
+      - resource-group
+  /api/quick/resourceGroups/{groupId}/users:
+    get:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 组内用户列表
+      tags:
+      - resource-group
+  /api/quick/resourceGroups/{groupId}/users/{userId}:
+    delete:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: client user id
+        in: path
+        name: userId
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+      summary: 踢出用户
+      tags:
+      - resource-group
+    put:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: client user id
+        in: path
+        name: userId
+        required: true
+        type: integer
+      - description: body
+        in: body
+        name: group
+        required: true
+        schema:
+          $ref: '#/definitions/model.RequestResourceGroup'
+      responses:
+        "200":
+          description: OK
+      summary: 修改用户在组内的角色
+      tags:
+      - resource-group
+  /api/quick/resourceGroups/{groupId}/users/{userId}/actions:
+    get:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: client user id
+        in: path
+        name: userId
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+      summary: 用户在组内所拥有的权限列表
+      tags:
+      - resource-group
+  /api/quick/resourceGroups/{groupId}/users/{userId}/actions/{actionId}:
+    get:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: client user id
+        in: path
+        name: userId
+        required: true
+        type: string
+      - description: action id
+        in: path
+        name: actionId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      summary: 用户在组内是否拥有某个权限
+      tags:
+      - resource-group
+  /api/quick/resourceGroups/{groupId}/users/{userId}/roles:
+    get:
+      parameters:
+      - description: user id
+        in: header
+        name: X-User-ID
+        type: string
+      - description: user pool id
+        in: header
+        name: X-Pool-ID
+        type: string
+      - description: group id
+        in: path
+        name: groupId
+        required: true
+        type: string
+      - description: client user id
+        in: path
+        name: userId
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+      summary: 用户在组内的角色
+      tags:
+      - resource-group
   /api/quick/resources:
     get:
-      description: list resources
       responses:
         "200":
           description: OK
           schema:
             type: object
+      summary: list resources
       tags:
       - resource
     post:
-      description: create resource
       responses:
         "200":
           description: OK
           schema:
             type: object
+      summary: create resource
       tags:
       - resource
   /api/quick/resources/{resourceId}:
     delete:
-      description: delete resource
       parameters:
       - description: resource id
         in: path
@@ -963,10 +1841,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: delete resource
       tags:
       - resource
     get:
-      description: get resource
       parameters:
       - description: resource id
         in: path
@@ -978,10 +1856,10 @@ paths:
           description: OK
           schema:
             type: object
+      summary: get resource
       tags:
       - resource
     put:
-      description: update resource
       parameters:
       - description: resource id
         in: path
@@ -991,11 +1869,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: update resource
       tags:
       - resource
   /api/quick/resources/{resourceId}/json/operations/{operationId}:
     get:
-      description: 判断用户当前对JSON资源的操作是否被允许
       parameters:
       - description: resource id
         in: path
@@ -1015,11 +1893,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: 判断用户当前对JSON资源的操作是否被允许
       tags:
       - auth
   /api/quick/resources/{resourceId}/json/operations/{operationId}/json:
     get:
-      description: 获取拥有某个操作权限的整个json结构
       parameters:
       - description: resource id
         in: path
@@ -1036,11 +1914,11 @@ paths:
           description: OK
           schema:
             type: object
+      summary: 获取拥有某个操作权限的整个json结构
       tags:
       - auth
   /api/quick/resources/{resourceId}/json/operations/{operationId}/parents/:parentId:
     get:
-      description: 获取拥有某个操作权限的node列表
       parameters:
       - description: resource id
         in: path
@@ -1057,11 +1935,11 @@ paths:
           description: OK
           schema:
             type: object
+      summary: 获取拥有某个操作权限的node列表
       tags:
       - auth
   /api/quick/resources/{resourceId}/json/users/{userId}/roles:
     get:
-      description: list resource json user roles
       parameters:
       - description: resource id
         in: path
@@ -1078,10 +1956,10 @@ paths:
           description: OK
           schema:
             type: object
+      summary: list resource json user roles
       tags:
       - resource-user
     post:
-      description: create resource json user role
       parameters:
       - description: resource id
         in: path
@@ -1098,11 +1976,11 @@ paths:
           description: OK
           schema:
             type: object
+      summary: create resource json user role
       tags:
       - resource-user
   /api/quick/resources/{resourceId}/json/users/{userId}/roles/{roleId}:
     delete:
-      description: delete resource json user role
       parameters:
       - description: resource id
         in: path
@@ -1122,10 +2000,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: delete resource json user role
       tags:
       - resource-user
     put:
-      description: update resource json user role
       parameters:
       - description: resource id
         in: path
@@ -1145,11 +2023,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: update resource json user role
       tags:
       - resource-user
   /api/quick/resources/{resourceId}/nodes:
     get:
-      description: list resource nodes
       parameters:
       - description: resource id
         in: path
@@ -1161,10 +2039,10 @@ paths:
           description: OK
           schema:
             type: object
+      summary: list resource nodes
       tags:
       - resource
     post:
-      description: create resource node
       parameters:
       - description: resource id
         in: path
@@ -1176,11 +2054,11 @@ paths:
           description: OK
           schema:
             type: object
+      summary: create resource node
       tags:
       - resource
   /api/quick/resources/{resourceId}/nodes/{nodeId}:
     delete:
-      description: delete resource node
       parameters:
       - description: resource id
         in: path
@@ -1195,10 +2073,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: delete resource node
       tags:
       - resource
     get:
-      description: get resource node
       parameters:
       - description: resource id
         in: path
@@ -1215,10 +2093,10 @@ paths:
           description: OK
           schema:
             type: object
+      summary: get resource node
       tags:
       - resource
     put:
-      description: update resource node
       parameters:
       - description: resource id
         in: path
@@ -1233,11 +2111,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: update resource node
       tags:
       - resource
   /api/quick/resources/{resourceId}/nodes/{nodeId}/operations/{operationId}:
     get:
-      description: 判断用户当前对资源的操作是否被允许
       parameters:
       - description: resource id
         in: path
@@ -1257,11 +2135,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: 判断用户当前对资源的操作是否被允许
       tags:
       - auth
   /api/quick/resources/{resourceId}/operations:
     get:
-      description: list resource operations
       parameters:
       - description: resource id
         in: path
@@ -1273,10 +2151,10 @@ paths:
           description: OK
           schema:
             type: object
+      summary: list resource operations
       tags:
       - resource-operation
     post:
-      description: create resource operation
       parameters:
       - description: resource id
         in: path
@@ -1288,11 +2166,11 @@ paths:
           description: OK
           schema:
             type: object
+      summary: create resource operation
       tags:
       - resource-operation
   /api/quick/resources/{resourceId}/operations/{operationId}:
     delete:
-      description: delete resource operation
       parameters:
       - description: resource id
         in: path
@@ -1307,10 +2185,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: delete resource operation
       tags:
       - resource-operation
     get:
-      description: get resource operation
       parameters:
       - description: resource id
         in: path
@@ -1327,10 +2205,10 @@ paths:
           description: OK
           schema:
             type: object
+      summary: get resource operation
       tags:
       - resource-operation
     put:
-      description: update resource operation
       parameters:
       - description: resource id
         in: path
@@ -1345,11 +2223,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: update resource operation
       tags:
       - resource-operation
   /api/quick/resources/{resourceId}/roles:
     get:
-      description: list resource roles
       parameters:
       - description: resource id
         in: path
@@ -1361,10 +2239,10 @@ paths:
           description: OK
           schema:
             type: object
+      summary: list resource roles
       tags:
       - resource-role
     post:
-      description: create resource role
       parameters:
       - description: resource id
         in: path
@@ -1376,11 +2254,11 @@ paths:
           description: OK
           schema:
             type: object
+      summary: create resource role
       tags:
       - resource-role
   /api/quick/resources/{resourceId}/roles/{roleId}:
     delete:
-      description: delete resource role
       parameters:
       - description: resource id
         in: path
@@ -1395,10 +2273,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: delete resource role
       tags:
       - resource-role
     get:
-      description: get resource role
       parameters:
       - description: resource id
         in: path
@@ -1415,10 +2293,10 @@ paths:
           description: OK
           schema:
             type: object
+      summary: get resource role
       tags:
       - resource-role
     put:
-      description: update resource role
       parameters:
       - description: resource id
         in: path
@@ -1433,11 +2311,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: update resource role
       tags:
       - resource-role
   /api/quick/resources/{resourceId}/roles/{roleId}/operations:
     get:
-      description: list resource role operations
       parameters:
       - description: resource id
         in: path
@@ -1454,10 +2332,10 @@ paths:
           description: OK
           schema:
             type: object
+      summary: list resource role operations
       tags:
       - resource-role
     post:
-      description: create resource role operation
       parameters:
       - description: resource id
         in: path
@@ -1474,11 +2352,11 @@ paths:
           description: OK
           schema:
             type: object
+      summary: create resource role operation
       tags:
       - resource-role
   /api/quick/resources/{resourceId}/roles/{roleId}/operations/{operationId}:
     delete:
-      description: delete resource role operation
       parameters:
       - description: resource id
         in: path
@@ -1498,11 +2376,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: delete resource role operation
       tags:
       - resource-role
   /api/quick/resources/{resourceId}/users/{userId}/roles:
     get:
-      description: list resource json user roles
       parameters:
       - description: resource id
         in: path
@@ -1519,10 +2397,10 @@ paths:
           description: OK
           schema:
             type: object
+      summary: list resource json user roles
       tags:
       - resource-user
     post:
-      description: create resource json user role
       parameters:
       - description: resource id
         in: path
@@ -1539,11 +2417,11 @@ paths:
           description: OK
           schema:
             type: object
+      summary: create resource json user role
       tags:
       - resource-user
   /api/quick/resources/{resourceId}/users/{userId}/roles/{roleId}:
     delete:
-      description: delete resource json user role
       parameters:
       - description: resource id
         in: path
@@ -1563,10 +2441,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: delete resource json user role
       tags:
       - resource-user
     put:
-      description: update resource json user role
       parameters:
       - description: resource id
         in: path
@@ -1586,11 +2464,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: update resource json user role
       tags:
       - resource-user
   /api/quick/user-pools:
     get:
-      description: list user pool
       parameters:
       - description: user id
         in: header
@@ -1603,10 +2481,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: list user pool
       tags:
       - user
     post:
-      description: create user pool
       parameters:
       - description: user id
         in: header
@@ -1625,11 +2503,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: create user pool
       tags:
       - user
   /api/quick/user-pools/{poolId}:
     delete:
-      description: delete user pool
       parameters:
       - description: user id
         in: header
@@ -1647,10 +2525,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: delete user pool
       tags:
       - user
     get:
-      description: get user pool info
       parameters:
       - description: user id
         in: header
@@ -1668,10 +2546,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: get user pool info
       tags:
       - user
     put:
-      description: modify user pool
       parameters:
       - description: user id
         in: header
@@ -1695,11 +2573,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: modify user pool
       tags:
       - user
   /api/quick/user-pools/{poolId}/users:
     get:
-      description: list users
       parameters:
       - description: user id
         in: header
@@ -1717,10 +2595,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: list users
       tags:
       - user
     post:
-      description: create user
       parameters:
       - description: user id
         in: header
@@ -1744,11 +2622,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: create user
       tags:
       - user
   /api/quick/user-pools/{poolId}/users/{userId}:
     delete:
-      description: delete user
       parameters:
       - description: user id
         in: header
@@ -1771,10 +2649,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: delete user
       tags:
       - user
     get:
-      description: get user info
       parameters:
       - description: user id
         in: header
@@ -1797,10 +2675,10 @@ paths:
       responses:
         "200":
           description: OK
+      summary: get user info
       tags:
       - user
     put:
-      description: modify user
       parameters:
       - description: user id
         in: header
@@ -1829,6 +2707,7 @@ paths:
       responses:
         "200":
           description: OK
+      summary: modify user
       tags:
       - user
 securityDefinitions:

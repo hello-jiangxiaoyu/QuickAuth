@@ -8,14 +8,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ListTenant	swagger
-// @Description	get tenant list
-// @Tags		tenant
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Param		appId		path	string	true	"app id"
-// @Success		200
-// @Router		/api/quick/apps/{appId}/tenants [get]
+// ListTenant
+// @Summary	get tenant list
+// @Tags	tenant
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	appId		path	string	true	"app id"
+// @Success	200
+// @Router	/api/quick/apps/{appId}/tenants [get]
 func (a Route) ListTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
@@ -32,15 +32,15 @@ func (a Route) ListTenant(c *gin.Context) {
 	resp.SuccessArrayData(c, len(tenants), utils.DtoFilter(tenants, model.TenantsDto))
 }
 
-// GetTenant	swagger
-// @Description	get tenant details
-// @Tags		tenant
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Param		appId		path	string	true	"app id"
-// @Param		tenantId	path	integer	true	"tenant id"
-// @Success		200
-// @Router		/api/quick/apps/{appId}/tenants/{tenantId} [get]
+// GetTenant
+// @Summary	get tenant details
+// @Tags	tenant
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	appId		path	string	true	"app id"
+// @Param	tenantId	path	integer	true	"tenant id"
+// @Success	200
+// @Router	/api/quick/apps/{appId}/tenants/{tenantId} [get]
 func (a Route) GetTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
@@ -57,15 +57,15 @@ func (a Route) GetTenant(c *gin.Context) {
 	resp.SuccessWithData(c, tenant)
 }
 
-// CreateTenant	swagger
-// @Description	create tenant
-// @Tags		tenant
-// @Param		X-User-ID	header	string				false	"user id"
-// @Param		X-Pool-ID	header	string				false	"user pool id"
-// @Param		appId		path	string				true	"app id"
-// @Param		bd			body	request.TenantReq	true	"body"
-// @Success		200
-// @Router		/api/quick/apps/{appId}/tenants [post]
+// CreateTenant
+// @Summary	create tenant
+// @Tags	tenant
+// @Param	X-User-ID	header	string				false	"user id"
+// @Param	X-Pool-ID	header	string				false	"user pool id"
+// @Param	appId		path	string				true	"app id"
+// @Param	bd			body	request.TenantReq	true	"body"
+// @Success	200
+// @Router	/api/quick/apps/{appId}/tenants [post]
 func (a Route) CreateTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
@@ -82,16 +82,16 @@ func (a Route) CreateTenant(c *gin.Context) {
 	resp.SuccessWithData(c, tenant)
 }
 
-// ModifyTenant	swagger
-// @Description	modify tenant
-// @Tags		tenant
-// @Param		X-User-ID	header	string				false	"user id"
-// @Param		X-Pool-ID	header	string				false	"user pool id"
-// @Param		appId		path	string				true	"app id"
-// @Param		tenantId	path	integer				true	"tenant id"
-// @Param		bd			body	request.TenantReq	true	"body"
-// @Success		200
-// @Router		/api/quick/apps/{appId}/tenants/{tenantId} [put]
+// ModifyTenant
+// @Summary	modify tenant
+// @Tags	tenant
+// @Param	X-User-ID	header	string				false	"user id"
+// @Param	X-Pool-ID	header	string				false	"user pool id"
+// @Param	appId		path	string				true	"app id"
+// @Param	tenantId	path	integer				true	"tenant id"
+// @Param	bd			body	request.TenantReq	true	"body"
+// @Success	200
+// @Router	/api/quick/apps/{appId}/tenants/{tenantId} [put]
 func (a Route) ModifyTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
@@ -107,15 +107,15 @@ func (a Route) ModifyTenant(c *gin.Context) {
 	resp.Success(c)
 }
 
-// DeleteTenant	swagger
-// @Description	delete tenant
-// @Tags		tenant
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Param		appId		path	string	true	"app id"
-// @Param		tenantId	path	integer	true	"tenant id"
-// @Success		200
-// @Router		/api/quick/apps/{appId}/tenants/{tenantId} [delete]
+// DeleteTenant
+// @Summary	delete tenant
+// @Tags	tenant
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	appId		path	string	true	"app id"
+// @Param	tenantId	path	integer	true	"tenant id"
+// @Success	200
+// @Router	/api/quick/apps/{appId}/tenants/{tenantId} [delete]
 func (a Route) DeleteTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {

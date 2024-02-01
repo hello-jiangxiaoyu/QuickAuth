@@ -6,14 +6,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ListLoginProviderInfo	swagger
-// @Description	list provider info
-// @Tags		provider
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Param		vhost		header	string	false	"tenant host"
-// @Success		200
-// @Router		/api/quick/providers [get]
+// ListLoginProviderInfo
+// @Summary	list provider info
+// @Tags	provider
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		header	string	false	"tenant host"
+// @Success	200
+// @Router	/api/quick/providers [get]
 func (a Route) ListLoginProviderInfo(c *gin.Context) {
 	var in request.ProviderReq
 	if err := a.SetCtx(c).SetTenant(&in.Tenant).Error; err != nil {
@@ -29,8 +29,8 @@ func (a Route) ListLoginProviderInfo(c *gin.Context) {
 	resp.SuccessArrayData(c, len(providers), providers)
 }
 
-// GetProvider	swagger
-// @Description	get provider details
+// GetProvider
+// @Summary	get provider details
 // @Tags		provider
 // @Param		X-User-ID	header	string	false	"user id"
 // @Param		X-Pool-ID	header	string	false	"user pool id"
@@ -53,15 +53,15 @@ func (a Route) GetProvider(c *gin.Context) {
 	resp.SuccessWithData(c, provider)
 }
 
-// CreateProvider	swagger
-// @Description	create provider
-// @Tags		provider
-// @Param		X-User-ID	header	string				false	"user id"
-// @Param		X-Pool-ID	header	string				false	"user pool id"
-// @Param		vhost		header	string				false	"tenant host"
-// @Param		bd			body	request.ProviderReq	true	"body"
-// @Success		200
-// @Router		/api/quick/providers [post]
+// CreateProvider
+// @Summary	create provider
+// @Tags	provider
+// @Param	X-User-ID	header	string				false	"user id"
+// @Param	X-Pool-ID	header	string				false	"user pool id"
+// @Param	vhost		header	string				false	"tenant host"
+// @Param	bd			body	request.ProviderReq	true	"body"
+// @Success	200
+// @Router	/api/quick/providers [post]
 func (a Route) CreateProvider(c *gin.Context) {
 	var in request.ProviderReq
 	if err := a.SetCtx(c).BindJson(&in).SetTenant(&in.Tenant).Error; err != nil {
@@ -78,14 +78,14 @@ func (a Route) CreateProvider(c *gin.Context) {
 	resp.SuccessWithData(c, provider)
 }
 
-// ModifyProvider	swagger
-// @Description	modify provider
-// @Tags		provider
-// @Param		providerId	path	integer				true	"provider id"
-// @Param		vhost		header	string				false	"tenant host"
-// @Param		bd			body	request.ProviderReq	true	"body"
-// @Success		200
-// @Router		/api/quick/providers/{providerId} [put]
+// ModifyProvider
+// @Summary	modify provider
+// @Tags	provider
+// @Param	providerId	path	integer				true	"provider id"
+// @Param	vhost		header	string				false	"tenant host"
+// @Param	bd			body	request.ProviderReq	true	"body"
+// @Success	200
+// @Router	/api/quick/providers/{providerId} [put]
 func (a Route) ModifyProvider(c *gin.Context) {
 	var in request.ProviderReq
 	if err := a.SetCtx(c).BindUriAndJson(&in).SetTenant(&in.Tenant).Error; err != nil {
@@ -101,13 +101,13 @@ func (a Route) ModifyProvider(c *gin.Context) {
 	resp.Success(c)
 }
 
-// DeleteProvider	swagger
-// @Description	delete provider
-// @Tags		provider
-// @Param		providerId	path	integer	true	"provider id"
-// @Param		vhost		header	string	false	"tenant host"
-// @Success		200
-// @Router		/api/quick/providers/{providerId} [delete]
+// DeleteProvider
+// @Summary	delete provider
+// @Tags	provider
+// @Param	providerId	path	integer	true	"provider id"
+// @Param	vhost		header	string	false	"tenant host"
+// @Success	200
+// @Router	/api/quick/providers/{providerId} [delete]
 func (a Route) DeleteProvider(c *gin.Context) {
 	var in request.ProviderReq
 	if err := a.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {

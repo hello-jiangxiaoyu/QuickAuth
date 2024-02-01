@@ -6,14 +6,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ListAppSecret	swagger
-// @Description	list app secret
-// @Tags		app
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Param		appId		path	string	true	"app id"
-// @Success		200
-// @Router		/api/quick/apps/{appId}/secrets [get]
+// ListAppSecret
+// @Summary	list app secret
+// @Tags	app
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	appId		path	string	true	"app id"
+// @Success	200
+// @Router	/api/quick/apps/{appId}/secrets [get]
 func (a Route) ListAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
 	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
@@ -29,15 +29,15 @@ func (a Route) ListAppSecret(c *gin.Context) {
 	resp.SuccessArrayData(c, len(secrets), secrets)
 }
 
-// CreateAppSecret	swagger
-// @Description	create app secret
-// @Tags		app
-// @Param		X-User-ID	header	string					false	"user id"
-// @Param		X-Pool-ID	header	string					false	"user pool id"
-// @Param		appId		path	string					true	"app id"
-// @Param		bd			body	request.AppSecretReq	true	"body"
-// @Success		200
-// @Router		/api/quick/apps/{appId}/secrets [post]
+// CreateAppSecret
+// @Summary	create app secret
+// @Tags	app
+// @Param	X-User-ID	header	string					false	"user id"
+// @Param	X-Pool-ID	header	string					false	"user pool id"
+// @Param	appId		path	string					true	"app id"
+// @Param	bd			body	request.AppSecretReq	true	"body"
+// @Success	200
+// @Router	/api/quick/apps/{appId}/secrets [post]
 func (a Route) CreateAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
 	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
@@ -53,16 +53,16 @@ func (a Route) CreateAppSecret(c *gin.Context) {
 	resp.SuccessWithData(c, secret)
 }
 
-// ModifyAppSecret	swagger
-// @Description	create app secret
-// @Tags		app
-// @Param		X-User-ID	header	string					false	"user id"
-// @Param		X-Pool-ID	header	string					false	"user pool id"
-// @Param		appId		path	string					true	"app id"
-// @Param		secretId	path	integer					true	"secret id"
-// @Param		bd			body	request.AppSecretReq	true	"body"
-// @Success		200
-// @Router		/api/quick/apps/{appId}/secrets/{secretId} [put]
+// ModifyAppSecret
+// @Summary	create app secret
+// @Tags	app
+// @Param	X-User-ID	header	string					false	"user id"
+// @Param	X-Pool-ID	header	string					false	"user pool id"
+// @Param	appId		path	string					true	"app id"
+// @Param	secretId	path	integer					true	"secret id"
+// @Param	bd			body	request.AppSecretReq	true	"body"
+// @Success	200
+// @Router	/api/quick/apps/{appId}/secrets/{secretId} [put]
 func (a Route) ModifyAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
 	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
@@ -78,15 +78,15 @@ func (a Route) ModifyAppSecret(c *gin.Context) {
 	resp.SuccessWithData(c, secret)
 }
 
-// DeleteAppSecret	swagger
-// @Description	delete app secret
-// @Tags		app
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Param		appId		path	string	true	"app id"
-// @Param		secretId	path	integer	true	"secret id"
-// @Success		200
-// @Router		/api/quick/apps/{appId}/secrets/{secretId} [delete]
+// DeleteAppSecret
+// @Summary	delete app secret
+// @Tags	app
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	appId		path	string	true	"app id"
+// @Param	secretId	path	integer	true	"secret id"
+// @Success	200
+// @Router	/api/quick/apps/{appId}/secrets/{secretId} [delete]
 func (a Route) DeleteAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
 	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {

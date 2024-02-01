@@ -8,14 +8,14 @@ import (
 	"github.com/google/uuid"
 )
 
-// ListUser	swagger
-// @Description	list users
-// @Tags		user
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Param		poolId		path	integer	true	"user pool id"
-// @Success		200
-// @Router		/api/quick/user-pools/{poolId}/users [get]
+// ListUser
+// @Summary	list users
+// @Tags	user
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	poolId		path	integer	true	"user pool id"
+// @Success	200
+// @Router	/api/quick/user-pools/{poolId}/users [get]
 func (a Route) ListUser(c *gin.Context) {
 	var in request.UserReq
 	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
@@ -31,15 +31,15 @@ func (a Route) ListUser(c *gin.Context) {
 	resp.SuccessArrayData(c, len(users), users)
 }
 
-// GetUser	swagger
-// @Description	get user info
-// @Tags		user
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Param		poolId		path	integer	true	"user pool id"
-// @Param		userId		path	string	true	"user id"
-// @Success		200
-// @Router		/api/quick/user-pools/{poolId}/users/{userId} [get]
+// GetUser
+// @Summary	get user info
+// @Tags	user
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	poolId		path	integer	true	"user pool id"
+// @Param	userId		path	string	true	"user id"
+// @Success	200
+// @Router	/api/quick/user-pools/{poolId}/users/{userId} [get]
 func (a Route) GetUser(c *gin.Context) {
 	var in request.UserReq
 	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
@@ -55,15 +55,15 @@ func (a Route) GetUser(c *gin.Context) {
 	resp.SuccessWithData(c, user)
 }
 
-// CreateUser	swagger
-// @Description	create user
-// @Tags		user
-// @Param		X-User-ID	header	string			false	"user id"
-// @Param		X-Pool-ID	header	string			false	"user pool id"
-// @Param		poolId		path	integer			true	"user pool id"
-// @Param		bd			body	request.UserReq	true	"body"
-// @Success		200
-// @Router		/api/quick/user-pools/{poolId}/users [post]
+// CreateUser
+// @Summary	create user
+// @Tags	user
+// @Param	X-User-ID	header	string			false	"user id"
+// @Param	X-Pool-ID	header	string			false	"user pool id"
+// @Param	poolId		path	integer			true	"user pool id"
+// @Param	bd			body	request.UserReq	true	"body"
+// @Success	200
+// @Router	/api/quick/user-pools/{poolId}/users [post]
 func (a Route) CreateUser(c *gin.Context) {
 	var in request.UserReq
 	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
@@ -87,16 +87,16 @@ func (a Route) CreateUser(c *gin.Context) {
 	resp.SuccessWithData(c, user.Dto())
 }
 
-// ModifyUser	swagger
-// @Description	modify user
-// @Tags		user
-// @Param		X-User-ID	header	string			false	"user id"
-// @Param		X-Pool-ID	header	string			false	"user pool id"
-// @Param		poolId		path	integer			true	"user pool id"
-// @Param		userId		path	string			true	"user id"
-// @Param		bd			body	request.UserReq	true	"body"
-// @Success		200
-// @Router		/api/quick/user-pools/{poolId}/users/{userId} [put]
+// ModifyUser
+// @Summary	modify user
+// @Tags	user
+// @Param	X-User-ID	header	string			false	"user id"
+// @Param	X-Pool-ID	header	string			false	"user pool id"
+// @Param	poolId		path	integer			true	"user pool id"
+// @Param	userId		path	string			true	"user id"
+// @Param	bd			body	request.UserReq	true	"body"
+// @Success	200
+// @Router	/api/quick/user-pools/{poolId}/users/{userId} [put]
 func (a Route) ModifyUser(c *gin.Context) {
 	var in request.UserReq
 	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
@@ -111,15 +111,15 @@ func (a Route) ModifyUser(c *gin.Context) {
 	resp.Success(c)
 }
 
-// DeleteUser	swagger
-// @Description	delete user
-// @Tags		user
-// @Param		X-User-ID	header	string	false	"user id"
-// @Param		X-Pool-ID	header	string	false	"user pool id"
-// @Param		poolId		path	integer	true	"user pool id"
-// @Param		userId		path	string	true	"user id"
-// @Success		200
-// @Router		/api/quick/user-pools/{poolId}/users/{userId} [delete]
+// DeleteUser
+// @Summary	delete user
+// @Tags	user
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	poolId		path	integer	true	"user pool id"
+// @Param	userId		path	string	true	"user id"
+// @Success	200
+// @Router	/api/quick/user-pools/{poolId}/users/{userId} [delete]
 func (a Route) DeleteUser(c *gin.Context) {
 	var in request.UserReq
 	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
