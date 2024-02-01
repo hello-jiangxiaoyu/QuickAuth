@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"QuickAuth/internal"
+	"QuickAuth/biz"
 	"QuickAuth/pkg/global"
 	"fmt"
 	"os"

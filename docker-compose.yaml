@@ -8,24 +8,12 @@ services:
     container_name: quick-auth
     restart: always
     ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /usr/local/openresty/configuration:/usr/local/openresty/configuration
-    env_file:
-      - deploy/quick-auth.env
+      - "8000:8000"
+    environment:
+      - DEPLOY_TYPE=docker
+      - FIRST_DEPLOY=true
+      - SYSTEM_CONF=prod.yaml
     networks: ["auth"]
-  clickhouse:
-    image: yandex/clickhouse-server
-    container_name: clickhouse
-    networks: ["auth"]
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ./deploy/clickhouse/docker_related_config.xml:/etc/clickhouse-server/config.d/docker_related_config.xml:rw
-      - ./deploy/clickhouse/config.xml:/etc/clickhouse-server/config.xml:rw
-      - ./deploy/clickhouse/users.xml:/etc/clickhouse-server/users.xml:rw
-      - /data/clickhouse/lib:/var/lib/clickhouse:rw
   postgres:
     image: postgres
     container_name: postgres
@@ -34,8 +22,6 @@ services:
       POSTGRES_DB: "quick_auth"
       POSTGRES_PASSWORD: "admin"
       POSTGRES_USER: "admin"
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
 
 networks:
   auth:

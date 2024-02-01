@@ -1,7 +1,7 @@
 package global
 
 import (
-	"QuickAuth/internal/endpoint/model"
+	"QuickAuth/biz/endpoint/model"
 	"QuickAuth/pkg/conf"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -21,6 +21,10 @@ type Repository struct {
 	DB     *gorm.DB
 	Logger *zap.Logger
 	Config *conf.SystemConfig
+}
+
+func Db() *gorm.DB {
+	return DB
 }
 
 func NewRepository(db *gorm.DB, logger *zap.Logger, config *conf.SystemConfig) *Repository {

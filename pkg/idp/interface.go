@@ -1,7 +1,7 @@
 package idp
 
 import (
-	"QuickAuth/internal/endpoint/model"
+	"QuickAuth/biz/endpoint/model"
 	"golang.org/x/oauth2"
 )
 

@@ -26,12 +26,11 @@ type (
 	}
 
 	SystemConfig struct {
-		Svc        Server   `json:"server" yaml:"server"`
-		Def        Default  `json:"default" yaml:"default"`
-		Log        Log      `json:"log" yaml:"log"`
-		Clickhouse Database `json:"clickhouse" yaml:"clickhouse"`
-		DB         Database `json:"database" yaml:"database"`
-		Redis      Database `json:"redis" yaml:"redis"`
+		Svc   Server   `json:"server" yaml:"server"`
+		Def   Default  `json:"default" yaml:"default"`
+		Log   Log      `json:"log" yaml:"log"`
+		DB    Database `json:"database" yaml:"database"`
+		Redis Database `json:"redis" yaml:"redis"`
 	}
 )
 

@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"QuickAuth/internal/endpoint/model"
-	"QuickAuth/internal/endpoint/resp"
+	"QuickAuth/biz/endpoint/model"
+	"QuickAuth/biz/endpoint/resp"
 	"QuickAuth/pkg/global"
 	"errors"
 	"github.com/gin-gonic/gin"
@@ -18,7 +18,7 @@ func TenantHost() gin.HandlerFunc {
 		if host == "" {
 			host = c.Request.Host
 		}
-		if err := global.DB.Where("host = ?", host).Preload("App").Preload("UserPool").First(&tenant).Error; err != nil {
+		if err := global.Db().Where("host = ?", host).Preload("App").Preload("UserPool").First(&tenant).Error; err != nil {
 			resp.ErrorHost(c)
 			return
 		}

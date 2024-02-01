@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"QuickAuth/internal/endpoint/resp"
-	"QuickAuth/internal/service/oauth"
+	"QuickAuth/biz/endpoint/resp"
+	"QuickAuth/biz/service/oauth"
 	"QuickAuth/pkg/global"
 	"crypto/rsa"
 	"fmt"
@@ -58,6 +58,6 @@ func setUserInfo(c *gin.Context, claims jwt.Claims) {
 
 func M2mAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		
+
 	}
 }

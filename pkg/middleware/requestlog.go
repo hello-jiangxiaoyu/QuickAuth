@@ -59,8 +59,6 @@ func RequestLog() gin.HandlerFunc {
 		start := time.Now()
 		c.Next()
 		zapLogRequest(c, start)
-
-		// todo: upload to clickhouse
 	}
 }
 

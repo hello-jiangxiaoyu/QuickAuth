@@ -1,6 +1,6 @@
 
 server:
-  listen: "localhost:80"
+  listen: "localhost:8000"
   uploadSwitch: true
   wildcardSwitch: false
   wildcardSuffix: ".example.com"
@@ -22,14 +22,6 @@ database:
   port: 5432
   dbName: "dev_quick_auth"
   username: "admin"
-  password: "admin"
-
-# database for log
-clickhouse:
-  host: "localhost"
-  port: 8123
-  dbName: "log"
-  username: "default"
   password: "admin"
 
 redis:

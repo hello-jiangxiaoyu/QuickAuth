@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"QuickAuth/internal/endpoint/model"
+	"QuickAuth/biz/endpoint/model"
 	"QuickAuth/pkg/global"
 	"fmt"
 	"os"
@@ -18,7 +18,7 @@ func autoMigrateDB() {
 		model.Tenant{},
 	}
 
-	if err := global.DB.Debug().AutoMigrate(migrateList...); err != nil {
+	if err := global.Db().Debug().AutoMigrate(migrateList...); err != nil {
 		fmt.Println("[Error] migrate err: ", err)
 		os.Exit(ExitMigrate)
 		return
@@ -40,7 +40,7 @@ func createDbTables() {
 	statements := strings.Split(string(sqlBytes), ";")
 	for _, sql := range statements {
 		if strings.TrimSpace(sql) != "" {
-			if err = global.DB.Exec(sql).Error; err != nil {
+			if err = global.Db().Exec(sql).Error; err != nil {
 				fmt.Println("[Error] exec sql err: ", err)
 				os.Exit(ExitExecSql)
 				return

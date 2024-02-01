@@ -4,9 +4,8 @@
 data
 *.log
 
-internal/query
+biz/query
 node_modules
 venv
-cmd/gen
 
 gen_modify_test.go
