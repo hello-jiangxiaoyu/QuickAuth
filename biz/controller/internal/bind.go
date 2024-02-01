@@ -29,7 +29,28 @@ func (a *Api) BindUri(obj any) *Api {
 	return a
 }
 
+func BindUri(c *gin.Context, obj any) *Api {
+	a := New(c)
+	if err := setUriValue(a.c, obj); err != nil {
+		return a.setError(err)
+	}
+	return a
+}
+
 func (a *Api) BindUriAndJson(obj any) *Api {
+	if a.c == nil {
+		return a.setError(errors.New("gin context should not be nil"))
+	}
+	if err := setUriValue(a.c, obj); err != nil {
+		return a.setError(err)
+	}
+	if err := a.c.ShouldBindJSON(obj); err != nil {
+		return a.setError(err)
+	}
+	return a
+}
+func BindUriAndJson(c *gin.Context, obj any) *Api {
+	a := New(c)
 	if a.c == nil {
 		return a.setError(errors.New("gin context should not be nil"))
 	}
@@ -46,7 +67,7 @@ func (a *Api) BindQuery(obj any) *Api {
 	if a.c == nil {
 		return a.setError(errors.New("gin context should not be nil"))
 	}
-	if err := a.c.BindQuery(obj); err != nil {
+	if err := a.c.ShouldBindQuery(obj); err != nil {
 		return a.setError(err)
 	}
 	return a
