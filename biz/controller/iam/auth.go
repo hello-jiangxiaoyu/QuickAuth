@@ -67,7 +67,7 @@ func (a Resource) ListResourceOperationNodes(c *gin.Context) {
 	}
 	data, err := a.svc.ListResourceOperationNodes(in.Tenant.ID, in.ResourceId, in.ParentId, in.OperationId, in.UserId)
 	if err != nil {
-		resp.ErrorSelect(c, err, "ListResourceOperationNodes err", true)
+		resp.ErrorSelect(c, err, "ListResourceOperationNodes err")
 		return
 	}
 
@@ -89,7 +89,7 @@ func (a Resource) ListJSONResourceOperationNodes(c *gin.Context) {
 	}
 	data, err := a.svc.ListJSONResourceOperationNodes(in.Tenant.ID, in.ResourceId, in.OperationId, in.UserId)
 	if err != nil {
-		resp.ErrorSelect(c, err, "ListResourceOperationNodes err", true)
+		resp.ErrorSelect(c, err, "ListResourceOperationNodes err")
 		return
 	}
 

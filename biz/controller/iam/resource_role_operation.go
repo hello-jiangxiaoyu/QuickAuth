@@ -21,7 +21,7 @@ func (a Resource) ListResourceRoleOperations(c *gin.Context) {
 	}
 	data, err := a.svc.ListResourceRoleOperations(in.Tenant.ID, in.ResourceId, in.RoleId)
 	if err != nil {
-		resp.ErrorSelect(c, err, "ListResourceRoleOperations err", true)
+		resp.ErrorSelect(c, err, "ListResourceRoleOperations err")
 		return
 	}
 

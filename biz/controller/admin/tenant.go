@@ -19,13 +19,13 @@ import (
 func (a Route) ListTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, true)
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	tenants, err := a.svc.ListTenant(in.AppID)
 	if err != nil {
-		resp.ErrorSelect(c, err, "list tenant err", true)
+		resp.ErrorSelect(c, err, "list tenant err")
 		return
 	}
 

@@ -17,13 +17,13 @@ import (
 func (a Route) ListRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := a.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
-		resp.ErrorRequest(c, err, true)
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	uris, err := a.svc.ListRedirectUri(in.Tenant.ID)
 	if err != nil {
-		resp.ErrorSelect(c, err, "list redirect uri err", true)
+		resp.ErrorSelect(c, err, "list redirect uri err")
 		return
 	}
 	resp.SuccessArrayData(c, len(uris), uris)

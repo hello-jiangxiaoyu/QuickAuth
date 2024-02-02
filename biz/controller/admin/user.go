@@ -19,13 +19,13 @@ import (
 func (a Route) ListUser(c *gin.Context) {
 	var in request.UserReq
 	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, true)
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	users, err := a.svc.ListUser(in.UserPoolID)
 	if err != nil {
-		resp.ErrorSelect(c, err, "list user err", true)
+		resp.ErrorSelect(c, err, "list user err")
 		return
 	}
 	resp.SuccessArrayData(c, len(users), users)

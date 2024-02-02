@@ -20,7 +20,7 @@ func (a Resource) ListResourceOperations(c *gin.Context) {
 	}
 	data, err := a.svc.ListResourceOperations(in.Tenant.ID, in.ResourceId)
 	if err != nil {
-		resp.ErrorSelect(c, err, "ListResourceOperations err", true)
+		resp.ErrorSelect(c, err, "ListResourceOperations err")
 		return
 	}
 

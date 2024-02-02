@@ -21,7 +21,7 @@ func (a Resource) ListResourceJSONUserRoles(c *gin.Context) {
 	}
 	data, err := a.svc.ListResourceJSONUserRoles(in.Tenant.ID, in.ResourceId, in.UserId)
 	if err != nil {
-		resp.ErrorSelect(c, err, "ListResourceJsonUserRoles err", true)
+		resp.ErrorSelect(c, err, "ListResourceJsonUserRoles err")
 		return
 	}
 

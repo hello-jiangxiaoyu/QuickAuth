@@ -6,6 +6,7 @@ import (
 	"QuickAuth/biz/endpoint/resp"
 	"QuickAuth/biz/service"
 	"QuickAuth/biz/service/admin"
+	"errors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -28,7 +29,7 @@ func NewAdminRoute(svc *service.Service) *Route {
 func (a Route) ListApp(c *gin.Context) {
 	apps, err := a.svc.ListApps()
 	if err != nil {
-		resp.ErrorSelect(c, err, "list apps err", true)
+		resp.ErrorSelect(c, err, "list apps err")
 		return
 	}
 	resp.SuccessArrayData(c, len(apps), apps)
@@ -113,7 +114,7 @@ func (a Route) ModifyApp(c *gin.Context) {
 // @Router	/api/quick/apps/{appId} [delete]
 func (a Route) DeleteApp(c *gin.Context) {
 	if err := a.svc.DeleteApp(c.Param("appId")); err != nil {
-		if err == admin.ErrorDeleteDefaultApp {
+		if errors.Is(err, admin.ErrorDeleteDefaultApp) {
 			resp.ErrorUnknown(c, err, err.Error())
 		} else {
 			resp.ErrorDelete(c, err, "delete app err")

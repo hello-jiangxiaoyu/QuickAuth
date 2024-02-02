@@ -17,13 +17,13 @@ import (
 func (a Route) ListAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
 	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
-		resp.ErrorRequest(c, err, true)
+		resp.ErrorRequest(c, err)
 		return
 	}
 
 	secrets, err := a.svc.ListAppSecrets(in.AppId)
 	if err != nil {
-		resp.ErrorSelect(c, err, "list app secret err", true)
+		resp.ErrorSelect(c, err, "list app secret err")
 		return
 	}
 	resp.SuccessArrayData(c, len(secrets), secrets)

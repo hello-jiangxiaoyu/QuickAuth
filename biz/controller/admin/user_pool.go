@@ -16,7 +16,7 @@ import (
 func (a Route) ListUserPool(c *gin.Context) {
 	pools, err := a.svc.ListUserPool()
 	if err != nil {
-		resp.ErrorSelect(c, err, "list user pool err", true)
+		resp.ErrorSelect(c, err, "list user pool err")
 		return
 	}
 	resp.SuccessArrayData(c, len(pools), pools)

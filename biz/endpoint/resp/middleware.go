@@ -6,13 +6,13 @@ import (
 )
 
 func ErrorPanic(ctx context.Context) {
-	errorResponse(ctx, http.StatusInternalServerError, CodeServerPanic, nil, "server panic", nil)
+	errorResponse(ctx, http.StatusInternalServerError, CodeServerPanic, nil, "server panic")
 }
 
 func ErrorHost(ctx context.Context) {
-	errorResponse(ctx, http.StatusForbidden, CodeNoSuchHost, nil, "no such host", nil)
+	errorResponse(ctx, http.StatusForbidden, CodeNoSuchHost, nil, "no such host")
 }
 
 func ErrorNoRoute(ctx context.Context) {
-	errorResponse(ctx, http.StatusNotFound, CodeNoSuchRoute, nil, "no such route", nil)
+	errorResponse(ctx, http.StatusNotFound, CodeNoSuchRoute, nil, "no such route")
 }
