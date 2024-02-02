@@ -9,7 +9,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-func (s *ServiceOauth) LoadRsaPublicKeys(tenant string) (*jose.JSONWebKeySet, error) {
+func LoadRsaPublicKeys(tenant string) (*jose.JSONWebKeySet, error) {
 	if tenant == "" {
 		return nil, errors.New("tenant name should not be null")
 	}

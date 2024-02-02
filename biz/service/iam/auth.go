@@ -2,19 +2,21 @@ package iam
 
 import (
 	"QuickAuth/biz/endpoint/model"
+	"QuickAuth/pkg/global"
+	"errors"
 	"gorm.io/gorm"
 )
 
-func (s *ServiceIam) IsOperationAllow(tenantId int64, resId int64, nodeId int64, operationId int64, userId any) (bool, error) {
+func IsOperationAllow(tenantId int64, resId int64, nodeId int64, operationId int64, userId any) (bool, error) {
 	var roles []int64
-	if err := s.db.Model(model.ResourceRole{}).Select("id").
+	if err := global.Db().Model(model.ResourceRole{}).Select("id").
 		Where("tenant_id = ? AND resource_id = ? AND operation_id = ?", tenantId, resId, operationId).Find(&roles).Error; err != nil {
 		return false, err
 	}
 
-	err := s.db.Where("user_id = ? AND tenant_id = ? AND node_id = ? AND resource_id = ? AND role_id in ?",
+	err := global.Db().Where("user_id = ? AND tenant_id = ? AND node_id = ? AND resource_id = ? AND role_id in ?",
 		userId, tenantId, nodeId, resId, roles).First(model.ResourceUserRole{}).Error
-	if err == gorm.ErrRecordNotFound {
+	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return false, nil
 	} else if err != nil {
 		return false, err
@@ -23,14 +25,14 @@ func (s *ServiceIam) IsOperationAllow(tenantId int64, resId int64, nodeId int64,
 	return true, nil
 }
 
-func (s *ServiceIam) IsJSONOperationAllow(tenantId int64, resId int64, path string, operationId int64, userId any) (bool, error) {
+func IsJSONOperationAllow(tenantId int64, resId int64, path string, operationId int64, userId any) (bool, error) {
 	var roles []int64
-	if err := s.db.Model(model.ResourceRole{}).Select("id").
+	if err := global.Db().Model(model.ResourceRole{}).Select("id").
 		Where("tenant_id = ? AND resource_id = ? AND operation_id = ?", tenantId, resId, operationId).Find(&roles).Error; err != nil {
 		return false, err
 	}
 
-	err := s.db.Where("user_id = ? AND tenant_id = ? AND json_path = ? AND resource_id = ? AND role_id in ?",
+	err := global.Db().Where("user_id = ? AND tenant_id = ? AND json_path = ? AND resource_id = ? AND role_id in ?",
 		userId, tenantId, path, resId, roles).First(model.ResourceJSONUserRole{}).Error
 	if err == gorm.ErrRecordNotFound {
 		return false, nil
@@ -42,9 +44,9 @@ func (s *ServiceIam) IsJSONOperationAllow(tenantId int64, resId int64, path stri
 }
 
 // ListResourceOperationNodes 获取拥有某个操作权限的node列表
-func (s *ServiceIam) ListResourceOperationNodes(tenantId int64, resId int64, paraId int64, operationId int64, userId string) ([]model.ResourceUserRole, error) {
+func ListResourceOperationNodes(tenantId int64, resId int64, paraId int64, operationId int64, userId string) ([]model.ResourceUserRole, error) {
 	var data []model.ResourceUserRole
-	if err := s.db.Table(model.TableNameResourceUserRole+" as rur").
+	if err := global.Db().Table(model.TableNameResourceUserRole+" as rur").
 		Select("rur.id", "rur.tenant_id", "rur.user_id", "rur.role_id", "rur.resource_id", "rur.node_id").
 		Joins(model.TableNameResourceNode+" as n ON n.id = rur.node_id").
 		Joins(model.TableNameResourceRoleOperation+" as ro ON ro.id = rur.role_id").
@@ -57,9 +59,9 @@ func (s *ServiceIam) ListResourceOperationNodes(tenantId int64, resId int64, par
 }
 
 // ListJSONResourceOperationNodes 获取拥有某个操作权限的整个json结构
-func (s *ServiceIam) ListJSONResourceOperationNodes(tenantId int64, resId int64, operationId int64, userId string) ([]model.ResourceJSONUserRole, error) {
+func ListJSONResourceOperationNodes(tenantId int64, resId int64, operationId int64, userId string) ([]model.ResourceJSONUserRole, error) {
 	var data []model.ResourceJSONUserRole
-	if err := s.db.Table(model.TableNameResourceJSONUserRole+" as rj").
+	if err := global.Db().Table(model.TableNameResourceJSONUserRole+" as rj").
 		Select("rj.id", "rj.tenant_id", "rj.resource_id", "rj.json_path", "rj.user_id", "rj.role_id").
 		Joins(model.TableNameResourceRoleOperation+" as ro ON ro.id = rj.role_id").
 		Where("rj.tenant_id = ? AND rj.resource_id = ? AND rj.user_id = ? AND ro.operation_id = ?", tenantId, resId, userId, operationId).

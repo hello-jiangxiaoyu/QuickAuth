@@ -2,11 +2,12 @@ package iam
 
 import (
 	"QuickAuth/biz/endpoint/model"
+	"QuickAuth/pkg/global"
 )
 
-func (s *ServiceIam) ListResourceUserRoles(tenantId int64, resId int64, userId string) ([]model.ResourceUserRole, error) {
+func ListResourceUserRoles(tenantId int64, resId int64, userId string) ([]model.ResourceUserRole, error) {
 	var data []model.ResourceUserRole
-	if err := s.db.Where("tenant_id = ? AND resource_id = ? AND user_id = ?", tenantId, resId, userId).
+	if err := global.Db().Where("tenant_id = ? AND resource_id = ? AND user_id = ?", tenantId, resId, userId).
 		Find(&data).Error; err != nil {
 		return nil, err
 	}
@@ -14,15 +15,15 @@ func (s *ServiceIam) ListResourceUserRoles(tenantId int64, resId int64, userId s
 	return data, nil
 }
 
-func (s *ServiceIam) CreateResourceUserRole(userRole *model.ResourceUserRole) (*model.ResourceUserRole, error) {
-	if err := s.db.Create(userRole).Error; err != nil {
+func CreateResourceUserRole(userRole *model.ResourceUserRole) (*model.ResourceUserRole, error) {
+	if err := global.Db().Create(userRole).Error; err != nil {
 		return nil, err
 	}
 	return userRole, nil
 }
 
-func (s *ServiceIam) UpdateResourceUserRole(tenantId int64, resId int64, userId string, nodeId int64, userRole *model.ResourceUserRole) error {
-	if err := s.db.Where("tenant_id = ? AND resource_id = ? AND user_id = ? AND node_id = ?",
+func UpdateResourceUserRole(tenantId int64, resId int64, userId string, nodeId int64, userRole *model.ResourceUserRole) error {
+	if err := global.Db().Where("tenant_id = ? AND resource_id = ? AND user_id = ? AND node_id = ?",
 		tenantId, resId, userId, nodeId).Updates(&userRole).Error; err != nil {
 		return err
 	}
@@ -30,8 +31,8 @@ func (s *ServiceIam) UpdateResourceUserRole(tenantId int64, resId int64, userId 
 	return nil
 }
 
-func (s *ServiceIam) DeleteResourceUserRole(tenantId int64, resId int64, userId string, nodeId int64) error {
-	if err := s.db.Where("tenant_id = ? AND resource_id = ? AND user_id = ? AND node_id = ?",
+func DeleteResourceUserRole(tenantId int64, resId int64, userId string, nodeId int64) error {
+	if err := global.Db().Where("tenant_id = ? AND resource_id = ? AND user_id = ? AND node_id = ?",
 		tenantId, resId, userId, nodeId).Delete(model.ResourceUserRole{}).Error; err != nil {
 		return err
 	}

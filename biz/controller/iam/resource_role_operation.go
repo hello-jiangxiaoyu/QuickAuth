@@ -4,6 +4,7 @@ import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
+	"QuickAuth/biz/service/iam"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,7 +21,7 @@ func (a Resource) ListResourceRoleOperations(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	data, err := a.svc.ListResourceRoleOperations(in.Tenant.ID, in.ResourceId, in.RoleId)
+	data, err := iam.ListResourceRoleOperations(in.Tenant.ID, in.ResourceId, in.RoleId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "ListResourceRoleOperations err")
 		return
@@ -45,7 +46,7 @@ func (a Resource) CreateResourceRoleOperation(c *gin.Context) {
 	in.RoleOperation.TenantID = in.Tenant.ID
 	in.RoleOperation.ResourceID = in.ResourceId
 	in.RoleOperation.RoleID = in.RoleId
-	data, err := a.svc.CreateResourceRoleOperation(&in.RoleOperation)
+	data, err := iam.CreateResourceRoleOperation(&in.RoleOperation)
 	if err != nil {
 		resp.ErrorCreate(c, err, "CreateResourceRoleOperation err")
 		return
@@ -68,7 +69,7 @@ func (a Resource) DeleteResourceRoleOperation(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	if err := a.svc.DeleteResourceRoleOperation(in.Tenant.ID, in.ResourceId, in.RoleId, in.OperationId); err != nil {
+	if err := iam.DeleteResourceRoleOperation(in.Tenant.ID, in.ResourceId, in.RoleId, in.OperationId); err != nil {
 		resp.ErrorDelete(c, err, "DeleteResourceRoleOperation err")
 		return
 	}

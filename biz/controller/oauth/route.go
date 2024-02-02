@@ -1,13 +1,12 @@
 package oauth
 
 import (
-	"QuickAuth/biz/service"
 	"QuickAuth/pkg/middleware"
 	"github.com/gin-gonic/gin"
 )
 
-func AddOauth2Route(svc *service.Service, e *gin.Engine) {
-	o := NewOAuth2Route(svc)
+func AddOauth2Route(e *gin.Engine) {
+	o := NewOAuth2Route()
 	r := e.Group("/api/quick")
 	{
 		r.GET("/.well-known/openid-configuration", o.GetOIDC) // OIDC信息

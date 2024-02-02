@@ -6,7 +6,6 @@ import (
 	"QuickAuth/biz/controller/oauth"
 	"QuickAuth/biz/controller/rg"
 	"QuickAuth/biz/endpoint/resp"
-	"QuickAuth/biz/service"
 	_ "QuickAuth/docs"
 	"QuickAuth/pkg/global"
 	"QuickAuth/pkg/middleware"
@@ -19,11 +18,10 @@ import (
 )
 
 func NewRouter(repo *global.Repository, e *gin.Engine) {
-	svc := service.NewService(repo)
 
-	admin.AddAdminRoute(svc, e)
-	oauth.AddOauth2Route(svc, e)
-	iam.AddIamRouter(svc, e)
+	admin.AddAdminRoute(e)
+	oauth.AddOauth2Route(e)
+	iam.AddIamRouter(e)
 	rg.AddResourceGroupRoutes(e.Group("/api/quick"))
 	AddWebRoutes(e)
 

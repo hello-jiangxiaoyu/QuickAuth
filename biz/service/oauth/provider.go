@@ -13,7 +13,7 @@ import (
 )
 
 // CreateProviderToken 创建ID Token
-func (s *ServiceOauth) CreateProviderToken(app model.App, tenant model.Tenant, user *idp.UserInfo, nonce string) (string, error) {
+func CreateProviderToken(app model.App, tenant model.Tenant, user *idp.UserInfo, nonce string) (string, error) {
 	nowTime := time.Now()
 	expireTime := nowTime.Add(time.Duration(tenant.IDExpire) * time.Hour)
 	claims := request.IDClaims{
@@ -33,11 +33,11 @@ func (s *ServiceOauth) CreateProviderToken(app model.App, tenant model.Tenant, u
 		},
 	}
 
-	return s.getTokenString(claims, app.Name)
+	return getTokenString(claims, app.Name)
 }
 
 // CheckState 校验state，防止CSRF攻击
-func (s *ServiceOauth) CheckState(c *gin.Context) error {
+func CheckState(c *gin.Context) error {
 	_, err := c.Cookie(resp.CookieState)
 	if err != nil {
 		return err

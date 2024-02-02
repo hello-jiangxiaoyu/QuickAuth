@@ -4,6 +4,7 @@ import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/model"
 	"QuickAuth/biz/endpoint/resp"
+	"QuickAuth/biz/service/oauth"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
@@ -60,7 +61,7 @@ func (o Controller) GetOIDC(c *gin.Context) {
 // @Router		/api/quick/.well-known/jwks.json [get]
 func (o Controller) ListJwks(c *gin.Context) {
 	tenantName := "default"
-	jwks, err := o.svc.LoadRsaPublicKeys(tenantName)
+	jwks, err := oauth.LoadRsaPublicKeys(tenantName)
 	if err != nil {
 		resp.ErrorUnknown(c, err, "failed to get pub keys")
 		return

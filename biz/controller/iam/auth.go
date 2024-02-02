@@ -4,6 +4,7 @@ import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
+	"QuickAuth/biz/service/iam"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -23,7 +24,7 @@ func (a Resource) IsOperationAllow(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	allow, err := a.svc.IsOperationAllow(in.Tenant.ID, in.ResourceId, in.NodeId, in.OperationId, user["sub"])
+	allow, err := iam.IsOperationAllow(in.Tenant.ID, in.ResourceId, in.NodeId, in.OperationId, user["sub"])
 	if err != nil {
 		resp.ErrorSelect(c, err, "IsOperationAllow err")
 		return
@@ -47,7 +48,7 @@ func (a Resource) IsJSONOperationAllow(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	allow, err := a.svc.IsJSONOperationAllow(in.Tenant.ID, in.ResourceId, in.Path, in.OperationId, user["sub"])
+	allow, err := iam.IsJSONOperationAllow(in.Tenant.ID, in.ResourceId, in.Path, in.OperationId, user["sub"])
 	if err != nil {
 		resp.ErrorSelect(c, err, "IsJSONOperationAllow err")
 		return
@@ -69,7 +70,7 @@ func (a Resource) ListResourceOperationNodes(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	data, err := a.svc.ListResourceOperationNodes(in.Tenant.ID, in.ResourceId, in.ParentId, in.OperationId, in.UserId)
+	data, err := iam.ListResourceOperationNodes(in.Tenant.ID, in.ResourceId, in.ParentId, in.OperationId, in.UserId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "ListResourceOperationNodes err")
 		return
@@ -91,7 +92,7 @@ func (a Resource) ListJSONResourceOperationNodes(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	data, err := a.svc.ListJSONResourceOperationNodes(in.Tenant.ID, in.ResourceId, in.OperationId, in.UserId)
+	data, err := iam.ListJSONResourceOperationNodes(in.Tenant.ID, in.ResourceId, in.OperationId, in.UserId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "ListResourceOperationNodes err")
 		return

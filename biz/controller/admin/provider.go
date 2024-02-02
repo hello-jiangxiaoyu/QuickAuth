@@ -4,6 +4,7 @@ import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
+	"QuickAuth/biz/service/admin"
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,7 +22,7 @@ func (a Route) ListLoginProviderInfo(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	providers, err := a.svc.GetLoginProviderInfo(in.Tenant.ID)
+	providers, err := admin.GetLoginProviderInfo(in.Tenant.ID)
 	if err != nil {
 		resp.ErrorSelect(c, err, "list provider err")
 		return
@@ -45,7 +46,7 @@ func (a Route) GetProvider(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	provider, err := a.svc.GetProviderById(in.Tenant.ID, in.ProviderId)
+	provider, err := admin.GetProviderById(in.Tenant.ID, in.ProviderId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "get provider err")
 		return
@@ -70,7 +71,7 @@ func (a Route) CreateProvider(c *gin.Context) {
 		return
 	}
 
-	provider, err := a.svc.CreateProvider(in.ToModel())
+	provider, err := admin.CreateProvider(in.ToModel())
 	if err != nil {
 		resp.ErrorCreate(c, err, "create provider err")
 		return
@@ -94,7 +95,7 @@ func (a Route) ModifyProvider(c *gin.Context) {
 		return
 	}
 
-	if err := a.svc.ModifyProvider(in.ProviderId, in.ToModel()); err != nil {
+	if err := admin.ModifyProvider(in.ProviderId, in.ToModel()); err != nil {
 		resp.ErrorUpdate(c, err, "modify provider err")
 		return
 	}
@@ -115,7 +116,7 @@ func (a Route) DeleteProvider(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	if err := a.svc.DeleteProvider(in.Tenant.ID, in.ProviderId); err != nil {
+	if err := admin.DeleteProvider(in.Tenant.ID, in.ProviderId); err != nil {
 		resp.ErrorDelete(c, err, "delete provider err")
 		return
 	}

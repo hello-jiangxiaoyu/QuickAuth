@@ -4,6 +4,7 @@ import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
+	"QuickAuth/biz/service/iam"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,7 +21,7 @@ func (a Resource) ListResourceUserRoles(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	data, err := a.svc.ListResourceUserRoles(in.Tenant.ID, in.ResourceId, in.UserId)
+	data, err := iam.ListResourceUserRoles(in.Tenant.ID, in.ResourceId, in.UserId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "ListResourceJsonUserRoles err")
 		return
@@ -45,7 +46,7 @@ func (a Resource) CreateResourceUserRole(c *gin.Context) {
 	in.JsonUserRole.TenantID = in.Tenant.ID
 	in.JsonUserRole.ResourceID = in.ResourceId
 	in.JsonUserRole.UserID = in.UserId
-	data, err := a.svc.CreateResourceUserRole(&in.UserRole)
+	data, err := iam.CreateResourceUserRole(&in.UserRole)
 	if err != nil {
 		resp.ErrorCreate(c, err, "CreateResourceJsonUserRole err")
 		return
@@ -71,7 +72,7 @@ func (a Resource) UpdateResourceUserRole(c *gin.Context) {
 	in.JsonUserRole.TenantID = in.Tenant.ID
 	in.JsonUserRole.ResourceID = in.ResourceId
 	in.JsonUserRole.UserID = in.UserId
-	if err := a.svc.UpdateResourceUserRole(in.Tenant.ID, in.ResourceId, in.UserId, in.NodeId, &in.UserRole); err != nil {
+	if err := iam.UpdateResourceUserRole(in.Tenant.ID, in.ResourceId, in.UserId, in.NodeId, &in.UserRole); err != nil {
 		resp.ErrorUpdate(c, err, "UpdateResourceJsonUserRole err")
 		return
 	}
@@ -93,7 +94,7 @@ func (a Resource) DeleteResourceUserRole(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	if err := a.svc.DeleteResourceUserRole(in.Tenant.ID, in.ResourceId, in.UserId, in.NodeId); err != nil {
+	if err := iam.DeleteResourceUserRole(in.Tenant.ID, in.ResourceId, in.UserId, in.NodeId); err != nil {
 		resp.ErrorDelete(c, err, "DeleteResourceJsonUserRole err")
 		return
 	}

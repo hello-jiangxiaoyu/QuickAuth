@@ -4,6 +4,7 @@ import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
+	"QuickAuth/biz/service/iam"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,7 +20,7 @@ func (a Resource) ListResourceRoles(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	data, err := a.svc.ListResourceRoles(in.Tenant.ID, in.ResourceId)
+	data, err := iam.ListResourceRoles(in.Tenant.ID, in.ResourceId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "ListResourceRoles err")
 		return
@@ -41,7 +42,7 @@ func (a Resource) GetResourceRole(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	data, err := a.svc.GetResourceRole(in.Tenant.ID, in.ResourceId, in.RoleId)
+	data, err := iam.GetResourceRole(in.Tenant.ID, in.ResourceId, in.RoleId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "GetResourceRole err")
 		return
@@ -64,7 +65,7 @@ func (a Resource) CreateResourceRole(c *gin.Context) {
 	}
 	in.Role.TenantID = in.Tenant.ID
 	in.Role.ResourceID = in.ResourceId
-	data, err := a.svc.CreateResourceRole(&in.Role)
+	data, err := iam.CreateResourceRole(&in.Role)
 	if err != nil {
 		resp.ErrorCreate(c, err, "CreateResourceRole err")
 		return
@@ -89,7 +90,7 @@ func (a Resource) UpdateResourceRole(c *gin.Context) {
 	in.Role.ID = in.RoleId
 	in.Role.TenantID = in.Tenant.ID
 	in.Role.ResourceID = in.ResourceId
-	if err := a.svc.UpdateResourceRole(in.Tenant.ID, in.ResourceId, in.RoleId, &in.Role); err != nil {
+	if err := iam.UpdateResourceRole(in.Tenant.ID, in.ResourceId, in.RoleId, &in.Role); err != nil {
 		resp.ErrorUpdate(c, err, "UpdateResourceRole err")
 		return
 	}
@@ -110,7 +111,7 @@ func (a Resource) DeleteResourceRole(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	if err := a.svc.DeleteResourceRole(in.Tenant.ID, in.ResourceId, in.RoleId); err != nil {
+	if err := iam.DeleteResourceRole(in.Tenant.ID, in.ResourceId, in.RoleId); err != nil {
 		resp.ErrorDelete(c, err, "DeleteResourceRole err")
 		return
 	}

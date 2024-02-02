@@ -4,6 +4,7 @@ import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
+	"QuickAuth/biz/service/admin"
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,7 +23,7 @@ func (a Route) ListRedirectUri(c *gin.Context) {
 		return
 	}
 
-	uris, err := a.svc.ListRedirectUri(in.Tenant.ID)
+	uris, err := admin.ListRedirectUri(in.Tenant.ID)
 	if err != nil {
 		resp.ErrorSelect(c, err, "list redirect uri err")
 		return
@@ -46,7 +47,7 @@ func (a Route) CreateRedirectUri(c *gin.Context) {
 		return
 	}
 
-	if err := a.svc.CreateRedirectUri(in.Tenant.ID, in.Uri); err != nil {
+	if err := admin.CreateRedirectUri(in.Tenant.ID, in.Uri); err != nil {
 		resp.ErrorUpdate(c, err, "create redirect uri err")
 		return
 	}
@@ -69,7 +70,7 @@ func (a Route) ModifyRedirectUri(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	if err := a.svc.ModifyRedirectUri(in.Tenant.ID, in.UriId, in.Uri); err != nil {
+	if err := admin.ModifyRedirectUri(in.Tenant.ID, in.UriId, in.Uri); err != nil {
 		resp.ErrorUpdate(c, err, "modify redirect uri err")
 		return
 	}
@@ -93,7 +94,7 @@ func (a Route) DeleteRedirectUri(c *gin.Context) {
 	}
 
 	uri := c.Param("uri")
-	if err := a.svc.DeleteRedirectUri(in.Tenant.ID, uri); err != nil {
+	if err := admin.DeleteRedirectUri(in.Tenant.ID, uri); err != nil {
 		resp.ErrorUpdate(c, err, "delete redirect uri err")
 		return
 	}

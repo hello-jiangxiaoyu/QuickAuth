@@ -4,6 +4,7 @@ import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
+	"QuickAuth/biz/service/admin"
 	"QuickAuth/pkg/safe"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -24,7 +25,7 @@ func (a Route) ListUser(c *gin.Context) {
 		return
 	}
 
-	users, err := a.svc.ListUser(in.UserPoolID)
+	users, err := admin.ListUser(in.UserPoolID)
 	if err != nil {
 		resp.ErrorSelect(c, err, "list user err")
 		return
@@ -48,7 +49,7 @@ func (a Route) GetUser(c *gin.Context) {
 		return
 	}
 
-	user, err := a.svc.GetUserById(in.UserPoolID, in.UserID)
+	user, err := admin.GetUserById(in.UserPoolID, in.UserID)
 	if err != nil {
 		resp.ErrorSelect(c, err, "no such user")
 		return
@@ -79,7 +80,7 @@ func (a Route) CreateUser(c *gin.Context) {
 		return
 	}
 	in.OpenId = uuid.NewString()
-	user, err := a.svc.CreateUser(in.ToModel())
+	user, err := admin.CreateUser(in.ToModel())
 	if err != nil {
 		resp.ErrorCreate(c, err, "create user err")
 		return
@@ -105,7 +106,7 @@ func (a Route) ModifyUser(c *gin.Context) {
 		return
 	}
 
-	if err := a.svc.ModifyUser(in.UserID, in.ToModel()); err != nil {
+	if err := admin.ModifyUser(in.UserID, in.ToModel()); err != nil {
 		resp.ErrorUpdate(c, err, "modify user err")
 		return
 	}
@@ -128,7 +129,7 @@ func (a Route) DeleteUser(c *gin.Context) {
 		return
 	}
 
-	if err := a.svc.DeleteUser(in.UserPoolID, in.UserID); err != nil {
+	if err := admin.DeleteUser(in.UserPoolID, in.UserID); err != nil {
 		resp.ErrorDelete(c, err, "delete user err")
 		return
 	}

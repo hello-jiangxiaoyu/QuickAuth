@@ -4,6 +4,7 @@ import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
+	"QuickAuth/biz/service/admin"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,7 +16,7 @@ import (
 // @Success	200
 // @Router	/api/quick/user-pools [get]
 func (a Route) ListUserPool(c *gin.Context) {
-	pools, err := a.svc.ListUserPool()
+	pools, err := admin.ListUserPool()
 	if err != nil {
 		resp.ErrorSelect(c, err, "list user pool err")
 		return
@@ -38,7 +39,7 @@ func (a Route) GetUserPool(c *gin.Context) {
 		return
 	}
 
-	pool, err := a.svc.GetUserPool(in.PoolId)
+	pool, err := admin.GetUserPool(in.PoolId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "get user pool err")
 		return
@@ -60,7 +61,7 @@ func (a Route) CreateUserPool(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	pool, err := a.svc.CreateUserPool(in.ToModel())
+	pool, err := admin.CreateUserPool(in.ToModel())
 	if err != nil {
 		resp.ErrorCreate(c, err, "create user pool err")
 		return
@@ -84,7 +85,7 @@ func (a Route) ModifyUserPool(c *gin.Context) {
 		return
 	}
 
-	if err := a.svc.ModifyUserPool(in.PoolId, in.ToModel()); err != nil {
+	if err := admin.ModifyUserPool(in.PoolId, in.ToModel()); err != nil {
 		resp.ErrorUpdate(c, err, "modify user pool err")
 		return
 	}
@@ -106,7 +107,7 @@ func (a Route) DeleteUserPool(c *gin.Context) {
 		return
 	}
 
-	if err := a.svc.DeleteUserPool(in.PoolId); err != nil {
+	if err := admin.DeleteUserPool(in.PoolId); err != nil {
 		resp.ErrorDelete(c, err, "delete user pool err")
 		return
 	}

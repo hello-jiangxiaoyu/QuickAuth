@@ -2,7 +2,7 @@ package internal
 
 import (
 	"QuickAuth/biz/endpoint/model"
-	"QuickAuth/biz/service"
+	"QuickAuth/biz/service/admin"
 	"QuickAuth/pkg/conf"
 	"QuickAuth/pkg/global"
 	"QuickAuth/pkg/tools/log"
@@ -70,14 +70,13 @@ func InitDefaultTenant() error {
 		return err
 	}
 
-	svc := service.NewService(global.NewRepository(global.Db(), global.Log, global.Config))
 	app := &model.App{
 		Name:     "default",
 		Tag:      "Single Tenant",
 		Icon:     "IconSafe",
 		Describe: "quick auth app",
 	}
-	app, err := svc.CreateApp(app, "127.0.0.1", 0)
+	app, err := admin.CreateApp(app, "127.0.0.1", 0)
 	if err != nil {
 		return err
 	}

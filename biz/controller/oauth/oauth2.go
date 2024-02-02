@@ -4,7 +4,7 @@ import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
-	"QuickAuth/biz/service"
+	"QuickAuth/biz/service/admin"
 	"QuickAuth/biz/service/oauth"
 	"errors"
 	"fmt"
@@ -15,11 +15,10 @@ import (
 )
 
 type Controller struct {
-	svc *service.Service
 }
 
-func NewOAuth2Route(svc *service.Service) Controller {
-	return Controller{svc: svc}
+func NewOAuth2Route() Controller {
+	return Controller{}
 }
 
 // GetAuthCode	swagger
@@ -40,7 +39,7 @@ func (o Controller) GetAuthCode(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	if ok, err := o.svc.IsRedirectUriValid(in.ClientID, in.Tenant.ID, in.RedirectUri); err != nil {
+	if ok, err := admin.IsRedirectUriValid(in.ClientID, in.Tenant.ID, in.RedirectUri); err != nil {
 		resp.ErrorSelect(c, err, "no such uri.")
 		return
 	} else if !ok {
@@ -55,7 +54,7 @@ func (o Controller) GetAuthCode(c *gin.Context) {
 	}
 
 	if in.ResponseType == internal.Oauth2ResponseTypeCode {
-		code, err := o.svc.CreateAccessCode(in.ClientID, userId)
+		code, err := oauth.CreateAccessCode(in.ClientID, userId)
 		if err != nil {
 			resp.ErrorUpdate(c, err, "failed to create access code.")
 			return
@@ -96,7 +95,7 @@ func (o Controller) GetToken(c *gin.Context) {
 		return
 	}
 
-	app, err := o.svc.GetApp(in.ClientID)
+	app, err := admin.GetApp(in.ClientID)
 	if err != nil {
 		resp.ErrorRequestWithErr(c, err, "no such app")
 		return

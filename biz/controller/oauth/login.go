@@ -5,6 +5,8 @@ import (
 	"QuickAuth/biz/endpoint/model"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
+	"QuickAuth/biz/service/admin"
+	"QuickAuth/biz/service/oauth"
 	"QuickAuth/pkg/safe"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -30,7 +32,7 @@ func (o Controller) Login(c *gin.Context) {
 	}
 
 	// 用户名和密码检查
-	user, err := o.svc.GetUserByName(in.Tenant.UserPoolID, in.UserName)
+	user, err := admin.GetUserByName(in.Tenant.UserPoolID, in.UserName)
 	if err != nil {
 		resp.ErrorNotFound(c, err, "no such user")
 		return
@@ -41,7 +43,7 @@ func (o Controller) Login(c *gin.Context) {
 	}
 
 	// 生成包含用户信息的id_token
-	token, err := o.svc.CreateIdToken(in.Tenant.App, in.Tenant, *user, "")
+	token, err := oauth.CreateIdToken(in.Tenant.App, in.Tenant, *user, "")
 	if err != nil {
 		resp.ErrorUnknown(c, err, "create id token err")
 		return
@@ -86,7 +88,7 @@ func (o Controller) Register(c *gin.Context) {
 		return
 	}
 
-	user, err := o.svc.CreateUser(&model.User{
+	user, err := admin.CreateUser(&model.User{
 		UserPoolID: in.Tenant.UserPoolID,
 		Username:   in.UserName,
 		Password:   in.Password,

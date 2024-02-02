@@ -1,14 +1,13 @@
 package admin
 
 import (
-	"QuickAuth/biz/service"
 	"QuickAuth/pkg/middleware"
 	"github.com/gin-gonic/gin"
 )
 
 // AddAdminRoute admin接口
-func AddAdminRoute(svc *service.Service, e *gin.Engine) {
-	admin := NewAdminRoute(svc)
+func AddAdminRoute(e *gin.Engine) {
+	admin := NewAdminRoute()
 	app := e.Group("/api/quick", middleware.LoginAuth())
 	{
 		// app应用管理

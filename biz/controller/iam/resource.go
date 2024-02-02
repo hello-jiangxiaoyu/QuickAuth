@@ -4,16 +4,15 @@ import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
-	"QuickAuth/biz/service"
+	"QuickAuth/biz/service/iam"
 	"github.com/gin-gonic/gin"
 )
 
 type Resource struct {
-	svc *service.Service
 }
 
-func NewResourceController(svc *service.Service) *Resource {
-	return &Resource{svc: svc}
+func NewResourceController() *Resource {
+	return &Resource{}
 }
 
 // ListResources
@@ -27,7 +26,7 @@ func (a Resource) ListResources(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	data, err := a.svc.ListResources(in.Tenant.ID)
+	data, err := iam.ListResources(in.Tenant.ID)
 	if err != nil {
 		resp.ErrorSelect(c, err, "ListResources err")
 		return
@@ -48,7 +47,7 @@ func (a Resource) GetResource(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	data, err := a.svc.GetResource(in.Tenant.ID, &in)
+	data, err := iam.GetResource(in.Tenant.ID, &in)
 	if err != nil {
 		resp.ErrorSelect(c, err, "GetResource err")
 		return
@@ -70,7 +69,7 @@ func (a Resource) CreateResource(c *gin.Context) {
 	}
 
 	in.Resource.TenantID = in.Tenant.ID
-	data, err := a.svc.CreateResource(&in.Resource)
+	data, err := iam.CreateResource(&in.Resource)
 	if err != nil {
 		resp.ErrorCreate(c, err, "CreateResource err")
 		return
@@ -92,7 +91,7 @@ func (a Resource) UpdateResource(c *gin.Context) {
 		return
 	}
 	in.Resource.TenantID = in.Tenant.ID
-	if err := a.svc.UpdateResource(in.Tenant.ID, in.ResourceId, &in.Resource); err != nil {
+	if err := iam.UpdateResource(in.Tenant.ID, in.ResourceId, &in.Resource); err != nil {
 		resp.ErrorUpdate(c, err, "UpdateResource err")
 		return
 	}
@@ -113,7 +112,7 @@ func (a Resource) DeleteResource(c *gin.Context) {
 		return
 	}
 
-	if err := a.svc.DeleteResource(in.Tenant.ID, in.ResourceId); err != nil {
+	if err := iam.DeleteResource(in.Tenant.ID, in.ResourceId); err != nil {
 		resp.ErrorDelete(c, err, "DeleteResource err")
 		return
 	}

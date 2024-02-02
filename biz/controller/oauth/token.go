@@ -3,6 +3,7 @@ package oauth
 import (
 	"QuickAuth/biz/endpoint/dto"
 	"QuickAuth/biz/endpoint/request"
+	"QuickAuth/biz/service/oauth"
 	"errors"
 )
 
@@ -31,12 +32,12 @@ func (o Controller) getTokenHandler(grantType string) (Handler, error) {
 }
 
 func (o Controller) handlerAuthorizationCode(req *request.Token) (*dto.TokenResponse, error) {
-	code, err := o.svc.GetAccessCode(req.ClientID, req.Code)
+	code, err := oauth.GetAccessCode(req.ClientID, req.Code)
 	if err != nil {
 		return nil, err
 	}
 
-	token, err := o.svc.CreateAccessToken(req.App, req.Tenant, req.UserID, req.Nonce, code.Scope)
+	token, err := oauth.CreateAccessToken(req.App, req.Tenant, req.UserID, req.Nonce, code.Scope)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +46,7 @@ func (o Controller) handlerAuthorizationCode(req *request.Token) (*dto.TokenResp
 }
 
 func (o Controller) handlerClientCredential(req *request.Token) (*dto.TokenResponse, error) {
-	token, err := o.svc.CreateAccessToken(req.App, req.Tenant, req.UserID, req.Nonce, []string{req.State})
+	token, err := oauth.CreateAccessToken(req.App, req.Tenant, req.UserID, req.Nonce, []string{req.State})
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +56,7 @@ func (o Controller) handlerClientCredential(req *request.Token) (*dto.TokenRespo
 }
 
 func (o Controller) handlerPassword(req *request.Token) (*dto.TokenResponse, error) {
-	token, err := o.svc.CreateAccessToken(req.App, req.Tenant, req.UserID, req.Nonce, []string{req.State})
+	token, err := oauth.CreateAccessToken(req.App, req.Tenant, req.UserID, req.Nonce, []string{req.State})
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +66,7 @@ func (o Controller) handlerPassword(req *request.Token) (*dto.TokenResponse, err
 }
 
 func (o Controller) handlerRefreshToken(req *request.Token) (*dto.TokenResponse, error) {
-	token, err := o.svc.CreateAccessToken(req.App, req.Tenant, req.UserID, req.Nonce, []string{req.State})
+	token, err := oauth.CreateAccessToken(req.App, req.Tenant, req.UserID, req.Nonce, []string{req.State})
 	if err != nil {
 		return nil, err
 	}

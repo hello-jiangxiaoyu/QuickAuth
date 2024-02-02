@@ -1,12 +1,11 @@
 package iam
 
 import (
-	"QuickAuth/biz/service"
 	"github.com/gin-gonic/gin"
 )
 
-func AddIamRouter(svc *service.Service, e *gin.Engine) {
-	resourceCtl := NewResourceController(svc)
+func AddIamRouter(e *gin.Engine) {
+	resourceCtl := NewResourceController()
 
 	// 资源管理
 	resource := e.Group("/api/quick")

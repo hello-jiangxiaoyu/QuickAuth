@@ -4,6 +4,8 @@ import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
+	"QuickAuth/biz/service/admin"
+	"QuickAuth/biz/service/oauth"
 	"QuickAuth/pkg/idp"
 	"QuickAuth/pkg/safe"
 	"fmt"
@@ -37,13 +39,13 @@ func (o Controller) ProviderCallback(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	if err := o.svc.CheckState(c); err != nil {
+	if err := oauth.CheckState(c); err != nil {
 		resp.ErrorRequestWithErr(c, err, "invalid state")
 		return
 	}
 
 	c.SetCookie(resp.CookieState, "", -1, "/api/quick/login", "", false, true) // 删除state
-	provider, err := o.svc.GetProviderById(in.Tenant.ID, in.ProviderId)
+	provider, err := admin.GetProviderById(in.Tenant.ID, in.ProviderId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "no such provider")
 		return
@@ -71,7 +73,7 @@ func (o Controller) ProviderCallback(c *gin.Context) {
 	}
 
 	// 登录成功，生成id_token
-	tokenStr, err := o.svc.CreateProviderToken(in.Tenant.App, in.Tenant, userInfo, "")
+	tokenStr, err := oauth.CreateProviderToken(in.Tenant.App, in.Tenant, userInfo, "")
 	if err != nil {
 		resp.ErrorUnknown(c, err, "create provider id token err")
 		return

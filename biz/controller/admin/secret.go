@@ -4,6 +4,7 @@ import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
+	"QuickAuth/biz/service/admin"
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,7 +23,7 @@ func (a Route) ListAppSecret(c *gin.Context) {
 		return
 	}
 
-	secrets, err := a.svc.ListAppSecrets(in.AppId)
+	secrets, err := admin.ListAppSecrets(in.AppId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "list app secret err")
 		return
@@ -46,7 +47,7 @@ func (a Route) CreateAppSecret(c *gin.Context) {
 		return
 	}
 
-	secret, err := a.svc.CreateAppSecret(in.AppId, in.ToModel())
+	secret, err := admin.CreateAppSecret(in.AppId, in.ToModel())
 	if err != nil {
 		resp.ErrorCreate(c, err, "create app secret err")
 		return
@@ -71,7 +72,7 @@ func (a Route) ModifyAppSecret(c *gin.Context) {
 		return
 	}
 
-	secret, err := a.svc.ModifyAppSecret(in.SecretId, in.ToModel())
+	secret, err := admin.ModifyAppSecret(in.SecretId, in.ToModel())
 	if err != nil {
 		resp.ErrorUpdate(c, err, "modify app secret err")
 		return
@@ -95,7 +96,7 @@ func (a Route) DeleteAppSecret(c *gin.Context) {
 		return
 	}
 
-	if err := a.svc.DeleteAppSecret(in.AppId, in.SecretId); err != nil {
+	if err := admin.DeleteAppSecret(in.AppId, in.SecretId); err != nil {
 		resp.ErrorDelete(c, err, "delete app secret err")
 		return
 	}

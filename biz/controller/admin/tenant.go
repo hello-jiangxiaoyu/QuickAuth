@@ -5,6 +5,7 @@ import (
 	"QuickAuth/biz/endpoint/model"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
+	"QuickAuth/biz/service/admin"
 	"QuickAuth/pkg/utils"
 	"github.com/gin-gonic/gin"
 )
@@ -24,7 +25,7 @@ func (a Route) ListTenant(c *gin.Context) {
 		return
 	}
 
-	tenants, err := a.svc.ListTenant(in.AppID)
+	tenants, err := admin.ListTenant(in.AppID)
 	if err != nil {
 		resp.ErrorSelect(c, err, "list tenant err")
 		return
@@ -49,7 +50,7 @@ func (a Route) GetTenant(c *gin.Context) {
 		return
 	}
 
-	tenant, err := a.svc.GetTenant(in.AppID, in.TenantID)
+	tenant, err := admin.GetTenant(in.AppID, in.TenantID)
 	if err != nil {
 		resp.ErrorSelect(c, err, "get tenant err")
 		return
@@ -74,7 +75,7 @@ func (a Route) CreateTenant(c *gin.Context) {
 		return
 	}
 
-	tenant, err := a.svc.CreatTenant(in.ToModel())
+	tenant, err := admin.CreatTenant(in.ToModel())
 	if err != nil {
 		resp.ErrorCreate(c, err, "create tenant err")
 		return
@@ -100,7 +101,7 @@ func (a Route) ModifyTenant(c *gin.Context) {
 		return
 	}
 
-	if err := a.svc.ModifyTenant(in.TenantID, in.ToModel()); err != nil {
+	if err := admin.ModifyTenant(in.TenantID, in.ToModel()); err != nil {
 		resp.ErrorUpdate(c, err, "modify tenant err")
 		return
 	}
@@ -124,7 +125,7 @@ func (a Route) DeleteTenant(c *gin.Context) {
 		return
 	}
 
-	if err := a.svc.DeleteTenant(in.AppID, in.TenantID); err != nil {
+	if err := admin.DeleteTenant(in.AppID, in.TenantID); err != nil {
 		resp.ErrorDelete(c, err, "delete tenant err")
 		return
 	}

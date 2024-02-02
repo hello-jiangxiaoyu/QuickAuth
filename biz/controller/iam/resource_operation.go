@@ -4,6 +4,7 @@ import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
+	"QuickAuth/biz/service/iam"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,7 +20,7 @@ func (a Resource) ListResourceOperations(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	data, err := a.svc.ListResourceOperations(in.Tenant.ID, in.ResourceId)
+	data, err := iam.ListResourceOperations(in.Tenant.ID, in.ResourceId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "ListResourceOperations err")
 		return
@@ -41,7 +42,7 @@ func (a Resource) GetResourceOperation(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	data, err := a.svc.GetResourceOperation(in.Tenant.ID, in.ResourceId, in.OperationId)
+	data, err := iam.GetResourceOperation(in.Tenant.ID, in.ResourceId, in.OperationId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "GetResourceOperation err")
 		return
@@ -64,7 +65,7 @@ func (a Resource) CreateResourceOperation(c *gin.Context) {
 	}
 	in.Operation.TenantID = in.Tenant.ID
 	in.Operation.ResourceID = in.ResourceId
-	data, err := a.svc.CreateResourceOperation(&in.Operation)
+	data, err := iam.CreateResourceOperation(&in.Operation)
 	if err != nil {
 		resp.ErrorCreate(c, err, "CreateResourceOperation err")
 		return
@@ -89,7 +90,7 @@ func (a Resource) UpdateResourceOperation(c *gin.Context) {
 	in.Operation.ID = in.OperationId
 	in.Operation.TenantID = in.Tenant.ID
 	in.Operation.ResourceID = in.ResourceId
-	if err := a.svc.UpdateResourceOperation(in.Tenant.ID, in.ResourceId, in.OperationId, &in.Operation); err != nil {
+	if err := iam.UpdateResourceOperation(in.Tenant.ID, in.ResourceId, in.OperationId, &in.Operation); err != nil {
 		resp.ErrorUpdate(c, err, "UpdateResourceOperation err")
 		return
 	}
@@ -110,7 +111,7 @@ func (a Resource) DeleteResourceOperation(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	if err := a.svc.DeleteResourceOperation(in.Tenant.ID, in.ResourceId, in.OperationId); err != nil {
+	if err := iam.DeleteResourceOperation(in.Tenant.ID, in.ResourceId, in.OperationId); err != nil {
 		resp.ErrorDelete(c, err, "DeleteResourceOperation err")
 		return
 	}

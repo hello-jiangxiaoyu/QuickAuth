@@ -4,18 +4,16 @@ import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
-	"QuickAuth/biz/service"
 	"QuickAuth/biz/service/admin"
 	"errors"
 	"github.com/gin-gonic/gin"
 )
 
 type Route struct {
-	svc *service.Service
 }
 
-func NewAdminRoute(svc *service.Service) *Route {
-	return &Route{svc: svc}
+func NewAdminRoute() *Route {
+	return &Route{}
 }
 
 // ListApp
@@ -26,7 +24,7 @@ func NewAdminRoute(svc *service.Service) *Route {
 // @Success	200
 // @Router	/api/quick/apps [get]
 func (a Route) ListApp(c *gin.Context) {
-	apps, err := a.svc.ListApps()
+	apps, err := admin.ListApps()
 	if err != nil {
 		resp.ErrorSelect(c, err, "list apps err")
 		return
@@ -49,7 +47,7 @@ func (a Route) GetApp(c *gin.Context) {
 		return
 	}
 
-	app, err := a.svc.GetAppDetail(in.AppId)
+	app, err := admin.GetAppDetail(in.AppId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "get app err")
 		return
@@ -72,7 +70,7 @@ func (a Route) CreateApp(c *gin.Context) {
 		return
 	}
 
-	app, err := a.svc.CreateApp(in.ToModel(), in.Host, in.PoolId)
+	app, err := admin.CreateApp(in.ToModel(), in.Host, in.PoolId)
 	if err != nil {
 		resp.ErrorCreate(c, err, "create app err")
 		return
@@ -96,7 +94,7 @@ func (a Route) ModifyApp(c *gin.Context) {
 		return
 	}
 
-	if err := a.svc.ModifyApp(in.AppId, in.ToModel()); err != nil {
+	if err := admin.ModifyApp(in.AppId, in.ToModel()); err != nil {
 		resp.ErrorUpdate(c, err, "modify app err")
 		return
 	}
@@ -112,7 +110,7 @@ func (a Route) ModifyApp(c *gin.Context) {
 // @Success	200
 // @Router	/api/quick/apps/{appId} [delete]
 func (a Route) DeleteApp(c *gin.Context) {
-	if err := a.svc.DeleteApp(c.Param("appId")); err != nil {
+	if err := admin.DeleteApp(c.Param("appId")); err != nil {
 		if errors.Is(err, admin.ErrorDeleteDefaultApp) {
 			resp.ErrorUnknown(c, err, err.Error())
 		} else {
