@@ -183,20 +183,20 @@ info:
 paths:
   /api/quick/.well-known/jwks.json:
     get:
-      description: get jwks
       responses:
         "200":
           description: OK
+      summary: get jwks
       tags:
       - oidc
   /api/quick/.well-known/openid-configuration:
     get:
-      description: get open id configuration
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/oauth.OpenidConfigurationDto'
+      summary: get open id configuration
       tags:
       - oidc
   /api/quick/apps:
@@ -552,7 +552,6 @@ paths:
       - tenant
   /api/quick/login:
     post:
-      description: login using username and password
       parameters:
       - description: username
         in: formData
@@ -571,11 +570,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: login using username and password
       tags:
       - login
   /api/quick/login/providers/{providerId}:
     get:
-      description: login third provider
       parameters:
       - description: provider name
         in: path
@@ -589,11 +588,11 @@ paths:
       responses:
         "200":
           description: OK
+      summary: login third provider
       tags:
       - login
   /api/quick/login/providers/{providerId}/callback:
     get:
-      description: login third provider callback
       parameters:
       - description: provider name
         in: path
@@ -612,27 +611,27 @@ paths:
       responses:
         "200":
           description: OK
+      summary: login third provider callback
       tags:
       - login
   /api/quick/logout:
     get:
-      description: logout current user
       responses:
         "200":
           description: OK
+      summary: logout current user
       tags:
       - login
   /api/quick/me/profile:
     get:
-      description: get jwks
       responses:
         "200":
           description: OK
+      summary: get jwks
       tags:
       - oidc
   /api/quick/oauth2/auth:
     get:
-      description: oauth2 authorize
       parameters:
       - description: client_id
         in: query
@@ -665,11 +664,11 @@ paths:
       responses:
         "302":
           description: Found
+      summary: oauth2 authorize
       tags:
       - oidc
   /api/quick/oauth2/token:
     post:
-      description: oauth2 token
       parameters:
       - description: client_id
         in: query
@@ -704,6 +703,7 @@ paths:
       responses:
         "200":
           description: OK
+      summary: oauth2 token
       tags:
       - oidc
   /api/quick/providers:
@@ -930,7 +930,6 @@ paths:
       - tenant
   /api/quick/register:
     post:
-      description: login using username and password
       parameters:
       - description: username
         in: formData
@@ -949,6 +948,7 @@ paths:
       responses:
         "200":
           description: OK
+      summary: login using username and password
       tags:
       - login
   /api/quick/resourceGroups:

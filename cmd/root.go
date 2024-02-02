@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"QuickAuth/biz"
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
@@ -46,7 +45,7 @@ func init() {
 }
 
 func initConfig() {
-	if err := internal.InitConfig(cfgFile); err != nil {
+	if err := InitConfig(cfgFile); err != nil {
 		fmt.Println("init config err: ", err)
 		os.Exit(1)
 	}

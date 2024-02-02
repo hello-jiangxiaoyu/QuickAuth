@@ -3,10 +3,10 @@ package controller
 import (
 	"QuickAuth/biz/controller/admin"
 	"QuickAuth/biz/controller/iam"
+	_ "QuickAuth/biz/controller/internal/docs"
 	"QuickAuth/biz/controller/oauth"
 	"QuickAuth/biz/controller/rg"
 	"QuickAuth/biz/endpoint/resp"
-	_ "QuickAuth/pkg/docs"
 	"QuickAuth/pkg/middleware"
 	"strings"
 

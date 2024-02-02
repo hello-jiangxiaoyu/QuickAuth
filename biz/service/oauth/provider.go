@@ -4,7 +4,7 @@ import (
 	"QuickAuth/biz/endpoint/model"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
-	"QuickAuth/biz/service/idp"
+	"QuickAuth/pkg/idp"
 	"QuickAuth/pkg/safe"
 	"QuickAuth/pkg/utils"
 	"github.com/gin-gonic/gin"

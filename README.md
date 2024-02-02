@@ -8,5 +8,5 @@ oauth2, oidc auth
 
 - 生成文档
 ```bash
-swag init -o pkg/docs
+swag init -o biz/controller/internal/docs
 ```

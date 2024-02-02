@@ -1,4 +1,4 @@
-package internal
+package biz
 
 import (
 	"QuickAuth/pkg/utils"
