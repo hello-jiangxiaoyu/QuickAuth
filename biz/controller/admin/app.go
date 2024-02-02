@@ -9,13 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Route struct {
-}
-
-func NewAdminRoute() *Route {
-	return &Route{}
-}
-
 // ListApp
 // @Summary	list apps
 // @Tags	app
@@ -23,7 +16,7 @@ func NewAdminRoute() *Route {
 // @Param	X-Pool-ID	header	string	false	"user pool id"
 // @Success	200
 // @Router	/api/quick/apps [get]
-func (a Route) ListApp(c *gin.Context) {
+func ListApp(c *gin.Context) {
 	apps, err := admin.ListApps()
 	if err != nil {
 		resp.ErrorSelect(c, err, "list apps err")
@@ -40,7 +33,7 @@ func (a Route) ListApp(c *gin.Context) {
 // @Param	appId		path	string	true	"app id"
 // @Success	200
 // @Router	/api/quick/apps/{appId} [get]
-func (a Route) GetApp(c *gin.Context) {
+func GetApp(c *gin.Context) {
 	var in request.AppReq
 	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -63,7 +56,7 @@ func (a Route) GetApp(c *gin.Context) {
 // @Param	bd			body	request.AppReq	true	"body"
 // @Success	200
 // @Router	/api/quick/apps [post]
-func (a Route) CreateApp(c *gin.Context) {
+func CreateApp(c *gin.Context) {
 	var in request.AppReq
 	if err := internal.BindJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -87,7 +80,7 @@ func (a Route) CreateApp(c *gin.Context) {
 // @Param	bd			body	request.AppReq	true	"body"
 // @Success	200
 // @Router	/api/quick/apps/{appId} [put]
-func (a Route) ModifyApp(c *gin.Context) {
+func ModifyApp(c *gin.Context) {
 	var in request.AppReq
 	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -109,7 +102,7 @@ func (a Route) ModifyApp(c *gin.Context) {
 // @Param	appId		path	string	true	"app id"
 // @Success	200
 // @Router	/api/quick/apps/{appId} [delete]
-func (a Route) DeleteApp(c *gin.Context) {
+func DeleteApp(c *gin.Context) {
 	if err := admin.DeleteApp(c.Param("appId")); err != nil {
 		if errors.Is(err, admin.ErrorDeleteDefaultApp) {
 			resp.ErrorUnknown(c, err, err.Error())

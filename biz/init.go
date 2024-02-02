@@ -5,8 +5,7 @@ import (
 	"QuickAuth/biz/service/admin"
 	"QuickAuth/pkg/conf"
 	"QuickAuth/pkg/global"
-	"QuickAuth/pkg/tools/log"
-	"QuickAuth/pkg/tools/orm"
+	"QuickAuth/pkg/log"
 	"errors"
 	"fmt"
 	"gorm.io/gorm"
@@ -34,7 +33,7 @@ func InitGorm() error {
 		return errors.New("dsn is empty, failed to initialize gorm")
 	}
 
-	db, err := orm.NewGormDB(global.Config.DB.DbType, dsn)
+	db, err := global.NewGormDB(dsn)
 	if err != nil {
 		return err
 	}

@@ -6,7 +6,6 @@ services:
       context: ./
       dockerfile: Dockerfile
     container_name: quick-auth
-    restart: always
     ports:
       - "8000:8000"
     environment:
@@ -19,9 +18,9 @@ services:
     container_name: postgres
     networks: [ "auth" ]
     environment:
-      POSTGRES_DB: "quick_auth"
-      POSTGRES_PASSWORD: "admin"
-      POSTGRES_USER: "admin"
+      - POSTGRES_DB=quick_auth
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
 
 networks:
   auth:

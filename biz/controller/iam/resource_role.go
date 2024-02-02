@@ -14,7 +14,7 @@ import (
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/roles 	[get]
-func (a Resource) ListResourceRoles(c *gin.Context) {
+func ListResourceRoles(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -36,7 +36,7 @@ func (a Resource) ListResourceRoles(c *gin.Context) {
 // @Param	roleId		path	string	true	"role id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/roles/{roleId} 	[get]
-func (a Resource) GetResourceRole(c *gin.Context) {
+func GetResourceRole(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -57,7 +57,7 @@ func (a Resource) GetResourceRole(c *gin.Context) {
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/roles 	[post]
-func (a Resource) CreateResourceRole(c *gin.Context) {
+func CreateResourceRole(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).BindJson(&in.Role).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -81,7 +81,7 @@ func (a Resource) CreateResourceRole(c *gin.Context) {
 // @Param	roleId		path	string	true	"role id"
 // @Success	200
 // @Router	/api/quick/resources/{resourceId}/roles/{roleId} 	[put]
-func (a Resource) UpdateResourceRole(c *gin.Context) {
+func UpdateResourceRole(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).BindJson(&in.Role).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -105,7 +105,7 @@ func (a Resource) UpdateResourceRole(c *gin.Context) {
 // @Param	roleId		path	string	true	"role id"
 // @Success	200
 // @Router	/api/quick/resources/{resourceId}/roles/{roleId} 	[delete]
-func (a Resource) DeleteResourceRole(c *gin.Context) {
+func DeleteResourceRole(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)

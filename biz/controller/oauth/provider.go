@@ -5,35 +5,35 @@ import (
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
 	"QuickAuth/biz/service/admin"
+	"QuickAuth/biz/service/idp"
 	"QuickAuth/biz/service/oauth"
-	"QuickAuth/pkg/idp"
 	"QuickAuth/pkg/safe"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-// ProviderLogin	swagger
-// @Description	login third provider
-// @Tags		login
-// @Param		provider	path	string	true	"provider name"
-// @Param		next		query	string	false	"next"
-// @Success		200
-// @Router		/api/quick/login/providers/{providerId} [get]
-func (o Controller) ProviderLogin(c *gin.Context) {
+// ProviderLogin
+// @Summary	login third provider
+// @Tags	login
+// @Param	provider	path	string	true	"provider name"
+// @Param	next		query	string	false	"next"
+// @Success	200
+// @Router	/api/quick/login/providers/{providerId} [get]
+func ProviderLogin(c *gin.Context) {
 	state := safe.RandHex(31)
 	c.SetCookie(resp.CookieState, state, 60*5, "/api/quick/login", "", false, true)
 }
 
-// ProviderCallback	swagger
-// @Description	login third provider callback
+// ProviderCallback
+// @Summary	login third provider callback
 // @Tags		login
 // @Param		provider	path	string	true	"provider name"
 // @Param		code		query	string	true	"code"
 // @Param		next		query	string	false	"next"
 // @Success		200
 // @Router		/api/quick/login/providers/{providerId}/callback [get]
-func (o Controller) ProviderCallback(c *gin.Context) {
+func ProviderCallback(c *gin.Context) {
 	var in request.LoginProvider
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)

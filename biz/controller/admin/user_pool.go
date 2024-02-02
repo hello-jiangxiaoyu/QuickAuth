@@ -15,7 +15,7 @@ import (
 // @Param	X-Pool-ID	header	string	false	"user pool id"
 // @Success	200
 // @Router	/api/quick/user-pools [get]
-func (a Route) ListUserPool(c *gin.Context) {
+func ListUserPool(c *gin.Context) {
 	pools, err := admin.ListUserPool()
 	if err != nil {
 		resp.ErrorSelect(c, err, "list user pool err")
@@ -32,7 +32,7 @@ func (a Route) ListUserPool(c *gin.Context) {
 // @Param	poolId		path	integer	true	"user pool id"
 // @Success	200
 // @Router	/api/quick/user-pools/{poolId} [get]
-func (a Route) GetUserPool(c *gin.Context) {
+func GetUserPool(c *gin.Context) {
 	var in request.UserPoolReq
 	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -55,7 +55,7 @@ func (a Route) GetUserPool(c *gin.Context) {
 // @Param	bd			body	request.UserPoolReq	true	"body"
 // @Success	200
 // @Router	/api/quick/user-pools [post]
-func (a Route) CreateUserPool(c *gin.Context) {
+func CreateUserPool(c *gin.Context) {
 	var in request.UserPoolReq
 	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -78,7 +78,7 @@ func (a Route) CreateUserPool(c *gin.Context) {
 // @Param	bd			body	request.UserPoolReq	true	"body"
 // @Success	200
 // @Router	/api/quick/user-pools/{poolId} [put]
-func (a Route) ModifyUserPool(c *gin.Context) {
+func ModifyUserPool(c *gin.Context) {
 	var in request.UserPoolReq
 	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -100,7 +100,7 @@ func (a Route) ModifyUserPool(c *gin.Context) {
 // @Param	poolId		path	integer	true	"user pool id"
 // @Success	200
 // @Router	/api/quick/user-pools/{poolId} [delete]
-func (a Route) DeleteUserPool(c *gin.Context) {
+func DeleteUserPool(c *gin.Context) {
 	var in request.UserPoolReq
 	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)

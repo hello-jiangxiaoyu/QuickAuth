@@ -20,7 +20,7 @@ func autoMigrateDB() {
 
 	if err := global.Db().Debug().AutoMigrate(migrateList...); err != nil {
 		fmt.Println("[Error] migrate err: ", err)
-		os.Exit(ExitMigrate)
+		os.Exit(1)
 		return
 	}
 
@@ -29,12 +29,12 @@ func autoMigrateDB() {
 
 func createDbTables() {
 	if err := initGlobal(); err != nil {
-		return
+		os.Exit(1)
 	}
 	sqlBytes, err := os.ReadFile("./deploy/postgres/create.sql")
 	if err != nil {
 		fmt.Println("[Error] read file err: ", err)
-		os.Exit(ExitReadFile)
+		os.Exit(1)
 	}
 
 	statements := strings.Split(string(sqlBytes), ";")
@@ -42,7 +42,7 @@ func createDbTables() {
 		if strings.TrimSpace(sql) != "" {
 			if err = global.Db().Exec(sql).Error; err != nil {
 				fmt.Println("[Error] exec sql err: ", err)
-				os.Exit(ExitExecSql)
+				os.Exit(1)
 				return
 			}
 		}

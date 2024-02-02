@@ -6,8 +6,7 @@ import (
 	"QuickAuth/biz/controller/oauth"
 	"QuickAuth/biz/controller/rg"
 	"QuickAuth/biz/endpoint/resp"
-	_ "QuickAuth/docs"
-	"QuickAuth/pkg/global"
+	_ "QuickAuth/pkg/docs"
 	"QuickAuth/pkg/middleware"
 	"strings"
 
@@ -17,8 +16,7 @@ import (
 	"net/http"
 )
 
-func NewRouter(repo *global.Repository, e *gin.Engine) {
-
+func NewRouter(e *gin.Engine) {
 	admin.AddAdminRoute(e)
 	oauth.AddOauth2Route(e)
 	iam.AddIamRouter(e)

@@ -12,15 +12,15 @@ import (
 	"net/http"
 )
 
-// Login	swagger
-// @Description	login using username and password
-// @Tags		login
-// @Param		username	formData	string	true	"username"
-// @Param		password	formData	string	true	"password"
-// @Param		next		query		string	false	"next"
-// @Success		200
-// @Router		/api/quick/login [post]
-func (o Controller) Login(c *gin.Context) {
+// Login
+// @Summary	login using username and password
+// @Tags	login
+// @Param	username	formData	string	true	"username"
+// @Param	password	formData	string	true	"password"
+// @Param	next		query		string	false	"next"
+// @Success	200
+// @Router	/api/quick/login [post]
+func Login(c *gin.Context) {
 	var in request.Login
 	if cookie, err := c.Cookie(resp.CookieIDToken); err == nil && cookie != "" {
 		resp.DoNothing(c, "user is already logged in, nothing to do")
@@ -56,25 +56,25 @@ func (o Controller) Login(c *gin.Context) {
 	resp.Success(c)
 }
 
-// Logout	swagger
-// @Description	logout current user
-// @Tags		login
-// @Success		200
-// @Router		/api/quick/logout [get]
-func (o Controller) Logout(c *gin.Context) {
+// Logout
+// @Summary	logout current user
+// @Tags	login
+// @Success	200
+// @Router	/api/quick/logout [get]
+func Logout(c *gin.Context) {
 	c.SetCookie(resp.CookieIDToken, "", -1, "/api/quick", "", false, true)
 	resp.Success(c)
 }
 
-// Register	swagger
-// @Description	login using username and password
-// @Tags		login
-// @Param		username	formData	string	true	"username"
-// @Param		password	formData	string	true	"password"
-// @Param		next		query		string	false	"next"
-// @Success		200
-// @Router		/api/quick/register [post]
-func (o Controller) Register(c *gin.Context) {
+// Register
+// @Summary	login using username and password
+// @Tags	login
+// @Param	username	formData	string	true	"username"
+// @Param	password	formData	string	true	"password"
+// @Param	next		query		string	false	"next"
+// @Success	200
+// @Router	/api/quick/register [post]
+func Register(c *gin.Context) {
 	var in request.Login
 	if err := internal.New(c).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)

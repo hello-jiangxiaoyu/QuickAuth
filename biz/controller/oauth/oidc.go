@@ -26,12 +26,12 @@ type OpenidConfigurationDto struct {
 	RequestUriParameterSupported      bool     `json:"request_uri_parameter_supported"`
 }
 
-// GetOIDC	swagger
-// @Description	get open id configuration
-// @Tags		oidc
-// @Success		200		{object}	OpenidConfigurationDto
-// @Router		/api/quick/.well-known/openid-configuration [get]
-func (o Controller) GetOIDC(c *gin.Context) {
+// GetOIDC
+// @Summary	get open id configuration
+// @Tags	oidc
+// @Success	200		{object}	OpenidConfigurationDto
+// @Router	/api/quick/.well-known/openid-configuration [get]
+func GetOIDC(c *gin.Context) {
 	var tenant model.Tenant
 	if err := internal.New(c).SetTenant(&tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -54,12 +54,12 @@ func (o Controller) GetOIDC(c *gin.Context) {
 	c.JSON(http.StatusOK, conf)
 }
 
-// ListJwks	swagger
-// @Description	get jwks
-// @Tags		oidc
-// @Success		200
-// @Router		/api/quick/.well-known/jwks.json [get]
-func (o Controller) ListJwks(c *gin.Context) {
+// ListJwks
+// @Summary	get jwks
+// @Tags	oidc
+// @Success	200
+// @Router	/api/quick/.well-known/jwks.json [get]
+func ListJwks(c *gin.Context) {
 	tenantName := "default"
 	jwks, err := oauth.LoadRsaPublicKeys(tenantName)
 	if err != nil {
@@ -70,12 +70,12 @@ func (o Controller) ListJwks(c *gin.Context) {
 	c.JSON(http.StatusOK, jwks)
 }
 
-// GetProfile	swagger
-// @Description	get jwks
-// @Tags		oidc
-// @Success		200
-// @Router		/api/quick/me/profile [get]
-func (o Controller) GetProfile(c *gin.Context) {
+// GetProfile
+// @Summary	get jwks
+// @Tags	oidc
+// @Success	200
+// @Router	/api/quick/me/profile [get]
+func GetProfile(c *gin.Context) {
 	var user jwt.MapClaims
 	if err := internal.New(c).SetUser(&user).Error; err != nil {
 		resp.ErrorRequestWithErr(c, err, "set user info err")

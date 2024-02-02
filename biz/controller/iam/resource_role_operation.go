@@ -15,7 +15,7 @@ import (
 // @Param	roleId		path	string	true	"role id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/roles/{roleId}/operations 	[get]
-func (a Resource) ListResourceRoleOperations(c *gin.Context) {
+func ListResourceRoleOperations(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -37,7 +37,7 @@ func (a Resource) ListResourceRoleOperations(c *gin.Context) {
 // @Param	roleId		path	string	true	"role id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/roles/{roleId}/operations 	[post]
-func (a Resource) CreateResourceRoleOperation(c *gin.Context) {
+func CreateResourceRoleOperation(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).BindJson(&in.RoleOperation).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -63,7 +63,7 @@ func (a Resource) CreateResourceRoleOperation(c *gin.Context) {
 // @Param	operationId	path	string	true	"operation id"
 // @Success	200
 // @Router	/api/quick/resources/{resourceId}/roles/{roleId}/operations/{operationId} 	[delete]
-func (a Resource) DeleteResourceRoleOperation(c *gin.Context) {
+func DeleteResourceRoleOperation(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)

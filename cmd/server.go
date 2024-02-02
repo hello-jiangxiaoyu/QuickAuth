@@ -14,14 +14,14 @@ func startServer() {
 
 	if _, err := internal.GetValidator(); err != nil {
 		fmt.Println("init validator err: ", err)
-		os.Exit(ExitServer)
+		os.Exit(1)
 		return
 	}
 
 	svc := internal.GetServer()
 	if err := svc.Run(global.Config.Svc.Listen); err != nil {
 		fmt.Println("server run err: ", err)
-		os.Exit(ExitServer)
+		os.Exit(1)
 		return
 	}
 
@@ -35,7 +35,7 @@ func initDefault() {
 
 	if err := internal.InitDefaultTenant(); err != nil {
 		fmt.Println("init tenant err: ", err)
-		os.Exit(ExitServer)
+		os.Exit(1)
 		return
 	}
 	fmt.Println("[OK] init default successfully")

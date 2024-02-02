@@ -18,7 +18,7 @@ import (
 // @Param	poolId		path	integer	true	"user pool id"
 // @Success	200
 // @Router	/api/quick/user-pools/{poolId}/users [get]
-func (a Route) ListUser(c *gin.Context) {
+func ListUser(c *gin.Context) {
 	var in request.UserReq
 	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -42,7 +42,7 @@ func (a Route) ListUser(c *gin.Context) {
 // @Param	userId		path	string	true	"user id"
 // @Success	200
 // @Router	/api/quick/user-pools/{poolId}/users/{userId} [get]
-func (a Route) GetUser(c *gin.Context) {
+func GetUser(c *gin.Context) {
 	var in request.UserReq
 	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -66,7 +66,7 @@ func (a Route) GetUser(c *gin.Context) {
 // @Param	bd			body	request.UserReq	true	"body"
 // @Success	200
 // @Router	/api/quick/user-pools/{poolId}/users [post]
-func (a Route) CreateUser(c *gin.Context) {
+func CreateUser(c *gin.Context) {
 	var in request.UserReq
 	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -99,7 +99,7 @@ func (a Route) CreateUser(c *gin.Context) {
 // @Param	bd			body	request.UserReq	true	"body"
 // @Success	200
 // @Router	/api/quick/user-pools/{poolId}/users/{userId} [put]
-func (a Route) ModifyUser(c *gin.Context) {
+func ModifyUser(c *gin.Context) {
 	var in request.UserReq
 	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -122,7 +122,7 @@ func (a Route) ModifyUser(c *gin.Context) {
 // @Param	userId		path	string	true	"user id"
 // @Success	200
 // @Router	/api/quick/user-pools/{poolId}/users/{userId} [delete]
-func (a Route) DeleteUser(c *gin.Context) {
+func DeleteUser(c *gin.Context) {
 	var in request.UserReq
 	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)

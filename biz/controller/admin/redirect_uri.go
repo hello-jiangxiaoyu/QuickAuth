@@ -16,7 +16,7 @@ import (
 // @Param	vhost		header	string	false	"tenant host"
 // @Success	200		{object}	[]string
 // @Router	/api/quick/redirect-uri [get]
-func (a Route) ListRedirectUri(c *gin.Context) {
+func ListRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -40,7 +40,7 @@ func (a Route) ListRedirectUri(c *gin.Context) {
 // @Param	bd			body	request.RedirectUriReq	true	"body"
 // @Success	200
 // @Router	/api/quick/redirect-uri [post]
-func (a Route) CreateRedirectUri(c *gin.Context) {
+func CreateRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := internal.BindUriAndJson(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -64,7 +64,7 @@ func (a Route) CreateRedirectUri(c *gin.Context) {
 // @Param	bd			body	request.RedirectUriReq	true	"body"
 // @Success	200
 // @Router	/api/quick/redirect-uri/{uriId} [put]
-func (a Route) ModifyRedirectUri(c *gin.Context) {
+func ModifyRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := internal.BindUriAndJson(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -86,7 +86,7 @@ func (a Route) ModifyRedirectUri(c *gin.Context) {
 // @Param	uri			path	string	true	"uri name"
 // @Success	200
 // @Router	/api/quick/redirect-uri/{uri} [delete]
-func (a Route) DeleteRedirectUri(c *gin.Context) {
+func DeleteRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)

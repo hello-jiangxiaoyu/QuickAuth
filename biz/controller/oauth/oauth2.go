@@ -14,25 +14,18 @@ import (
 	"net/url"
 )
 
-type Controller struct {
-}
-
-func NewOAuth2Route() Controller {
-	return Controller{}
-}
-
-// GetAuthCode	swagger
-// @Description	oauth2 authorize
-// @Tags		oidc
-// @Param		client_id		query	string	true	"client_id"
-// @Param		scope			query	string	true	"scope"
-// @Param		response_type	query	string	true	"response_type"
-// @Param		redirect_uri	query	string	true	"redirect_uri"
-// @Param		state			query	string	false	"state"
-// @Param		nonce			query	string	false	"nonce"
-// @Success		302
-// @Router		/api/quick/oauth2/auth [get]
-func (o Controller) GetAuthCode(c *gin.Context) {
+// GetAuthCode
+// @Summary	oauth2 authorize
+// @Tags	oidc
+// @Param	client_id		query	string	true	"client_id"
+// @Param	scope			query	string	true	"scope"
+// @Param	response_type	query	string	true	"response_type"
+// @Param	redirect_uri	query	string	true	"redirect_uri"
+// @Param	state			query	string	false	"state"
+// @Param	nonce			query	string	false	"nonce"
+// @Success	302
+// @Router	/api/quick/oauth2/auth [get]
+func GetAuthCode(c *gin.Context) {
 	var in request.Auth
 	var user jwt.MapClaims
 	if err := internal.New(c).BindQuery(&in).SetUser(&user).SetTenant(&in.Tenant).Error; err != nil {
@@ -76,19 +69,19 @@ func (o Controller) GetAuthCode(c *gin.Context) {
 	resp.ErrorRequestWithMsg(c, "Invalid response_type.")
 }
 
-// GetToken	swagger
-// @Description	oauth2 token
-// @Tags		oidc
-// @Param		client_id		query		string	true	"client_id"
-// @Param		client_secret	query		string	false	"client_secret"
-// @Param		code			query		string	false	"code"
-// @Param		grant_type		query		string	true	"grant_type"
-// @Param		redirect_uri	query		string	false	"redirect_uri"
-// @Param		state			query		string	false	"state"
-// @Param		nonce			query		string	false	"nonce"
-// @Success		200
-// @Router		/api/quick/oauth2/token [post]
-func (o Controller) GetToken(c *gin.Context) {
+// GetToken
+// @Summary	oauth2 token
+// @Tags	oidc
+// @Param	client_id		query		string	true	"client_id"
+// @Param	client_secret	query		string	false	"client_secret"
+// @Param	code			query		string	false	"code"
+// @Param	grant_type		query		string	true	"grant_type"
+// @Param	redirect_uri	query		string	false	"redirect_uri"
+// @Param	state			query		string	false	"state"
+// @Param	nonce			query		string	false	"nonce"
+// @Success	200
+// @Router	/api/quick/oauth2/token [post]
+func GetToken(c *gin.Context) {
 	var in request.Token
 	if err := internal.New(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -101,7 +94,7 @@ func (o Controller) GetToken(c *gin.Context) {
 		return
 	}
 	in.App = *app
-	handler, err := o.getTokenHandler(in.GrantType)
+	handler, err := getTokenHandler(in.GrantType)
 	if err != nil {
 		resp.ErrorRequestWithErr(c, err, err.Error())
 		return

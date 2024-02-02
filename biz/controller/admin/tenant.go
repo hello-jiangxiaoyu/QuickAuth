@@ -18,7 +18,7 @@ import (
 // @Param	appId		path	string	true	"app id"
 // @Success	200
 // @Router	/api/quick/apps/{appId}/tenants [get]
-func (a Route) ListTenant(c *gin.Context) {
+func ListTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -43,7 +43,7 @@ func (a Route) ListTenant(c *gin.Context) {
 // @Param	tenantId	path	integer	true	"tenant id"
 // @Success	200
 // @Router	/api/quick/apps/{appId}/tenants/{tenantId} [get]
-func (a Route) GetTenant(c *gin.Context) {
+func GetTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -68,7 +68,7 @@ func (a Route) GetTenant(c *gin.Context) {
 // @Param	bd			body	request.TenantReq	true	"body"
 // @Success	200
 // @Router	/api/quick/apps/{appId}/tenants [post]
-func (a Route) CreateTenant(c *gin.Context) {
+func CreateTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -94,7 +94,7 @@ func (a Route) CreateTenant(c *gin.Context) {
 // @Param	bd			body	request.TenantReq	true	"body"
 // @Success	200
 // @Router	/api/quick/apps/{appId}/tenants/{tenantId} [put]
-func (a Route) ModifyTenant(c *gin.Context) {
+func ModifyTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -118,7 +118,7 @@ func (a Route) ModifyTenant(c *gin.Context) {
 // @Param	tenantId	path	integer	true	"tenant id"
 // @Success	200
 // @Router	/api/quick/apps/{appId}/tenants/{tenantId} [delete]
-func (a Route) DeleteTenant(c *gin.Context) {
+func DeleteTenant(c *gin.Context) {
 	var in request.TenantReq
 	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)

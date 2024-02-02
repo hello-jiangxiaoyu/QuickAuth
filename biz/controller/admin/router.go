@@ -7,58 +7,57 @@ import (
 
 // AddAdminRoute admin接口
 func AddAdminRoute(e *gin.Engine) {
-	admin := NewAdminRoute()
 	app := e.Group("/api/quick", middleware.LoginAuth())
 	{
 		// app应用管理
-		app.GET("/apps", admin.ListApp)
-		app.GET("/apps/:appId", admin.GetApp)
-		app.POST("/apps", admin.CreateApp)
-		app.PUT("/apps/:appId", admin.ModifyApp)
-		app.DELETE("/apps/:appId", admin.DeleteApp)
+		app.GET("/apps", ListApp)
+		app.GET("/apps/:appId", GetApp)
+		app.POST("/apps", CreateApp)
+		app.PUT("/apps/:appId", ModifyApp)
+		app.DELETE("/apps/:appId", DeleteApp)
 
 		// m2m 密钥和权限
-		app.GET("/apps/:appId/secrets", admin.ListAppSecret)
-		app.POST("/apps/:appId/secrets", admin.CreateAppSecret)
-		app.PUT("/apps/:appId/secrets/:secretId", admin.ModifyAppSecret)
-		app.DELETE("/apps/:appId/secrets/:secretId", admin.DeleteAppSecret)
+		app.GET("/apps/:appId/secrets", ListAppSecret)
+		app.POST("/apps/:appId/secrets", CreateAppSecret)
+		app.PUT("/apps/:appId/secrets/:secretId", ModifyAppSecret)
+		app.DELETE("/apps/:appId/secrets/:secretId", DeleteAppSecret)
 
 		// 租户管理
-		app.GET("/apps/:appId/tenants", admin.ListTenant)
-		app.GET("/apps/:appId/tenants/:tenantId", admin.GetTenant)
-		app.POST("/apps/:appId/tenants", admin.CreateTenant)
-		app.PUT("/apps/:appId/tenants/:tenantId", admin.ModifyTenant)
-		app.DELETE("/apps/:appId/tenants/:tenantId", admin.DeleteTenant)
+		app.GET("/apps/:appId/tenants", ListTenant)
+		app.GET("/apps/:appId/tenants/:tenantId", GetTenant)
+		app.POST("/apps/:appId/tenants", CreateTenant)
+		app.PUT("/apps/:appId/tenants/:tenantId", ModifyTenant)
+		app.DELETE("/apps/:appId/tenants/:tenantId", DeleteTenant)
 
 		// 重定向uri管理
-		app.GET("/redirect-uri", admin.ListRedirectUri)
-		app.POST("/redirect-uri", admin.CreateRedirectUri)
-		app.PUT("/redirect-uri/:uriId", admin.ModifyRedirectUri)
-		app.DELETE("/redirect-uri/:uri", admin.DeleteRedirectUri)
+		app.GET("/redirect-uri", ListRedirectUri)
+		app.POST("/redirect-uri", CreateRedirectUri)
+		app.PUT("/redirect-uri/:uriId", ModifyRedirectUri)
+		app.DELETE("/redirect-uri/:uri", DeleteRedirectUri)
 
 		// provider第三方id系统
-		app.GET("/providers/:providerId", admin.GetProvider)
-		app.POST("/providers", admin.CreateProvider)
-		app.PUT("/providers/:providerId", admin.ModifyProvider)
-		app.DELETE("/providers/:providerId", admin.DeleteProvider)
+		app.GET("/providers/:providerId", GetProvider)
+		app.POST("/providers", CreateProvider)
+		app.PUT("/providers/:providerId", ModifyProvider)
+		app.DELETE("/providers/:providerId", DeleteProvider)
 	}
-	e.GET("/api/quick/providers", admin.ListLoginProviderInfo) // 获取当前租户所有第三方登录所需信息
+	e.GET("/api/quick/providers", ListLoginProviderInfo) // 获取当前租户所有第三方登录所需信息
 
 	// 用户管理
 	user := e.Group("/api/quick", middleware.LoginAuth())
 	{
 		// 用户池
-		user.GET("/user-pools", admin.ListUserPool)
-		user.GET("/user-pools/:poolId", admin.GetUserPool)
-		user.POST("/user-pools", admin.CreateUserPool)
-		user.PUT("/user-pools/:poolId", admin.ModifyUserPool)
-		user.DELETE("/user-pools/:poolId", admin.DeleteUserPool)
+		user.GET("/user-pools", ListUserPool)
+		user.GET("/user-pools/:poolId", GetUserPool)
+		user.POST("/user-pools", CreateUserPool)
+		user.PUT("/user-pools/:poolId", ModifyUserPool)
+		user.DELETE("/user-pools/:poolId", DeleteUserPool)
 
 		// 实体用户
-		user.GET("/user-pools/:poolId/users", admin.ListUser)
-		user.GET("/user-pools/:poolId/users/:userId", admin.GetUser)
-		user.POST("/user-pools/:poolId/users", admin.CreateUser)
-		user.PUT("/user-pools/:poolId/users/:userId", admin.ModifyUser)
-		user.DELETE("/user-pools/:poolId/users/:userId", admin.DeleteUser)
+		user.GET("/user-pools/:poolId/users", ListUser)
+		user.GET("/user-pools/:poolId/users/:userId", GetUser)
+		user.POST("/user-pools/:poolId/users", CreateUser)
+		user.PUT("/user-pools/:poolId/users/:userId", ModifyUser)
+		user.DELETE("/user-pools/:poolId/users/:userId", DeleteUser)
 	}
 }

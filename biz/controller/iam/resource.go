@@ -8,19 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Resource struct {
-}
-
-func NewResourceController() *Resource {
-	return &Resource{}
-}
-
 // ListResources
 // @Summary	list resources
 // @Tags	resource
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources 	[get]
-func (a Resource) ListResources(c *gin.Context) {
+func ListResources(c *gin.Context) {
 	var in request.Iam
 	if err := internal.New(c).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -41,7 +34,7 @@ func (a Resource) ListResources(c *gin.Context) {
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId} 	[get]
-func (a Resource) GetResource(c *gin.Context) {
+func GetResource(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -61,7 +54,7 @@ func (a Resource) GetResource(c *gin.Context) {
 // @Tags	resource
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources 	[post]
-func (a Resource) CreateResource(c *gin.Context) {
+func CreateResource(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindJson(c, &in.Resource).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -84,7 +77,7 @@ func (a Resource) CreateResource(c *gin.Context) {
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200
 // @Router	/api/quick/resources/{resourceId} 	[put]
-func (a Resource) UpdateResource(c *gin.Context) {
+func UpdateResource(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindJson(c, &in.Resource).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -105,7 +98,7 @@ func (a Resource) UpdateResource(c *gin.Context) {
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200
 // @Router	/api/quick/resources/{resourceId} 	[delete]
-func (a Resource) DeleteResource(c *gin.Context) {
+func DeleteResource(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)

@@ -17,7 +17,7 @@ import (
 // @Param	operationId	path	string	true	"operation id"
 // @Success	200
 // @Router	/api/quick/resources/{resourceId}/nodes/{nodeId}/operations/{operationId} 	[get]
-func (a Resource) IsOperationAllow(c *gin.Context) {
+func IsOperationAllow(c *gin.Context) {
 	var in request.Iam
 	var user jwt.MapClaims
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).SetUser(&user).Error; err != nil {
@@ -41,7 +41,7 @@ func (a Resource) IsOperationAllow(c *gin.Context) {
 // @Param	operationId	path	string	true	"operation id"
 // @Success	200
 // @Router	/api/quick/resources/{resourceId}/json/operations/{operationId} 	[get]
-func (a Resource) IsJSONOperationAllow(c *gin.Context) {
+func IsJSONOperationAllow(c *gin.Context) {
 	var in request.Iam
 	var user jwt.MapClaims
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).SetUser(&user).Error; err != nil {
@@ -64,7 +64,7 @@ func (a Resource) IsJSONOperationAllow(c *gin.Context) {
 // @Param	operationId	path	string	true	"operation id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/json/operations/{operationId}/parents/:parentId 	[get]
-func (a Resource) ListResourceOperationNodes(c *gin.Context) {
+func ListResourceOperationNodes(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -86,7 +86,7 @@ func (a Resource) ListResourceOperationNodes(c *gin.Context) {
 // @Param	operationId	path	string	true	"operation id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/json/operations/{operationId}/json 	[get]
-func (a Resource) ListJSONResourceOperationNodes(c *gin.Context) {
+func ListJSONResourceOperationNodes(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)

@@ -14,7 +14,7 @@ import (
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/operations 	[get]
-func (a Resource) ListResourceOperations(c *gin.Context) {
+func ListResourceOperations(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -36,7 +36,7 @@ func (a Resource) ListResourceOperations(c *gin.Context) {
 // @Param	operationId	path	string	true	"operation id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/operations/{operationId} 	[get]
-func (a Resource) GetResourceOperation(c *gin.Context) {
+func GetResourceOperation(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -57,7 +57,7 @@ func (a Resource) GetResourceOperation(c *gin.Context) {
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/operations 	[post]
-func (a Resource) CreateResourceOperation(c *gin.Context) {
+func CreateResourceOperation(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).BindJson(&in.Operation).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -81,7 +81,7 @@ func (a Resource) CreateResourceOperation(c *gin.Context) {
 // @Param	operationId	path	string	true	"operation id"
 // @Success	200
 // @Router	/api/quick/resources/{resourceId}/operations/{operationId} 	[put]
-func (a Resource) UpdateResourceOperation(c *gin.Context) {
+func UpdateResourceOperation(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).BindJson(&in.Operation).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -105,7 +105,7 @@ func (a Resource) UpdateResourceOperation(c *gin.Context) {
 // @Param	operationId	path	string	true	"operation id"
 // @Success	200
 // @Router	/api/quick/resources/{resourceId}/operations/{operationId} 	[delete]
-func (a Resource) DeleteResourceOperation(c *gin.Context) {
+func DeleteResourceOperation(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)

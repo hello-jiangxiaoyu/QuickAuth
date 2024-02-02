@@ -14,7 +14,7 @@ import (
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/nodes 	[get]
-func (a Resource) ListResourceNodes(c *gin.Context) {
+func ListResourceNodes(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -36,7 +36,7 @@ func (a Resource) ListResourceNodes(c *gin.Context) {
 // @Param	nodeId		path	string	true	"node id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/nodes/{nodeId} 	[get]
-func (a Resource) GetResourceNode(c *gin.Context) {
+func GetResourceNode(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -57,7 +57,7 @@ func (a Resource) GetResourceNode(c *gin.Context) {
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/nodes 	[post]
-func (a Resource) CreateResourceNode(c *gin.Context) {
+func CreateResourceNode(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).BindJson(&in.Node).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -82,7 +82,7 @@ func (a Resource) CreateResourceNode(c *gin.Context) {
 // @Param	nodeId		path	string	true	"node id"
 // @Success	200
 // @Router	/api/quick/resources/{resourceId}/nodes/{nodeId} 	[put]
-func (a Resource) UpdateResourceNode(c *gin.Context) {
+func UpdateResourceNode(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).BindJson(&in.Node).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -106,7 +106,7 @@ func (a Resource) UpdateResourceNode(c *gin.Context) {
 // @Param	nodeId		path	string	true	"node id"
 // @Success	200
 // @Router	/api/quick/resources/{resourceId}/nodes/{nodeId} 	[delete]
-func (a Resource) DeleteResourceNode(c *gin.Context) {
+func DeleteResourceNode(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)

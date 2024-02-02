@@ -16,7 +16,7 @@ import (
 // @Param	vhost		header	string	false	"tenant host"
 // @Success	200
 // @Router	/api/quick/providers [get]
-func (a Route) ListLoginProviderInfo(c *gin.Context) {
+func ListLoginProviderInfo(c *gin.Context) {
 	var in request.ProviderReq
 	if err := internal.New(c).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -40,7 +40,7 @@ func (a Route) ListLoginProviderInfo(c *gin.Context) {
 // @Param		providerId	path	integer	true	"provider id"
 // @Success		200
 // @Router		/api/quick/providers/{providerId} [get]
-func (a Route) GetProvider(c *gin.Context) {
+func GetProvider(c *gin.Context) {
 	var in request.ProviderReq
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -64,7 +64,7 @@ func (a Route) GetProvider(c *gin.Context) {
 // @Param	bd			body	request.ProviderReq	true	"body"
 // @Success	200
 // @Router	/api/quick/providers [post]
-func (a Route) CreateProvider(c *gin.Context) {
+func CreateProvider(c *gin.Context) {
 	var in request.ProviderReq
 	if err := internal.BindJson(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -88,7 +88,7 @@ func (a Route) CreateProvider(c *gin.Context) {
 // @Param	bd			body	request.ProviderReq	true	"body"
 // @Success	200
 // @Router	/api/quick/providers/{providerId} [put]
-func (a Route) ModifyProvider(c *gin.Context) {
+func ModifyProvider(c *gin.Context) {
 	var in request.ProviderReq
 	if err := internal.BindUriAndJson(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -110,7 +110,7 @@ func (a Route) ModifyProvider(c *gin.Context) {
 // @Param	vhost		header	string	false	"tenant host"
 // @Success	200
 // @Router	/api/quick/providers/{providerId} [delete]
-func (a Route) DeleteProvider(c *gin.Context) {
+func DeleteProvider(c *gin.Context) {
 	var in request.ProviderReq
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)

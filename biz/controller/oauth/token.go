@@ -17,12 +17,12 @@ const (
 
 type Handler func(*request.Token) (*dto.TokenResponse, error)
 
-func (o Controller) getTokenHandler(grantType string) (Handler, error) {
+func getTokenHandler(grantType string) (Handler, error) {
 	var tokenHandler = map[string]Handler{
-		grantTypeCode:         o.handlerAuthorizationCode,
-		grantTypeClient:       o.handlerClientCredential,
-		grantTypePassword:     o.handlerPassword,
-		grantTypeRefreshToken: o.handlerRefreshToken,
+		grantTypeCode:         handlerAuthorizationCode,
+		grantTypeClient:       handlerClientCredential,
+		grantTypePassword:     handlerPassword,
+		grantTypeRefreshToken: handlerRefreshToken,
 	}
 	h, ok := tokenHandler[grantType]
 	if !ok {
@@ -31,7 +31,7 @@ func (o Controller) getTokenHandler(grantType string) (Handler, error) {
 	return h, nil
 }
 
-func (o Controller) handlerAuthorizationCode(req *request.Token) (*dto.TokenResponse, error) {
+func handlerAuthorizationCode(req *request.Token) (*dto.TokenResponse, error) {
 	code, err := oauth.GetAccessCode(req.ClientID, req.Code)
 	if err != nil {
 		return nil, err
@@ -45,7 +45,7 @@ func (o Controller) handlerAuthorizationCode(req *request.Token) (*dto.TokenResp
 	return res, nil
 }
 
-func (o Controller) handlerClientCredential(req *request.Token) (*dto.TokenResponse, error) {
+func handlerClientCredential(req *request.Token) (*dto.TokenResponse, error) {
 	token, err := oauth.CreateAccessToken(req.App, req.Tenant, req.UserID, req.Nonce, []string{req.State})
 	if err != nil {
 		return nil, err
@@ -55,7 +55,7 @@ func (o Controller) handlerClientCredential(req *request.Token) (*dto.TokenRespo
 	return res, nil
 }
 
-func (o Controller) handlerPassword(req *request.Token) (*dto.TokenResponse, error) {
+func handlerPassword(req *request.Token) (*dto.TokenResponse, error) {
 	token, err := oauth.CreateAccessToken(req.App, req.Tenant, req.UserID, req.Nonce, []string{req.State})
 	if err != nil {
 		return nil, err
@@ -65,7 +65,7 @@ func (o Controller) handlerPassword(req *request.Token) (*dto.TokenResponse, err
 	return res, nil
 }
 
-func (o Controller) handlerRefreshToken(req *request.Token) (*dto.TokenResponse, error) {
+func handlerRefreshToken(req *request.Token) (*dto.TokenResponse, error) {
 	token, err := oauth.CreateAccessToken(req.App, req.Tenant, req.UserID, req.Nonce, []string{req.State})
 	if err != nil {
 		return nil, err

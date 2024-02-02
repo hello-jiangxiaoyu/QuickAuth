@@ -16,7 +16,7 @@ import (
 // @Param	appId		path	string	true	"app id"
 // @Success	200
 // @Router	/api/quick/apps/{appId}/secrets [get]
-func (a Route) ListAppSecret(c *gin.Context) {
+func ListAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
 	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -40,7 +40,7 @@ func (a Route) ListAppSecret(c *gin.Context) {
 // @Param	bd			body	request.AppSecretReq	true	"body"
 // @Success	200
 // @Router	/api/quick/apps/{appId}/secrets [post]
-func (a Route) CreateAppSecret(c *gin.Context) {
+func CreateAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
 	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -65,7 +65,7 @@ func (a Route) CreateAppSecret(c *gin.Context) {
 // @Param	bd			body	request.AppSecretReq	true	"body"
 // @Success	200
 // @Router	/api/quick/apps/{appId}/secrets/{secretId} [put]
-func (a Route) ModifyAppSecret(c *gin.Context) {
+func ModifyAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
 	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
@@ -89,7 +89,7 @@ func (a Route) ModifyAppSecret(c *gin.Context) {
 // @Param	secretId	path	integer	true	"secret id"
 // @Success	200
 // @Router	/api/quick/apps/{appId}/secrets/{secretId} [delete]
-func (a Route) DeleteAppSecret(c *gin.Context) {
+func DeleteAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
 	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
