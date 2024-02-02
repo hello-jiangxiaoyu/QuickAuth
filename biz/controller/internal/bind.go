@@ -18,6 +18,13 @@ func (a *Api) BindJson(obj any) *Api {
 	}
 	return a
 }
+func BindJson(c *gin.Context, obj any) *Api {
+	a := New(c)
+	if err := a.c.ShouldBindJSON(obj); err != nil {
+		return a.setError(err)
+	}
+	return a
+}
 
 func (a *Api) BindUri(obj any) *Api {
 	if a.c == nil {
@@ -28,7 +35,6 @@ func (a *Api) BindUri(obj any) *Api {
 	}
 	return a
 }
-
 func BindUri(c *gin.Context, obj any) *Api {
 	a := New(c)
 	if err := setUriValue(a.c, obj); err != nil {

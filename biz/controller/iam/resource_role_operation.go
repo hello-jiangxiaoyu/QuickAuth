@@ -1,6 +1,7 @@
 package iam
 
 import (
+	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
 	"github.com/gin-gonic/gin"
@@ -15,7 +16,7 @@ import (
 // @Router	/api/quick/resources/{resourceId}/roles/{roleId}/operations 	[get]
 func (a Resource) ListResourceRoleOperations(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -37,7 +38,7 @@ func (a Resource) ListResourceRoleOperations(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId}/roles/{roleId}/operations 	[post]
 func (a Resource) CreateResourceRoleOperation(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).BindJson(&in.RoleOperation).Error; err != nil {
+	if err := internal.BindUri(c, &in).BindJson(&in.RoleOperation).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -63,7 +64,7 @@ func (a Resource) CreateResourceRoleOperation(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId}/roles/{roleId}/operations/{operationId} 	[delete]
 func (a Resource) DeleteResourceRoleOperation(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}

@@ -1,6 +1,7 @@
 package iam
 
 import (
+	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
 	"github.com/gin-gonic/gin"
@@ -15,7 +16,7 @@ import (
 // @Router	/api/quick/resources/{resourceId}/json/users/{userId}/roles 	[get]
 func (a Resource) ListResourceJSONUserRoles(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -37,7 +38,7 @@ func (a Resource) ListResourceJSONUserRoles(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId}/json/users/{userId}/roles 	[post]
 func (a Resource) CreateResourceJSONUserRole(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).BindJson(&in.JsonUserRole).Error; err != nil {
+	if err := internal.BindUri(c, &in).BindJson(&in.JsonUserRole).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -63,7 +64,7 @@ func (a Resource) CreateResourceJSONUserRole(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId}/json/users/{userId}/roles/{roleId} 	[put]
 func (a Resource) UpdateResourceJSONUserRole(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -88,7 +89,7 @@ func (a Resource) UpdateResourceJSONUserRole(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId}/json/users/{userId}/roles/{roleId} 	[delete]
 func (a Resource) DeleteResourceJSONUserRole(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}

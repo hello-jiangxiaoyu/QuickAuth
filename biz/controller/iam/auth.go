@@ -1,9 +1,11 @@
 package iam
 
 import (
+	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 // IsOperationAllow
@@ -16,11 +18,12 @@ import (
 // @Router	/api/quick/resources/{resourceId}/nodes/{nodeId}/operations/{operationId} 	[get]
 func (a Resource) IsOperationAllow(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).SetUserInfo().BindUri(&in).Error; err != nil {
+	var user jwt.MapClaims
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).SetUser(&user).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	allow, err := a.svc.IsOperationAllow(in.Tenant.ID, in.ResourceId, in.NodeId, in.OperationId, a.UserInfo["sub"])
+	allow, err := a.svc.IsOperationAllow(in.Tenant.ID, in.ResourceId, in.NodeId, in.OperationId, user["sub"])
 	if err != nil {
 		resp.ErrorSelect(c, err, "IsOperationAllow err")
 		return
@@ -39,11 +42,12 @@ func (a Resource) IsOperationAllow(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId}/json/operations/{operationId} 	[get]
 func (a Resource) IsJSONOperationAllow(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).SetUserInfo().BindUri(&in).Error; err != nil {
+	var user jwt.MapClaims
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).SetUser(&user).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	allow, err := a.svc.IsJSONOperationAllow(in.Tenant.ID, in.ResourceId, in.Path, in.OperationId, a.UserInfo["sub"])
+	allow, err := a.svc.IsJSONOperationAllow(in.Tenant.ID, in.ResourceId, in.Path, in.OperationId, user["sub"])
 	if err != nil {
 		resp.ErrorSelect(c, err, "IsJSONOperationAllow err")
 		return
@@ -61,7 +65,7 @@ func (a Resource) IsJSONOperationAllow(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId}/json/operations/{operationId}/parents/:parentId 	[get]
 func (a Resource) ListResourceOperationNodes(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -83,7 +87,7 @@ func (a Resource) ListResourceOperationNodes(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId}/json/operations/{operationId}/json 	[get]
 func (a Resource) ListJSONResourceOperationNodes(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}

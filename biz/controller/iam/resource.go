@@ -10,7 +10,6 @@ import (
 
 type Resource struct {
 	svc *service.Service
-	internal.Api
 }
 
 func NewResourceController(svc *service.Service) *Resource {
@@ -24,7 +23,7 @@ func NewResourceController(svc *service.Service) *Resource {
 // @Router	/api/quick/resources 	[get]
 func (a Resource) ListResources(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).Error; err != nil {
+	if err := internal.New(c).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -45,7 +44,7 @@ func (a Resource) ListResources(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId} 	[get]
 func (a Resource) GetResource(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -65,7 +64,7 @@ func (a Resource) GetResource(c *gin.Context) {
 // @Router	/api/quick/resources 	[post]
 func (a Resource) CreateResource(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindJson(&in.Resource).Error; err != nil {
+	if err := internal.BindJson(c, &in.Resource).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -88,7 +87,7 @@ func (a Resource) CreateResource(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId} 	[put]
 func (a Resource) UpdateResource(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindJson(&in.Resource).Error; err != nil {
+	if err := internal.BindJson(c, &in.Resource).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -109,7 +108,7 @@ func (a Resource) UpdateResource(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId} 	[delete]
 func (a Resource) DeleteResource(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}

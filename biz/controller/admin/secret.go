@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
 	"github.com/gin-gonic/gin"
@@ -16,7 +17,7 @@ import (
 // @Router	/api/quick/apps/{appId}/secrets [get]
 func (a Route) ListAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
-	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -40,7 +41,7 @@ func (a Route) ListAppSecret(c *gin.Context) {
 // @Router	/api/quick/apps/{appId}/secrets [post]
 func (a Route) CreateAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
-	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -65,7 +66,7 @@ func (a Route) CreateAppSecret(c *gin.Context) {
 // @Router	/api/quick/apps/{appId}/secrets/{secretId} [put]
 func (a Route) ModifyAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
-	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -89,7 +90,7 @@ func (a Route) ModifyAppSecret(c *gin.Context) {
 // @Router	/api/quick/apps/{appId}/secrets/{secretId} [delete]
 func (a Route) DeleteAppSecret(c *gin.Context) {
 	var in request.AppSecretReq
-	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}

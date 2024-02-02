@@ -1,6 +1,7 @@
 package oauth
 
 import (
+	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/model"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
@@ -23,7 +24,7 @@ func (o Controller) Login(c *gin.Context) {
 		resp.DoNothing(c, "user is already logged in, nothing to do")
 		return
 	}
-	if err := o.SetCtx(c).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := internal.New(c).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -73,7 +74,7 @@ func (o Controller) Logout(c *gin.Context) {
 // @Router		/api/quick/register [post]
 func (o Controller) Register(c *gin.Context) {
 	var in request.Login
-	if err := o.SetCtx(c).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := internal.New(c).BindForm(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}

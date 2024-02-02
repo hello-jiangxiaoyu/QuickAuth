@@ -1,6 +1,7 @@
 package iam
 
 import (
+	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
 	"github.com/gin-gonic/gin"
@@ -14,7 +15,7 @@ import (
 // @Router	/api/quick/resources/{resourceId}/roles 	[get]
 func (a Resource) ListResourceRoles(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -36,7 +37,7 @@ func (a Resource) ListResourceRoles(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId}/roles/{roleId} 	[get]
 func (a Resource) GetResourceRole(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -57,7 +58,7 @@ func (a Resource) GetResourceRole(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId}/roles 	[post]
 func (a Resource) CreateResourceRole(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).BindJson(&in.Role).Error; err != nil {
+	if err := internal.BindUri(c, &in).BindJson(&in.Role).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -81,7 +82,7 @@ func (a Resource) CreateResourceRole(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId}/roles/{roleId} 	[put]
 func (a Resource) UpdateResourceRole(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).BindJson(&in.Role).Error; err != nil {
+	if err := internal.BindUri(c, &in).BindJson(&in.Role).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -105,7 +106,7 @@ func (a Resource) UpdateResourceRole(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId}/roles/{roleId} 	[delete]
 func (a Resource) DeleteResourceRole(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}

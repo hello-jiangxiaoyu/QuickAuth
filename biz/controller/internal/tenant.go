@@ -25,7 +25,7 @@ func (a *Api) SetTenant(t *model.Tenant) *Api {
 	return a
 }
 
-func (a *Api) SetUserInfo() *Api {
+func (a *Api) SetUser(user *jwt.MapClaims) *Api {
 	if a.c == nil {
 		return a.setError(errors.New("gin context should not be nil"))
 	}
@@ -45,6 +45,6 @@ func (a *Api) SetUserInfo() *Api {
 	if !ok {
 		return a.setError(errors.New("failed to convert sub to string"))
 	}
-	a.UserInfo = claim
+	*user = claim
 	return a
 }

@@ -1,10 +1,12 @@
 package oauth
 
 import (
+	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/model"
 	"QuickAuth/biz/endpoint/resp"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 	"net/http"
 )
 
@@ -30,7 +32,7 @@ type OpenidConfigurationDto struct {
 // @Router		/api/quick/.well-known/openid-configuration [get]
 func (o Controller) GetOIDC(c *gin.Context) {
 	var tenant model.Tenant
-	if err := o.SetCtx(c).SetTenant(&tenant).Error; err != nil {
+	if err := internal.New(c).SetTenant(&tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -73,10 +75,11 @@ func (o Controller) ListJwks(c *gin.Context) {
 // @Success		200
 // @Router		/api/quick/me/profile [get]
 func (o Controller) GetProfile(c *gin.Context) {
-	if err := o.SetCtx(c).SetUserInfo().Error; err != nil {
+	var user jwt.MapClaims
+	if err := internal.New(c).SetUser(&user).Error; err != nil {
 		resp.ErrorRequestWithErr(c, err, "set user info err")
 		return
 	}
 
-	resp.SuccessWithData(c, o.UserInfo)
+	resp.SuccessWithData(c, user)
 }

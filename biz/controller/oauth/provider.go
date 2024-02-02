@@ -1,6 +1,7 @@
 package oauth
 
 import (
+	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
 	"QuickAuth/pkg/idp"
@@ -32,7 +33,7 @@ func (o Controller) ProviderLogin(c *gin.Context) {
 // @Router		/api/quick/login/providers/{providerId}/callback [get]
 func (o Controller) ProviderCallback(c *gin.Context) {
 	var in request.LoginProvider
-	if err := o.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}

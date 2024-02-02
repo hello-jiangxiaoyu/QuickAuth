@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
 	"github.com/gin-gonic/gin"
@@ -32,7 +33,7 @@ func (a Route) ListUserPool(c *gin.Context) {
 // @Router	/api/quick/user-pools/{poolId} [get]
 func (a Route) GetUserPool(c *gin.Context) {
 	var in request.UserPoolReq
-	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -55,7 +56,7 @@ func (a Route) GetUserPool(c *gin.Context) {
 // @Router	/api/quick/user-pools [post]
 func (a Route) CreateUserPool(c *gin.Context) {
 	var in request.UserPoolReq
-	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -78,7 +79,7 @@ func (a Route) CreateUserPool(c *gin.Context) {
 // @Router	/api/quick/user-pools/{poolId} [put]
 func (a Route) ModifyUserPool(c *gin.Context) {
 	var in request.UserPoolReq
-	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -100,7 +101,7 @@ func (a Route) ModifyUserPool(c *gin.Context) {
 // @Router	/api/quick/user-pools/{poolId} [delete]
 func (a Route) DeleteUserPool(c *gin.Context) {
 	var in request.UserPoolReq
-	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}

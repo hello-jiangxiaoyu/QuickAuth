@@ -1,6 +1,7 @@
 package iam
 
 import (
+	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
 	"github.com/gin-gonic/gin"
@@ -14,7 +15,7 @@ import (
 // @Router	/api/quick/resources/{resourceId}/operations 	[get]
 func (a Resource) ListResourceOperations(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -36,7 +37,7 @@ func (a Resource) ListResourceOperations(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId}/operations/{operationId} 	[get]
 func (a Resource) GetResourceOperation(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -57,7 +58,7 @@ func (a Resource) GetResourceOperation(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId}/operations 	[post]
 func (a Resource) CreateResourceOperation(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).BindJson(&in.Operation).Error; err != nil {
+	if err := internal.BindUri(c, &in).BindJson(&in.Operation).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -81,7 +82,7 @@ func (a Resource) CreateResourceOperation(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId}/operations/{operationId} 	[put]
 func (a Resource) UpdateResourceOperation(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).BindJson(&in.Operation).Error; err != nil {
+	if err := internal.BindUri(c, &in).BindJson(&in.Operation).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -105,7 +106,7 @@ func (a Resource) UpdateResourceOperation(c *gin.Context) {
 // @Router	/api/quick/resources/{resourceId}/operations/{operationId} 	[delete]
 func (a Resource) DeleteResourceOperation(c *gin.Context) {
 	var in request.Iam
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}

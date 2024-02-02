@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
 	"github.com/gin-gonic/gin"
@@ -16,7 +17,7 @@ import (
 // @Router	/api/quick/providers [get]
 func (a Route) ListLoginProviderInfo(c *gin.Context) {
 	var in request.ProviderReq
-	if err := a.SetCtx(c).SetTenant(&in.Tenant).Error; err != nil {
+	if err := internal.New(c).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -40,7 +41,7 @@ func (a Route) ListLoginProviderInfo(c *gin.Context) {
 // @Router		/api/quick/providers/{providerId} [get]
 func (a Route) GetProvider(c *gin.Context) {
 	var in request.ProviderReq
-	if err := a.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -64,7 +65,7 @@ func (a Route) GetProvider(c *gin.Context) {
 // @Router	/api/quick/providers [post]
 func (a Route) CreateProvider(c *gin.Context) {
 	var in request.ProviderReq
-	if err := a.SetCtx(c).BindJson(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := internal.BindJson(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -88,7 +89,7 @@ func (a Route) CreateProvider(c *gin.Context) {
 // @Router	/api/quick/providers/{providerId} [put]
 func (a Route) ModifyProvider(c *gin.Context) {
 	var in request.ProviderReq
-	if err := a.SetCtx(c).BindUriAndJson(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := internal.BindUriAndJson(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -110,7 +111,7 @@ func (a Route) ModifyProvider(c *gin.Context) {
 // @Router	/api/quick/providers/{providerId} [delete]
 func (a Route) DeleteProvider(c *gin.Context) {
 	var in request.ProviderReq
-	if err := a.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}

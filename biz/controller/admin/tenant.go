@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/model"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
@@ -18,7 +19,7 @@ import (
 // @Router	/api/quick/apps/{appId}/tenants [get]
 func (a Route) ListTenant(c *gin.Context) {
 	var in request.TenantReq
-	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -43,7 +44,7 @@ func (a Route) ListTenant(c *gin.Context) {
 // @Router	/api/quick/apps/{appId}/tenants/{tenantId} [get]
 func (a Route) GetTenant(c *gin.Context) {
 	var in request.TenantReq
-	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -68,7 +69,7 @@ func (a Route) GetTenant(c *gin.Context) {
 // @Router	/api/quick/apps/{appId}/tenants [post]
 func (a Route) CreateTenant(c *gin.Context) {
 	var in request.TenantReq
-	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -94,7 +95,7 @@ func (a Route) CreateTenant(c *gin.Context) {
 // @Router	/api/quick/apps/{appId}/tenants/{tenantId} [put]
 func (a Route) ModifyTenant(c *gin.Context) {
 	var in request.TenantReq
-	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -118,7 +119,7 @@ func (a Route) ModifyTenant(c *gin.Context) {
 // @Router	/api/quick/apps/{appId}/tenants/{tenantId} [delete]
 func (a Route) DeleteTenant(c *gin.Context) {
 	var in request.TenantReq
-	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}

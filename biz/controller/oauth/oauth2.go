@@ -6,14 +6,15 @@ import (
 	"QuickAuth/biz/endpoint/resp"
 	"QuickAuth/biz/service"
 	"QuickAuth/biz/service/oauth"
+	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 	"net/http"
 	"net/url"
 )
 
 type Controller struct {
-	internal.Api
 	svc *service.Service
 }
 
@@ -34,7 +35,8 @@ func NewOAuth2Route(svc *service.Service) Controller {
 // @Router		/api/quick/oauth2/auth [get]
 func (o Controller) GetAuthCode(c *gin.Context) {
 	var in request.Auth
-	if err := o.SetCtx(c).BindQuery(&in).SetUserInfo().SetTenant(&in.Tenant).Error; err != nil {
+	var user jwt.MapClaims
+	if err := internal.New(c).BindQuery(&in).SetUser(&user).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -46,7 +48,7 @@ func (o Controller) GetAuthCode(c *gin.Context) {
 		return
 	}
 
-	userId, err := o.UserInfo.GetSubject()
+	userId, err := user.GetSubject()
 	if err != nil {
 		resp.ErrorRequest(c, err)
 		return
@@ -89,7 +91,7 @@ func (o Controller) GetAuthCode(c *gin.Context) {
 // @Router		/api/quick/oauth2/token [post]
 func (o Controller) GetToken(c *gin.Context) {
 	var in request.Token
-	if err := o.SetCtx(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := internal.New(c).BindQuery(&in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -107,7 +109,7 @@ func (o Controller) GetToken(c *gin.Context) {
 	}
 
 	token, err := handler(&in)
-	if err == oauth.ErrorCodeExpired {
+	if errors.Is(err, oauth.ErrorCodeExpired) {
 		resp.ErrorForbidden(c, err.Error())
 		return
 	} else if err != nil {

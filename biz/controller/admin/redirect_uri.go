@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
 	"github.com/gin-gonic/gin"
@@ -16,7 +17,7 @@ import (
 // @Router	/api/quick/redirect-uri [get]
 func (a Route) ListRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
-	if err := a.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -40,7 +41,7 @@ func (a Route) ListRedirectUri(c *gin.Context) {
 // @Router	/api/quick/redirect-uri [post]
 func (a Route) CreateRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
-	if err := a.SetCtx(c).BindUriAndJson(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := internal.BindUriAndJson(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -64,7 +65,7 @@ func (a Route) CreateRedirectUri(c *gin.Context) {
 // @Router	/api/quick/redirect-uri/{uriId} [put]
 func (a Route) ModifyRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
-	if err := a.SetCtx(c).BindUriAndJson(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := internal.BindUriAndJson(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -86,7 +87,7 @@ func (a Route) ModifyRedirectUri(c *gin.Context) {
 // @Router	/api/quick/redirect-uri/{uri} [delete]
 func (a Route) DeleteRedirectUri(c *gin.Context) {
 	var in request.RedirectUriReq
-	if err := a.SetCtx(c).BindUri(&in).SetTenant(&in.Tenant).Error; err != nil {
+	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}

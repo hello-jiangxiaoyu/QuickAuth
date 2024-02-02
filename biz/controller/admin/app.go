@@ -12,7 +12,6 @@ import (
 
 type Route struct {
 	svc *service.Service
-	internal.Api
 }
 
 func NewAdminRoute(svc *service.Service) *Route {
@@ -45,7 +44,7 @@ func (a Route) ListApp(c *gin.Context) {
 // @Router	/api/quick/apps/{appId} [get]
 func (a Route) GetApp(c *gin.Context) {
 	var in request.AppReq
-	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -68,7 +67,7 @@ func (a Route) GetApp(c *gin.Context) {
 // @Router	/api/quick/apps [post]
 func (a Route) CreateApp(c *gin.Context) {
 	var in request.AppReq
-	if err := a.SetCtx(c).BindJson(&in).Error; err != nil {
+	if err := internal.BindJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -92,7 +91,7 @@ func (a Route) CreateApp(c *gin.Context) {
 // @Router	/api/quick/apps/{appId} [put]
 func (a Route) ModifyApp(c *gin.Context) {
 	var in request.AppReq
-	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}

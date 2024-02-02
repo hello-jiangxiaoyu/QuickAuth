@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
 	"QuickAuth/pkg/safe"
@@ -18,7 +19,7 @@ import (
 // @Router	/api/quick/user-pools/{poolId}/users [get]
 func (a Route) ListUser(c *gin.Context) {
 	var in request.UserReq
-	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -42,7 +43,7 @@ func (a Route) ListUser(c *gin.Context) {
 // @Router	/api/quick/user-pools/{poolId}/users/{userId} [get]
 func (a Route) GetUser(c *gin.Context) {
 	var in request.UserReq
-	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -66,7 +67,7 @@ func (a Route) GetUser(c *gin.Context) {
 // @Router	/api/quick/user-pools/{poolId}/users [post]
 func (a Route) CreateUser(c *gin.Context) {
 	var in request.UserReq
-	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -99,7 +100,7 @@ func (a Route) CreateUser(c *gin.Context) {
 // @Router	/api/quick/user-pools/{poolId}/users/{userId} [put]
 func (a Route) ModifyUser(c *gin.Context) {
 	var in request.UserReq
-	if err := a.SetCtx(c).BindUriAndJson(&in).Error; err != nil {
+	if err := internal.BindUriAndJson(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
@@ -122,7 +123,7 @@ func (a Route) ModifyUser(c *gin.Context) {
 // @Router	/api/quick/user-pools/{poolId}/users/{userId} [delete]
 func (a Route) DeleteUser(c *gin.Context) {
 	var in request.UserReq
-	if err := a.SetCtx(c).BindUri(&in).Error; err != nil {
+	if err := internal.BindUri(c, &in).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
