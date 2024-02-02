@@ -12,7 +12,6 @@ func GetServer() *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	r.Use(middleware.Recovery(), cors.Default())
 	r.Use(middleware.RequestLog(), middleware.GenerateRequestID())
-	r.Use(middleware.TenantHost())
 	controller.NewRouter(r)
 	return r
 }

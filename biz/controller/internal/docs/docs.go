@@ -2505,7 +2505,7 @@ const docTemplate = `{
         "/api/quick/resources": {
             "get": {
                 "tags": [
-                    "resource"
+                    "ABAC"
                 ],
                 "summary": "list resources",
                 "responses": {
@@ -2519,7 +2519,7 @@ const docTemplate = `{
             },
             "post": {
                 "tags": [
-                    "resource"
+                    "ABAC"
                 ],
                 "summary": "create resource",
                 "responses": {
@@ -2535,7 +2535,7 @@ const docTemplate = `{
         "/api/quick/resources/{resourceId}": {
             "get": {
                 "tags": [
-                    "resource"
+                    "ABAC"
                 ],
                 "summary": "get resource",
                 "parameters": [
@@ -2558,7 +2558,7 @@ const docTemplate = `{
             },
             "put": {
                 "tags": [
-                    "resource"
+                    "ABAC"
                 ],
                 "summary": "update resource",
                 "parameters": [
@@ -2578,7 +2578,7 @@ const docTemplate = `{
             },
             "delete": {
                 "tags": [
-                    "resource"
+                    "ABAC"
                 ],
                 "summary": "delete resource",
                 "parameters": [
@@ -2600,7 +2600,7 @@ const docTemplate = `{
         "/api/quick/resources/{resourceId}/json/operations/{operationId}": {
             "get": {
                 "tags": [
-                    "auth"
+                    "ABAC"
                 ],
                 "summary": "判断用户当前对JSON资源的操作是否被允许",
                 "parameters": [
@@ -2636,7 +2636,7 @@ const docTemplate = `{
         "/api/quick/resources/{resourceId}/json/operations/{operationId}/json": {
             "get": {
                 "tags": [
-                    "auth"
+                    "ABAC"
                 ],
                 "summary": "获取拥有某个操作权限的整个json结构",
                 "parameters": [
@@ -2668,7 +2668,7 @@ const docTemplate = `{
         "/api/quick/resources/{resourceId}/json/operations/{operationId}/parents/:parentId": {
             "get": {
                 "tags": [
-                    "auth"
+                    "ABAC"
                 ],
                 "summary": "获取拥有某个操作权限的node列表",
                 "parameters": [
@@ -2700,7 +2700,7 @@ const docTemplate = `{
         "/api/quick/resources/{resourceId}/json/users/{userId}/roles": {
             "get": {
                 "tags": [
-                    "resource-user"
+                    "ABAC"
                 ],
                 "summary": "list resource json user roles",
                 "parameters": [
@@ -2730,7 +2730,7 @@ const docTemplate = `{
             },
             "post": {
                 "tags": [
-                    "resource-user"
+                    "ABAC"
                 ],
                 "summary": "create resource json user role",
                 "parameters": [
@@ -2762,7 +2762,7 @@ const docTemplate = `{
         "/api/quick/resources/{resourceId}/json/users/{userId}/roles/{roleId}": {
             "put": {
                 "tags": [
-                    "resource-user"
+                    "ABAC"
                 ],
                 "summary": "update resource json user role",
                 "parameters": [
@@ -2796,7 +2796,7 @@ const docTemplate = `{
             },
             "delete": {
                 "tags": [
-                    "resource-user"
+                    "ABAC"
                 ],
                 "summary": "delete resource json user role",
                 "parameters": [
@@ -2832,7 +2832,7 @@ const docTemplate = `{
         "/api/quick/resources/{resourceId}/nodes": {
             "get": {
                 "tags": [
-                    "resource"
+                    "ABAC"
                 ],
                 "summary": "list resource nodes",
                 "parameters": [
@@ -2855,7 +2855,7 @@ const docTemplate = `{
             },
             "post": {
                 "tags": [
-                    "resource"
+                    "ABAC"
                 ],
                 "summary": "create resource node",
                 "parameters": [
@@ -2880,7 +2880,7 @@ const docTemplate = `{
         "/api/quick/resources/{resourceId}/nodes/{nodeId}": {
             "get": {
                 "tags": [
-                    "resource"
+                    "ABAC"
                 ],
                 "summary": "get resource node",
                 "parameters": [
@@ -2910,7 +2910,7 @@ const docTemplate = `{
             },
             "put": {
                 "tags": [
-                    "resource"
+                    "ABAC"
                 ],
                 "summary": "update resource node",
                 "parameters": [
@@ -2937,7 +2937,7 @@ const docTemplate = `{
             },
             "delete": {
                 "tags": [
-                    "resource"
+                    "ABAC"
                 ],
                 "summary": "delete resource node",
                 "parameters": [
@@ -2966,7 +2966,7 @@ const docTemplate = `{
         "/api/quick/resources/{resourceId}/nodes/{nodeId}/operations/{operationId}": {
             "get": {
                 "tags": [
-                    "auth"
+                    "ABAC"
                 ],
                 "summary": "判断用户当前对资源的操作是否被允许",
                 "parameters": [
@@ -3002,7 +3002,7 @@ const docTemplate = `{
         "/api/quick/resources/{resourceId}/operations": {
             "get": {
                 "tags": [
-                    "resource-operation"
+                    "ABAC"
                 ],
                 "summary": "list resource operations",
                 "parameters": [
@@ -3025,7 +3025,7 @@ const docTemplate = `{
             },
             "post": {
                 "tags": [
-                    "resource-operation"
+                    "ABAC"
                 ],
                 "summary": "create resource operation",
                 "parameters": [
@@ -3050,7 +3050,7 @@ const docTemplate = `{
         "/api/quick/resources/{resourceId}/operations/{operationId}": {
             "get": {
                 "tags": [
-                    "resource-operation"
+                    "ABAC"
                 ],
                 "summary": "get resource operation",
                 "parameters": [
@@ -3080,7 +3080,7 @@ const docTemplate = `{
             },
             "put": {
                 "tags": [
-                    "resource-operation"
+                    "ABAC"
                 ],
                 "summary": "update resource operation",
                 "parameters": [
@@ -3107,7 +3107,7 @@ const docTemplate = `{
             },
             "delete": {
                 "tags": [
-                    "resource-operation"
+                    "ABAC"
                 ],
                 "summary": "delete resource operation",
                 "parameters": [
@@ -3136,7 +3136,7 @@ const docTemplate = `{
         "/api/quick/resources/{resourceId}/roles": {
             "get": {
                 "tags": [
-                    "resource-role"
+                    "ABAC"
                 ],
                 "summary": "list resource roles",
                 "parameters": [
@@ -3159,7 +3159,7 @@ const docTemplate = `{
             },
             "post": {
                 "tags": [
-                    "resource-role"
+                    "ABAC"
                 ],
                 "summary": "create resource role",
                 "parameters": [
@@ -3184,7 +3184,7 @@ const docTemplate = `{
         "/api/quick/resources/{resourceId}/roles/{roleId}": {
             "get": {
                 "tags": [
-                    "resource-role"
+                    "ABAC"
                 ],
                 "summary": "get resource role",
                 "parameters": [
@@ -3214,7 +3214,7 @@ const docTemplate = `{
             },
             "put": {
                 "tags": [
-                    "resource-role"
+                    "ABAC"
                 ],
                 "summary": "update resource role",
                 "parameters": [
@@ -3241,7 +3241,7 @@ const docTemplate = `{
             },
             "delete": {
                 "tags": [
-                    "resource-role"
+                    "ABAC"
                 ],
                 "summary": "delete resource role",
                 "parameters": [
@@ -3270,7 +3270,7 @@ const docTemplate = `{
         "/api/quick/resources/{resourceId}/roles/{roleId}/operations": {
             "get": {
                 "tags": [
-                    "resource-role"
+                    "ABAC"
                 ],
                 "summary": "list resource role operations",
                 "parameters": [
@@ -3300,7 +3300,7 @@ const docTemplate = `{
             },
             "post": {
                 "tags": [
-                    "resource-role"
+                    "ABAC"
                 ],
                 "summary": "create resource role operation",
                 "parameters": [
@@ -3332,7 +3332,7 @@ const docTemplate = `{
         "/api/quick/resources/{resourceId}/roles/{roleId}/operations/{operationId}": {
             "delete": {
                 "tags": [
-                    "resource-role"
+                    "ABAC"
                 ],
                 "summary": "delete resource role operation",
                 "parameters": [
@@ -3368,7 +3368,7 @@ const docTemplate = `{
         "/api/quick/resources/{resourceId}/users/{userId}/roles": {
             "get": {
                 "tags": [
-                    "resource-user"
+                    "ABAC"
                 ],
                 "summary": "list resource json user roles",
                 "parameters": [
@@ -3398,7 +3398,7 @@ const docTemplate = `{
             },
             "post": {
                 "tags": [
-                    "resource-user"
+                    "ABAC"
                 ],
                 "summary": "create resource json user role",
                 "parameters": [
@@ -3430,7 +3430,7 @@ const docTemplate = `{
         "/api/quick/resources/{resourceId}/users/{userId}/roles/{roleId}": {
             "put": {
                 "tags": [
-                    "resource-user"
+                    "ABAC"
                 ],
                 "summary": "update resource json user role",
                 "parameters": [
@@ -3464,7 +3464,7 @@ const docTemplate = `{
             },
             "delete": {
                 "tags": [
-                    "resource-user"
+                    "ABAC"
                 ],
                 "summary": "delete resource json user role",
                 "parameters": [

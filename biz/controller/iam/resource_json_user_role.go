@@ -10,7 +10,7 @@ import (
 
 // ListResourceJSONUserRoles
 // @Summary	list resource json user roles
-// @Tags	resource-user
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	userId		path	string	true	"user id"
 // @Success	200		{object}	interface{}
@@ -32,7 +32,7 @@ func ListResourceJSONUserRoles(c *gin.Context) {
 
 // CreateResourceJSONUserRole
 // @Summary	create resource json user role
-// @Tags	resource-user
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	userId		path	string	true	"user id"
 // @Success	200		{object}	interface{}
@@ -57,7 +57,7 @@ func CreateResourceJSONUserRole(c *gin.Context) {
 
 // UpdateResourceJSONUserRole
 // @Summary	update resource json user role
-// @Tags	resource-user
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	userId		path	string	true	"user id"
 // @Param	roleId		path	string	true	"role id"
@@ -82,7 +82,7 @@ func UpdateResourceJSONUserRole(c *gin.Context) {
 
 // DeleteResourceJSONUserRole
 // @Summary	delete resource json user role
-// @Tags	resource-user
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	userId		path	string	true	"user id"
 // @Param	roleId		path	string	true	"role id"

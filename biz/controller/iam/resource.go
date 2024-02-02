@@ -10,7 +10,7 @@ import (
 
 // ListResources
 // @Summary	list resources
-// @Tags	resource
+// @Tags	ABAC
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources 	[get]
 func ListResources(c *gin.Context) {
@@ -30,7 +30,7 @@ func ListResources(c *gin.Context) {
 
 // GetResource
 // @Summary	get resource
-// @Tags	resource
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId} 	[get]
@@ -51,7 +51,7 @@ func GetResource(c *gin.Context) {
 
 // CreateResource
 // @Summary	create resource
-// @Tags	resource
+// @Tags	ABAC
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources 	[post]
 func CreateResource(c *gin.Context) {
@@ -73,7 +73,7 @@ func CreateResource(c *gin.Context) {
 
 // UpdateResource
 // @Summary	update resource
-// @Tags	resource
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200
 // @Router	/api/quick/resources/{resourceId} 	[put]
@@ -94,7 +94,7 @@ func UpdateResource(c *gin.Context) {
 
 // DeleteResource
 // @Summary	delete resource
-// @Tags	resource
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200
 // @Router	/api/quick/resources/{resourceId} 	[delete]

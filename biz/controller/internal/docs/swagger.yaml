@@ -1820,7 +1820,7 @@ paths:
             type: object
       summary: list resources
       tags:
-      - resource
+      - ABAC
     post:
       responses:
         "200":
@@ -1829,7 +1829,7 @@ paths:
             type: object
       summary: create resource
       tags:
-      - resource
+      - ABAC
   /api/quick/resources/{resourceId}:
     delete:
       parameters:
@@ -1843,7 +1843,7 @@ paths:
           description: OK
       summary: delete resource
       tags:
-      - resource
+      - ABAC
     get:
       parameters:
       - description: resource id
@@ -1858,7 +1858,7 @@ paths:
             type: object
       summary: get resource
       tags:
-      - resource
+      - ABAC
     put:
       parameters:
       - description: resource id
@@ -1871,7 +1871,7 @@ paths:
           description: OK
       summary: update resource
       tags:
-      - resource
+      - ABAC
   /api/quick/resources/{resourceId}/json/operations/{operationId}:
     get:
       parameters:
@@ -1895,7 +1895,7 @@ paths:
           description: OK
       summary: 判断用户当前对JSON资源的操作是否被允许
       tags:
-      - auth
+      - ABAC
   /api/quick/resources/{resourceId}/json/operations/{operationId}/json:
     get:
       parameters:
@@ -1916,7 +1916,7 @@ paths:
             type: object
       summary: 获取拥有某个操作权限的整个json结构
       tags:
-      - auth
+      - ABAC
   /api/quick/resources/{resourceId}/json/operations/{operationId}/parents/:parentId:
     get:
       parameters:
@@ -1937,7 +1937,7 @@ paths:
             type: object
       summary: 获取拥有某个操作权限的node列表
       tags:
-      - auth
+      - ABAC
   /api/quick/resources/{resourceId}/json/users/{userId}/roles:
     get:
       parameters:
@@ -1958,7 +1958,7 @@ paths:
             type: object
       summary: list resource json user roles
       tags:
-      - resource-user
+      - ABAC
     post:
       parameters:
       - description: resource id
@@ -1978,7 +1978,7 @@ paths:
             type: object
       summary: create resource json user role
       tags:
-      - resource-user
+      - ABAC
   /api/quick/resources/{resourceId}/json/users/{userId}/roles/{roleId}:
     delete:
       parameters:
@@ -2002,7 +2002,7 @@ paths:
           description: OK
       summary: delete resource json user role
       tags:
-      - resource-user
+      - ABAC
     put:
       parameters:
       - description: resource id
@@ -2025,7 +2025,7 @@ paths:
           description: OK
       summary: update resource json user role
       tags:
-      - resource-user
+      - ABAC
   /api/quick/resources/{resourceId}/nodes:
     get:
       parameters:
@@ -2041,7 +2041,7 @@ paths:
             type: object
       summary: list resource nodes
       tags:
-      - resource
+      - ABAC
     post:
       parameters:
       - description: resource id
@@ -2056,7 +2056,7 @@ paths:
             type: object
       summary: create resource node
       tags:
-      - resource
+      - ABAC
   /api/quick/resources/{resourceId}/nodes/{nodeId}:
     delete:
       parameters:
@@ -2075,7 +2075,7 @@ paths:
           description: OK
       summary: delete resource node
       tags:
-      - resource
+      - ABAC
     get:
       parameters:
       - description: resource id
@@ -2095,7 +2095,7 @@ paths:
             type: object
       summary: get resource node
       tags:
-      - resource
+      - ABAC
     put:
       parameters:
       - description: resource id
@@ -2113,7 +2113,7 @@ paths:
           description: OK
       summary: update resource node
       tags:
-      - resource
+      - ABAC
   /api/quick/resources/{resourceId}/nodes/{nodeId}/operations/{operationId}:
     get:
       parameters:
@@ -2137,7 +2137,7 @@ paths:
           description: OK
       summary: 判断用户当前对资源的操作是否被允许
       tags:
-      - auth
+      - ABAC
   /api/quick/resources/{resourceId}/operations:
     get:
       parameters:
@@ -2153,7 +2153,7 @@ paths:
             type: object
       summary: list resource operations
       tags:
-      - resource-operation
+      - ABAC
     post:
       parameters:
       - description: resource id
@@ -2168,7 +2168,7 @@ paths:
             type: object
       summary: create resource operation
       tags:
-      - resource-operation
+      - ABAC
   /api/quick/resources/{resourceId}/operations/{operationId}:
     delete:
       parameters:
@@ -2187,7 +2187,7 @@ paths:
           description: OK
       summary: delete resource operation
       tags:
-      - resource-operation
+      - ABAC
     get:
       parameters:
       - description: resource id
@@ -2207,7 +2207,7 @@ paths:
             type: object
       summary: get resource operation
       tags:
-      - resource-operation
+      - ABAC
     put:
       parameters:
       - description: resource id
@@ -2225,7 +2225,7 @@ paths:
           description: OK
       summary: update resource operation
       tags:
-      - resource-operation
+      - ABAC
   /api/quick/resources/{resourceId}/roles:
     get:
       parameters:
@@ -2241,7 +2241,7 @@ paths:
             type: object
       summary: list resource roles
       tags:
-      - resource-role
+      - ABAC
     post:
       parameters:
       - description: resource id
@@ -2256,7 +2256,7 @@ paths:
             type: object
       summary: create resource role
       tags:
-      - resource-role
+      - ABAC
   /api/quick/resources/{resourceId}/roles/{roleId}:
     delete:
       parameters:
@@ -2275,7 +2275,7 @@ paths:
           description: OK
       summary: delete resource role
       tags:
-      - resource-role
+      - ABAC
     get:
       parameters:
       - description: resource id
@@ -2295,7 +2295,7 @@ paths:
             type: object
       summary: get resource role
       tags:
-      - resource-role
+      - ABAC
     put:
       parameters:
       - description: resource id
@@ -2313,7 +2313,7 @@ paths:
           description: OK
       summary: update resource role
       tags:
-      - resource-role
+      - ABAC
   /api/quick/resources/{resourceId}/roles/{roleId}/operations:
     get:
       parameters:
@@ -2334,7 +2334,7 @@ paths:
             type: object
       summary: list resource role operations
       tags:
-      - resource-role
+      - ABAC
     post:
       parameters:
       - description: resource id
@@ -2354,7 +2354,7 @@ paths:
             type: object
       summary: create resource role operation
       tags:
-      - resource-role
+      - ABAC
   /api/quick/resources/{resourceId}/roles/{roleId}/operations/{operationId}:
     delete:
       parameters:
@@ -2378,7 +2378,7 @@ paths:
           description: OK
       summary: delete resource role operation
       tags:
-      - resource-role
+      - ABAC
   /api/quick/resources/{resourceId}/users/{userId}/roles:
     get:
       parameters:
@@ -2399,7 +2399,7 @@ paths:
             type: object
       summary: list resource json user roles
       tags:
-      - resource-user
+      - ABAC
     post:
       parameters:
       - description: resource id
@@ -2419,7 +2419,7 @@ paths:
             type: object
       summary: create resource json user role
       tags:
-      - resource-user
+      - ABAC
   /api/quick/resources/{resourceId}/users/{userId}/roles/{roleId}:
     delete:
       parameters:
@@ -2443,7 +2443,7 @@ paths:
           description: OK
       summary: delete resource json user role
       tags:
-      - resource-user
+      - ABAC
     put:
       parameters:
       - description: resource id
@@ -2466,7 +2466,7 @@ paths:
           description: OK
       summary: update resource json user role
       tags:
-      - resource-user
+      - ABAC
   /api/quick/user-pools:
     get:
       parameters:

@@ -10,7 +10,7 @@ import (
 
 // ListResourceOperations
 // @Summary	list resource operations
-// @Tags	resource-operation
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/operations 	[get]
@@ -31,7 +31,7 @@ func ListResourceOperations(c *gin.Context) {
 
 // GetResourceOperation
 // @Summary	get resource operation
-// @Tags	resource-operation
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	operationId	path	string	true	"operation id"
 // @Success	200		{object}	interface{}
@@ -53,7 +53,7 @@ func GetResourceOperation(c *gin.Context) {
 
 // CreateResourceOperation
 // @Summary	create resource operation
-// @Tags	resource-operation
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/operations 	[post]
@@ -76,7 +76,7 @@ func CreateResourceOperation(c *gin.Context) {
 
 // UpdateResourceOperation
 // @Summary	update resource operation
-// @Tags	resource-operation
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	operationId	path	string	true	"operation id"
 // @Success	200
@@ -100,7 +100,7 @@ func UpdateResourceOperation(c *gin.Context) {
 
 // DeleteResourceOperation
 // @Summary	delete resource operation
-// @Tags	resource-operation
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	operationId	path	string	true	"operation id"
 // @Success	200

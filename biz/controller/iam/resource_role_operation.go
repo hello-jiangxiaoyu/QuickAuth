@@ -10,7 +10,7 @@ import (
 
 // ListResourceRoleOperations
 // @Summary	list resource role operations
-// @Tags	resource-role
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	roleId		path	string	true	"role id"
 // @Success	200		{object}	interface{}
@@ -32,7 +32,7 @@ func ListResourceRoleOperations(c *gin.Context) {
 
 // CreateResourceRoleOperation
 // @Summary	create resource role operation
-// @Tags	resource-role
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	roleId		path	string	true	"role id"
 // @Success	200		{object}	interface{}
@@ -57,7 +57,7 @@ func CreateResourceRoleOperation(c *gin.Context) {
 
 // DeleteResourceRoleOperation
 // @Summary	delete resource role operation
-// @Tags	resource-role
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	roleId		path	string	true	"role id"
 // @Param	operationId	path	string	true	"operation id"

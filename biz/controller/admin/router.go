@@ -6,8 +6,8 @@ import (
 )
 
 // AddAdminRoute admin接口
-func AddAdminRoute(e *gin.Engine) {
-	app := e.Group("/api/quick", middleware.LoginAuth())
+func AddAdminRoute(e *gin.RouterGroup) {
+	app := e.Group("", middleware.LoginAuth())
 	{
 		// app应用管理
 		app.GET("/apps", ListApp)
@@ -41,10 +41,10 @@ func AddAdminRoute(e *gin.Engine) {
 		app.PUT("/providers/:providerId", ModifyProvider)
 		app.DELETE("/providers/:providerId", DeleteProvider)
 	}
-	e.GET("/api/quick/providers", ListLoginProviderInfo) // 获取当前租户所有第三方登录所需信息
+	e.GET("/providers", ListLoginProviderInfo) // 获取当前租户所有第三方登录所需信息
 
 	// 用户管理
-	user := e.Group("/api/quick", middleware.LoginAuth())
+	user := e.Group("", middleware.LoginAuth())
 	{
 		// 用户池
 		user.GET("/user-pools", ListUserPool)

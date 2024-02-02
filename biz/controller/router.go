@@ -17,10 +17,14 @@ import (
 )
 
 func NewRouter(e *gin.Engine) {
-	admin.AddAdminRoute(e)
-	oauth.AddOauth2Route(e)
-	iam.AddIamRouter(e)
-	rg.AddResourceGroupRoutes(e.Group("/api/quick"))
+	api := e.Group("/api/quick", middleware.TenantHost())
+	{
+		admin.AddAdminRoute(api)
+		oauth.AddOauth2Route(api)
+		iam.AddIamRouter(api)
+		rg.AddResourceGroupRoutes(api)
+	}
+
 	AddWebRoutes(e)
 
 	e.GET("/api/quick/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

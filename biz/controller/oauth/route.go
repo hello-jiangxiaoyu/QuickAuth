@@ -5,8 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddOauth2Route(e *gin.Engine) {
-	r := e.Group("/api/quick")
+func AddOauth2Route(e *gin.RouterGroup) {
+	r := e.Group("")
 	{
 		r.GET("/.well-known/openid-configuration", GetOIDC) // OIDC信息
 		r.GET("/.well-known/jwks.json", ListJwks)           // jwk签名公钥

@@ -10,7 +10,7 @@ import (
 
 // ListResourceRoles
 // @Summary	list resource roles
-// @Tags	resource-role
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/roles 	[get]
@@ -31,7 +31,7 @@ func ListResourceRoles(c *gin.Context) {
 
 // GetResourceRole
 // @Summary	get resource role
-// @Tags	resource-role
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	roleId		path	string	true	"role id"
 // @Success	200		{object}	interface{}
@@ -53,7 +53,7 @@ func GetResourceRole(c *gin.Context) {
 
 // CreateResourceRole
 // @Summary	create resource role
-// @Tags	resource-role
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/roles 	[post]
@@ -76,7 +76,7 @@ func CreateResourceRole(c *gin.Context) {
 
 // UpdateResourceRole
 // @Summary	update resource role
-// @Tags	resource-role
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	roleId		path	string	true	"role id"
 // @Success	200
@@ -100,7 +100,7 @@ func UpdateResourceRole(c *gin.Context) {
 
 // DeleteResourceRole
 // @Summary	delete resource role
-// @Tags	resource-role
+// @Tags	ABAC
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	roleId		path	string	true	"role id"
 // @Success	200

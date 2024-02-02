@@ -4,9 +4,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddIamRouter(e *gin.Engine) {
+func AddIamRouter(e *gin.RouterGroup) {
 	// 资源管理
-	resource := e.Group("/api/quick")
+	resource := e.Group("")
 	{
 		resource.GET("/resources", ListResources)
 		resource.GET("/resources/:resourceId", GetResource)
@@ -16,7 +16,7 @@ func AddIamRouter(e *gin.Engine) {
 	}
 
 	// 资源属性管理
-	resourceAttribute := e.Group("/api/quick/resources/:resourceId")
+	resourceAttribute := e.Group("/resources/:resourceId")
 	{
 		// 资源下的节点
 		resourceAttribute.GET("/nodes", ListResourceNodes)
@@ -41,7 +41,7 @@ func AddIamRouter(e *gin.Engine) {
 	}
 
 	// 授权管理
-	auth := e.Group("/api/quick/resources/:resourceId")
+	auth := e.Group("/resources/:resourceId")
 	{
 		// 角色的权限管理
 		auth.GET("/roles/:roleId/operations", ListResourceRoleOperations)
@@ -61,7 +61,7 @@ func AddIamRouter(e *gin.Engine) {
 	}
 
 	// 鉴权
-	iamAuth := e.Group("/api/quick/resources/:resourceId")
+	iamAuth := e.Group("/resources/:resourceId")
 	{
 		iamAuth.GET("/nodes/:nodeId/operations/:operationId", IsOperationAllow) // 针对某个资源的操作，判断是否允许
 		iamAuth.GET("/json/operations/:operationId", IsJSONOperationAllow)      // 针对某个json资源的操作，判断是否允许
