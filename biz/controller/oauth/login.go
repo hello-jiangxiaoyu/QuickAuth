@@ -82,12 +82,7 @@ func Register(c *gin.Context) {
 	}
 
 	var err error
-	in.Password, err = safe.HashPassword(in.Password)
-	if err != nil {
-		resp.ErrorUnknown(c, err, "hash password err")
-		return
-	}
-
+	in.Password = safe.HashPassword(in.Password)
 	user, err := admin.CreateUser(&model.User{
 		UserPoolID: in.Tenant.UserPoolID,
 		Username:   in.UserName,

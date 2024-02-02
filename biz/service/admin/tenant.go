@@ -3,8 +3,8 @@ package admin
 import (
 	"QuickAuth/biz/endpoint/model"
 	"QuickAuth/pkg/global"
+	"QuickAuth/pkg/utils"
 	"github.com/lib/pq"
-	"github.com/pkg/errors"
 	"net/url"
 )
 
@@ -27,10 +27,10 @@ func ListTenant(appId string) ([]model.Tenant, error) {
 
 func CreatTenant(t *model.Tenant) (*model.Tenant, error) {
 	if _, err := GetApp(t.AppID); err != nil {
-		return nil, errors.Wrap(err, "no such app")
+		return nil, utils.WithMessage(err, "no such app")
 	}
 	if _, err := GetUserPool(t.UserPoolID); err != nil {
-		return nil, errors.Wrap(err, "no such user pool")
+		return nil, utils.WithMessage(err, "no such user pool")
 	}
 
 	t.RedirectUris = pq.StringArray{"https://" + t.Host, "http://" + t.Host}
@@ -106,7 +106,7 @@ func ModifyRedirectUri(tenantId int64, uriId uint, uri string) error {
 func DeleteRedirectUri(tenantId int64, uri string) error {
 	uri, err := url.QueryUnescape(uri)
 	if err != nil {
-		return errors.Wrap(err, "invalid uri")
+		return utils.WithMessage(err, "invalid uri")
 	}
 
 	sql := `update tenants set redirect_uris = array_remove(redirect_uris, ?) where id = ?;`

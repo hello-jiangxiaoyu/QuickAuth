@@ -4,7 +4,6 @@ import (
 	"QuickAuth/biz/endpoint/model"
 	"QuickAuth/pkg/global"
 	"QuickAuth/pkg/utils"
-	"github.com/pkg/errors"
 )
 
 func GetUserByName(poolId int64, userName string) (*model.User, error) {
@@ -38,7 +37,7 @@ func ListUser(poolId int64) ([]model.User, error) {
 
 func CreateUser(u *model.User) (*model.User, error) {
 	if _, err := GetUserPool(u.UserPoolID); err != nil {
-		return nil, errors.Wrap(err, "no such user pool")
+		return nil, utils.WithMessage(err, "no such user pool")
 	}
 
 	u.ID = utils.GetNoLineUUID()
@@ -51,7 +50,7 @@ func CreateUser(u *model.User) (*model.User, error) {
 
 func ModifyUser(userId string, u *model.User) error {
 	if _, err := GetUserPool(u.UserPoolID); err != nil {
-		return errors.Wrap(err, "no such user pool")
+		return utils.WithMessage(err, "no such user pool")
 	}
 
 	if err := global.Db().Select("display_name", "email", "phone").

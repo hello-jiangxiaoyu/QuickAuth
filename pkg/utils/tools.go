@@ -2,6 +2,7 @@ package utils
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"os"
 	"runtime"
@@ -49,4 +50,17 @@ func GetPanicStackInfo(msg string, err any, skip int, fullStack bool) string {
 		}
 	}
 	return res + "\n"
+}
+
+// WithMessage err和msg有一个不为空则返回error
+func WithMessage(err error, msg string) error {
+	if err == nil && msg == "" {
+		return nil
+	} else if err == nil {
+		return errors.New(msg)
+	} else if msg == "" {
+		return err
+	}
+
+	return errors.New(msg + ": " + err.Error())
 }

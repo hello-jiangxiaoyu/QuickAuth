@@ -2,12 +2,14 @@ package cmd
 
 import (
 	"QuickAuth/biz/endpoint/model"
-	"QuickAuth/biz/service/admin"
 	"QuickAuth/cmd/log"
 	"QuickAuth/pkg/conf"
 	"QuickAuth/pkg/global"
+	"QuickAuth/pkg/safe"
+	"QuickAuth/pkg/utils"
 	"errors"
 	"fmt"
+	"github.com/lib/pq"
 	"gorm.io/gorm"
 )
 
@@ -70,12 +72,57 @@ func InitDefaultTenant() error {
 	}
 
 	app := &model.App{
+		ID:       utils.GetNoLineUUID(),
 		Name:     "default",
 		Tag:      "Single Tenant",
 		Icon:     "IconSafe",
 		Describe: "quick auth app",
 	}
-	app, err := admin.CreateApp(app, "127.0.0.1", 0)
+	t := model.Tenant{
+		AppID:        app.ID,
+		Type:         1,
+		Name:         "default",
+		Company:      "default",
+		Host:         "127.0.0.1:8000",
+		Describe:     "default tenant created by app",
+		RedirectUris: pq.StringArray{"http://127.0.0.1:8000"},
+		GrantTypes:   pq.StringArray{},
+		Config:       "{}",
+	}
+
+	err := global.Db().Transaction(func(tx *gorm.DB) error {
+		if err := tx.Create(app).Error; err != nil {
+			return utils.WithMessage(err, "create app err")
+		}
+		userPool := model.UserPool{
+			Name:     app.Name,
+			Describe: app.Name + " user pool",
+		}
+		if err := tx.Create(&userPool).Error; err != nil {
+			return utils.WithMessage(err, "create default user pool err")
+		}
+		t.UserPoolID = userPool.ID
+		if err := tx.Create(&model.User{
+			UserPoolID:  userPool.ID,
+			Username:    "admin",
+			Password:    safe.HashPassword("admin"),
+			DisplayName: "admin",
+		}).Error; err != nil {
+			return utils.WithMessage(err, "create user err")
+		}
+		if err := tx.Create(&t).Error; err != nil {
+			return utils.WithMessage(err, "create default tenant err")
+		}
+		if err := tx.Create(&model.AppSecret{
+			AppID:    app.ID,
+			Secret:   safe.Rand62(63),
+			Scope:    []string{"read_user"},
+			Describe: "default secret",
+		}).Error; err != nil {
+			return utils.WithMessage(err, "create default secret err")
+		}
+		return nil
+	})
 	if err != nil {
 		return err
 	}

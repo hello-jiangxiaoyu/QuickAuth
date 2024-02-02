@@ -37,6 +37,7 @@ func initDefault() {
 	}
 	fmt.Println("[OK] init default successfully")
 }
+
 func initGlobal() error {
 	var err error
 	if err = InitLogger(); err != nil {

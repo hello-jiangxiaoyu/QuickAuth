@@ -41,7 +41,6 @@ func init() {
 
 	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "./deploy/dev.yaml", "config file (default is ./deploy/dev.yaml)")
-	rootCmd.PersistentFlags().Bool("viper", true, "Use Viper for configuration")
 }
 
 func initConfig() {

@@ -31,7 +31,7 @@ func createDbTables() {
 	if err := initGlobal(); err != nil {
 		os.Exit(1)
 	}
-	sqlBytes, err := os.ReadFile("./deploy/postgres/create.sql")
+	sqlBytes, err := os.ReadFile("./deploy/create.sql")
 	if err != nil {
 		fmt.Println("[Error] read file err: ", err)
 		os.Exit(1)

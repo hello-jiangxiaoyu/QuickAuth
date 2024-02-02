@@ -74,7 +74,7 @@ func CreateUser(c *gin.Context) {
 	}
 
 	var err error
-	in.Password, err = safe.HashPassword(in.Password)
+	in.Password = safe.HashPassword(in.Password)
 	if err != nil {
 		resp.ErrorUnknown(c, err, "hash password err")
 		return

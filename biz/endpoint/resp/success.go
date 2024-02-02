@@ -1,9 +1,10 @@
 package resp
 
 import (
+	"QuickAuth/pkg/utils"
 	"context"
+	"errors"
 	"github.com/gin-gonic/gin"
-	"github.com/pkg/errors"
 	"net/http"
 )
 
@@ -28,7 +29,7 @@ func response(ctx context.Context, code int, errCode int, err error, msg string,
 	c.JSON(code, &ArrayResponse{Code: errCode, Msg: msg, Total: total, Data: data})
 
 	if err != nil {
-		_ = c.Error(errors.WithMessage(err, msg))
+		_ = c.Error(utils.WithMessage(err, msg))
 	} else {
 		_ = c.Error(errors.New(msg))
 	}
