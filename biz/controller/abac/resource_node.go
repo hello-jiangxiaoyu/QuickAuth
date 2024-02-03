@@ -1,133 +1,135 @@
-package iam
+package abac
 
 import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
-	"QuickAuth/biz/service/iam"
+	"QuickAuth/biz/service/abac"
 	"github.com/gin-gonic/gin"
 )
 
-// ListResourceRoles
-// @Summary	list resource roles
+// ListResourceNodes
+// @Summary	list resource nodes
 // @Tags	ABAC
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
 // @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
-// @Router	/api/quick/resources/{resourceId}/roles 	[get]
-func ListResourceRoles(c *gin.Context) {
+// @Router	/api/quick/resources/{resourceId}/nodes 	[get]
+func ListResourceNodes(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	data, err := iam.ListResourceRoles(in.Tenant.ID, in.ResourceId)
+	data, err := abac.ListResourceNodes(in.Tenant.ID, in.ResourceId)
 	if err != nil {
-		resp.ErrorSelect(c, err, "ListResourceRoles err")
+		resp.ErrorSelect(c, err, "ListResourceNodes err")
 		return
 	}
 
 	resp.SuccessArrayData(c, len(data), data)
 }
 
-// GetResourceRole
-// @Summary	get resource role
+// GetResourceNode
+// @Summary	get resource node
 // @Tags	ABAC
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
 // @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
-// @Param	roleId		path	string	true	"role id"
+// @Param	nodeId		path	string	true	"node id"
 // @Success	200		{object}	interface{}
-// @Router	/api/quick/resources/{resourceId}/roles/{roleId} 	[get]
-func GetResourceRole(c *gin.Context) {
+// @Router	/api/quick/resources/{resourceId}/nodes/{nodeId} 	[get]
+func GetResourceNode(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	data, err := iam.GetResourceRole(in.Tenant.ID, in.ResourceId, in.RoleId)
+	data, err := abac.GetResourceNode(in.Tenant.ID, in.ResourceId, in.NodeId)
 	if err != nil {
-		resp.ErrorSelect(c, err, "GetResourceRole err")
+		resp.ErrorSelect(c, err, "GetResourceNode err")
 		return
 	}
 
 	resp.SuccessWithData(c, data)
 }
 
-// CreateResourceRole
-// @Summary	create resource role
+// CreateResourceNode
+// @Summary	create resource node
 // @Tags	ABAC
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
 // @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
-// @Router	/api/quick/resources/{resourceId}/roles 	[post]
-func CreateResourceRole(c *gin.Context) {
+// @Router	/api/quick/resources/{resourceId}/nodes 	[post]
+func CreateResourceNode(c *gin.Context) {
 	var in request.Iam
-	if err := internal.BindUri(c, &in).BindJson(&in.Role).SetTenant(&in.Tenant).Error; err != nil {
+	if err := internal.BindUri(c, &in).BindJson(&in.Node).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	in.Role.TenantID = in.Tenant.ID
-	in.Role.ResourceID = in.ResourceId
-	data, err := iam.CreateResourceRole(&in.Role)
+
+	in.Node.TenantID = in.Tenant.ID
+	in.Node.ResourceID = in.ResourceId
+	data, err := abac.CreateResourceNode(&in.Node)
 	if err != nil {
-		resp.ErrorCreate(c, err, "CreateResourceRole err")
+		resp.ErrorCreate(c, err, "CreateResourceNode err")
 		return
 	}
 
 	resp.SuccessWithData(c, data)
 }
 
-// UpdateResourceRole
-// @Summary	update resource role
+// UpdateResourceNode
+// @Summary	update resource node
 // @Tags	ABAC
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
 // @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
-// @Param	roleId		path	string	true	"role id"
+// @Param	nodeId		path	string	true	"node id"
 // @Success	200
-// @Router	/api/quick/resources/{resourceId}/roles/{roleId} 	[put]
-func UpdateResourceRole(c *gin.Context) {
+// @Router	/api/quick/resources/{resourceId}/nodes/{nodeId} 	[put]
+func UpdateResourceNode(c *gin.Context) {
 	var in request.Iam
-	if err := internal.BindUri(c, &in).BindJson(&in.Role).SetTenant(&in.Tenant).Error; err != nil {
+	if err := internal.BindUri(c, &in).BindJson(&in.Node).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	in.Role.ID = in.RoleId
-	in.Role.TenantID = in.Tenant.ID
-	in.Role.ResourceID = in.ResourceId
-	if err := iam.UpdateResourceRole(in.Tenant.ID, in.ResourceId, in.RoleId, &in.Role); err != nil {
-		resp.ErrorUpdate(c, err, "UpdateResourceRole err")
+	in.Node.ID = in.NodeId
+	in.Node.TenantID = in.Tenant.ID
+	in.Node.ResourceID = in.ResourceId
+	if err := abac.UpdateResourceNode(in.Tenant.ID, in.ResourceId, in.NodeId, &in.Node); err != nil {
+		resp.ErrorUpdate(c, err, "UpdateResourceNode err")
 		return
 	}
 
 	resp.Success(c)
 }
 
-// DeleteResourceRole
-// @Summary	delete resource role
+// DeleteResourceNode
+// @Summary	delete resource node
 // @Tags	ABAC
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
 // @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
-// @Param	roleId		path	string	true	"role id"
+// @Param	nodeId		path	string	true	"node id"
 // @Success	200
-// @Router	/api/quick/resources/{resourceId}/roles/{roleId} 	[delete]
-func DeleteResourceRole(c *gin.Context) {
+// @Router	/api/quick/resources/{resourceId}/nodes/{nodeId} 	[delete]
+func DeleteResourceNode(c *gin.Context) {
 	var in request.Iam
 	if err := internal.BindUri(c, &in).SetTenant(&in.Tenant).Error; err != nil {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	if err := iam.DeleteResourceRole(in.Tenant.ID, in.ResourceId, in.RoleId); err != nil {
-		resp.ErrorDelete(c, err, "DeleteResourceRole err")
+
+	if err := abac.DeleteResourceNode(in.Tenant.ID, in.ResourceId, in.NodeId); err != nil {
+		resp.ErrorDelete(c, err, "DeleteResourceNode err")
 		return
 	}
 

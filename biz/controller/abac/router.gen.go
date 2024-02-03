@@ -1,4 +1,4 @@
-package iam
+package abac
 
 import (
 	"github.com/gin-gonic/gin"

@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"QuickAuth/biz/controller/abac"
 	"QuickAuth/biz/controller/admin"
-	"QuickAuth/biz/controller/iam"
 	_ "QuickAuth/biz/controller/internal/docs"
 	"QuickAuth/biz/controller/oauth"
 	"QuickAuth/biz/controller/rg"
@@ -21,7 +21,7 @@ func NewRouter(e *gin.Engine) {
 	{
 		admin.AddAdminRoute(api)
 		oauth.AddOauth2Route(api)
-		iam.AddIamRouter(api)
+		abac.AddIamRouter(api)
 		rg.AddResourceGroupRoutes(api)
 	}
 

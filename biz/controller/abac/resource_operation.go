@@ -1,10 +1,10 @@
-package iam
+package abac
 
 import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
-	"QuickAuth/biz/service/iam"
+	"QuickAuth/biz/service/abac"
 	"github.com/gin-gonic/gin"
 )
 
@@ -23,7 +23,7 @@ func ListResourceOperations(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	data, err := iam.ListResourceOperations(in.Tenant.ID, in.ResourceId)
+	data, err := abac.ListResourceOperations(in.Tenant.ID, in.ResourceId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "ListResourceOperations err")
 		return
@@ -48,7 +48,7 @@ func GetResourceOperation(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	data, err := iam.GetResourceOperation(in.Tenant.ID, in.ResourceId, in.OperationId)
+	data, err := abac.GetResourceOperation(in.Tenant.ID, in.ResourceId, in.OperationId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "GetResourceOperation err")
 		return
@@ -74,7 +74,7 @@ func CreateResourceOperation(c *gin.Context) {
 	}
 	in.Operation.TenantID = in.Tenant.ID
 	in.Operation.ResourceID = in.ResourceId
-	data, err := iam.CreateResourceOperation(&in.Operation)
+	data, err := abac.CreateResourceOperation(&in.Operation)
 	if err != nil {
 		resp.ErrorCreate(c, err, "CreateResourceOperation err")
 		return
@@ -102,7 +102,7 @@ func UpdateResourceOperation(c *gin.Context) {
 	in.Operation.ID = in.OperationId
 	in.Operation.TenantID = in.Tenant.ID
 	in.Operation.ResourceID = in.ResourceId
-	if err := iam.UpdateResourceOperation(in.Tenant.ID, in.ResourceId, in.OperationId, &in.Operation); err != nil {
+	if err := abac.UpdateResourceOperation(in.Tenant.ID, in.ResourceId, in.OperationId, &in.Operation); err != nil {
 		resp.ErrorUpdate(c, err, "UpdateResourceOperation err")
 		return
 	}
@@ -126,7 +126,7 @@ func DeleteResourceOperation(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	if err := iam.DeleteResourceOperation(in.Tenant.ID, in.ResourceId, in.OperationId); err != nil {
+	if err := abac.DeleteResourceOperation(in.Tenant.ID, in.ResourceId, in.OperationId); err != nil {
 		resp.ErrorDelete(c, err, "DeleteResourceOperation err")
 		return
 	}

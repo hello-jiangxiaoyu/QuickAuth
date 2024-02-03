@@ -1,10 +1,10 @@
-package iam
+package abac
 
 import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
-	"QuickAuth/biz/service/iam"
+	"QuickAuth/biz/service/abac"
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,7 +22,7 @@ func ListResources(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	data, err := iam.ListResources(in.Tenant.ID)
+	data, err := abac.ListResources(in.Tenant.ID)
 	if err != nil {
 		resp.ErrorSelect(c, err, "ListResources err")
 		return
@@ -46,7 +46,7 @@ func GetResource(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	data, err := iam.GetResource(in.Tenant.ID, &in)
+	data, err := abac.GetResource(in.Tenant.ID, &in)
 	if err != nil {
 		resp.ErrorSelect(c, err, "GetResource err")
 		return
@@ -71,7 +71,7 @@ func CreateResource(c *gin.Context) {
 	}
 
 	in.Resource.TenantID = in.Tenant.ID
-	data, err := iam.CreateResource(&in.Resource)
+	data, err := abac.CreateResource(&in.Resource)
 	if err != nil {
 		resp.ErrorCreate(c, err, "CreateResource err")
 		return
@@ -96,7 +96,7 @@ func UpdateResource(c *gin.Context) {
 		return
 	}
 	in.Resource.TenantID = in.Tenant.ID
-	if err := iam.UpdateResource(in.Tenant.ID, in.ResourceId, &in.Resource); err != nil {
+	if err := abac.UpdateResource(in.Tenant.ID, in.ResourceId, &in.Resource); err != nil {
 		resp.ErrorUpdate(c, err, "UpdateResource err")
 		return
 	}
@@ -120,7 +120,7 @@ func DeleteResource(c *gin.Context) {
 		return
 	}
 
-	if err := iam.DeleteResource(in.Tenant.ID, in.ResourceId); err != nil {
+	if err := abac.DeleteResource(in.Tenant.ID, in.ResourceId); err != nil {
 		resp.ErrorDelete(c, err, "DeleteResource err")
 		return
 	}

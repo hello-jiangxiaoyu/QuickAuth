@@ -1,10 +1,10 @@
-package iam
+package abac
 
 import (
 	"QuickAuth/biz/controller/internal"
 	"QuickAuth/biz/endpoint/request"
 	"QuickAuth/biz/endpoint/resp"
-	"QuickAuth/biz/service/iam"
+	"QuickAuth/biz/service/abac"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,7 +24,7 @@ func ListResourceRoleOperations(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	data, err := iam.ListResourceRoleOperations(in.Tenant.ID, in.ResourceId, in.RoleId)
+	data, err := abac.ListResourceRoleOperations(in.Tenant.ID, in.ResourceId, in.RoleId)
 	if err != nil {
 		resp.ErrorSelect(c, err, "ListResourceRoleOperations err")
 		return
@@ -52,7 +52,7 @@ func CreateResourceRoleOperation(c *gin.Context) {
 	in.RoleOperation.TenantID = in.Tenant.ID
 	in.RoleOperation.ResourceID = in.ResourceId
 	in.RoleOperation.RoleID = in.RoleId
-	data, err := iam.CreateResourceRoleOperation(&in.RoleOperation)
+	data, err := abac.CreateResourceRoleOperation(&in.RoleOperation)
 	if err != nil {
 		resp.ErrorCreate(c, err, "CreateResourceRoleOperation err")
 		return
@@ -78,7 +78,7 @@ func DeleteResourceRoleOperation(c *gin.Context) {
 		resp.ErrorRequest(c, err)
 		return
 	}
-	if err := iam.DeleteResourceRoleOperation(in.Tenant.ID, in.ResourceId, in.RoleId, in.OperationId); err != nil {
+	if err := abac.DeleteResourceRoleOperation(in.Tenant.ID, in.ResourceId, in.RoleId, in.OperationId); err != nil {
 		resp.ErrorDelete(c, err, "DeleteResourceRoleOperation err")
 		return
 	}

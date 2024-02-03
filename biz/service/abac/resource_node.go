@@ -1,4 +1,4 @@
-package iam
+package abac
 
 import (
 	"QuickAuth/biz/endpoint/model"
