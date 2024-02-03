@@ -14,6 +14,7 @@ import (
 // @Tags	resource-group
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	groupId		path	string	true	"group id"
 // @Success	200
 // @Router	/api/quick/resourceGroups/{groupId}/users [get]
@@ -36,6 +37,7 @@ func GetResourceGroupUserList(c *gin.Context) {
 // @Tags	resource-group
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	groupId		path	string	true	"group id"
 // @Param	userId		path	integer	true	"client user id"
 // @Success	200
@@ -59,6 +61,7 @@ func GetResourceGroupUserRole(c *gin.Context) {
 // @Tags	resource-group
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	groupId		path	string	true	"group id"
 // @Param	userId		path	integer	true	"client user id"
 // @Success	200
@@ -82,6 +85,7 @@ func GetResourceGroupUserActionList(c *gin.Context) {
 // @Tags	resource-group
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	groupId		path	string	true	"group id"
 // @Param	userId		path	string	true	"client user id"
 // @Param	actionId	path	string	true	"action id"
@@ -106,6 +110,7 @@ func GetResourceGroupUserAction(c *gin.Context) {
 // @Tags	resource-group
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	groupId		path	string	true	"group id"
 // @Param	roleId		path	string	true	"role id"
 // @Param	group		body	model.RequestResourceGroup	true	"body"
@@ -133,6 +138,7 @@ func CreateResourceGroupUserRole(c *gin.Context) {
 // @Tags	resource-group
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	groupId		path	string	true	"group id"
 // @Param	userId		path	integer	true	"client user id"
 // @Param	group		body	model.RequestResourceGroup	true	"body"
@@ -160,6 +166,7 @@ func UpdateResourceGroupUserRole(c *gin.Context) {
 // @Tags	resource-group
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	groupId		path	string	true	"group id"
 // @Param	userId		path	integer	true	"client user id"
 // @Success	200

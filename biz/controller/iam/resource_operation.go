@@ -11,6 +11,9 @@ import (
 // ListResourceOperations
 // @Summary	list resource operations
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/operations 	[get]
@@ -32,6 +35,9 @@ func ListResourceOperations(c *gin.Context) {
 // GetResourceOperation
 // @Summary	get resource operation
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	operationId	path	string	true	"operation id"
 // @Success	200		{object}	interface{}
@@ -54,6 +60,9 @@ func GetResourceOperation(c *gin.Context) {
 // CreateResourceOperation
 // @Summary	create resource operation
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/operations 	[post]
@@ -77,6 +86,9 @@ func CreateResourceOperation(c *gin.Context) {
 // UpdateResourceOperation
 // @Summary	update resource operation
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	operationId	path	string	true	"operation id"
 // @Success	200
@@ -101,6 +113,9 @@ func UpdateResourceOperation(c *gin.Context) {
 // DeleteResourceOperation
 // @Summary	delete resource operation
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	operationId	path	string	true	"operation id"
 // @Success	200

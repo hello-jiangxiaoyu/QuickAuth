@@ -66,6 +66,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -91,6 +97,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "description": "body",
@@ -130,6 +142,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -159,6 +177,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -203,6 +227,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -237,6 +267,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -266,6 +302,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -309,6 +351,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -357,6 +405,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -1216,6 +1270,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -1241,6 +1301,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "description": "body",
@@ -1280,6 +1346,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1309,6 +1381,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -1353,6 +1431,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1387,6 +1471,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1416,6 +1506,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -1462,6 +1558,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1498,6 +1600,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -1549,6 +1657,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1590,6 +1704,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1619,6 +1739,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -1665,6 +1791,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1701,6 +1833,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -1752,6 +1890,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1793,6 +1937,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1822,6 +1972,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -1868,6 +2024,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1904,6 +2066,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -1955,6 +2123,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1996,6 +2170,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -2032,6 +2212,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -2083,6 +2269,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -2131,6 +2323,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -2169,6 +2367,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -2217,6 +2421,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -2270,6 +2480,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -2301,6 +2517,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -2352,6 +2574,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -2393,6 +2621,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -2431,6 +2665,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -2482,6 +2722,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -2508,6 +2754,26 @@ const docTemplate = `{
                     "ABAC"
                 ],
                 "summary": "list resources",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2522,6 +2788,26 @@ const docTemplate = `{
                     "ABAC"
                 ],
                 "summary": "create resource",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2539,6 +2825,24 @@ const docTemplate = `{
                 ],
                 "summary": "get resource",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2564,6 +2868,24 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -2582,6 +2904,24 @@ const docTemplate = `{
                 ],
                 "summary": "delete resource",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2604,6 +2944,24 @@ const docTemplate = `{
                 ],
                 "summary": "判断用户当前对JSON资源的操作是否被允许",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2642,6 +3000,24 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -2672,6 +3048,24 @@ const docTemplate = `{
                 ],
                 "summary": "获取拥有某个操作权限的node列表",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2706,6 +3100,24 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -2734,6 +3146,24 @@ const docTemplate = `{
                 ],
                 "summary": "create resource json user role",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2768,6 +3198,24 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -2800,6 +3248,24 @@ const docTemplate = `{
                 ],
                 "summary": "delete resource json user role",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2838,6 +3304,24 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -2859,6 +3343,24 @@ const docTemplate = `{
                 ],
                 "summary": "create resource node",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2884,6 +3386,24 @@ const docTemplate = `{
                 ],
                 "summary": "get resource node",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2916,6 +3436,24 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -2941,6 +3479,24 @@ const docTemplate = `{
                 ],
                 "summary": "delete resource node",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2970,6 +3526,24 @@ const docTemplate = `{
                 ],
                 "summary": "判断用户当前对资源的操作是否被允许",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3008,6 +3582,24 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -3029,6 +3621,24 @@ const docTemplate = `{
                 ],
                 "summary": "create resource operation",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3054,6 +3664,24 @@ const docTemplate = `{
                 ],
                 "summary": "get resource operation",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3086,6 +3714,24 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -3111,6 +3757,24 @@ const docTemplate = `{
                 ],
                 "summary": "delete resource operation",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3142,6 +3806,24 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -3163,6 +3845,24 @@ const docTemplate = `{
                 ],
                 "summary": "create resource role",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3188,6 +3888,24 @@ const docTemplate = `{
                 ],
                 "summary": "get resource role",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3220,6 +3938,24 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -3245,6 +3981,24 @@ const docTemplate = `{
                 ],
                 "summary": "delete resource role",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3274,6 +4028,24 @@ const docTemplate = `{
                 ],
                 "summary": "list resource role operations",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3306,6 +4078,24 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -3336,6 +4126,24 @@ const docTemplate = `{
                 ],
                 "summary": "delete resource role operation",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3374,6 +4182,24 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -3402,6 +4228,24 @@ const docTemplate = `{
                 ],
                 "summary": "create resource json user role",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3436,6 +4280,24 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -3468,6 +4330,24 @@ const docTemplate = `{
                 ],
                 "summary": "delete resource json user role",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3515,6 +4395,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -3540,6 +4426,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "description": "body",
@@ -3578,6 +4470,12 @@ const docTemplate = `{
                         "in": "header"
                     },
                     {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
@@ -3608,6 +4506,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "integer",
@@ -3651,6 +4555,12 @@ const docTemplate = `{
                         "in": "header"
                     },
                     {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
@@ -3685,6 +4595,12 @@ const docTemplate = `{
                         "in": "header"
                     },
                     {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
@@ -3715,6 +4631,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "integer",
@@ -3760,6 +4682,12 @@ const docTemplate = `{
                         "in": "header"
                     },
                     {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
@@ -3797,6 +4725,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "integer",
@@ -3845,6 +4779,12 @@ const docTemplate = `{
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "integer",

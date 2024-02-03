@@ -14,6 +14,7 @@ import (
 // @Tags	app
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Success	200
 // @Router	/api/quick/apps [get]
 func ListApp(c *gin.Context) {
@@ -30,6 +31,7 @@ func ListApp(c *gin.Context) {
 // @Tags	app
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	appId		path	string	true	"app id"
 // @Success	200
 // @Router	/api/quick/apps/{appId} [get]
@@ -53,6 +55,7 @@ func GetApp(c *gin.Context) {
 // @Tags	app
 // @Param	X-User-ID	header	string			false	"user id"
 // @Param	X-Pool-ID	header	string			false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	bd			body	request.AppReq	true	"body"
 // @Success	200
 // @Router	/api/quick/apps [post]
@@ -76,6 +79,7 @@ func CreateApp(c *gin.Context) {
 // @Tags	app
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	appId		path	string			true	"app id"
 // @Param	bd			body	request.AppReq	true	"body"
 // @Success	200
@@ -99,6 +103,7 @@ func ModifyApp(c *gin.Context) {
 // @Tags	app
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	appId		path	string	true	"app id"
 // @Success	200
 // @Router	/api/quick/apps/{appId} [delete]

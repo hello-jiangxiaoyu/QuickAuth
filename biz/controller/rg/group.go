@@ -13,6 +13,7 @@ import (
 // @Tags	resource-group
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Success	200
 // @Router	/api/quick/resourceGroups [get]
 func GetResourceGroupList(c *gin.Context) {
@@ -34,6 +35,7 @@ func GetResourceGroupList(c *gin.Context) {
 // @Tags	resource-group
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	groupId		path	string	true	"group id"
 // @Success	200
 // @Router	/api/quick/resourceGroups/{groupId} [get]
@@ -56,6 +58,7 @@ func GetResourceGroup(c *gin.Context) {
 // @Tags	resource-group
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	group		body	model.RequestResourceGroup	true	"body"
 // @Success	200
 // @Router	/api/quick/resourceGroups [post]
@@ -78,6 +81,7 @@ func CreateResourceGroup(c *gin.Context) {
 // @Tags	resource-group
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	groupId		path	string	true	"group id"
 // @Param	group		body	model.RequestResourceGroup	true	"body"
 // @Success	200
@@ -100,6 +104,7 @@ func UpdateResourceGroup(c *gin.Context) {
 // @Tags	resource-group
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	groupId		path	string	true	"group id"
 // @Success	200
 // @Router	/api/quick/resourceGroups/{groupId} [delete]

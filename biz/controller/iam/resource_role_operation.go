@@ -11,6 +11,9 @@ import (
 // ListResourceRoleOperations
 // @Summary	list resource role operations
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	roleId		path	string	true	"role id"
 // @Success	200		{object}	interface{}
@@ -33,6 +36,9 @@ func ListResourceRoleOperations(c *gin.Context) {
 // CreateResourceRoleOperation
 // @Summary	create resource role operation
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	roleId		path	string	true	"role id"
 // @Success	200		{object}	interface{}
@@ -58,6 +64,9 @@ func CreateResourceRoleOperation(c *gin.Context) {
 // DeleteResourceRoleOperation
 // @Summary	delete resource role operation
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	roleId		path	string	true	"role id"
 // @Param	operationId	path	string	true	"operation id"

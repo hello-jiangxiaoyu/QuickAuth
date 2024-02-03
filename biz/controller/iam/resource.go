@@ -11,6 +11,9 @@ import (
 // ListResources
 // @Summary	list resources
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources 	[get]
 func ListResources(c *gin.Context) {
@@ -31,6 +34,9 @@ func ListResources(c *gin.Context) {
 // GetResource
 // @Summary	get resource
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId} 	[get]
@@ -52,6 +58,9 @@ func GetResource(c *gin.Context) {
 // CreateResource
 // @Summary	create resource
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources 	[post]
 func CreateResource(c *gin.Context) {
@@ -74,6 +83,9 @@ func CreateResource(c *gin.Context) {
 // UpdateResource
 // @Summary	update resource
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200
 // @Router	/api/quick/resources/{resourceId} 	[put]
@@ -95,6 +107,9 @@ func UpdateResource(c *gin.Context) {
 // DeleteResource
 // @Summary	delete resource
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200
 // @Router	/api/quick/resources/{resourceId} 	[delete]

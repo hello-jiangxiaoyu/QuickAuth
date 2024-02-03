@@ -12,6 +12,9 @@ import (
 // IsOperationAllow
 // @Summary	判断用户当前对资源的操作是否被允许
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	nodeId		path	string	true	"node id"
 // @Param	operationId	path	string	true	"operation id"
@@ -36,6 +39,9 @@ func IsOperationAllow(c *gin.Context) {
 // IsJSONOperationAllow
 // @Summary	判断用户当前对JSON资源的操作是否被允许
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	path		query	string	true	"json path"
 // @Param	operationId	path	string	true	"operation id"
@@ -60,6 +66,9 @@ func IsJSONOperationAllow(c *gin.Context) {
 // ListResourceOperationNodes
 // @Summary	获取拥有某个操作权限的node列表
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	operationId	path	string	true	"operation id"
 // @Success	200		{object}	interface{}
@@ -82,6 +91,9 @@ func ListResourceOperationNodes(c *gin.Context) {
 // ListJSONResourceOperationNodes
 // @Summary	获取拥有某个操作权限的整个json结构
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	operationId	path	string	true	"operation id"
 // @Success	200		{object}	interface{}

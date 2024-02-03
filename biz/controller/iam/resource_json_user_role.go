@@ -11,6 +11,9 @@ import (
 // ListResourceJSONUserRoles
 // @Summary	list resource json user roles
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	userId		path	string	true	"user id"
 // @Success	200		{object}	interface{}
@@ -33,6 +36,9 @@ func ListResourceJSONUserRoles(c *gin.Context) {
 // CreateResourceJSONUserRole
 // @Summary	create resource json user role
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	userId		path	string	true	"user id"
 // @Success	200		{object}	interface{}
@@ -58,6 +64,9 @@ func CreateResourceJSONUserRole(c *gin.Context) {
 // UpdateResourceJSONUserRole
 // @Summary	update resource json user role
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	userId		path	string	true	"user id"
 // @Param	roleId		path	string	true	"role id"
@@ -83,6 +92,9 @@ func UpdateResourceJSONUserRole(c *gin.Context) {
 // DeleteResourceJSONUserRole
 // @Summary	delete resource json user role
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	userId		path	string	true	"user id"
 // @Param	roleId		path	string	true	"role id"

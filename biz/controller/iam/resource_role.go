@@ -11,6 +11,9 @@ import (
 // ListResourceRoles
 // @Summary	list resource roles
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/roles 	[get]
@@ -32,6 +35,9 @@ func ListResourceRoles(c *gin.Context) {
 // GetResourceRole
 // @Summary	get resource role
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	roleId		path	string	true	"role id"
 // @Success	200		{object}	interface{}
@@ -54,6 +60,9 @@ func GetResourceRole(c *gin.Context) {
 // CreateResourceRole
 // @Summary	create resource role
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/roles 	[post]
@@ -77,6 +86,9 @@ func CreateResourceRole(c *gin.Context) {
 // UpdateResourceRole
 // @Summary	update resource role
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	roleId		path	string	true	"role id"
 // @Success	200
@@ -101,6 +113,9 @@ func UpdateResourceRole(c *gin.Context) {
 // DeleteResourceRole
 // @Summary	delete resource role
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	roleId		path	string	true	"role id"
 // @Success	200

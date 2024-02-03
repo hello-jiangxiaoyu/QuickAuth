@@ -13,6 +13,7 @@ import (
 // @Tags	user
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Success	200
 // @Router	/api/quick/user-pools [get]
 func ListUserPool(c *gin.Context) {
@@ -29,6 +30,7 @@ func ListUserPool(c *gin.Context) {
 // @Tags	user
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	poolId		path	integer	true	"user pool id"
 // @Success	200
 // @Router	/api/quick/user-pools/{poolId} [get]
@@ -52,6 +54,7 @@ func GetUserPool(c *gin.Context) {
 // @Tags	user
 // @Param	X-User-ID	header	string				false	"user id"
 // @Param	X-Pool-ID	header	string				false	"user pool id"
+// @Param	vhost		query	string				false	"virtual host"
 // @Param	bd			body	request.UserPoolReq	true	"body"
 // @Success	200
 // @Router	/api/quick/user-pools [post]
@@ -74,6 +77,7 @@ func CreateUserPool(c *gin.Context) {
 // @Tags	user
 // @Param	X-User-ID	header	string				false	"user id"
 // @Param	X-Pool-ID	header	string				false	"user pool id"
+// @Param	vhost		query	string				false	"virtual host"
 // @Param	poolId		path	integer				true	"user pool id"
 // @Param	bd			body	request.UserPoolReq	true	"body"
 // @Success	200
@@ -97,6 +101,7 @@ func ModifyUserPool(c *gin.Context) {
 // @Tags	user
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	poolId		path	integer	true	"user pool id"
 // @Success	200
 // @Router	/api/quick/user-pools/{poolId} [delete]

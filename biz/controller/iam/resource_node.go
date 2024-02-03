@@ -11,6 +11,9 @@ import (
 // ListResourceNodes
 // @Summary	list resource nodes
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/nodes 	[get]
@@ -32,6 +35,9 @@ func ListResourceNodes(c *gin.Context) {
 // GetResourceNode
 // @Summary	get resource node
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	nodeId		path	string	true	"node id"
 // @Success	200		{object}	interface{}
@@ -54,6 +60,9 @@ func GetResourceNode(c *gin.Context) {
 // CreateResourceNode
 // @Summary	create resource node
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Success	200		{object}	interface{}
 // @Router	/api/quick/resources/{resourceId}/nodes 	[post]
@@ -78,6 +87,9 @@ func CreateResourceNode(c *gin.Context) {
 // UpdateResourceNode
 // @Summary	update resource node
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	nodeId		path	string	true	"node id"
 // @Success	200
@@ -102,6 +114,9 @@ func UpdateResourceNode(c *gin.Context) {
 // DeleteResourceNode
 // @Summary	delete resource node
 // @Tags	ABAC
+// @Param	X-User-ID	header	string	false	"user id"
+// @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	resourceId	path	string	true	"resource id"
 // @Param	nodeId		path	string	true	"node id"
 // @Success	200

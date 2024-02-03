@@ -13,6 +13,7 @@ import (
 // @Tags	app
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	appId		path	string	true	"app id"
 // @Success	200
 // @Router	/api/quick/apps/{appId}/secrets [get]
@@ -36,6 +37,7 @@ func ListAppSecret(c *gin.Context) {
 // @Tags	app
 // @Param	X-User-ID	header	string					false	"user id"
 // @Param	X-Pool-ID	header	string					false	"user pool id"
+// @Param	vhost		query	string					false	"virtual host"
 // @Param	appId		path	string					true	"app id"
 // @Param	bd			body	request.AppSecretReq	true	"body"
 // @Success	200
@@ -60,6 +62,7 @@ func CreateAppSecret(c *gin.Context) {
 // @Tags	app
 // @Param	X-User-ID	header	string					false	"user id"
 // @Param	X-Pool-ID	header	string					false	"user pool id"
+// @Param	vhost		query	string					false	"virtual host"
 // @Param	appId		path	string					true	"app id"
 // @Param	secretId	path	integer					true	"secret id"
 // @Param	bd			body	request.AppSecretReq	true	"body"
@@ -85,6 +88,7 @@ func ModifyAppSecret(c *gin.Context) {
 // @Tags	app
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	appId		path	string	true	"app id"
 // @Param	secretId	path	integer	true	"secret id"
 // @Success	200

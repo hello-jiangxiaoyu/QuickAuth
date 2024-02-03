@@ -57,6 +57,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -82,6 +88,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "description": "body",
@@ -121,6 +133,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -150,6 +168,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -194,6 +218,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -228,6 +258,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "app id",
                         "name": "appId",
                         "in": "path",
@@ -257,6 +293,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -300,6 +342,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -348,6 +396,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -1207,6 +1261,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -1232,6 +1292,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "description": "body",
@@ -1271,6 +1337,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1300,6 +1372,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -1344,6 +1422,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1378,6 +1462,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1407,6 +1497,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -1453,6 +1549,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1489,6 +1591,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -1540,6 +1648,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1581,6 +1695,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1610,6 +1730,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -1656,6 +1782,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1692,6 +1824,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -1743,6 +1881,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1784,6 +1928,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1813,6 +1963,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -1859,6 +2015,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1895,6 +2057,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -1946,6 +2114,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -1987,6 +2161,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -2023,6 +2203,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -2074,6 +2260,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -2122,6 +2314,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -2160,6 +2358,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -2208,6 +2412,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -2261,6 +2471,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -2292,6 +2508,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -2343,6 +2565,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -2384,6 +2612,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -2422,6 +2656,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -2473,6 +2713,12 @@
                     },
                     {
                         "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "group id",
                         "name": "groupId",
                         "in": "path",
@@ -2499,6 +2745,26 @@
                     "ABAC"
                 ],
                 "summary": "list resources",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2513,6 +2779,26 @@
                     "ABAC"
                 ],
                 "summary": "create resource",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2530,6 +2816,24 @@
                 ],
                 "summary": "get resource",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2555,6 +2859,24 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -2573,6 +2895,24 @@
                 ],
                 "summary": "delete resource",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2595,6 +2935,24 @@
                 ],
                 "summary": "判断用户当前对JSON资源的操作是否被允许",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2633,6 +2991,24 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -2663,6 +3039,24 @@
                 ],
                 "summary": "获取拥有某个操作权限的node列表",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2697,6 +3091,24 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -2725,6 +3137,24 @@
                 ],
                 "summary": "create resource json user role",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2759,6 +3189,24 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -2791,6 +3239,24 @@
                 ],
                 "summary": "delete resource json user role",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2829,6 +3295,24 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -2850,6 +3334,24 @@
                 ],
                 "summary": "create resource node",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2875,6 +3377,24 @@
                 ],
                 "summary": "get resource node",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2907,6 +3427,24 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -2932,6 +3470,24 @@
                 ],
                 "summary": "delete resource node",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2961,6 +3517,24 @@
                 ],
                 "summary": "判断用户当前对资源的操作是否被允许",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -2999,6 +3573,24 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -3020,6 +3612,24 @@
                 ],
                 "summary": "create resource operation",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3045,6 +3655,24 @@
                 ],
                 "summary": "get resource operation",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3077,6 +3705,24 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -3102,6 +3748,24 @@
                 ],
                 "summary": "delete resource operation",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3133,6 +3797,24 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -3154,6 +3836,24 @@
                 ],
                 "summary": "create resource role",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3179,6 +3879,24 @@
                 ],
                 "summary": "get resource role",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3211,6 +3929,24 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -3236,6 +3972,24 @@
                 ],
                 "summary": "delete resource role",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3265,6 +4019,24 @@
                 ],
                 "summary": "list resource role operations",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3297,6 +4069,24 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -3327,6 +4117,24 @@
                 ],
                 "summary": "delete resource role operation",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3365,6 +4173,24 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -3393,6 +4219,24 @@
                 ],
                 "summary": "create resource json user role",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3427,6 +4271,24 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "resource id",
                         "name": "resourceId",
                         "in": "path",
@@ -3459,6 +4321,24 @@
                 ],
                 "summary": "delete resource json user role",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user pool id",
+                        "name": "X-Pool-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "resource id",
@@ -3506,6 +4386,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -3531,6 +4417,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "description": "body",
@@ -3569,6 +4461,12 @@
                         "in": "header"
                     },
                     {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
@@ -3599,6 +4497,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "integer",
@@ -3642,6 +4546,12 @@
                         "in": "header"
                     },
                     {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
@@ -3676,6 +4586,12 @@
                         "in": "header"
                     },
                     {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
@@ -3706,6 +4622,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "integer",
@@ -3751,6 +4673,12 @@
                         "in": "header"
                     },
                     {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "user pool id",
                         "name": "poolId",
@@ -3788,6 +4716,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "integer",
@@ -3836,6 +4770,12 @@
                         "description": "user pool id",
                         "name": "X-Pool-ID",
                         "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "virtual host",
+                        "name": "vhost",
+                        "in": "query"
                     },
                     {
                         "type": "integer",

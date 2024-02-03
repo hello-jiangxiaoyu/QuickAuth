@@ -15,6 +15,7 @@ import (
 // @Tags	resource-group
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	groupId		path	string	true	"group id"
 // @Param	roleId		path	string	true	"role id"
 // @Success	200
@@ -38,6 +39,7 @@ func GetResourceGroupRoleActionList(c *gin.Context) {
 // @Tags	resource-group
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	groupId		path	string	true	"group id"
 // @Param	roleId		path	string	true	"role id"
 // @Param	actionId	path	string	true	"action id"
@@ -62,6 +64,7 @@ func GetResourceGroupRoleAction(c *gin.Context) {
 // @Tags	resource-group
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	groupId		path	string	true	"group id"
 // @Param	roleId		path	string	true	"role id"
 // @Param	data		body	model.RequestResourceGroup	true	"body"
@@ -89,6 +92,7 @@ func CreateResourceGroupRoleAction(c *gin.Context) {
 // @Tags	resource-group
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	groupId		path	string	true	"group id"
 // @Param	roleId		path	string	true	"role id"
 // @Param	data		body	model.RequestResourceGroup	true	"body"
@@ -135,6 +139,7 @@ func UpdateResourceGroupRoleAction(c *gin.Context) {
 // @Tags	resource-group
 // @Param	X-User-ID	header	string	false	"user id"
 // @Param	X-Pool-ID	header	string	false	"user pool id"
+// @Param	vhost		query	string	false	"virtual host"
 // @Param	groupId		path	string	true	"group id"
 // @Param	roleId		path	string	true	"role id"
 // @Success	200
