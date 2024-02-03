@@ -1,30 +1,16 @@
 package log
 
 import (
-	rotate "github.com/lestrrat-go/file-rotatelogs"
-	"go.uber.org/zap/zapcore"
+	"gopkg.in/natefinch/lumberjack.v2"
 	"io"
-	"time"
 )
 
-var DictLogLevel = map[string]zapcore.Level{
-	"debug": zapcore.DebugLevel,
-	"info":  zapcore.InfoLevel,
-	"warn":  zapcore.WarnLevel,
-	"error": zapcore.ErrorLevel,
-}
-
-func timeDivisionWriter(path string) (io.Writer, error) {
-	MaxAge := 3
-	hook, err := rotate.New(
-		path+"_%Y-%m-%d.log",
-		rotate.WithMaxAge(time.Duration(int64(24*time.Hour)*int64(MaxAge))),
-		rotate.WithRotationTime(time.Minute),
-		rotate.WithLinkName(path), // 最新日志软链接
-	)
-
-	if err != nil {
-		return nil, err
+func getLumberjackWriter(path string) io.Writer {
+	return &lumberjack.Logger{
+		Filename:   path + ".log", // 日志文件存放目录，如果文件夹不存在会自动创建
+		MaxSize:    2,             // 文件大小限制,单位MB
+		MaxBackups: 100,           // 最大保留日志文件数量
+		MaxAge:     7,             // 日志文件保留天数
+		Compress:   true,          // 是否压缩处理
 	}
-	return hook, nil
 }

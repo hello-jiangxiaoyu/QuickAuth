@@ -7,22 +7,6 @@ import (
 	"time"
 )
 
-type LogFormat struct {
-	Ts            string        `json:"ts"`
-	Status        int           `json:"status"`
-	Method        string        `json:"method"`
-	Path          string        `json:"path"`
-	Query         string        `json:"query"`
-	ClientIp      string        `json:"client_ip"`
-	Host          string        `json:"host"`
-	Cost          time.Duration `json:"cost"`
-	ReqLength     int64         `json:"request_length"`
-	BodyBytesSent int           `json:"body_bytes_sent"`
-	HttpReferer   string        `json:"http_referer"`
-	UserAgent     string        `json:"user_agent"`
-	Errors        string        `json:"errors"`
-}
-
 func zapLogRequest(c *gin.Context, start time.Time) {
 	tenant, _ := getTenant(c)
 	code := c.GetInt("code")

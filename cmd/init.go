@@ -47,17 +47,8 @@ func InitLogger() error {
 	if global.Config == nil {
 		return errors.New("global.Config is nil, failed to initialize logger")
 	}
-	errorLog, err := log.NewZapErrorLogger(global.Config.Log.Dir, global.Config.Log.Level)
-	if err != nil {
-		return err
-	}
-	accessLog, err := log.NewZapAccessLogger(global.Config.Log.Dir)
-	if err != nil {
-		return err
-	}
-
-	global.Log = errorLog
-	global.AccessLog = accessLog
+	global.Log = log.NewZapErrorLogger(global.Config.Log.Dir)
+	global.AccessLog = log.NewZapAccessLogger(global.Config.Log.Dir)
 	return nil
 }
 

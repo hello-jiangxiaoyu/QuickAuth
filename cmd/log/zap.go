@@ -5,37 +5,27 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-func NewZapErrorLogger(dirName string, level string) (*zap.Logger, error) {
-	zapLevel, ok := DictLogLevel[level]
-	if !ok {
-		zapLevel = zapcore.InfoLevel
-	}
-	writer, err := timeDivisionWriter(dirName + "/error")
-	if err != nil {
-		return nil, err
-	}
+func NewZapErrorLogger(dirName string) *zap.Logger {
+	writer := getLumberjackWriter(dirName + "/error")
 	sink := zapcore.AddSync(writer)
 	writeSyncer := zapcore.NewMultiWriteSyncer(sink)
 	encoderConfig := GetEncoderConfig()
 	encoderConfig.CallerKey = "caller"
 	encoderConfig.TimeKey = "ts"
 	encoderConfig.LevelKey = "level"
-	encoder := zapcore.NewConsoleEncoder(encoderConfig)     //获取编码器,NewJSONEncoder()输出json格式，NewConsoleEncoder()输出普通文本格式
-	core := zapcore.NewCore(encoder, writeSyncer, zapLevel) //第三个及之后的参数为写入文件的日志级别,ErrorLevel模式只记录error级别的日志
-	return zap.New(core, zap.AddCaller()), nil
+	encoder := zapcore.NewConsoleEncoder(encoderConfig)              // 获取编码器
+	core := zapcore.NewCore(encoder, writeSyncer, zapcore.InfoLevel) // 日志级别
+	return zap.New(core, zap.AddCaller())
 }
 
-func NewZapAccessLogger(dirName string) (*zap.Logger, error) {
-	writer, err := timeDivisionWriter(dirName + "/access")
-	if err != nil {
-		return nil, err
-	}
+func NewZapAccessLogger(dirName string) *zap.Logger {
+	writer := getLumberjackWriter(dirName + "/access")
 	sink := zapcore.AddSync(writer)
 	writeSyncer := zapcore.NewMultiWriteSyncer(sink)
-	encoderConfig := GetEncoderConfig()                               //指定时间格式
-	encoder := zapcore.NewConsoleEncoder(encoderConfig)               //获取编码器,NewJSONEncoder()输出json格式，NewConsoleEncoder()输出普通文本格式
-	core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel) //第三个及之后的参数为写入文件的日志级别,ErrorLevel模式只记录error级别的日志
-	return zap.New(core), nil
+	encoderConfig := GetEncoderConfig()
+	encoder := zapcore.NewConsoleEncoder(encoderConfig)               // 获取编码器
+	core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel) // 日志级别
+	return zap.New(core)
 }
 
 func GetEncoderConfig() zapcore.EncoderConfig {
