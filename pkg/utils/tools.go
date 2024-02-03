@@ -4,10 +4,8 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"os"
 	"runtime"
 	"strconv"
-	"strings"
 )
 
 // GetGoID get goroutine id
@@ -33,23 +31,6 @@ func DtoFilter[S any, T any](s []S, f func(S) T) []T {
 		l = append(l, f(i))
 	}
 	return l
-}
-
-func GetPanicStackInfo(msg string, err any, skip int, fullStack bool) string {
-	pwd, _ := os.Getwd()
-	pwd = strings.ReplaceAll(pwd, `\`, "/") // handle windows path
-	res := fmt.Sprintf("\n[Recovery] panic recovered: %s\n[Error] %v", msg, err)
-	for i := skip; ; i++ {
-		pc, file, line, ok := runtime.Caller(i)
-		if !ok {
-			break
-		}
-
-		if fullStack || pwd == "" || strings.Contains(file, pwd) { // only about quick auth source files
-			res += fmt.Sprintf("\n\t%s:%d %s", file, line, runtime.FuncForPC(pc).Name())
-		}
-	}
-	return res + "\n"
 }
 
 // WithMessage err和msg有一个不为空则返回error
